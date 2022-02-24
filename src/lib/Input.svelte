@@ -5,15 +5,15 @@
 	const id = uuidv4();
 </script>
 
-<label for={id}>
-	<span>
+<div>
+	<label for={id}>
 		<slot />
-	</span>
+	</label>
 	<input type="number" bind:value {id} />
-</label>
+</div>
 
 <style>
-	label {
+	div {
 		display: flex;
 		flex-direction: column;
 		gap: 0.25em;

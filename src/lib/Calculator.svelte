@@ -15,8 +15,10 @@
 	<Input bind:value={grams}>grams</Input>
 
 	<span>
-		{kcal} kcal
+		{kcal.toFixed(2)} kcal
 	</span>
+
+	<slot />
 </div>
 
 <style>
