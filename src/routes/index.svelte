@@ -4,7 +4,7 @@
 	let ingredients = [];
 
 	function addIngredient() {
-		ingredients = [0, ...ingredients];
+		ingredients = [...ingredients, 0];
 	}
 
 	$: sum = ingredients.reduce((a, b) => {
@@ -12,7 +12,7 @@
 	}, 0);
 </script>
 
-{#each ingredients as ingredient, i}
+{#each ingredients as ingredient, i (i)}
 	<Calculator bind:kcal={ingredient} />
 {/each}
 
