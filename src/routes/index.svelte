@@ -3,7 +3,12 @@
 
 	import Calculator from '$lib/Calculator.svelte';
 
-	let ingredients = [];
+	let ingredients = [
+		{
+			id: uuidv4(),
+			kcal: 0
+		}
+	];
 
 	function addIngredient() {
 		ingredients = [

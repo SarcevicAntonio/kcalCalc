@@ -29,6 +29,7 @@
   },
   "type": "module",
   "dependencies": {
+    "as-comps": "0.0.6",
     "uuid": "^8.3.2"
   }
 }

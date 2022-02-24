@@ -7,6 +7,7 @@ html {
 	font-size: 1.2em;
 }
 
-button, input {
+button, input, select {
 	font: inherit;
+	padding: 0.25em;
 }
