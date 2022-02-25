@@ -3,6 +3,11 @@ import { writable, type Writable } from 'svelte/store';
 interface Ingredient {
 	name: string;
 	kcalPer100: number;
+	ml?: boolean;
+}
+
+export interface IngredientInstance extends Ingredient {
+	amount: number;
 }
 
 export const ingredients: Writable<Ingredient[]> = writable([

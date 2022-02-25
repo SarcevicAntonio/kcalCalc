@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
 	import Input from '$lib/Input.svelte';
+	import eatUnit, { type EatUnit } from '$lib/stores/eatUnit';
 
-	let eatUnitInstance = {
+	let eatUnitInstance: EatUnit = {
 		label: null,
 		date: null,
 		kcal: null,
@@ -38,5 +39,11 @@
 	{:else}
 		<div />
 	{/if}
-	<button class="primary">☁</button>
+	<button
+		class="primary"
+		on:click={() => {
+			eatUnit.add(eatUnitInstance);
+			history.back();
+		}}>☁</button
+	>
 </div>

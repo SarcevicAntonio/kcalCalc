@@ -14,6 +14,7 @@ specifiers:
   prettier-plugin-svelte: ^2.5.0
   svelte: ^3.44.0
   svelte-check: ^2.2.6
+  svelte-local-storage-store: ^0.2.6
   svelte-preprocess: ^4.10.1
   tslib: ^2.3.1
   typescript: ~4.5.4
@@ -22,6 +23,7 @@ specifiers:
 dependencies:
   as-comps: 0.0.6
   firebase: 9.6.7
+  svelte-local-storage-store: 0.2.6_svelte@3.46.4
   uuid: 8.3.2
 
 devDependencies:
@@ -2300,6 +2302,15 @@ packages:
     dependencies:
       svelte: 3.46.4
     dev: true
+
+  /svelte-local-storage-store/0.2.6_svelte@3.46.4:
+    resolution: {integrity: sha512-7QLCZ4V/0ydvZRyVChNYx7gVkprzrkACD63PpZINy5oFv9nE+5CAP94QN3NBI2awPeDB+cpUzNCB4Q0Yjr9CYQ==}
+    engines: {node: '>=0.14'}
+    peerDependencies:
+      svelte: ^3.44.1
+    dependencies:
+      svelte: 3.46.4
+    dev: false
 
   /svelte-preprocess/4.10.4_svelte@3.46.4+typescript@4.5.5:
     resolution: {integrity: sha512-fuwol0N4UoHsNQolLFbMqWivqcJ9N0vfWO9IuPAiX/5okfoGXURyJ6nECbuEIv0nU3M8Xe2I1ONNje2buk7l6A==}
