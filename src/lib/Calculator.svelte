@@ -1,7 +1,9 @@
 <script>
 	import { Dialog } from 'as-comps';
+	import { onMount } from 'svelte';
 	import Input from './Input.svelte';
-	import { ingredients } from './stores/ingredients';
+	import { collection, getDocs } from 'firebase/firestore';
+	import { db } from './firebase';
 
 	let kcalPer100 = 0;
 	let grams = 0;
@@ -11,6 +13,21 @@
 	$: kcal = (kcalPer100 / 100) * grams;
 
 	let ingredientSelectState = null;
+
+	let presets = [];
+
+	async function getFirestore() {
+		const querySnapshot = await getDocs(collection(db, 'ingredients'));
+		querySnapshot.forEach((doc) => {
+			presets.push(doc.data());
+			console.log(`${doc.id} => `, doc.data());
+		});
+		presets = presets;
+	}
+
+	onMount(() => {
+		getFirestore();
+	});
 </script>
 
 <div>
@@ -18,8 +35,8 @@
 		<label for="ingredient">Select Ingredient</label>
 		<br />
 		<select id="ingredient" bind:value={ingredientSelectState}>
-			{#each $ingredients as ingredient}
-				<option value={ingredient.kcalPer100}>{ingredient.name}</option>
+			{#each presets as ingredient}
+				<option value={ingredient.kcalPer100}>{ingredient.label}</option>
 			{/each}
 		</select>
 		<br />

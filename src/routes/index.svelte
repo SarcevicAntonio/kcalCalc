@@ -29,8 +29,6 @@
 	$: sum = ingredients.reduce((a, b) => {
 		return a + b.kcal;
 	}, 0);
-
-	$: console.log(ingredients);
 </script>
 
 <ul>
