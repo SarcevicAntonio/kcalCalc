@@ -1,46 +1,47 @@
 import { writable, type Writable } from 'svelte/store';
 
-interface Ingredient {
-	name: string;
+export interface Ingredient {
+	label: string;
 	kcalPer100: number;
 	ml?: boolean;
 }
 
 export interface IngredientInstance extends Ingredient {
 	amount: number;
+	id: string;
 }
 
 export const ingredients: Writable<Ingredient[]> = writable([
 	{
-		name: 'Emmer Dinkel',
+		label: 'Emmer Dinkel',
 		kcalPer100: 283
 	},
 	{
-		name: 'Lätta Extra Fit',
+		label: 'Lätta Extra Fit',
 		kcalPer100: 265
 	},
 	{
-		name: 'Finesse Hühnerbrust',
+		label: 'Finesse Hühnerbrust',
 		kcalPer100: 105
 	},
 	{
-		name: 'Leerdammer Caractere',
+		label: 'Leerdammer Caractere',
 		kcalPer100: 368
 	},
 	{
-		name: 'Avocado',
+		label: 'Avocado',
 		kcalPer100: 160
 	},
 	{
-		name: 'Sirracha',
+		label: 'Sirracha',
 		kcalPer100: 139
 	},
 	{
-		name: 'Parmesan',
+		label: 'Parmesan',
 		kcalPer100: 431
 	},
 	{
-		name: 'Oatly Gartenkräuter',
+		label: 'Oatly Gartenkräuter',
 		kcalPer100: 215
 	}
 ]);

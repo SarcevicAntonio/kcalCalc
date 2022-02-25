@@ -1,49 +1,88 @@
 <script lang="ts">
-	import Input from '$lib/Input.svelte';
-	import eatUnit, { type EatUnit } from '$lib/stores/eatUnit';
+	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
+	import { v4 as uuidv4 } from 'uuid';
 
-	let eatUnitInstance: EatUnit = {
+	import Input from '$lib/Input.svelte';
+	import type { EatUnit } from '$lib/stores/eatUnit';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	export let eatUnit: EatUnit = {
 		label: null,
-		date: null,
-		kcal: null,
-		ingredientInstances: []
+		date: new Date().toISOString().split('T')[0],
+		kcal: 0,
+		ingredients: []
 	};
 
-	let trackingIngredients = false;
+	function addIngredient() {
+		const next = [
+			...eatUnit.ingredients,
+			{
+				label: '',
+				kcalPer100: 0,
+				amount: 0,
+				id: uuidv4()
+			}
+		];
+		eatUnit.ingredients = next;
+	}
+
+	$: if (eatUnit.ingredients.length) {
+		eatUnit.kcal = eatUnit.ingredients.reduce(
+			(prev, next) => prev + (next.kcalPer100 / 100) * next.amount,
+			0
+		);
+	}
 </script>
 
-<Input type="date" bind:value={eatUnitInstance.date}>Datum</Input>
-
-<Input type="text" bind:value={eatUnitInstance.label}>Label</Input>
-
-<div class="row gap">
-	<input id="tracking-ing" type="checkbox" bind:checked={trackingIngredients} />
-	<label for="tracking-ing">Zutaten tracken</label>
+<div class="row">
+	<div class="col">
+		<h1>Essenseinheit</h1>
+		<span class="bold">{eatUnit.kcal} kcal</span>
+	</div>
 </div>
 
-{#if !trackingIngredients}
-	<Input type="number" bind:value={eatUnitInstance.kcal}>kcal</Input>
+<Input type="date" bind:value={eatUnit.date}>Datum</Input>
+
+<Input type="text" placeholder="Pizza" bind:value={eatUnit.label}>Label</Input>
+
+<div class="row gap">
+	<input
+		id="trackIngredients"
+		type="checkbox"
+		checked={!!eatUnit.ingredients.length}
+		on:change={() => {
+			if (!eatUnit.ingredients.length) {
+				addIngredient();
+			} else {
+				eatUnit.ingredients = [];
+			}
+		}}
+	/>
+	<label for="trackIngredients">Zutaten tracken</label>
+</div>
+
+{#if !eatUnit.ingredients.length}
+	<Input type="number" bind:value={eatUnit.kcal}>kcal</Input>
 {:else}
-	{#each eatUnitInstance.ingredientInstances as ingredient}
-		<button>
-			{JSON.stringify(ingredient)}
-		</button>
-	{:else}
-		... noch keine Zutaten
+	{#each eatUnit.ingredients as ingredient (ingredient.id)}
+		<IngredientCalculator bind:ingredient />
 	{/each}
 {/if}
 
 <div class="fabs sb aic">
-	{#if trackingIngredients}
-		<button>➕</button>
+	{#if eatUnit.ingredients.length}
+		<button on:click={addIngredient}>➕</button>
 	{:else}
 		<div />
 	{/if}
 	<button
 		class="primary"
 		on:click={() => {
-			eatUnit.add(eatUnitInstance);
-			history.back();
-		}}>☁</button
+			dispatch('save', eatUnit);
+		}}
 	>
+		☁
+	</button>
 </div>

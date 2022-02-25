@@ -1,12 +1,13 @@
 import { writable } from 'svelte-local-storage-store';
 import type { IngredientInstance } from './ingredients';
 import { v4 as uuidv4 } from 'uuid';
+import { get } from 'svelte/store';
 
 export interface EatUnit {
 	id?: string;
 	label: string;
 	kcal: number;
-	ingredientInstances?: IngredientInstance[];
+	ingredients?: IngredientInstance[];
 	date: string;
 }
 
@@ -20,6 +21,13 @@ function eatUnitStore() {
 		},
 		remove: (id: string) => {
 			update((state) => state.filter((a) => a.id !== id));
+		},
+		updateEntry: (unit: EatUnit) => {
+			update((state) => {
+				const index = state.findIndex((a) => a.id === unit.id);
+				state[index] = unit;
+				return state;
+			});
 		}
 	};
 }
@@ -27,3 +35,7 @@ function eatUnitStore() {
 const eatUnits = eatUnitStore();
 
 export default eatUnits;
+
+export function getEatUnit(id: string): EatUnit {
+	return get(eatUnits).find((a) => a.id === id);
+}

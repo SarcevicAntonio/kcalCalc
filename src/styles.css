@@ -15,6 +15,10 @@ html {
 	font-size: 1.2em;
 }
 
+body {
+	margin-bottom: 126px;
+}
+
 button,
 input,
 select {
@@ -25,16 +29,19 @@ select {
 h1,
 h2 {
 	margin: 0%;
+	font-weight: unset;
 }
 
 .col {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 
 .row {
 	display: flex;
 	flex-direction: row;
+	width: 100%;
 }
 
 .center {
@@ -86,4 +93,16 @@ button.ghost {
 	background-color: transparent;
 	border: none;
 	min-width: 48px;
+}
+
+.card {
+	text-decoration: unset;
+	color: unset;
+	padding: 16px;
+	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.13);
+	border-radius: 16px;
+}
+
+.bold {
+	font-weight: 600;
 }

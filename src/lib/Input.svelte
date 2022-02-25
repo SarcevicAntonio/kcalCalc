@@ -2,6 +2,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 
 	export let value;
+	export let placeholder = null;
 
 	const id = uuidv4();
 
@@ -18,7 +19,7 @@
 	<label for={id}>
 		<slot />
 	</label>
-	<input {type} {value} {id} on:input={handleInput} />
+	<input {type} {value} {id} {placeholder} on:input={handleInput} />
 </div>
 
 <style>

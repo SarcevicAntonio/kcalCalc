@@ -1,14 +1,11 @@
 <script>
 	import EatUnitForm from '$lib/forms/EatUnitForm.svelte';
+	import eatUnits from '$lib/stores/eatUnit';
 </script>
 
-<div class="row">
-	<div class="col">
-		<h1>Essenseinheit</h1>
-		<span>xyz kcal</span>
-	</div>
-</div>
-
-<div class="col gap">
-	<EatUnitForm />
-</div>
+<EatUnitForm
+	on:save={(e) => {
+		eatUnits.add(e.detail);
+		history.back();
+	}}
+/>

@@ -2,4 +2,6 @@
 	import '../styles.css';
 </script>
 
-<slot />
+<div class="col gap">
+	<slot />
+</div>

@@ -6,19 +6,24 @@
 	<button class="ghost">⬅️</button>
 	<div class="col center">
 		<h1>Heute</h1>
-		<span>{$eatUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
+		<span class="bold">{$eatUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
 	</div>
 	<button class="ghost">➡️</button>
 </div>
 
 {#if eatUnits}
-	{#each $eatUnits as eatUnit}
-		{JSON.stringify(eatUnit)}
-		<button
-			on:click={() => {
-				eatUnits.remove(eatUnit.id);
-			}}>löschen</button
-		>
+	{#each $eatUnits as { label, kcal, ingredients, id }}
+		<a href="/eatunit/edit/{id}" class="card">
+			<h2>{label}</h2>
+			<div class="row sb">
+				<span>
+					{#if ingredients?.length}
+						{ingredients.length} Zutaten
+					{/if}
+				</span>
+				<span class="bold">{kcal} kcal</span>
+			</div>
+		</a>
 	{:else}
 		... keine Einträge
 	{/each}
