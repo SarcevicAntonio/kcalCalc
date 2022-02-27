@@ -1,19 +1,10 @@
-<script context="module">
-	export async function load({ params }) {
-		return {
-			props: {
-				day: params.day
-			}
-		};
-	}
-</script>
-
 <script>
+	import { page } from '$app/stores';
 	import eatUnits from '$lib/stores/eatUnit';
 
-	export let day;
+	const { year, month, day } = $page.params;
 
-	let curDate = new Date(day);
+	let curDate = new Date([year, month, day].join('-'));
 
 	const today = new Date();
 
@@ -42,7 +33,10 @@
 		}}>⬅️</button
 	>
 	<div class="col center">
-		<a href="/months/{curDate.toISOString().substring(0, 7)}" class="monthSwitch">
+		<a
+			href="/{curDate.toISOString().split('T')[0].replace('-', '/').split('-')[0]}"
+			class="monthSwitch"
+		>
 			<h1>{header}</h1>
 			<span class="bold">{curDateUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
 		</a>
@@ -57,7 +51,7 @@
 </div>
 {#if curDateUnits}
 	{#each curDateUnits as { label, kcal, ingredients, id }}
-		<a href="/eatunit/edit/{id}" class="card">
+		<a href="{$page.url.href}/edit/{id}" class="card">
 			<h2>{label}</h2>
 			<div class="row sb">
 				<span>
@@ -74,7 +68,7 @@
 {/if}
 
 <div class="fabs">
-	<a href="/eatunit/add" class="primary">➕</a>
+	<a href="{$page.url.href}/add" class="primary">➕</a>
 	{#if curDateString !== todayString}
 		<button
 			on:click={() => {

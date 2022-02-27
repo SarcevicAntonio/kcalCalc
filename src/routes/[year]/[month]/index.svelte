@@ -1,21 +1,10 @@
-<script context="module">
-	export async function load({ params }) {
-		return {
-			props: {
-				month: params.month
-			}
-		};
-	}
-</script>
-
 <script>
+	import { page } from '$app/stores';
 	import eatUnits from '$lib/stores/eatUnit';
 
-	export let month;
+	const { year, month } = $page.params;
 
-	let curDate = new Date(month + '-01');
-
-	console.log(month, curDate);
+	let curDate = new Date([year, month, '01'].join('-'));
 
 	const today = new Date();
 
@@ -72,7 +61,7 @@
 		{@const dayDate = new Date(thisMonthString + '-' + day)}
 		{@const thisDaysUnits = thisMonthsUnits.filter((a) => a.date.substring(8, 10) === day)}
 		<a
-			href="/days/{dayDate.toISOString().split('T')[0]}"
+			href="/{dayDate.toISOString().split('T')[0].replaceAll('-', '/')}"
 			class="card"
 			class:today={dayDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]}
 		>
@@ -85,7 +74,7 @@
 			</div>
 		</a>
 	{:else}
-		... noch keine Einträge für diesen Tag
+		... noch keine Einträge für diesen Monat
 	{/each}
 {/if}
 
