@@ -27,11 +27,11 @@
 	$: monthName = curDate.toLocaleString('default', { month: 'long' });
 
 	function setHeader(curDate) {
-		return curDateString;
-		// if (thisMonthString === curDateString) {
-		// 	return 'test';
-		// }
-		// return curDate;
+		if (today.getFullYear() === curDate.getFullYear()) {
+			return curDate.toLocaleString(undefined, { month: 'long' });
+		}
+
+		return curDate.toLocaleString(undefined, { year: 'numeric', month: 'short' });
 	}
 </script>
 

@@ -68,10 +68,14 @@ h2 {
 	left: 0;
 	right: 0;
 	width: 100%;
-	padding: 16px;
+	padding: 1em;
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-between;
+}
+
+button {
+	cursor: pointer;
 }
 
 .fabs > button,
@@ -80,27 +84,27 @@ h2 {
 	border: none;
 	box-shadow: var(--btn-shadow);
 	text-decoration: none;
-	padding: 16px;
+	padding: 1em;
 	background-color: var(--secondary);
 }
 
 .fabs > .primary {
 	background-color: var(--primary);
-	padding: 32px;
+	padding: 2em;
 }
 
 button.ghost {
 	background-color: transparent;
 	border: none;
-	min-width: 48px;
+	min-width: 4em;
 }
 
 .card {
 	text-decoration: unset;
 	color: unset;
-	padding: 16px;
+	padding: 1em;
 	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.13);
-	border-radius: 16px;
+	border-radius: 1em;
 }
 
 .bold {

@@ -17,8 +17,10 @@
 	function setHeader(curDateString) {
 		if (todayString === curDateString) {
 			return 'Heute';
+		} else if (today.getFullYear() === curDate.getFullYear()) {
+			return curDate.toLocaleString(undefined, { month: 'short', day: 'numeric' });
 		}
-		return curDateString;
+		return curDate.toLocaleString(undefined, { year: '2-digit', month: 'short', day: 'numeric' });
 	}
 
 	$: header = setHeader(curDateString);
@@ -32,15 +34,15 @@
 			curDate = curDate;
 		}}>⬅️</button
 	>
-	<div class="col center">
-		<a
-			href="/{curDate.toISOString().split('T')[0].replace('-', '/').split('-')[0]}"
-			class="monthSwitch"
-		>
+	<a
+		href="/{curDate.toISOString().split('T')[0].replace('-', '/').split('-')[0]}"
+		class="monthSwitch"
+	>
+		<div class="col center">
 			<h1>{header}</h1>
 			<span class="bold">{curDateUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
-		</a>
-	</div>
+		</div>
+	</a>
 	<button
 		class="ghost"
 		on:click={() => {
@@ -80,7 +82,10 @@
 
 <style>
 	.monthSwitch {
-		display: contents;
+		text-decoration: unset;
 		color: unset;
+		padding: 0 0.5em;
+		border-radius: 1em;
+		box-shadow: var(--btn-shadow);
 	}
 </style>
