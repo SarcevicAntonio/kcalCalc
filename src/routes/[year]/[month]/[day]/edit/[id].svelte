@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import EatUnitForm from '$lib/forms/EatUnitForm.svelte';
 	import eatUnits, { getEatUnit } from '$lib/stores/eatUnit';
@@ -16,7 +17,7 @@
 		{eatUnit}
 		on:save={(e) => {
 			eatUnits.updateEntry(e.detail);
-			history.back();
+			goto('/' + e.detail.date.replaceAll('-', '/'));
 		}}
 	/>
 {/if}

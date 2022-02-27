@@ -5,7 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{ save: EatUnit }>();
 
 	export let eatUnit: EatUnit = {
 		label: null,
