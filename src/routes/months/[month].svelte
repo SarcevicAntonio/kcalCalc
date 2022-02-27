@@ -1,12 +1,27 @@
+<script context="module">
+	export async function load({ params }) {
+		return {
+			props: {
+				month: params.month
+			}
+		};
+	}
+</script>
+
 <script>
-	import curDate from '$lib/stores/curDate';
 	import eatUnits from '$lib/stores/eatUnit';
 
-	let today = new Date();
+	export let month;
 
-	let thisMonthString = today.toISOString().substring(0, 7);
+	let curDate = new Date(month + '-01');
 
-	$: curDateString = $curDate.toISOString().substring(0, 7);
+	console.log(month, curDate);
+
+	const today = new Date();
+
+	const thisMonthString = today.toISOString().substring(0, 7);
+
+	$: curDateString = curDate.toISOString().substring(0, 7);
 
 	$: thisMonthsUnits = $eatUnits.filter((a) => a.date.substring(0, 7) === curDateString);
 
@@ -18,9 +33,9 @@
 		return [...acc, curValDay];
 	}, []);
 
-	$: header = setHeader($curDate);
+	$: header = setHeader(curDate);
 
-	$: monthName = $curDate.toLocaleString('default', { month: 'long' });
+	$: monthName = curDate.toLocaleString('default', { month: 'long' });
 
 	function setHeader(curDate) {
 		return curDateString;
@@ -35,8 +50,8 @@
 	<button
 		class="ghost"
 		on:click={() => {
-			$curDate.setMonth($curDate.getMonth() - 1);
-			$curDate = $curDate;
+			curDate.setMonth(curDate.getMonth() - 1);
+			curDate = curDate;
 		}}>⬅️</button
 	>
 	<div class="col center">
@@ -46,8 +61,8 @@
 	<button
 		class="ghost"
 		on:click={() => {
-			$curDate.setMonth($curDate.getMonth() + 1);
-			$curDate = $curDate;
+			curDate.setMonth(curDate.getMonth() + 1);
+			curDate = curDate;
 		}}>➡️</button
 	>
 </div>
@@ -56,11 +71,8 @@
 	{#each daysInUnit as day}
 		{@const dayDate = new Date(thisMonthString + '-' + day)}
 		{@const thisDaysUnits = thisMonthsUnits.filter((a) => a.date.substring(8, 10) === day)}
-		<button
-			on:click={() => {
-				$curDate = new Date(dayDate);
-				location.href = '/';
-			}}
+		<a
+			href="/days/{dayDate.toISOString().split('T')[0]}"
 			class="card"
 			class:today={dayDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]}
 		>
@@ -71,7 +83,7 @@
 				</span>
 				<span class="bold">{thisDaysUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
 			</div>
-		</button>
+		</a>
 	{:else}
 		... noch keine Einträge für diesen Tag
 	{/each}
@@ -82,7 +94,7 @@
 		<span />
 		<button
 			on:click={() => {
-				$curDate = new Date(today);
+				curDate = new Date(today);
 			}}>zu diesem Monat</button
 		>
 	{/if}
