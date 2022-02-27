@@ -1,21 +1,11 @@
-<script context="module">
-	export async function load({ params }) {
-		return {
-			props: {
-				id: params.id
-			}
-		};
-	}
-</script>
-
 <script>
+	import { page } from '$app/stores';
 	import EatUnitForm from '$lib/forms/EatUnitForm.svelte';
 	import eatUnits, { getEatUnit } from '$lib/stores/eatUnit';
 	import { onMount } from 'svelte';
 
-	export let id;
+	const { id } = $page.params;
 	let eatUnit;
-
 	onMount(() => {
 		eatUnit = getEatUnit(id);
 	});
