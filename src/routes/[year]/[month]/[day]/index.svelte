@@ -51,7 +51,7 @@
 </div>
 {#if curDateUnits}
 	{#each curDateUnits as { label, kcal, ingredients, id }}
-		<a href="{$page.url.href}/edit/{id}" class="card">
+		<a href="/{curDateString.replaceAll('-', '/')}/edit/{id}" class="card">
 			<h2>{label}</h2>
 			<div class="row sb">
 				<span>
@@ -68,7 +68,7 @@
 {/if}
 
 <div class="fabs">
-	<a href="{$page.url.href}/add" class="primary">➕</a>
+	<a href="/{curDateString.replaceAll('-', '/')}/add" class="primary">➕</a>
 	{#if curDateString !== todayString}
 		<button
 			on:click={() => {
