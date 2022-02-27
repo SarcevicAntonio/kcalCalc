@@ -1,10 +1,9 @@
 <script lang="ts">
 	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
-	import { v4 as uuidv4 } from 'uuid';
-
 	import Input from '$lib/Input.svelte';
 	import type { EatUnit } from '$lib/stores/eatUnit';
 	import { createEventDispatcher } from 'svelte';
+	import { v4 as uuidv4 } from 'uuid';
 
 	const dispatch = createEventDispatcher();
 
@@ -38,7 +37,7 @@
 
 <div class="row">
 	<div class="col">
-		<h1>Essenseinheit</h1>
+		<h1>Einheit</h1>
 		<span class="bold">{eatUnit.kcal} kcal</span>
 	</div>
 </div>
