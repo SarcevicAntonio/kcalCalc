@@ -8,6 +8,7 @@
 
 * {
 	box-sizing: border-box;
+	font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
 html {
@@ -29,7 +30,7 @@ select {
 h1,
 h2 {
 	margin: 0%;
-	font-weight: unset;
+	font-weight: 400;
 }
 
 .col {
@@ -71,7 +72,6 @@ h2 {
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-between;
-	height: 126px;
 }
 
 .fabs > button,
@@ -104,5 +104,5 @@ button.ghost {
 }
 
 .bold {
-	font-weight: 600;
+	font-weight: 700;
 }
