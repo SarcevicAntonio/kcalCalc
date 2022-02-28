@@ -1,7 +1,12 @@
 <script>
 	import { page } from '$app/stores';
 	import eatUnits from '$lib/stores/eatUnit';
-
+	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
+	import IconArrowRight from '~icons/mdi/arrow-right-bold';
+	import IconMonth from '~icons/mdi/calendar-month';
+	import IconToday from '~icons/mdi/calendar-today';
+	import IconHome from '~icons/mdi/home';
+	import IconPlus from '~icons/mdi/plus-thick';
 	const { year, month, day } = $page.params;
 
 	let curDate = new Date([year, month, day].join('-'));
@@ -38,8 +43,10 @@
 		on:click={() => {
 			curDate.setDate(curDate.getDate() - 1);
 			curDate = curDate;
-		}}>⬅️</button
+		}}
 	>
+		<IconArrowLeft />
+	</button>
 	<div class="col center">
 		<h1>{header}</h1>
 		<span class="bold">{curDateUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
@@ -49,8 +56,10 @@
 		on:click={() => {
 			curDate.setDate(curDate.getDate() + 1);
 			curDate = curDate;
-		}}>➡️</button
+		}}
 	>
+		<IconArrowRight />
+	</button>
 </div>
 {#if curDateUnits}
 	{#each curDateUnits as { label, kcal, ingredients, id }}
@@ -66,22 +75,24 @@
 			</div>
 		</a>
 	{:else}
-		... noch keine Einträge für diesen Tag
+		<div class="notice">... noch keine Einträge für diesen Tag</div>
 	{/each}
 {/if}
 
 <nav>
-	<a href="/{curDateString.replaceAll('-', '/')}/add" class="primary">➕ Einheit</a>
+	<a href="/{curDateString.replaceAll('-', '/')}/add" class="primary"><IconPlus /> Einheit</a>
 	{#if curDateString !== todayString}
 		<button
 			on:click={() => {
 				curDate = new Date(today);
 			}}
 		>
-			📆 Heute
+			<IconToday /> Heute
 		</button>
 	{/if}
-	<a href={monthSwitchHref}>📅 {curDate.toLocaleString(undefined, { month: 'long' })} </a>
+	<a href={monthSwitchHref}
+		><IconMonth /> {curDate.toLocaleString(undefined, { month: 'long' })}
+	</a>
 
-	<a href="/">🏠</a>
+	<a href="/"><IconHome /></a>
 </nav>

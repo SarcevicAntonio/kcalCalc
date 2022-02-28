@@ -1,6 +1,10 @@
 <script>
 	import { page } from '$app/stores';
 	import eatUnits from '$lib/stores/eatUnit';
+	import IconHome from '~icons/mdi/home';
+	import IconToday from '~icons/mdi/calendar-today';
+	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
+	import IconArrowRight from '~icons/mdi/arrow-right-bold';
 
 	const { year, month } = $page.params;
 
@@ -45,8 +49,10 @@
 		on:click={() => {
 			curDate.setMonth(curDate.getMonth() - 1);
 			curDate = curDate;
-		}}>⬅️</button
+		}}
 	>
+		<IconArrowLeft />
+	</button>
 	<div class="col center">
 		<h1>{header}</h1>
 		<span class="bold">{thisMonthsUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
@@ -56,8 +62,10 @@
 		on:click={() => {
 			curDate.setMonth(curDate.getMonth() + 1);
 			curDate = curDate;
-		}}>➡️</button
+		}}
 	>
+		<IconArrowRight />
+	</button>
 </div>
 
 {#if daysInUnit}
@@ -78,7 +86,7 @@
 			</div>
 		</a>
 	{:else}
-		... noch keine Einträge für diesen Monat
+		<div class="notice">... noch keine Einträge für diesen Monat</div>
 	{/each}
 {/if}
 
@@ -89,17 +97,16 @@
 				curDate = new Date(today);
 			}}
 		>
-			zum aktuellen Monat
+			<IconToday />zum aktuellen Monat
 		</button>
 	{/if}
 	<span />
-	<a href="/">🏠</a>
+	<a href="/"><IconHome /></a>
 </nav>
 
 <style>
 	.card {
 		border: 0px solid transparent;
-		background-color: unset;
 		text-align: unset;
 	}
 	.today {
