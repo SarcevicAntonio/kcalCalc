@@ -1,13 +1,114 @@
+:root {
+	--primary: #a2d83d;
+	--secondary: #f1b5e0;
+	--btn-shadow: 0px 0.4px 0.4px rgba(0, 0, 0, 0.02), 0px 1.1px 1.1px rgba(0, 0, 0, 0.028),
+		0px 2px 2px rgba(0, 0, 0, 0.035), 0px 3.6px 3.6px rgba(0, 0, 0, 0.042),
+		0px 6.7px 6.7px rgba(0, 0, 0, 0.05), 0px 16px 16px rgba(0, 0, 0, 0.07);
+}
+
 * {
 	box-sizing: border-box;
+	font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
 html {
 	font-family: sans-serif;
 	font-size: 1.2em;
+	background-color: #FFF3E0;
 }
 
-button, input, select {
+body {
+	margin-bottom: 126px;
+}
+
+button,
+input,
+select {
 	font: inherit;
 	padding: 0.25em;
+}
+
+h1,
+h2 {
+	margin: 0%;
+	font-weight: 400;
+}
+
+.col {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.center {
+	justify-content: center;
+	align-items: center;
+}
+
+.sb {
+	justify-content: space-between;
+}
+
+.aic {
+	align-items: center;
+}
+
+.gap {
+	gap: 1em;
+}
+
+nav {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	padding: 1em;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+}
+
+button {
+	cursor: pointer;
+}
+
+nav > button,
+nav > a {
+	border-radius: 10000px;
+	border: none;
+	box-shadow: var(--btn-shadow);
+	text-decoration: none;
+	color: unset;
+	padding: 1em;
+	background-color: var(--secondary);
+}
+
+nav > .primary {
+	background-color: var(--primary);
+}
+
+button.ghost {
+	background-color: transparent;
+	border: none;
+	min-width: 4em;
+}
+
+.card {
+	background-color: #E0F7FA;
+	text-decoration: unset;
+	color: unset;
+	padding: 1em;
+	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.13);
+	border-radius: 1em;
+}
+
+.bold {
+	font-weight: 700;
 }
