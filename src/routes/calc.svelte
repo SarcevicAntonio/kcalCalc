@@ -7,7 +7,6 @@
 	import IconDelete from '~icons/mdi/delete';
 	import IconHome from '~icons/mdi/home';
 	import IconPlus from '~icons/mdi/plus-thick';
-	
 
 	let ingredients = [newIngredient()];
 
@@ -57,16 +56,12 @@
 			<IconPortion />
 			Portionen
 		</svelte:fragment>
-		<div class="col gap">
-			<h2>Portionieren</h2>
-
-			<Input type="number" bind:value={divisor}>Dividend</Input>
-
-			<span class="bold">{(sum / divisor).toFixed(0)} kcal</span>
-
+		<h2>Portionieren</h2>
+		<Input type="number" bind:value={divisor}>Dividend</Input>
+		<span class="bold">{(sum / divisor).toFixed(0)} kcal</span>
+		<!-- 
 			<button>Als Einheit speichern</button>
-			//todo: button func
-		</div>
+			//todo: button func -->
 	</Dialog>
 	<a href="/"><IconHome /></a>
 </nav>
