@@ -66,7 +66,7 @@
 			</div>
 		</a>
 	{:else}
-		... noch keine Einträge für diesen Tag
+		<div class="notice">... noch keine Einträge für diesen Tag</div>
 	{/each}
 {/if}
 

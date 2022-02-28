@@ -78,7 +78,9 @@
 			</div>
 		</a>
 	{:else}
+	<div class="notice">
 		... noch keine Einträge für diesen Monat
+	</div>
 	{/each}
 {/if}
 
@@ -99,7 +101,6 @@
 <style>
 	.card {
 		border: 0px solid transparent;
-		background-color: unset;
 		text-align: unset;
 	}
 	.today {

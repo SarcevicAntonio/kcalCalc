@@ -2,7 +2,7 @@
 	<h1>kcalCalc</h1>
 </div>
 
-// todo: logo
+<div class="notice">// todo: logo</div>
 
 <nav>
 	<a href="/calc">🖩 Calculator</a>
