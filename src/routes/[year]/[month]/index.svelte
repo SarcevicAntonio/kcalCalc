@@ -10,7 +10,11 @@
 
 	const thisMonthString = today.toISOString().substring(0, 7);
 
-	$: curDateString = curDate.toISOString().substring(0, 7);
+	let curDateString;
+
+	$: if (isFinite(+curDate)) {
+		curDateString = curDate.toISOString().substring(0, 7);
+	}
 
 	$: thisMonthsUnits = $eatUnits.filter((a) => a.date.substring(0, 7) === curDateString);
 
@@ -78,7 +82,7 @@
 	{/each}
 {/if}
 
-<div class="fabs">
+<nav>
 	{#if curDateString !== thisMonthString}
 		<span />
 		<button
@@ -87,7 +91,7 @@
 			}}>zu diesem Monat</button
 		>
 	{/if}
-</div>
+</nav>
 
 <style>
 	.card {

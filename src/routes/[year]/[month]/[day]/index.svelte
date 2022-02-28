@@ -10,7 +10,13 @@
 
 	const todayString = today.toISOString().split('T')[0];
 
-	$: curDateString = curDate.toISOString().split('T')[0];
+	let curDateString = '';
+	let monthSwitchHref = '';
+
+	$: if (isFinite(+curDate)) {
+		curDateString = curDate.toISOString().split('T')[0];
+		monthSwitchHref = '/' + curDate.toISOString().split('T')[0].replace('-', '/').split('-')[0];
+	}
 
 	$: curDateUnits = $eatUnits.filter((a) => a.date === curDateString);
 
@@ -34,10 +40,7 @@
 			curDate = curDate;
 		}}>⬅️</button
 	>
-	<a
-		href="/{curDate.toISOString().split('T')[0].replace('-', '/').split('-')[0]}"
-		class="monthSwitch"
-	>
+	<a href={monthSwitchHref} class="monthSwitch">
 		<div class="col center">
 			<h1>{header}</h1>
 			<span class="bold">{curDateUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
@@ -69,7 +72,7 @@
 	{/each}
 {/if}
 
-<div class="fabs">
+<nav>
 	<a href="/{curDateString.replaceAll('-', '/')}/add" class="primary">➕</a>
 	{#if curDateString !== todayString}
 		<button
@@ -78,7 +81,7 @@
 			}}>zu Heute</button
 		>
 	{/if}
-</div>
+</nav>
 
 <style>
 	.monthSwitch {
