@@ -40,12 +40,10 @@
 			curDate = curDate;
 		}}>⬅️</button
 	>
-	<a href={monthSwitchHref} class="monthSwitch">
-		<div class="col center">
-			<h1>{header}</h1>
-			<span class="bold">{curDateUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
-		</div>
-	</a>
+	<div class="col center">
+		<h1>{header}</h1>
+		<span class="bold">{curDateUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
+	</div>
 	<button
 		class="ghost"
 		on:click={() => {
@@ -73,22 +71,17 @@
 {/if}
 
 <nav>
-	<a href="/{curDateString.replaceAll('-', '/')}/add" class="primary">➕</a>
+	<a href="/{curDateString.replaceAll('-', '/')}/add" class="primary">➕ Einheit</a>
 	{#if curDateString !== todayString}
 		<button
 			on:click={() => {
 				curDate = new Date(today);
-			}}>zu Heute</button
+			}}
 		>
+			📆 Heute
+		</button>
 	{/if}
-</nav>
+	<a href={monthSwitchHref}>📅 {curDate.toLocaleString(undefined, { month: 'long' })} </a>
 
-<style>
-	.monthSwitch {
-		text-decoration: unset;
-		color: unset;
-		padding: 0 0.5em;
-		border-radius: 1em;
-		box-shadow: var(--btn-shadow);
-	}
-</style>
+	<a href="/">🏠</a>
+</nav>

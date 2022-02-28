@@ -1,9 +1,17 @@
-<script context="module">
-	export function load() {
-		const today = '/' + new Date().toISOString().split('T')[0].replaceAll('-', '/');
-		return {
-			redirect: today,
-			status: 302
-		};
+<div class="row center">
+	<h1>kcalCalc</h1>
+</div>
+
+// todo: logo
+
+<nav>
+	<a href="/calc">🖩 Calculator</a>
+	<a href={'/' + new Date().toISOString().split('T')[0].replaceAll('-', '/')}> 📆 Heute </a>
+</nav>
+
+<style>
+	nav {
+		flex-direction: column;
+		gap: 1em;
 	}
-</script>
+</style>

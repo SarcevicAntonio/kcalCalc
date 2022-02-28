@@ -2,28 +2,22 @@
 	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
 	import Input from '$lib/Input.svelte';
 	import type { EatUnit } from '$lib/stores/eatUnit';
+	import { newIngredient } from '$lib/stores/ingredients';
 	import { createEventDispatcher } from 'svelte';
-	import { v4 as uuidv4 } from 'uuid';
 
 	const dispatch = createEventDispatcher<{ save: EatUnit }>();
 
-	export let eatUnit: EatUnit = {
-		label: null,
-		date: new Date().toISOString().split('T')[0],
-		kcal: 0,
-		ingredients: []
-	};
+	export let eatUnit: EatUnit;
 
 	function addIngredient() {
-		const next = [
-			...eatUnit.ingredients,
-			{
-				label: '',
-				kcalPer100: 0,
-				amount: 0,
-				id: uuidv4()
-			}
-		];
+		const next = [...eatUnit.ingredients, newIngredient()];
+		eatUnit.ingredients = next;
+	}
+
+	function removeIngredient(id) {
+		const next = eatUnit.ingredients.filter((a) => {
+			return a.id !== id;
+		});
 		eatUnit.ingredients = next;
 	}
 
@@ -66,15 +60,23 @@
 	<Input type="number" bind:value={eatUnit.kcal}>kcal</Input>
 {:else}
 	{#each eatUnit.ingredients as ingredient (ingredient.id)}
-		<IngredientCalculator bind:ingredient />
+		<IngredientCalculator bind:ingredient>
+			<button
+				on:click={() => {
+					removeIngredient(ingredient.id);
+				}}
+			>
+				❌
+			</button></IngredientCalculator
+		>
 	{/each}
 {/if}
 
 <nav class="sb aic">
 	{#if eatUnit.ingredients.length}
-		<button on:click={addIngredient}>➕</button>
+		<button on:click={addIngredient}>➕ Zutat</button>
 	{:else}
-		<div />
+		<span />
 	{/if}
 	<button
 		class="primary"
@@ -82,6 +84,6 @@
 			dispatch('save', eatUnit);
 		}}
 	>
-		☁
+		☁ Speichern
 	</button>
 </nav>

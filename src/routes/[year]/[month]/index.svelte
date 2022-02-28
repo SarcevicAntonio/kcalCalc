@@ -84,13 +84,16 @@
 
 <nav>
 	{#if curDateString !== thisMonthString}
-		<span />
 		<button
 			on:click={() => {
 				curDate = new Date(today);
-			}}>zu diesem Monat</button
+			}}
 		>
+			zum aktuellen Monat
+		</button>
 	{/if}
+	<span />
+	<a href="/">🏠</a>
 </nav>
 
 <style>

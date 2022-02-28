@@ -9,7 +9,7 @@
 	export let eatUnit = {
 		label: null,
 		date: [year, month, day].join('-'),
-		kcal: 0,
+		kcal: 100,
 		ingredients: []
 	};
 </script>

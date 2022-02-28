@@ -1,9 +1,13 @@
 import { writable, type Writable } from 'svelte/store';
+import { v4 as uuidv4 } from 'uuid';
+
+export function newIngredient() {
+	return { label: '', kcalPer100: 100, amount: 100, id: uuidv4() };
+}
 
 export interface Ingredient {
 	label: string;
 	kcalPer100: number;
-	ml?: boolean;
 }
 
 export interface IngredientInstance extends Ingredient {

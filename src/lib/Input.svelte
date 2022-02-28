@@ -27,5 +27,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.25em;
+		flex-grow: 1;
 	}
 </style>
