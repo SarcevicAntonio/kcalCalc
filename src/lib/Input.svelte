@@ -29,4 +29,7 @@
 		gap: 0.25em;
 		flex-grow: 1;
 	}
+	input {
+		width: 100%;
+	}
 </style>

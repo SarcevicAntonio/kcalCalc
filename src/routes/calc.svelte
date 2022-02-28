@@ -3,6 +3,11 @@
 	import Input from '$lib/Input.svelte';
 	import { newIngredient } from '$lib/stores/ingredients';
 	import { Dialog } from 'as-comps';
+	import IconPortion from '~icons/mdi/circle-slice-5';
+	import IconDelete from '~icons/mdi/delete';
+	import IconHome from '~icons/mdi/home';
+	import IconPlus from '~icons/mdi/plus-thick';
+	
 
 	let ingredients = [newIngredient()];
 
@@ -40,14 +45,18 @@
 				removeIngredient(ingredient.id);
 			}}
 		>
-			❌
+			<IconDelete />
 		</button>
 	</IngredientCalculator>
 {/each}
 
 <nav>
-	<button on:click={addIngredient} class="primary">➕ Zutat</button>
-	<Dialog triggerLabel="Portionieren">
+	<button on:click={addIngredient} class="primary"><IconPlus /> Zutat</button>
+	<Dialog>
+		<svelte:fragment slot="trigger-label">
+			<IconPortion />
+			Portionen
+		</svelte:fragment>
 		<div class="col gap">
 			<h2>Portionieren</h2>
 
@@ -59,5 +68,5 @@
 			//todo: button func
 		</div>
 	</Dialog>
-	<a href="/">🏠</a>
+	<a href="/"><IconHome /></a>
 </nav>

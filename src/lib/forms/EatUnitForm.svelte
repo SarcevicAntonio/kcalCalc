@@ -4,6 +4,9 @@
 	import type { EatUnit } from '$lib/stores/eatUnit';
 	import { newIngredient } from '$lib/stores/ingredients';
 	import { createEventDispatcher } from 'svelte';
+	import IconDelete from '~icons/mdi/delete';
+	import IconPlus from '~icons/mdi/plus-thick';
+	import IconSave from '~icons/mdi/cloud-upload';
 
 	const dispatch = createEventDispatcher<{ save: EatUnit }>();
 
@@ -66,7 +69,7 @@
 					removeIngredient(ingredient.id);
 				}}
 			>
-				❌
+				<IconDelete />
 			</button></IngredientCalculator
 		>
 	{/each}
@@ -74,7 +77,7 @@
 
 <nav class="sb aic">
 	{#if eatUnit.ingredients.length}
-		<button on:click={addIngredient}>➕ Zutat</button>
+		<button on:click={addIngredient}><IconPlus /> Zutat</button>
 	{:else}
 		<span />
 	{/if}
@@ -84,6 +87,6 @@
 			dispatch('save', eatUnit);
 		}}
 	>
-		☁ Speichern
+		<IconSave /> Speichern
 	</button>
 </nav>

@@ -5,6 +5,7 @@
 	import { db } from './firebase';
 	import Input from './Input.svelte';
 	import { newIngredient, type Ingredient, type IngredientInstance } from './stores/ingredients';
+	import IconPreset from '~icons/mdi/backup-restore';
 
 	export let hideLabel = false;
 
@@ -36,7 +37,10 @@
 
 	<div class="row gap preset-btn">
 		<Input bind:value={ingredient.kcalPer100}>kcal per 100x</Input>
-		<Dialog triggerLabel="✨" let:toggle>
+		<Dialog let:toggle>
+			<svelte:fragment slot="trigger-label">
+				<IconPreset />
+			</svelte:fragment>
 			<div class="col gap">
 				<label for="preset">Select Ingredient</label>
 				<select id="preset" bind:value={ingredientSelectState}>
