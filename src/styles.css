@@ -62,7 +62,7 @@ h2 {
 	gap: 1em;
 }
 
-.fabs {
+nav {
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -78,8 +78,8 @@ button {
 	cursor: pointer;
 }
 
-.fabs > button,
-.fabs > a {
+nav > button,
+nav > a {
 	border-radius: 10000px;
 	border: none;
 	box-shadow: var(--btn-shadow);
@@ -88,7 +88,7 @@ button {
 	background-color: var(--secondary);
 }
 
-.fabs > .primary {
+nav > .primary {
 	background-color: var(--primary);
 	padding: 2em;
 }

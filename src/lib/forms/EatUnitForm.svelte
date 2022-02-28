@@ -70,7 +70,7 @@
 	{/each}
 {/if}
 
-<div class="fabs sb aic">
+<nav class="sb aic">
 	{#if eatUnit.ingredients.length}
 		<button on:click={addIngredient}>➕</button>
 	{:else}
@@ -84,4 +84,4 @@
 	>
 		☁
 	</button>
-</div>
+</nav>
