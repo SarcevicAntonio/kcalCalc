@@ -15,8 +15,13 @@
 {#if eatUnit}
 	<EatUnitForm
 		{eatUnit}
+		showDelete
 		on:save={(e) => {
 			eatUnits.updateEntry(e.detail);
+			goto('/' + e.detail.date.replaceAll('-', '/'));
+		}}
+		on:delete={(e) => {
+			eatUnits.remove(id);
 			goto('/' + e.detail.date.replaceAll('-', '/'));
 		}}
 	/>

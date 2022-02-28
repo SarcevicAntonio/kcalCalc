@@ -7,9 +7,11 @@
 	import IconDelete from '~icons/mdi/delete';
 	import IconPlus from '~icons/mdi/plus-thick';
 	import IconSave from '~icons/mdi/cloud-upload';
+	import { Dialog } from 'as-comps';
 
-	const dispatch = createEventDispatcher<{ save: EatUnit }>();
+	const dispatch = createEventDispatcher<{ save: EatUnit; delete: EatUnit }>();
 
+	export let showDelete = false;
 	export let eatUnit: EatUnit;
 
 	function addIngredient() {
@@ -76,10 +78,32 @@
 {/if}
 
 <nav class="sb aic">
-	{#if eatUnit.ingredients.length}
-		<button on:click={addIngredient}><IconPlus /> Zutat</button>
-	{:else}
-		<span />
+	<button on:click={addIngredient}><IconPlus /> Zutat</button>
+
+	{#if showDelete}
+		<Dialog let:toggle>
+			<svelte:fragment slot="trigger-label">
+				<IconDelete />
+			</svelte:fragment>
+			<h1>Einheit Löschen</h1>
+			<p>Sicher, dass du diese Einheit löschen willst?</p>
+			<p>Die ist dann halt für immer weg, ne?</p>
+			<svelte:fragment slot="dialog-actions">
+				<button
+					on:click={() => {
+						toggle();
+					}}>Doch nicht...</button
+				>
+				<button
+					on:click={() => {
+						dispatch('delete', eatUnit);
+						toggle();
+					}}
+				>
+					<IconDelete /> Einheit Löschen
+				</button>
+			</svelte:fragment>
+		</Dialog>
 	{/if}
 	<button
 		class="primary"
