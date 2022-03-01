@@ -1,12 +1,13 @@
 <script lang="ts">
 	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
 	import Input from '$lib/Input.svelte';
-	import { newIngredient } from '$lib/stores/ingredients';
+	import { newIngredient, saveIngredients } from '$lib/stores/ingredients';
 	import { Dialog } from 'as-comps';
 	import IconPortion from '~icons/mdi/circle-slice-5';
 	import IconDelete from '~icons/mdi/delete';
 	import IconHome from '~icons/mdi/home';
 	import IconPlus from '~icons/mdi/plus-thick';
+	import IconSave from '~icons/mdi/cloud-upload';
 
 	let ingredients = [newIngredient()];
 
@@ -38,7 +39,7 @@
 </div>
 
 {#each ingredients as ingredient (ingredient.id)}
-	<IngredientCalculator bind:ingredient hideLabel>
+	<IngredientCalculator bind:ingredient>
 		<button
 			on:click={() => {
 				removeIngredient(ingredient.id);
@@ -54,14 +55,30 @@
 	<Dialog>
 		<svelte:fragment slot="trigger-label">
 			<IconPortion />
-			Portionen
 		</svelte:fragment>
-		<h2>Portionieren</h2>
-		<Input type="number" bind:value={divisor}>Dividend</Input>
-		<span class="bold">{(sum / divisor).toFixed(0)} kcal</span>
-		<!-- 
-			<button>Als Einheit speichern</button>
-			//todo: button func -->
+		<div class="col gap">
+			<h2>Portionieren</h2>
+			<Input type="number" bind:value={divisor}>Personen</Input>
+			<span>
+				{sum} / {divisor} =
+				<span class="bold">{(sum / divisor).toFixed(0)} kcal</span>
+			</span>
+		</div>
+	</Dialog>
+	<Dialog let:toggle>
+		<svelte:fragment slot="trigger-label">
+			<IconSave />
+		</svelte:fragment>
+		<h2>Zutaten speichern?</h2>
+		<svelte:fragment slot="dialog-actions">
+			<button on:click={toggle}>Nö...</button>
+			<button
+				on:click={() => {
+					saveIngredients(ingredients);
+					toggle();
+				}}>Speichern</button
+			>
+		</svelte:fragment>
 	</Dialog>
 	<a href="/"><IconHome /></a>
 </nav>

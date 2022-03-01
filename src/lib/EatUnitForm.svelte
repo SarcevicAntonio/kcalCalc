@@ -2,12 +2,12 @@
 	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
 	import Input from '$lib/Input.svelte';
 	import type { EatUnit } from '$lib/stores/eatUnit';
-	import { newIngredient } from '$lib/stores/ingredients';
+	import { newIngredient, saveIngredients } from '$lib/stores/ingredients';
+	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
+	import IconSave from '~icons/mdi/cloud-upload';
 	import IconDelete from '~icons/mdi/delete';
 	import IconPlus from '~icons/mdi/plus-thick';
-	import IconSave from '~icons/mdi/cloud-upload';
-	import { Dialog } from 'as-comps';
 
 	const dispatch = createEventDispatcher<{ save: EatUnit; delete: EatUnit }>();
 
@@ -108,6 +108,7 @@
 	<button
 		class="primary"
 		on:click={() => {
+			saveIngredients(eatUnit.ingredients);
 			dispatch('save', eatUnit);
 		}}
 	>

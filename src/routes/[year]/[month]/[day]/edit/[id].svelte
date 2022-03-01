@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import EatUnitForm from '$lib/forms/EatUnitForm.svelte';
+	import EatUnitForm from '$lib/EatUnitForm.svelte';
 	import eatUnits, { getEatUnit } from '$lib/stores/eatUnit';
 	import { onMount } from 'svelte';
 

@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import EatUnitForm from '$lib/forms/EatUnitForm.svelte';
+	import EatUnitForm from '$lib/EatUnitForm.svelte';
 	import eatUnits from '$lib/stores/eatUnit';
 
 	const { year, month, day } = $page.params;

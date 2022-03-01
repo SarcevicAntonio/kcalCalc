@@ -1,4 +1,6 @@
-import { writable, type Writable } from 'svelte/store';
+import { db } from '$lib/firebase';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { get, writable, type Writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
 
 export function newIngredient() {
@@ -15,37 +17,34 @@ export interface IngredientInstance extends Ingredient {
 	id: string;
 }
 
-export const ingredients: Writable<Ingredient[]> = writable([
-	{
-		label: 'Emmer Dinkel',
-		kcalPer100: 283
-	},
-	{
-		label: 'Lätta Extra Fit',
-		kcalPer100: 265
-	},
-	{
-		label: 'Finesse Hühnerbrust',
-		kcalPer100: 105
-	},
-	{
-		label: 'Leerdammer Caractere',
-		kcalPer100: 368
-	},
-	{
-		label: 'Avocado',
-		kcalPer100: 160
-	},
-	{
-		label: 'Sirracha',
-		kcalPer100: 139
-	},
-	{
-		label: 'Parmesan',
-		kcalPer100: 431
-	},
-	{
-		label: 'Oatly Gartenkräuter',
-		kcalPer100: 215
-	}
-]);
+export const ingredientPresets: Writable<Ingredient[]> = writable([]);
+
+async function getData() {
+	const presets = [];
+	const querySnapshot = await getDocs(collection(db, 'ingredients'));
+	querySnapshot.forEach((doc) => {
+		presets.push(doc.data() as Ingredient);
+	});
+	ingredientPresets.set(presets);
+}
+
+getData();
+
+export function saveIngredients(ingredients: Ingredient[]) {
+	if (!ingredients.length) return;
+
+	const presets = get(ingredientPresets);
+
+	const requests = ingredients.map((ingredient) => {
+		if (!presets.some((e) => e.label === ingredient.label)) {
+			return addDoc(collection(db, 'ingredients'), {
+				kcalPer100: ingredient.kcalPer100,
+				label: ingredient.label
+			});
+		}
+	});
+
+	Promise.all(requests).then(() => {
+		getData();
+	});
+}
