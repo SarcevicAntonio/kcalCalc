@@ -19,7 +19,7 @@
 	<label for={id}>
 		<slot />
 	</label>
-	<input {type} {value} {id} {placeholder} on:input={handleInput} />
+	<input {type} {value} {id} {placeholder} on:input={handleInput} on:change />
 </div>
 
 <style>

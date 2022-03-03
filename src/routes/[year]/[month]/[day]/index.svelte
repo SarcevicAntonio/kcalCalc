@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import eatUnits from '$lib/stores/eatUnit';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
@@ -35,6 +36,18 @@
 	}
 
 	$: header = setHeader(curDateString);
+
+	function newUnit() {
+		let eatUnit = {
+			label: null,
+			date: [year, month, day].join('-'),
+			kcal: 100,
+			ingredients: []
+		};
+
+		const id = eatUnits.add(eatUnit);
+		goto('/edit/' + id);
+	}
 </script>
 
 <div class="row sb">
@@ -63,8 +76,8 @@
 </div>
 {#if curDateUnits}
 	{#each curDateUnits as { label, kcal, ingredients, id }}
-		<a href="/{curDateString.replaceAll('-', '/')}/edit/{id}" class="card">
-			<h2>{label}</h2>
+		<a href="/edit/{id}" class="card">
+			<h2>{label || 'Kein Label'}</h2>
 			<div class="row sb">
 				<span>
 					{#if ingredients?.length}
@@ -80,7 +93,7 @@
 {/if}
 
 <nav>
-	<a href="/{curDateString.replaceAll('-', '/')}/add" class="primary"><IconPlus /> Einheit</a>
+	<button on:click={newUnit} class="primary"><IconPlus /> Einheit</button>
 	{#if curDateString !== todayString}
 		<button
 			on:click={() => {
@@ -90,8 +103,9 @@
 			<IconToday /> Heute
 		</button>
 	{/if}
-	<a href={monthSwitchHref}
-		><IconMonth /> {curDate.toLocaleString(undefined, { month: 'long' })}
+	<a href={monthSwitchHref}>
+		<IconMonth />
+		{curDate.toLocaleString(undefined, { month: 'long' })}
 	</a>
 
 	<a href="/"><IconHome /></a>

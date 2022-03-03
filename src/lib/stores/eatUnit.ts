@@ -17,7 +17,9 @@ function eatUnitStore() {
 	return {
 		subscribe,
 		add: (unit: EatUnit) => {
-			update((state) => [...state, { ...unit, id: uuidv4() }]);
+			const id = uuidv4();
+			update((state) => [...state, { ...unit, id }]);
+			return id;
 		},
 		remove: (id: string) => {
 			update((state) => state.filter((a) => a.id !== id));
@@ -28,7 +30,7 @@ function eatUnitStore() {
 				state[index] = unit;
 				return state;
 			});
-		},
+		}
 	};
 }
 
