@@ -15,7 +15,7 @@
 
 <div class="card col gap" transition:scale|local={animationOptions}>
 	<div class="row gap preset-btn">
-		<Input placeholder="Zwiebel" type="text" bind:value={ingredient.label}>Label</Input>
+		<Input placeholder="Zwiebel" type="text" bind:value={ingredient.label} on:change>Label</Input>
 		<Dialog let:toggle>
 			<svelte:fragment slot="trigger-label">
 				<IconPreset />
@@ -30,8 +30,8 @@
 	</div>
 
 	<div class="row gap preset-btn">
-		<Input bind:value={ingredient.kcalPer100}>kcal per 100x</Input>
-		<Input bind:value={ingredient.amount}>g / ml</Input>
+		<Input bind:value={ingredient.kcalPer100} on:change>kcal per 100x</Input>
+		<Input bind:value={ingredient.amount} on:change>g / ml</Input>
 	</div>
 	<div class="row sb">
 		<slot><span /></slot>
