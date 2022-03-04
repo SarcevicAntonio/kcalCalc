@@ -17,9 +17,9 @@
 		ingredients = [...ingredients, newIngredient()];
 	}
 
-	function removeIngredient(id) {
+	function removeIngredient(instanceId) {
 		ingredients = ingredients.filter((a) => {
-			return a.id !== id;
+			return a.instanceId !== instanceId;
 		});
 	}
 
@@ -40,12 +40,12 @@
 	</div>
 </div>
 
-{#each ingredients as ingredient (ingredient.id)}
+{#each ingredients as ingredient (ingredient.instanceId)}
 	<div animate:flip={animationOptions}>
 		<IngredientCalculator bind:ingredient>
 			<button
 				on:click={() => {
-					removeIngredient(ingredient.id);
+					removeIngredient(ingredient.instanceId);
 				}}
 			>
 				<IconDelete />

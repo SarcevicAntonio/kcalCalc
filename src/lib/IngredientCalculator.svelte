@@ -1,16 +1,18 @@
 <script lang="ts">
 	import { Dialog } from 'as-comps';
+	import { createEventDispatcher } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import IconPreset from '~icons/mdi/backup-restore';
 	import animationOptions from './animationOptions';
 	import IngredientPresets from './IngredientPresets.svelte';
 	import Input from './Input.svelte';
 	import { newIngredient, type IngredientInstance } from './stores/ingredients';
+
+	const dispatch = createEventDispatcher();
+
 	export let ingredient: IngredientInstance = newIngredient();
 
 	$: kcal = (ingredient.kcalPer100 / 100) * ingredient.amount;
-
-	let ingredientSelectState = null;
 </script>
 
 <div class="card col gap" transition:scale|local={animationOptions}>
@@ -24,6 +26,7 @@
 				on:select={(e) => {
 					ingredient = { ...ingredient, ...e.detail };
 					toggle();
+					dispatch('change');
 				}}
 			/>
 		</Dialog>

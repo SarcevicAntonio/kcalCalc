@@ -25,9 +25,9 @@
 		edited();
 	}
 
-	function removeIngredient(id) {
+	function removeIngredient(instanceId) {
 		const next = eatUnit.ingredients.filter((a) => {
-			return a.id !== id;
+			return a.instanceId !== instanceId;
 		});
 		eatUnit.ingredients = next;
 		edited();
@@ -77,12 +77,12 @@
 	{#if !eatUnit.ingredients.length}
 		<Input type="number" bind:value={eatUnit.kcal} on:change={edited}>kcal</Input>
 	{:else}
-		{#each eatUnit.ingredients as ingredient (ingredient.id)}
+		{#each eatUnit.ingredients as ingredient (ingredient.instanceId)}
 			<div animate:flip={animationOptions}>
 				<IngredientCalculator bind:ingredient on:change={edited}>
 					<button
 						on:click={() => {
-							removeIngredient(ingredient.id);
+							removeIngredient(ingredient.instanceId);
 						}}
 					>
 						<IconDelete />

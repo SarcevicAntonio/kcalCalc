@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Notifications } from 'as-comps';
+
 	import '../styles.css';
 
 	// polyfill: replaceAll
@@ -12,3 +14,4 @@
 <div class="col gap">
 	<slot />
 </div>
+<Notifications />

@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Input from './Input.svelte';
-	import { ingredientPresets, type Ingredient } from './stores/ingredients';
+	import { deleteIngredient, ingredientPresets, type Ingredient } from './stores/ingredients';
+	import IconDelete from '~icons/mdi/delete';
+	import { Dialog } from 'as-comps';
+	import { flip } from 'svelte/animate';
+	import { scale } from 'svelte/transition';
+	import animationOptions from './animationOptions';
 
 	const dispatch = createEventDispatcher<{ select: Ingredient }>();
 
@@ -13,15 +18,40 @@
 </script>
 
 <div class="wrapper col gap">
-	{#each filtered as item}
-		<button
-			class="card"
-			on:click={() => {
-				dispatch('select', item);
-			}}
-		>
-			{item.label}
-		</button>
+	{#each filtered as item (item.docId)}
+		<div class="row gap" animate:flip out:scale|local={animationOptions}>
+			<Dialog let:toggle>
+				<svelte:fragment slot="trigger-label">
+					<IconDelete />
+				</svelte:fragment>
+				<h1>Zutat Löschen</h1>
+				<p>Sicher, dass du "{item.label}" löschen willst?</p>
+				<p>Die ist dann halt für immer weg, ne?</p>
+				<svelte:fragment slot="dialog-actions">
+					<button
+						on:click={() => {
+							toggle();
+						}}>Doch nicht...</button
+					>
+					<button
+						on:click={() => {
+							deleteIngredient(item);
+							toggle();
+						}}
+					>
+						<IconDelete /> Einheit Löschen
+					</button>
+				</svelte:fragment>
+			</Dialog>
+			<button
+				class="card grow"
+				on:click={() => {
+					dispatch('select', item);
+				}}
+			>
+				{item.label}
+			</button>
+		</div>
 	{/each}
 </div>
 <Input bind:value type="text">Suchen</Input>
@@ -31,9 +61,9 @@
 		overflow-y: auto;
 		max-height: 30em;
 		min-width: 14em;
+		margin-bottom: 0.5em;
 	}
 	button {
 		text-align: unset;
-		border: unset;
 	}
 </style>
