@@ -1,13 +1,14 @@
 <script lang="ts">
 	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
 	import Input from '$lib/Input.svelte';
-	import { newIngredient, saveIngredients } from '$lib/stores/ingredients';
+	import { newIngredient,saveIngredients } from '$lib/stores/ingredients';
 	import { Dialog } from 'as-comps';
+	import { flip } from 'svelte/animate';
 	import IconPortion from '~icons/mdi/circle-slice-5';
+	import IconSave from '~icons/mdi/cloud-upload';
 	import IconDelete from '~icons/mdi/delete';
 	import IconHome from '~icons/mdi/home';
 	import IconPlus from '~icons/mdi/plus-thick';
-	import IconSave from '~icons/mdi/cloud-upload';
 
 	let ingredients = [newIngredient()];
 
@@ -39,15 +40,17 @@
 </div>
 
 {#each ingredients as ingredient (ingredient.id)}
-	<IngredientCalculator bind:ingredient>
-		<button
-			on:click={() => {
-				removeIngredient(ingredient.id);
-			}}
-		>
-			<IconDelete />
-		</button>
-	</IngredientCalculator>
+	<div animate:flip={{ duration: 400 }}>
+		<IngredientCalculator bind:ingredient>
+			<button
+				on:click={() => {
+					removeIngredient(ingredient.id);
+				}}
+			>
+				<IconDelete />
+			</button>
+		</IngredientCalculator>
+	</div>
 {/each}
 
 <nav>

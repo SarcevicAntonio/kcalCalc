@@ -6,10 +6,11 @@
 	import eatUnits, { getEatUnit } from '$lib/stores/eatUnit';
 	import { newIngredient, saveIngredients } from '$lib/stores/ingredients';
 	import { Dialog } from 'as-comps';
+	import { flip } from 'svelte/animate';
+	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconSave from '~icons/mdi/cloud-upload';
 	import IconDelete from '~icons/mdi/delete';
 	import IconPlus from '~icons/mdi/plus-thick';
-	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 
 	let editMade = false;
 
@@ -76,15 +77,17 @@
 		<Input type="number" bind:value={eatUnit.kcal} on:change={edited}>kcal</Input>
 	{:else}
 		{#each eatUnit.ingredients as ingredient (ingredient.id)}
-			<IngredientCalculator bind:ingredient>
-				<button
-					on:click={() => {
-						removeIngredient(ingredient.id);
-					}}
-				>
-					<IconDelete />
-				</button>
-			</IngredientCalculator>
+			<div animate:flip={{ duration: 400 }}>
+				<IngredientCalculator bind:ingredient>
+					<button
+						on:click={() => {
+							removeIngredient(ingredient.id);
+						}}
+					>
+						<IconDelete />
+					</button>
+				</IngredientCalculator>
+			</div>
 		{/each}
 	{/if}
 

@@ -1,9 +1,11 @@
 :root {
-	--primary: hsl(86, 86%, 61%);
-	--secondary: hsl(34, 100%, 75%);
+	--primary: #c04789;
+	--bg: #c5e1a5;
+	--secondary: #8bc34a;
 	--btn-shadow: 0px 0.4px 0.4px rgba(0, 0, 0, 0.02), 0px 1.1px 1.1px rgba(0, 0, 0, 0.028),
 		0px 2px 2px rgba(0, 0, 0, 0.035), 0px 3.6px 3.6px rgba(0, 0, 0, 0.042),
 		0px 6.7px 6.7px rgba(0, 0, 0, 0.05), 0px 16px 16px rgba(0, 0, 0, 0.07);
+	--as-dialog-background: var(--bg);
 }
 
 * {
@@ -14,7 +16,7 @@
 html {
 	font-family: sans-serif;
 	font-size: 1.2em;
-	background-color: hsl(34, 100%, 97%);
+	background-color: var(--bg);
 	padding: 0.25em;
 }
 
@@ -66,7 +68,7 @@ h2 {
 }
 
 .gap {
-	gap: 1em;
+	gap: 0.5em;
 }
 
 nav {
@@ -107,6 +109,7 @@ nav > a {
 
 nav > .primary {
 	background-color: var(--primary);
+	color: white;
 }
 
 button.ghost {
@@ -115,12 +118,12 @@ button.ghost {
 }
 
 .card {
-	background-color: var(--secondary);
+	border: 1px solid var(--primary);
+	background-color: var(--primary);
+	color: white;
 	text-decoration: unset;
-	color: unset;
-	padding: 1em;
-	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.13);
-	border-radius: 1em;
+	padding: 0.5em;
+	border-radius: 0.25em;
 }
 
 .bold {

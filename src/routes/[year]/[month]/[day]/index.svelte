@@ -2,12 +2,14 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import eatUnits from '$lib/stores/eatUnit';
+	import { flip } from 'svelte/animate';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconArrowRight from '~icons/mdi/arrow-right-bold';
 	import IconMonth from '~icons/mdi/calendar-month';
 	import IconToday from '~icons/mdi/calendar-today';
 	import IconHome from '~icons/mdi/home';
 	import IconPlus from '~icons/mdi/plus-thick';
+
 	const { year, month, day } = $page.params;
 
 	let curDate = new Date([year, month, day].join('-'));
@@ -75,8 +77,8 @@
 	</button>
 </div>
 {#if curDateUnits}
-	{#each curDateUnits as { label, kcal, ingredients, id }}
-		<a href="/edit/{id}" class="card">
+	{#each curDateUnits as { label, kcal, ingredients, id } (id)}
+		<a href="/edit/{id}" class="card" animate:flip={{ duration: 200 }}>
 			<h2>{label || 'Kein Label'}</h2>
 			<div class="row sb">
 				<span>

@@ -4,7 +4,7 @@
 	import IngredientPresets from './IngredientPresets.svelte';
 	import Input from './Input.svelte';
 	import { ingredientPresets, newIngredient, type IngredientInstance } from './stores/ingredients';
-
+	import { scale } from 'svelte/transition';
 	export let ingredient: IngredientInstance = newIngredient();
 
 	$: kcal = (ingredient.kcalPer100 / 100) * ingredient.amount;
@@ -12,7 +12,7 @@
 	let ingredientSelectState = null;
 </script>
 
-<div class="card col gap">
+<div class="card col gap" transition:scale|local={{duration: 400}}>
 	<div class="row gap preset-btn">
 		<Input placeholder="Zwiebel" type="text" bind:value={ingredient.label}>Label</Input>
 		<Dialog let:toggle>
@@ -46,8 +46,5 @@
 	}
 	.preset-btn {
 		align-items: flex-end;
-	}
-	.card {
-		padding: 0.5em;
 	}
 </style>

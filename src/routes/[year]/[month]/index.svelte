@@ -105,10 +105,6 @@
 </nav>
 
 <style>
-	.card {
-		border: 0px solid transparent;
-		text-align: unset;
-	}
 	.today {
 		border-bottom: 4px solid yellowgreen;
 	}
