@@ -32,8 +32,8 @@ select {
 	font: inherit;
 	padding: 0.25em;
 	border-radius: 0.25em;
-	border: 1px solid black;
 	background: white;
+	border: none;
 }
 
 h1,
@@ -69,6 +69,10 @@ h2 {
 
 .gap {
 	gap: 0.5em;
+}
+
+.grow {
+	flex-grow: 1;
 }
 
 nav {
