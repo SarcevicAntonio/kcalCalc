@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import animationOptions from '$lib/animationOptions';
 	import eatUnits from '$lib/stores/eatUnit';
 	import { flip } from 'svelte/animate';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
@@ -78,7 +79,7 @@
 </div>
 {#if curDateUnits}
 	{#each curDateUnits as { label, kcal, ingredients, id } (id)}
-		<a href="/edit/{id}" class="card" animate:flip={{ duration: 200 }}>
+		<a href="/edit/{id}" class="card" animate:flip={animationOptions}>
 			<h2>{label || 'Kein Label'}</h2>
 			<div class="row sb">
 				<span>

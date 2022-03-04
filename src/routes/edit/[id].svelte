@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import animationOptions from '$lib/animationOptions';
 	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
 	import Input from '$lib/Input.svelte';
 	import eatUnits, { getEatUnit } from '$lib/stores/eatUnit';
@@ -77,8 +78,8 @@
 		<Input type="number" bind:value={eatUnit.kcal} on:change={edited}>kcal</Input>
 	{:else}
 		{#each eatUnit.ingredients as ingredient (ingredient.id)}
-			<div animate:flip={{ duration: 400 }}>
-				<IngredientCalculator bind:ingredient>
+			<div animate:flip={animationOptions}>
+				<IngredientCalculator bind:ingredient on:change={edited}>
 					<button
 						on:click={() => {
 							removeIngredient(ingredient.id);

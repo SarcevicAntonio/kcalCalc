@@ -1,7 +1,8 @@
 <script lang="ts">
+	import animationOptions from '$lib/animationOptions';
 	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
 	import Input from '$lib/Input.svelte';
-	import { newIngredient,saveIngredients } from '$lib/stores/ingredients';
+	import { newIngredient, saveIngredients } from '$lib/stores/ingredients';
 	import { Dialog } from 'as-comps';
 	import { flip } from 'svelte/animate';
 	import IconPortion from '~icons/mdi/circle-slice-5';
@@ -40,7 +41,7 @@
 </div>
 
 {#each ingredients as ingredient (ingredient.id)}
-	<div animate:flip={{ duration: 400 }}>
+	<div animate:flip={animationOptions}>
 		<IngredientCalculator bind:ingredient>
 			<button
 				on:click={() => {
