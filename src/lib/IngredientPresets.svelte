@@ -19,7 +19,7 @@
 
 <div class="wrapper col gap">
 	{#each filtered as item (item.docId)}
-		<div class="row gap" animate:flip out:scale|local={animationOptions}>
+		<div class="row gap" animate:flip={animationOptions} out:scale|local={animationOptions}>
 			<Dialog let:toggle>
 				<svelte:fragment slot="trigger-label">
 					<IconDelete />
