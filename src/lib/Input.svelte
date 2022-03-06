@@ -33,10 +33,7 @@
 	const handleInput = (e) => {
 		// handle types
 		value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
-
 		dispatch('input', value);
-
-		showOptions = true;
 	};
 </script>
 
@@ -44,7 +41,17 @@
 	<label for={id}>
 		<slot />
 	</label>
-	<input {type} {value} {id} {placeholder} on:input={handleInput} on:change />
+	<input
+		{type}
+		{value}
+		{id}
+		{placeholder}
+		on:input={handleInput}
+		on:change
+		on:focus={() => {
+			showOptions = true;
+		}}
+	/>
 	<!-- Autocomplete -->
 	{#if showOptions && filtered && value}
 		<div class="options">
@@ -83,7 +90,7 @@
 		z-index: 999;
 		left: 0;
 		right: 0;
-		background-color: var(--primary);
+		background-color: var(--bg);
 		padding: 0.25em;
 		box-shadow: var(--btn-shadow);
 		border-radius: 0.5em;
@@ -91,5 +98,6 @@
 	button {
 		text-align: unset;
 		padding: 0.5em;
+		background: var(--secondary);
 	}
 </style>
