@@ -6,27 +6,38 @@
 	import animationOptions from './animationOptions';
 	import IngredientPresets from './IngredientPresets.svelte';
 	import Input from './Input.svelte';
-	import { newIngredient, type IngredientInstance } from './stores/ingredients';
+	import { ingredientPresets, newIngredient, type IngredientInstance } from './stores/ingredients';
 
 	const dispatch = createEventDispatcher();
 
 	export let ingredient: IngredientInstance = newIngredient();
 
 	$: kcal = (ingredient.kcalPer100 / 100) * ingredient.amount;
+
+	function handleSelect(e) {
+		ingredient = { ...ingredient, ...e.detail };
+		dispatch('change');
+	}
 </script>
 
 <div class="card col gap" transition:scale|local={animationOptions}>
 	<div class="row gap preset-btn">
-		<Input placeholder="Zwiebel" type="text" bind:value={ingredient.label} on:change>Label</Input>
+		<Input
+			placeholder="Zwiebel"
+			type="text"
+			bind:value={ingredient.label}
+			options={$ingredientPresets}
+			on:select={handleSelect}
+			on:change>Label</Input
+		>
 		<Dialog let:toggle>
 			<svelte:fragment slot="trigger-label">
 				<IconPreset />
 			</svelte:fragment>
 			<IngredientPresets
 				on:select={(e) => {
-					ingredient = { ...ingredient, ...e.detail };
+					handleSelect(e);
 					toggle();
-					dispatch('change');
 				}}
 			/>
 		</Dialog>
