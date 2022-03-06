@@ -1,10 +1,11 @@
 <script>
 	import { page } from '$app/stores';
 	import eatUnits from '$lib/stores/eatUnit';
-	import IconHome from '~icons/mdi/home';
-	import IconToday from '~icons/mdi/calendar-today';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconArrowRight from '~icons/mdi/arrow-right-bold';
+	import IconMonth from '~icons/mdi/calendar-month';
+	import IconToday from '~icons/mdi/calendar-today';
+	import IconHome from '~icons/mdi/home';
 
 	const { year, month } = $page.params;
 
@@ -86,7 +87,9 @@
 			</div>
 		</a>
 	{:else}
-		<div class="notice">... noch keine Einträge für diesen Monat</div>
+		<div class="notice col">
+			<p>... noch keine Einträge für diesen Monat</p>
+		</div>
 	{/each}
 {/if}
 
@@ -97,8 +100,14 @@
 				curDate = new Date(today);
 			}}
 		>
-			<IconToday />zum aktuellen Monat
+			<IconMonth /> akt. Monat
 		</button>
+	{/if}
+	{#if !daysInUnit.length}
+		<a href="/{today.toISOString().split('T')[0].replaceAll('-', '/')}">
+			<IconToday />
+			Heute
+		</a>
 	{/if}
 	<span />
 	<a href="/"><IconHome /></a>
