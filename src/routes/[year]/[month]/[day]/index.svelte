@@ -108,7 +108,9 @@
 	{/if}
 	<a href={monthSwitchHref}>
 		<IconMonth />
-		{curDate.toLocaleString(undefined, { month: 'long' })}
+		{#if curDateString === todayString}
+			{curDate.toLocaleString(undefined, { month: 'long' })}
+		{/if}
 	</a>
 
 	<a href="/"><IconHome /></a>
