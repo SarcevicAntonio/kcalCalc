@@ -23,10 +23,12 @@
 		});
 	}
 
-	$: sum = ingredients.reduce((acc, ingredient) => {
+	$: kcalSum = ingredients.reduce((acc, ingredient) => {
 		let kcal = (ingredient.kcalPer100 / 100) * ingredient.amount;
 		return acc + kcal;
 	}, 0);
+
+	$: amountSum = ingredients.reduce((acc, ingredient) => acc + ingredient.amount, 0);
 
 	let divisor = 2;
 </script>
@@ -34,8 +36,16 @@
 <div class="row center">
 	<div class="col center">
 		<h1>kcalCalc Calculator</h1>
+		<div class="center row gap">
+			<span>
+				{amountSum.toFixed(0)} g|ml
+			</span> <br />
+			<span>
+				{(kcalSum / amountSum) * 100} kcal per 100x
+			</span>
+		</div>
 		<span class="bold">
-			{sum.toFixed(0)} kcal
+			{kcalSum.toFixed(0)} kcal
 		</span>
 	</div>
 </div>
@@ -64,8 +74,8 @@
 			<h2>Portionieren</h2>
 			<Input type="number" bind:value={divisor}>Personen</Input>
 			<span>
-				{sum} / {divisor} =
-				<span class="bold">{(sum / divisor).toFixed(0)} kcal</span>
+				{kcalSum} / {divisor} =
+				<span class="bold">{(kcalSum / divisor).toFixed(0)} kcal</span>
 			</span>
 		</div>
 	</Dialog>

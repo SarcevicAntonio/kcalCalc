@@ -45,7 +45,7 @@
 
 	<div class="row gap preset-btn">
 		<Input bind:value={ingredient.kcalPer100} on:change>kcal per 100x</Input>
-		<Input bind:value={ingredient.amount} on:change>g / ml</Input>
+		<Input bind:value={ingredient.amount} on:change>g|ml</Input>
 	</div>
 	<div class="row sb">
 		<slot><span /></slot>
