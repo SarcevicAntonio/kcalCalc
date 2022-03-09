@@ -20,6 +20,10 @@ html {
 	padding: 0.25em;
 }
 
+html:focus-within {
+	scroll-behavior: smooth;
+}
+
 body {
 	max-width: 25em;
 	margin: auto;

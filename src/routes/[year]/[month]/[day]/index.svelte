@@ -105,7 +105,7 @@
 				curDate = new Date(today);
 			}}
 		>
-			<IconToday /> Heute
+			<IconHome />
 		</button>
 	{/if}
 	<a href={monthSwitchHref}>
@@ -114,6 +114,4 @@
 			{curDate.toLocaleString(undefined, { month: 'long' })}
 		{/if}
 	</a>
-
-	<a href="/"><IconHome /></a>
 </nav>

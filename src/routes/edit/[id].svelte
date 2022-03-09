@@ -7,8 +7,10 @@
 	import eatUnits, { getEatUnit } from '$lib/stores/eatUnit';
 	import { newIngredient, saveIngredients } from '$lib/stores/ingredients';
 	import { Dialog } from 'as-comps';
+	import { tick } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
+	import IconPortion from '~icons/mdi/circle-slice-5';
 	import IconSave from '~icons/mdi/cloud-upload';
 	import IconDelete from '~icons/mdi/delete';
 	import IconPlus from '~icons/mdi/plus-thick';
@@ -19,10 +21,12 @@
 
 	let eatUnit = getEatUnit(id);
 
-	function addIngredient() {
+	async function addIngredient() {
 		const next = [...eatUnit.ingredients, newIngredient()];
 		eatUnit.ingredients = next;
 		edited();
+		await tick();
+		window.scrollTo(0, document.body.scrollHeight);
 	}
 
 	function removeIngredient(instanceId) {
@@ -40,6 +44,11 @@
 		);
 	}
 
+	$: amountSum = eatUnit?.ingredients.reduce((acc, ingredient) => acc + ingredient.amount, 0);
+	$: kcalPer100 = (eatUnit?.kcal / amountSum) * 100;
+
+	let divisor = 2;
+
 	function edited() {
 		editMade = true;
 	}
@@ -49,7 +58,9 @@
 	<div class="row">
 		<div class="col">
 			<h1>Einheit</h1>
-			<span class="bold">{eatUnit.kcal.toFixed(0)} kcal</span>
+			<span class="bold">
+				{eatUnit.kcal.toFixed(0)} kcal
+			</span>
 		</div>
 	</div>
 
@@ -90,10 +101,68 @@
 				</IngredientCalculator>
 			</div>
 		{/each}
+		<div class="row gap sb">
+			<span>Summe:</span>
+			<span>
+				{amountSum.toFixed(0)} g|ml
+			</span>
+			<span>
+				{kcalPer100.toFixed(0)} kcal per 100x
+			</span>
+		</div>
 	{/if}
 
 	<nav class="sb aic">
 		<button on:click={addIngredient}><IconPlus /> Zutat</button>
+		<Dialog let:toggle>
+			<svelte:fragment slot="trigger-label">
+				<IconPortion />
+			</svelte:fragment>
+			<div class="col gap">
+				<h2>Portionieren</h2>
+				<Input type="number" bind:value={divisor} min="1">Portionen</Input>
+				<br />
+				<span>
+					{eatUnit.kcal.toFixed(0)} kcal / {divisor.toFixed(0)} Portionen =
+					<br />
+					<span class="bold">{(eatUnit.kcal / divisor).toFixed(0)} kcal</span>
+				</span>
+				<br />
+				{#if !eatUnit.ingredients.length}
+					<span>
+						Möchtest du die kcal in dieser Einheit durch die Anzahl der Portionen teilen?
+					</span>
+					<button
+						on:click={() => {
+							eatUnit.kcal = eatUnit.kcal / divisor;
+							edited();
+							toggle();
+						}}
+					>
+						<IconPortion />
+						kcal teilen
+					</button>
+				{:else}
+					<span>
+						Möchtest du die Zutaten in dieser Einheit durch die Anzahl der Portionen teilen?
+					</span>
+					<button
+						on:click={() => {
+							eatUnit.ingredients.forEach((e) => {
+								e.amount = e.amount / divisor;
+							});
+							eatUnit = eatUnit;
+							edited();e
+							toggle();
+						}}
+					>
+						<IconPortion />
+						Zutaten teilen
+					</button>
+				{/if}
+			</div>
+		</Dialog>
+
 		<Dialog let:toggle>
 			<svelte:fragment slot="trigger-label">
 				<IconDelete />

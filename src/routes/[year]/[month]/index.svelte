@@ -4,8 +4,7 @@
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconArrowRight from '~icons/mdi/arrow-right-bold';
 	import IconMonth from '~icons/mdi/calendar-month';
-	import IconToday from '~icons/mdi/calendar-today';
-	import IconHome from '~icons/mdi/home';
+	import IconHome from '~icons/mdi/house';
 
 	const { year, month } = $page.params;
 
@@ -109,12 +108,10 @@
 	{/if}
 	{#if !daysInUnit.length}
 		<a href="/{today.toISOString().split('T')[0].replaceAll('-', '/')}">
-			<IconToday />
-			Heute
+			<IconHome />
 		</a>
 	{/if}
 	<span />
-	<a href="/"><IconHome /></a>
 </nav>
 
 <style>
