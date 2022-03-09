@@ -65,7 +65,9 @@
 	</button>
 	<div class="col center">
 		<h1>{header}</h1>
-		<span class="bold">{curDateUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
+		<span class="bold">
+			{curDateUnits.reduce((prev, next) => prev + next.kcal, 0).toFixed(0)} kcal
+		</span>
 	</div>
 	<button
 		class="ghost"
@@ -87,7 +89,7 @@
 						{ingredients.length} Zutaten
 					{/if}
 				</span>
-				<span class="bold">{kcal} kcal</span>
+				<span class="bold">{kcal.toFixed(0)} kcal</span>
 			</div>
 		</a>
 	{:else}

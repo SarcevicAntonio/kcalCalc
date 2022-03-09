@@ -74,7 +74,7 @@
 			<h2>Portionieren</h2>
 			<Input type="number" bind:value={divisor}>Personen</Input>
 			<span>
-				{kcalSum} / {divisor} =
+				{kcalSum.toFixed(0)} / {divisor.toFixed(0)} =
 				<span class="bold">{(kcalSum / divisor).toFixed(0)} kcal</span>
 			</span>
 		</div>

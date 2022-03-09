@@ -49,7 +49,7 @@
 	<div class="row">
 		<div class="col">
 			<h1>Einheit</h1>
-			<span class="bold">{eatUnit.kcal} kcal</span>
+			<span class="bold">{eatUnit.kcal.toFixed(0)} kcal</span>
 		</div>
 	</div>
 

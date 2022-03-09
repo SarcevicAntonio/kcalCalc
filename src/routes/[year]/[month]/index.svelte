@@ -56,7 +56,9 @@
 	</button>
 	<div class="col center">
 		<h1>{header}</h1>
-		<span class="bold">{thisMonthsUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
+		<span class="bold">
+			{thisMonthsUnits.reduce((prev, next) => prev + next.kcal, 0).toFixed(0)} kcal
+		</span>
 	</div>
 	<button
 		class="ghost"
@@ -83,7 +85,9 @@
 				<span>
 					{thisDaysUnits.length} Einheiten
 				</span>
-				<span class="bold">{thisDaysUnits.reduce((prev, next) => prev + next.kcal, 0)} kcal</span>
+				<span class="bold">
+					{thisDaysUnits.reduce((prev, next) => prev + next.kcal, 0).toFixed(0)} kcal
+				</span>
 			</div>
 		</a>
 	{:else}
