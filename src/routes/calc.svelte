@@ -1,7 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import animationOptions from '$lib/animationOptions';
 	import IngredientCalculator from '$lib/IngredientCalculator.svelte';
 	import Input from '$lib/Input.svelte';
+	import eatUnits from '$lib/stores/eatUnit';
 	import { newIngredient, saveIngredients } from '$lib/stores/ingredients';
 	import { Dialog } from 'as-comps';
 	import { flip } from 'svelte/animate';
@@ -29,8 +31,21 @@
 	}, 0);
 
 	$: amountSum = ingredients.reduce((acc, ingredient) => acc + ingredient.amount, 0);
+	$: kcalPer100 = (kcalSum / amountSum) * 100;
 
 	let divisor = 2;
+
+	function saveAsUnit() {
+		let eatUnit = {
+			label: null,
+			date: new Date().toISOString().split('T')[0],
+			kcal: kcalSum / divisor,
+			ingredients: [{ ...newIngredient(), kcalPer100: +kcalPer100.toFixed(0), amount: amountSum }]
+		};
+
+		const id = eatUnits.add(eatUnit);
+		goto('/edit/' + id);
+	}
 </script>
 
 <div class="row center">
@@ -41,7 +56,7 @@
 				{amountSum.toFixed(0)} g|ml
 			</span> <br />
 			<span>
-				{(kcalSum / amountSum) * 100} kcal per 100x
+				{kcalPer100.toFixed(0)} kcal per 100x
 			</span>
 		</div>
 		<span class="bold">
@@ -66,17 +81,26 @@
 
 <nav>
 	<button on:click={addIngredient} class="primary"><IconPlus /> Zutat</button>
-	<Dialog>
+	<Dialog let:toggle>
 		<svelte:fragment slot="trigger-label">
 			<IconPortion />
 		</svelte:fragment>
 		<div class="col gap">
 			<h2>Portionieren</h2>
-			<Input type="number" bind:value={divisor}>Personen</Input>
+			<Input type="number" bind:value={divisor} min="1">Personen</Input>
 			<span>
-				{kcalSum.toFixed(0)} / {divisor.toFixed(0)} =
+				{kcalSum.toFixed(0)} kcal / {divisor.toFixed(0)} Personen =
 				<span class="bold">{(kcalSum / divisor).toFixed(0)} kcal</span>
 			</span>
+			<button
+				on:click={() => {
+					saveAsUnit();
+					toggle();
+				}}
+			>
+				<IconPlus />
+				als Einheit speichern
+			</button>
 		</div>
 	</Dialog>
 	<Dialog let:toggle>
@@ -85,13 +109,16 @@
 		</svelte:fragment>
 		<h2>Zutaten speichern?</h2>
 		<svelte:fragment slot="dialog-actions">
-			<button on:click={toggle}>Nö...</button>
+			<button on:click={toggle}> Doch nicht </button>
 			<button
 				on:click={() => {
 					saveIngredients(ingredients);
 					toggle();
-				}}>Speichern</button
+				}}
 			>
+				<IconSave />
+				Speichern
+			</button>
 		</svelte:fragment>
 	</Dialog>
 	<a href="/"><IconHome /></a>

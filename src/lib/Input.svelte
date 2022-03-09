@@ -10,6 +10,8 @@
 	export let value: any;
 	export let placeholder = null;
 	export let type = 'number';
+	export let min = undefined;
+	export let max = undefined;
 
 	// autocomplete
 	export let options = undefined;
@@ -46,6 +48,8 @@
 		{value}
 		{id}
 		{placeholder}
+		{min}
+		{max}
 		on:input={handleInput}
 		on:change
 		on:focus={() => {
