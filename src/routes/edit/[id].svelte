@@ -105,8 +105,10 @@
 				<button
 					on:click={() => {
 						toggle();
-					}}>Doch nicht...</button
+					}}
 				>
+					Doch nicht
+				</button>
 				<button
 					on:click={() => {
 						eatUnits.remove(id);

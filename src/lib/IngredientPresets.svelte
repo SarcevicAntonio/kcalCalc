@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import Input from './Input.svelte';
-	import { deleteIngredient, ingredientPresets, type Ingredient } from './stores/ingredients';
-	import IconDelete from '~icons/mdi/delete';
 	import { Dialog } from 'as-comps';
+	import { createEventDispatcher } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { scale } from 'svelte/transition';
+	import IconDelete from '~icons/mdi/delete';
 	import animationOptions from './animationOptions';
+	import Input from './Input.svelte';
+	import { deleteIngredient, ingredientPresets, type Ingredient } from './stores/ingredients';
 
 	const dispatch = createEventDispatcher<{ select: Ingredient }>();
 
@@ -31,8 +31,10 @@
 					<button
 						on:click={() => {
 							toggle();
-						}}>Doch nicht...</button
+						}}
 					>
+						Doch nicht
+					</button>
 					<button
 						on:click={() => {
 							deleteIngredient(item);
