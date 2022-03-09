@@ -152,7 +152,7 @@
 								e.amount = e.amount / divisor;
 							});
 							eatUnit = eatUnit;
-							edited();e
+							edited();
 							toggle();
 						}}
 					>
