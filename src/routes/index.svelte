@@ -3,11 +3,11 @@
 	import IconToday from '~icons/mdi/calendar-today';
 </script>
 
-<div class="row center">
+<div class="col center logo">
+	<img src="/favicon.svg" alt="kcalCalc Logo">
 	<h1>kcalCalc</h1>
 </div>
 
-<div class="notice">// todo: logo</div>
 
 <nav>
 	<a href="/calc">
@@ -23,5 +23,11 @@
 	nav {
 		flex-direction: column;
 		gap: 1em;
+	}
+	.logo {
+		min-height: 50vh;
+	}
+	img {
+		height: 10em;
 	}
 </style>
