@@ -7,11 +7,12 @@
 	const id = uuidv4();
 	const dispatch = createEventDispatcher();
 
-	export let value: any;
+	export let value: any = '';
 	export let placeholder = null;
 	export let type = 'number';
 	export let min = undefined;
 	export let max = undefined;
+	export let name;
 
 	// autocomplete
 	export let options = undefined;
@@ -50,6 +51,7 @@
 		{placeholder}
 		{min}
 		{max}
+		{name}
 		on:input={handleInput}
 		on:change
 		on:focus={() => {

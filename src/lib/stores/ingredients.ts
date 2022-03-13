@@ -1,8 +1,10 @@
-import { db } from '$lib/firebase';
+import { getClientApp } from '$lib/firebase';
 import { notification } from 'as-comps';
 import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { get, writable, type Writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
+
+const db = getClientApp().db;
 
 export function newIngredient() {
 	return { label: '', kcalPer100: 100, amount: 100, instanceId: uuidv4() };
