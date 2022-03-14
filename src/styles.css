@@ -97,13 +97,17 @@ button.ghost {
 }
 
 .card {
-	border: 1px solid var(--primary);
-	background-color: var(--primary);
-	color: white;
+	background-color: var(--secondary);
+	color: black;
 	text-decoration: unset;
 	padding: 0.5em;
 	border-radius: 0.25em;
 	box-shadow: var(--shadow);
+}
+
+.card button,
+.card a {
+	border: 1px solid black;
 }
 
 .bold {

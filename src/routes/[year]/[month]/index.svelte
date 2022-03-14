@@ -118,6 +118,7 @@
 
 <style>
 	.today {
-		border-bottom: 4px solid yellowgreen;
+		color: white;
+		background-color: var(--primary);
 	}
 </style>
