@@ -7,7 +7,6 @@
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconArrowRight from '~icons/mdi/arrow-right-bold';
 	import IconMonth from '~icons/mdi/calendar-month';
-	import IconToday from '~icons/mdi/calendar-today';
 	import IconHome from '~icons/mdi/home';
 	import IconPlus from '~icons/mdi/plus-thick';
 
@@ -43,7 +42,7 @@
 	function newUnit() {
 		let eatUnit = {
 			label: null,
-			date: [year, month, day].join('-'),
+			date: curDateString,
 			kcal: 100,
 			ingredients: []
 		};
