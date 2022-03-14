@@ -12,7 +12,7 @@
 	export let type = 'number';
 	export let min = undefined;
 	export let max = undefined;
-	export let name;
+	export let name = '';
 
 	// autocomplete
 	export let options = undefined;

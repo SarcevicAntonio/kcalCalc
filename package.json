@@ -14,7 +14,10 @@
 		"preview": "svelte-kit preview"
 	},
 	"dependencies": {
+		"@firebase/app-compat": "0.x",
+		"@firebase/app-types": "0.x",
 		"firebase": "^9.6.7",
+		"firebase-admin": "^10.0.2",
 		"fuse.js": "^6.5.3",
 		"uuid": "^8.3.2"
 	},

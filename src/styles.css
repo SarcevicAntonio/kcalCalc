@@ -17,7 +17,7 @@ html {
 	font-family: sans-serif;
 	font-size: 1.2em;
 	background-color: var(--bg);
-	padding: 0.25em;
+	padding: 0;
 }
 
 html:focus-within {
@@ -30,6 +30,7 @@ body {
 	margin-bottom: 126px;
 }
 
+a,
 button,
 input,
 select {
@@ -94,11 +95,15 @@ nav {
 	margin: auto;
 }
 
+a,
 button {
+	padding-inline: 0.5em;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
 	background-color: var(--secondary);
+	text-decoration: none;
+	color: black;
 }
 
 nav > button,

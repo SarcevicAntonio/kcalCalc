@@ -1,4 +1,4 @@
-import { getClientApp } from '$lib/firebase';
+import { getClientApp } from '$lib/firebase/client';
 import { notification } from 'as-comps';
 import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { get, writable, type Writable } from 'svelte/store';

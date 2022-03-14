@@ -3,8 +3,12 @@
 // See https://kit.svelte.dev/docs/types#the-app-namespace
 // for information about these interfaces
 declare namespace App {
-	// interface Locals {}
+	interface Locals {
+		token: DecodedIdToken;
+	}
 	// interface Platform {}
-	// interface Session {}
+	interface Session {
+		user: User
+	}
 	// interface Stuff {}
 }

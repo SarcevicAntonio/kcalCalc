@@ -1,4 +1,6 @@
 <script lang="ts">
+	import ProfileLink from '$lib/ProfileLink.svelte';
+
 	import { Notifications } from 'as-comps';
 
 	import '../styles.css';
@@ -11,7 +13,26 @@
 	}
 </script>
 
-<div class="col gap">
+<header class="row sb">
+	<div class="row gap">
+		<img src="/icon-header.svg" alt="kcalCalc Logo" />
+		<h1>kcalCalc</h1>
+	</div>
+	<ProfileLink />
+</header>
+
+<div class="col gap content">
 	<slot />
 </div>
+
 <Notifications />
+
+<style>
+	header {
+		padding-inline: 0.5em;
+		background: var(--secondary);
+	}
+	.content {
+		padding: 0.5em;
+	}
+</style>

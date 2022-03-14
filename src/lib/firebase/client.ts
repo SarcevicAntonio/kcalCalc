@@ -1,5 +1,12 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getAuth, inMemoryPersistence, sendSignInLinkToEmail, setPersistence } from 'firebase/auth';
+import {
+	getAuth,
+	inMemoryPersistence,
+	isSignInWithEmailLink,
+	sendSignInLinkToEmail,
+	setPersistence,
+	signInWithEmailLink
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 if (
@@ -37,10 +44,18 @@ export function getClientApp() {
 
 export function sendMagicLink(email: string, redirectUlr: string) {
 	const auth = getAuth(getClientApp().app);
-	console.log(auth);
-	console.log(redirectUlr);
 	return sendSignInLinkToEmail(auth, email, {
 		url: redirectUlr,
 		handleCodeInApp: true
 	});
+}
+
+export function isLinkMagic(link: string) {
+	const auth = getAuth(getClientApp().app);
+	return isSignInWithEmailLink(auth, link);
+}
+
+export function signInWithMagicLink(email: string, link: string) {
+	const auth = getAuth(getClientApp().app);
+	return signInWithEmailLink(auth, email, link);
 }
