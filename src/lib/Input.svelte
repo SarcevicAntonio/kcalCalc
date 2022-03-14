@@ -57,7 +57,7 @@
 		}}
 	/>
 	<!-- Autocomplete -->
-	{#if showOptions && filtered && value}
+	{#if showOptions && filtered?.length && value}
 		<div class="options">
 			{#each filtered as option}
 				<button
