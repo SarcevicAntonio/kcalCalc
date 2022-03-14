@@ -1,6 +1,8 @@
 <script>
 	import { page } from '$app/stores';
+	import { ym, ymd } from '$lib/dateFormats';
 	import eatUnits from '$lib/stores/eatUnit';
+	import { format, addMonths } from 'date-fns';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconArrowRight from '~icons/mdi/arrow-right-bold';
 	import IconMonth from '~icons/mdi/calendar-month';
@@ -11,13 +13,13 @@
 	let curDate = new Date([year, month, '01'].join('-'));
 
 	const today = new Date();
-
-	const thisMonthString = today.toISOString().substring(0, 7);
+	const todayString = format(today, ymd);
+	const thisMonthString = format(today, ym);
 
 	let curDateString;
 
 	$: if (isFinite(+curDate)) {
-		curDateString = curDate.toISOString().substring(0, 7);
+		curDateString = format(curDate, ym);
 	}
 
 	$: thisMonthsUnits = $eatUnits
@@ -49,8 +51,7 @@
 	<button
 		class="ghost"
 		on:click={() => {
-			curDate.setMonth(curDate.getMonth() - 1);
-			curDate = curDate;
+			curDate = addMonths(curDate, -1);
 		}}
 	>
 		<IconArrowLeft />
@@ -64,8 +65,7 @@
 	<button
 		class="ghost"
 		on:click={() => {
-			curDate.setMonth(curDate.getMonth() + 1);
-			curDate = curDate;
+			curDate = addMonths(curDate, 1);
 		}}
 	>
 		<IconArrowRight />
@@ -74,12 +74,13 @@
 
 {#if daysInUnit}
 	{#each daysInUnit as day}
-		{@const dayDate = new Date(thisMonthString + '-' + day)}
+		{@const dayDate = new Date(curDateString + '-' + day)}
+		{@const dayDateString = format(dayDate, ymd)}
 		{@const thisDaysUnits = thisMonthsUnits.filter((a) => a.date.substring(8, 10) === day)}
 		<a
-			href="/{dayDate.toISOString().split('T')[0].replaceAll('-', '/')}"
+			href="/{dayDateString.replaceAll('-', '/')}"
 			class="card"
-			class:today={dayDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]}
+			class:today={dayDateString === todayString}
 		>
 			<h2>{day}. {monthName}</h2>
 			<div class="row sb">
@@ -109,7 +110,7 @@
 		</button>
 	{/if}
 	{#if !daysInUnit.length}
-		<a href="/{today.toISOString().split('T')[0].replaceAll('-', '/')}">
+		<a href="/{todayString.replaceAll('-', '/')}">
 			<IconHome />
 		</a>
 	{/if}

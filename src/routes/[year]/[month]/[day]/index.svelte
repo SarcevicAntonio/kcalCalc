@@ -2,7 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import animationOptions from '$lib/animationOptions';
+	import { ym, ymd } from '$lib/dateFormats';
 	import eatUnits from '$lib/stores/eatUnit';
+	import { format } from 'date-fns';
 	import { flip } from 'svelte/animate';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconArrowRight from '~icons/mdi/arrow-right-bold';
@@ -15,15 +17,14 @@
 	let curDate = new Date([year, month, day].join('-'));
 
 	const today = new Date();
-
-	const todayString = today.toISOString().split('T')[0];
+	const todayString = format(today, ymd);
 
 	let curDateString = '';
 	let monthSwitchHref = '';
 
 	$: if (isFinite(+curDate)) {
-		curDateString = curDate.toISOString().split('T')[0];
-		monthSwitchHref = '/' + curDate.toISOString().split('T')[0].replace('-', '/').split('-')[0];
+		curDateString = format(curDate, ymd);
+		monthSwitchHref = '/' + format(curDate, ym).replace('-', '/');
 	}
 
 	$: curDateUnits = $eatUnits.filter((a) => a.date === curDateString);

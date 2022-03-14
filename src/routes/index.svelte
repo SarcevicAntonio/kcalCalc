@@ -1,8 +1,10 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { ymd } from '$lib/dateFormats';
+	import { format } from 'date-fns';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		goto('/' + new Date().toISOString().split('T')[0].replaceAll('-', '/'));
+		goto('/' + format(new Date(), ymd).replaceAll('-', '/'));
 	});
 </script>
