@@ -20,7 +20,9 @@
 		curDateString = curDate.toISOString().substring(0, 7);
 	}
 
-	$: thisMonthsUnits = $eatUnits.filter((a) => a.date.substring(0, 7) === curDateString);
+	$: thisMonthsUnits = $eatUnits
+		.filter((a) => a.date.substring(0, 7) === curDateString)
+		.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 
 	$: daysInUnit = thisMonthsUnits.reduce((acc, curVal) => {
 		const curValDay = curVal.date.substring(8, 10);
