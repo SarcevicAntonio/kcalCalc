@@ -28,7 +28,7 @@
 			bind:value={ingredient.label}
 			options={$ingredientPresets}
 			on:select={handleSelect}
-			on:change>Label</Input
+			on:input>Label</Input
 		>
 		<Dialog let:toggle>
 			<svelte:fragment slot="trigger-label">
@@ -44,8 +44,8 @@
 	</div>
 
 	<div class="row gap preset-btn">
-		<Input bind:value={ingredient.kcalPer100} on:change>kcal per 100x</Input>
-		<Input bind:value={ingredient.amount} on:change>g|ml</Input>
+		<Input bind:value={ingredient.kcalPer100} on:input>kcal per 100x</Input>
+		<Input bind:value={ingredient.amount} on:input>g|ml</Input>
 	</div>
 	<div class="row sb">
 		<slot><span /></slot>

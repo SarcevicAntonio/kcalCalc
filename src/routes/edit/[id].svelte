@@ -64,16 +64,16 @@
 		</div>
 	</div>
 
-	<Input type="date" bind:value={eatUnit.date} on:change={edited}>Datum</Input>
+	<Input type="date" bind:value={eatUnit.date} on:input={edited}>Datum</Input>
 
-	<Input type="text" placeholder="Pizza" bind:value={eatUnit.label} on:change={edited}>Label</Input>
+	<Input type="text" placeholder="Pizza" bind:value={eatUnit.label} on:input={edited}>Label</Input>
 
 	<div class="row gap">
 		<input
 			id="trackIngredients"
 			type="checkbox"
 			checked={!!eatUnit.ingredients.length}
-			on:change={() => {
+			on:input={() => {
 				if (!eatUnit.ingredients.length) {
 					addIngredient();
 				} else {
@@ -86,11 +86,11 @@
 	</div>
 
 	{#if !eatUnit.ingredients.length}
-		<Input type="number" bind:value={eatUnit.kcal} on:change={edited}>kcal</Input>
+		<Input type="number" bind:value={eatUnit.kcal} on:input={edited}>kcal</Input>
 	{:else}
 		{#each eatUnit.ingredients as ingredient (ingredient.instanceId)}
 			<div animate:flip={animationOptions}>
-				<IngredientCalculator bind:ingredient on:change={edited}>
+				<IngredientCalculator bind:ingredient on:input={edited}>
 					<button
 						on:click={() => {
 							removeIngredient(ingredient.instanceId);
