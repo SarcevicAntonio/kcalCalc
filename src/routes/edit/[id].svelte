@@ -9,6 +9,7 @@
 	import { Dialog } from 'as-comps';
 	import { tick } from 'svelte';
 	import { flip } from 'svelte/animate';
+	import { fade } from 'svelte/transition';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconPortion from '~icons/mdi/circle-slice-5';
 	import IconSave from '~icons/mdi/cloud-upload';
@@ -62,14 +63,16 @@
 				{eatUnit.kcal.toFixed(0)} kcal
 			</span>
 		</div>
-		<div class="col end">
-			<span>
-				{kcalPer100.toFixed(0)} kcal per 100x
-			</span>
-			<span>
-				{amountSum.toFixed(0)} g|ml
-			</span>
-		</div>
+		{#if eatUnit.ingredients.length}
+			<div class="col end" transition:fade>
+				<span>
+					{amountSum.toFixed(0)} g|ml
+				</span>
+				<span>
+					{kcalPer100.toFixed(0)} kcal per 100x
+				</span>
+			</div>
+		{/if}
 	</div>
 
 	<Input type="date" bind:value={eatUnit.date} on:input={edited}>Datum</Input>
