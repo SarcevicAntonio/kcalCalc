@@ -96,7 +96,7 @@
 		right: 0;
 		background-color: var(--bg);
 		padding: 0.25em;
-		box-shadow: var(--btn-shadow);
+		box-shadow: var(--shadow);
 		border-radius: 0.5em;
 	}
 	button {

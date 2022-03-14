@@ -55,11 +55,19 @@
 </script>
 
 {#if eatUnit}
-	<div class="row">
+	<div class="row sb">
 		<div class="col">
 			<h1>Einheit</h1>
 			<span class="bold">
 				{eatUnit.kcal.toFixed(0)} kcal
+			</span>
+		</div>
+		<div class="col end">
+			<span>
+				{kcalPer100.toFixed(0)} kcal per 100x
+			</span>
+			<span>
+				{amountSum.toFixed(0)} g|ml
 			</span>
 		</div>
 	</div>
@@ -101,15 +109,6 @@
 				</IngredientCalculator>
 			</div>
 		{/each}
-		<div class="row gap sb">
-			<span>Summe:</span>
-			<span>
-				{amountSum.toFixed(0)} g|ml
-			</span>
-			<span>
-				{kcalPer100.toFixed(0)} kcal per 100x
-			</span>
-		</div>
 	{/if}
 
 	<nav class="sb aic">
@@ -208,3 +207,10 @@
 		{/if}
 	</nav>
 {/if}
+
+<style>
+	.end {
+		align-items: end;
+		justify-content: end;
+	}
+</style>

@@ -11,7 +11,26 @@
 	}
 </script>
 
-<div class="col gap">
+<header class="row gap">
+	<img src="/icon-mono.svg" alt="kcalCalc Logo" />
+	<span>kcalCalc</span>
+</header>
+
+<div class="content col gap">
 	<slot />
 </div>
 <Notifications />
+
+<style>
+	span {
+		font-size: 2em;
+	}
+	header {
+		padding-inline: 0.5em;
+		background: var(--secondary);
+		box-shadow: var(--shadow);
+	}
+	.content {
+		padding: 0.5em;
+	}
+</style>
