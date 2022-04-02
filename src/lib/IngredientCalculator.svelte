@@ -24,6 +24,7 @@
 		if (ingredient.label.length >= 4) {
 			loadFddbEntries();
 		}
+		ingredient.docId = '';
 		dispatch('input');
 	}
 
