@@ -13,7 +13,7 @@ export const get: RequestHandler = async (request) => {
 
 	const ingredients: Ingredient[] = [];
 
-	const requests = Array.from(document.querySelectorAll('td a')).map((a: HTMLAnchorElement) => {
+	const requests = Array.from(document.querySelectorAll('td a')).map(async (a: HTMLAnchorElement) => {
 		return fetch('https://fddb.mobi' + a.href).then(async (itemRes) => {
 			if (!itemRes.ok) {
 				return { status: itemRes.status, error: new Error(itemRes.statusText) };

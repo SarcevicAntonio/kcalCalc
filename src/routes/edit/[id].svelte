@@ -30,7 +30,7 @@
 		window.scrollTo(0, document.body.scrollHeight);
 	}
 
-	function removeIngredient(instanceId) {
+	function removeIngredient(instanceId: string) {
 		const next = eatUnit.ingredients.filter((a) => {
 			return a.instanceId !== instanceId;
 		});

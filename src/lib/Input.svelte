@@ -7,7 +7,7 @@
 	const id = uuidv4();
 	const dispatch = createEventDispatcher();
 
-	export let value: any;
+	export let value: string | number;
 	export let placeholder = null;
 	export let type = 'number';
 	export let min = undefined;
@@ -20,17 +20,19 @@
 	let filtered = options;
 
 	$: setFiltered(options, value);
-	function setFiltered(options, value) {
-		if (!options || !value.trim()) return;
+	function setFiltered(options: any, value: string | number) {
+		if (!options || !(value + '').trim()) return;
 		const fuse = new Fuse(options, {
 			keys: [optionLabel]
 		});
-		filtered = fuse.search(value).map((e) => e.item);
+		filtered = fuse.search(value + '').map((e) => e.item);
 	}
 
-	const handleInput = (e) => {
+	const handleInput = (e: Event) => {
 		// handle types
-		value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
+		value = type.match(/^(number|range)$/)
+			? +(e.target as HTMLInputElement).value
+			: (e.target as HTMLInputElement).value;
 		dispatch('input', value);
 	};
 </script>
@@ -67,7 +69,7 @@
 					}}
 				>
 					{option[optionLabel]}
-					<slot name="option-button-extra" option={option} />
+					<slot name="option-button-extra" {option} />
 				</button>
 			{/each}
 		</div>

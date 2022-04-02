@@ -2,12 +2,17 @@
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
 	import { scale } from 'svelte/transition';
-	import IconPreset from '~icons/mdi/settings';
 	import IconCloud from '~icons/mdi/file-cloud';
+	import IconPreset from '~icons/mdi/settings';
 	import animationOptions from './animationOptions';
 	import IngredientPresets from './IngredientPresets.svelte';
 	import Input from './Input.svelte';
-	import { ingredientPresets, newIngredient, type IngredientInstance } from './stores/ingredients';
+	import {
+		ingredientPresets,
+		newIngredient,
+		type Ingredient,
+		type IngredientInstance
+	} from './stores/ingredients';
 
 	const dispatch = createEventDispatcher();
 
@@ -15,7 +20,7 @@
 
 	$: kcal = (ingredient.kcalPer100 / 100) * ingredient.amount;
 
-	function handleSelect(e) {
+	function handleSelect(e: CustomEvent<Ingredient>) {
 		ingredient.docId = '';
 		ingredient.portions = [];
 		ingredient = { ...ingredient, ...e.detail };

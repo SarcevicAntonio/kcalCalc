@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import { ym, ymd } from '$lib/dateFormats';
 	import eatUnits from '$lib/stores/eatUnit';
-	import { format, addMonths } from 'date-fns';
+	import { addMonths, format } from 'date-fns';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconArrowRight from '~icons/mdi/arrow-right-bold';
 	import IconMonth from '~icons/mdi/calendar-month';
@@ -16,7 +16,7 @@
 	const todayString = format(today, ymd);
 	const thisMonthString = format(today, ym);
 
-	let curDateString;
+	let curDateString: string;
 
 	$: if (isFinite(+curDate)) {
 		curDateString = format(curDate, ym);
@@ -38,7 +38,7 @@
 
 	$: monthName = curDate.toLocaleString('default', { month: 'long' });
 
-	function setHeader(curDate) {
+	function setHeader(curDate: Date) {
 		if (today.getFullYear() === curDate.getFullYear()) {
 			return curDate.toLocaleString(undefined, { month: 'long' });
 		}

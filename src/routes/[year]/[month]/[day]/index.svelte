@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import animationOptions from '$lib/animationOptions';
@@ -29,7 +29,7 @@
 
 	$: curDateUnits = $eatUnits.filter((a) => a.date === curDateString);
 
-	function setHeader(curDateString) {
+	function setHeader(curDateString: string) {
 		if (todayString === curDateString) {
 			return 'Heute';
 		} else if (today.getFullYear() === curDate.getFullYear()) {

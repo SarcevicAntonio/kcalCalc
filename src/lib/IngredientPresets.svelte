@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
-	import { flip } from 'svelte/animate';
-	import { scale } from 'svelte/transition';
 	import IconDelete from '~icons/mdi/delete';
-	import animationOptions from './animationOptions';
 	import Input from './Input.svelte';
 	import { deleteIngredient, ingredientPresets, type Ingredient } from './stores/ingredients';
 

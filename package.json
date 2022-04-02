@@ -24,6 +24,7 @@
 		"@iconify/json": "^2.1.8",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"@types/uuid": "^8.3.4",
 		"@typescript-eslint/eslint-plugin": "^5.10.1",
 		"@typescript-eslint/parser": "^5.10.1",
 		"as-comps": "0.0.7",
