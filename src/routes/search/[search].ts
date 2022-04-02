@@ -1,33 +1,48 @@
+import type { Ingredient } from '$lib/stores/ingredients';
 import type { RequestHandler } from '@sveltejs/kit';
 import { parseHTML } from 'linkedom';
 
 export const get: RequestHandler = async (request) => {
-	const fetchRequest = await fetch(
+	const searchRes = await fetch(
 		'https://fddb.mobi/search/?lang=de&search=' + request.params.search
 	);
-	if (!fetchRequest.ok)
-		return { status: fetchRequest.status, error: new Error(fetchRequest.statusText) };
-	const { document } = parseHTML(await fetchRequest.text());
-	const body = [];
-	document.querySelectorAll('div table').forEach((item) => {
-		const entry = {
-			title: '',
-			units: []
-		};
-		item.querySelectorAll('b').forEach((bold) => {
-			if (!bold.nextSibling) {
-				entry.title = bold.textContent;
-			} else {
-				entry.units.push({
-					unit: bold.textContent.replace(':', ''),
-					kcal: bold.nextSibling.textContent.match(/\((.+) kcal\)/)[1]
+	if (!searchRes.ok) {
+		return { status: searchRes.status, error: new Error(searchRes.statusText) };
+	}
+	const { document } = parseHTML(await searchRes.text());
+
+	const ingredients: Ingredient[] = [];
+
+	const requests = Array.from(document.querySelectorAll('td a')).map((a: HTMLAnchorElement) => {
+		return fetch('https://fddb.mobi' + a.href).then(async (itemRes) => {
+			if (!itemRes.ok) {
+				return { status: itemRes.status, error: new Error(itemRes.statusText) };
+			}
+
+			const { document } = parseHTML(await itemRes.text());
+
+			const label = document.querySelector('h3').textContent;
+			let kcalPer100 = 0;
+
+			document.querySelectorAll('tr').forEach((tr) => {
+				if (tr.textContent.startsWith('Kalorien')) {
+					kcalPer100 = +tr.children[1].textContent.split(' ')[0];
+				}
+			});
+
+			if (kcalPer100 > 0) {
+				ingredients.push({
+					docId: 'FFDB_' + label,
+					label,
+					kcalPer100
 				});
 			}
 		});
-		body.push(entry);
 	});
 
-	return {
-		body
-	};
+	return Promise.all(requests).then(() => {
+		return {
+			body: JSON.stringify(ingredients)
+		};
+	});
 };
