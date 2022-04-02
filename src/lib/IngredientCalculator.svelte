@@ -89,5 +89,6 @@
 	}
 	.end {
 		margin-left: auto;
+		line-height: 1;
 	}
 </style>
