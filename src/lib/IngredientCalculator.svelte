@@ -90,5 +90,6 @@
 	.end {
 		margin-left: auto;
 		line-height: 1;
+		align-self: center;
 	}
 </style>
