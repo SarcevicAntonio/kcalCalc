@@ -33,7 +33,7 @@
 	}
 
 	async function loadFddbEntries() {
-		await fetch('/search/' + ingredient.label.replaceAll('%', ' '))
+		await fetch('/search/' + encodeURIComponent(ingredient.label))
 			.then((res) => res.json())
 			.then((res) => {
 				fddbEntries = res;
@@ -85,6 +85,7 @@
 						<button
 							on:click={() => {
 								ingredient.amount = portion.amount;
+								dispatch('input');
 								toggle();
 							}}
 						>
