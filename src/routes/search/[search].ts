@@ -21,7 +21,10 @@ export const get: RequestHandler = async (request) => {
 
 			const { document } = parseHTML(await itemRes.text());
 
-			const label = document.querySelector('h3').textContent;
+			const title = document.querySelector('h3').textContent;
+			const brand = document.querySelector('p').textContent.match(/\(.+\)/);
+			const label = title + ' ' + brand;
+
 			let kcalPer100 = 0;
 
 			document.querySelectorAll('tr').forEach((tr) => {
