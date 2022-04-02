@@ -32,7 +32,7 @@ export const get: RequestHandler = async (request) => {
 
 			if (kcalPer100 > 0) {
 				ingredients.push({
-					docId: 'FFDB_' + label,
+					docId: 'FDDB_' + label,
 					label,
 					kcalPer100
 				});

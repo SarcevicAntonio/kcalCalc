@@ -16,7 +16,23 @@
 
 	function handleSelect(e) {
 		ingredient = { ...ingredient, ...e.detail };
-		dispatch('change');
+	}
+
+	let fddbEntries = [];
+
+	function onLabelInput() {
+		if (ingredient.label.length >= 4) {
+			loadFddbEntries();
+		}
+		dispatch('input');
+	}
+
+	async function loadFddbEntries() {
+		await fetch('/search/' + ingredient.label)
+			.then((res) => res.json())
+			.then((res) => {
+				fddbEntries = res;
+			});
 	}
 </script>
 
@@ -26,10 +42,15 @@
 			placeholder="Zwiebel"
 			type="text"
 			bind:value={ingredient.label}
-			options={$ingredientPresets}
+			options={[...fddbEntries, ...$ingredientPresets]}
 			on:select={handleSelect}
-			on:input>Label</Input
+			on:input={onLabelInput}
 		>
+			Label
+			<svelte:fragment slot="option-button-extra" let:option>
+				{option['docId'].startsWith('FDDB_') ? '[FDDB]' : ''}
+			</svelte:fragment>
+		</Input>
 		<Dialog let:toggle>
 			<svelte:fragment slot="trigger-label">
 				<IconPreset />

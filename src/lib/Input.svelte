@@ -17,7 +17,6 @@
 	export let options = undefined;
 	export let optionLabel = 'label';
 	let showOptions = false;
-	let limitOptions = 3;
 	let filtered = options;
 
 	$: setFiltered(options, value);
@@ -26,10 +25,7 @@
 		const fuse = new Fuse(options, {
 			keys: [optionLabel]
 		});
-		filtered = fuse
-			.search(value)
-			.map((e) => e.item)
-			.slice(0, limitOptions);
+		filtered = fuse.search(value).map((e) => e.item);
 	}
 
 	const handleInput = (e) => {
@@ -71,6 +67,7 @@
 					}}
 				>
 					{option[optionLabel]}
+					<slot name="option-button-extra" option={option} />
 				</button>
 			{/each}
 		</div>
@@ -98,6 +95,8 @@
 		padding: 0.25em;
 		box-shadow: var(--shadow);
 		border-radius: 0.5em;
+		max-height: 180px;
+		overflow-y: auto;
 	}
 	button {
 		text-align: unset;

@@ -40,7 +40,11 @@ export function saveIngredients(ingredients: Ingredient[]) {
 
 	const requests = ingredients.map((ingredient) => {
 		ingredient.label = ingredient.label.trim();
-		if (ingredient.label && !presets.some((e) => e.label === ingredient.label)) {
+		if (
+			ingredient.label &&
+			!ingredient.label.startsWith('FDDB_') &&
+			!presets.some((e) => e.label === ingredient.label)
+		) {
 			saveCount++;
 			return addDoc(collection(db, 'ingredients'), {
 				kcalPer100: ingredient.kcalPer100,
