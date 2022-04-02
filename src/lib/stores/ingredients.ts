@@ -5,14 +5,14 @@ import { get, writable, type Writable } from 'svelte/store';
 import { v4 as uuidv4 } from 'uuid';
 
 export function newIngredient() {
-	return { label: '', kcalPer100: 100, amount: 100, instanceId: uuidv4() };
+	return { label: '', kcalPer100: 100, amount: 100, instanceId: uuidv4(), docId: '', portions: [] };
 }
 
 export interface Ingredient {
-	docId?: string;
+	docId: string;
 	label: string;
 	kcalPer100: number;
-	portions?: Array<{
+	portions: Array<{
 		label: string;
 		amount: number;
 	}>;

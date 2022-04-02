@@ -57,12 +57,9 @@ export const get: RequestHandler = async (request) => {
 				const ingredient = {
 					docId: 'FDDB_' + label,
 					label,
-					kcalPer100
+					kcalPer100,
+					portions
 				};
-
-				if (portions.length > 0) {
-					ingredient['portions'] = portions;
-				}
 
 				ingredients.push(ingredient);
 			}

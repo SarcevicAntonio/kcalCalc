@@ -16,8 +16,8 @@
 	$: kcal = (ingredient.kcalPer100 / 100) * ingredient.amount;
 
 	function handleSelect(e) {
-		delete ingredient.docId;
-		delete ingredient.portions;
+		ingredient.docId = '';
+		ingredient.portions = [];
 		ingredient = { ...ingredient, ...e.detail };
 	}
 
@@ -27,8 +27,8 @@
 		if (ingredient.label.length >= 4) {
 			loadFddbEntries();
 		}
-		delete ingredient.docId;
-		delete ingredient.portions;
+		ingredient.docId = '';
+		ingredient.portions = [];
 		dispatch('input');
 	}
 
@@ -74,7 +74,7 @@
 	<div class="row gap preset-btn">
 		<Input bind:value={ingredient.kcalPer100} on:input>kcal per 100x</Input>
 		<Input bind:value={ingredient.amount} on:input>g|ml</Input>
-		{#if ingredient.portions}
+		{#if ingredient.portions?.length}
 			<Dialog let:toggle>
 				<svelte:fragment slot="trigger-label">
 					<IconPreset />
