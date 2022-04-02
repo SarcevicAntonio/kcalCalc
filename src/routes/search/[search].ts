@@ -33,12 +33,38 @@ export const get: RequestHandler = async (request) => {
 				}
 			});
 
+			const portions: Ingredient['portions'] = [];
+
+			document.querySelectorAll('h4').forEach((h4) => {
+				if (h4.textContent.includes('Portionen')) {
+					let ref = h4.nextElementSibling;
+					while (ref.nodeName === 'DIV') {
+						const split = ref.querySelector('td b').textContent.split('(');
+
+						const label = split[0].trim();
+						const amount = +split[1].split(' ')[0];
+
+						if (amount !== 100) {
+							portions.push({ label, amount });
+						}
+
+						ref = ref.nextElementSibling;
+					}
+				}
+			});
+
 			if (kcalPer100 > 0) {
-				ingredients.push({
+				const ingredient = {
 					docId: 'FDDB_' + label,
 					label,
 					kcalPer100
-				});
+				};
+
+				if (portions.length > 0) {
+					ingredient['portions'] = portions;
+				}
+
+				ingredients.push(ingredient);
 			}
 		});
 	});

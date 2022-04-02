@@ -12,6 +12,10 @@ export interface Ingredient {
 	docId?: string;
 	label: string;
 	kcalPer100: number;
+	portions?: Array<{
+		label: string;
+		amount: number;
+	}>;
 }
 
 export interface IngredientInstance extends Ingredient {

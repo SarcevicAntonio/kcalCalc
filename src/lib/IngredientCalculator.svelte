@@ -16,6 +16,8 @@
 	$: kcal = (ingredient.kcalPer100 / 100) * ingredient.amount;
 
 	function handleSelect(e) {
+		delete ingredient.docId;
+		delete ingredient.portions;
 		ingredient = { ...ingredient, ...e.detail };
 	}
 
@@ -25,12 +27,13 @@
 		if (ingredient.label.length >= 4) {
 			loadFddbEntries();
 		}
-		ingredient.docId = '';
+		delete ingredient.docId;
+		delete ingredient.portions;
 		dispatch('input');
 	}
 
 	async function loadFddbEntries() {
-		await fetch('/search/' + ingredient.label)
+		await fetch('/search/' + ingredient.label.replaceAll('%', ' '))
 			.then((res) => res.json())
 			.then((res) => {
 				fddbEntries = res;
@@ -71,6 +74,26 @@
 	<div class="row gap preset-btn">
 		<Input bind:value={ingredient.kcalPer100} on:input>kcal per 100x</Input>
 		<Input bind:value={ingredient.amount} on:input>g|ml</Input>
+		{#if ingredient.portions}
+			<Dialog let:toggle>
+				<svelte:fragment slot="trigger-label">
+					<IconPreset />
+				</svelte:fragment>
+				<h2>Portionierungen</h2>
+				<div class=" col gap">
+					{#each ingredient.portions as portion}
+						<button
+							on:click={() => {
+								ingredient.amount = portion.amount;
+								toggle();
+							}}
+						>
+							{portion.label}: {portion.amount} g|ml
+						</button>
+					{/each}
+				</div>
+			</Dialog>
+		{/if}
 	</div>
 	<div class="row sb">
 		<slot><span /></slot>
