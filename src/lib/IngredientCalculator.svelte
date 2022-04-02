@@ -2,7 +2,8 @@
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
 	import { scale } from 'svelte/transition';
-	import IconPreset from '~icons/mdi/backup-restore';
+	import IconPreset from '~icons/mdi/settings';
+	import IconCloud from '~icons/mdi/file-cloud';
 	import animationOptions from './animationOptions';
 	import IngredientPresets from './IngredientPresets.svelte';
 	import Input from './Input.svelte';
@@ -48,9 +49,11 @@
 			on:input={onLabelInput}
 		>
 			Label
-			<svelte:fragment slot="option-button-extra" let:option>
-				{option['docId'].startsWith('FDDB_') ? '[FDDB]' : ''}
-			</svelte:fragment>
+			<span class="end" slot="option-button-extra" let:option>
+				{#if option['docId'].startsWith('FDDB_')}
+					<IconCloud />
+				{/if}
+			</span>
 		</Input>
 		<Dialog let:toggle>
 			<svelte:fragment slot="trigger-label">
@@ -83,5 +86,8 @@
 	}
 	.preset-btn {
 		align-items: flex-end;
+	}
+	.end {
+		margin-left: auto;
 	}
 </style>
