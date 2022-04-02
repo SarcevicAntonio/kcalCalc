@@ -42,6 +42,7 @@ export function saveIngredients(ingredients: Ingredient[]) {
 		ingredient.label = ingredient.label.trim();
 		if (
 			ingredient.label &&
+			!ingredient.label.startsWith('👻') &&
 			!ingredient.docId.startsWith('FDDB_') &&
 			!presets.some((e) => e.label === ingredient.label)
 		) {
