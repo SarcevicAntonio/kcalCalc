@@ -48,7 +48,7 @@
 					dispatch('select', item);
 				}}
 			>
-				{item.label}
+				{item.label} <span style="margin-left: auto;"> </span>
 			</button>
 		</div>
 	{/each}
@@ -61,8 +61,5 @@
 		max-height: 30em;
 		min-width: 14em;
 		margin-bottom: 0.5em;
-	}
-	button {
-		text-align: unset;
 	}
 </style>

@@ -78,6 +78,7 @@ html {
 	background-color: var(--md-background);
 	color: var(--md-on-background);
 	padding: 0;
+	accent-color: var(--md-primary);
 }
 html:focus-within {
 	scroll-behavior: smooth;
@@ -99,18 +100,18 @@ input,
 select {
 	font: inherit;
 	padding: 0.25em;
-	border-radius: 0.25em;
+	border-radius: 0.5em;
 	background-color: var(--md-background);
 	color: var(--md-on-background);
 	border: none;
-}
-input {
 	border: 1px solid var(--md-outline);
 }
 
 button {
 	cursor: pointer;
 	display: flex;
+	gap: 0.5em;
+	justify-content: center;
 	align-items: center;
 	border: 1px solid var(--md-outline);
 	background-color: var(--md-surface);
@@ -167,7 +168,7 @@ button.ghost {
 	color: var(--md-on-surface-variant);
 	text-decoration: unset;
 	padding: 0.5em;
-	border-radius: 0.25em;
+	border-radius: 12px;
 }
 
 .bold {

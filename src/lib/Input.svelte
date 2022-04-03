@@ -95,13 +95,12 @@
 		right: 0;
 		background-color: var(--md-surface);
 		padding: 0.25em;
-		border-radius: 0.5em;
+		border-radius: 28px;
 		max-height: 180px;
 		overflow-y: auto;
 	}
 	button {
 		text-align: unset;
-		padding: 0.5em;
 		border: none;
 		background: var(--md-secondary-container);
 		color: var(--md-on-secondary-container);
