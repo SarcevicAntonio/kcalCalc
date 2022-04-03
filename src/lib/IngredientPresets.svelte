@@ -43,7 +43,7 @@
 				</svelte:fragment>
 			</Dialog>
 			<button
-				class="card grow"
+				class="grow tone"
 				on:click={() => {
 					dispatch('select', item);
 				}}

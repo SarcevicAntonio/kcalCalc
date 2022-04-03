@@ -93,9 +93,8 @@
 		z-index: 999;
 		left: 0;
 		right: 0;
-		background-color: var(--bg);
+		background-color: var(--md-surface);
 		padding: 0.25em;
-		box-shadow: var(--shadow);
 		border-radius: 0.5em;
 		max-height: 180px;
 		overflow-y: auto;
@@ -103,6 +102,8 @@
 	button {
 		text-align: unset;
 		padding: 0.5em;
-		background: var(--secondary);
+		border: none;
+		background: var(--md-secondary-container);
+		color: var(--md-on-secondary-container);
 	}
 </style>

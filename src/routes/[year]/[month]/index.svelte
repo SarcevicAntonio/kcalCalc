@@ -119,7 +119,8 @@
 
 <style>
 	.today {
-		color: white;
-		background-color: var(--primary);
+		background-color: var(--md-surface);
+		color: var(--md-on-surface);
+		border: 1px solid var(--md-outline);
 	}
 </style>

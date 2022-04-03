@@ -26,11 +26,12 @@
 <style>
 	span {
 		font-size: 2em;
+		font-weight: 700;
 	}
 	header {
 		padding-inline: 0.5em;
-		background: var(--secondary);
-		box-shadow: var(--shadow);
+		background-color: var(--md-surface);
+		color: var(--md-on-surface);
 	}
 	.content {
 		padding: 0.5em;
