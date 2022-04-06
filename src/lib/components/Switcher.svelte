@@ -1,0 +1,19 @@
+<script>
+	import { createEventDispatcher } from 'svelte';
+
+	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
+	import IconArrowRight from '~icons/mdi/arrow-right-bold';
+	const dispatch = createEventDispatcher();
+</script>
+
+<div class="row sb">
+	<button class="btn txt-only" on:click={() => dispatch('prev')}>
+		<IconArrowLeft />
+	</button>
+	<div class="col center">
+		<slot />
+	</div>
+	<button class="btn txt-only" on:click={() => dispatch('next')}>
+		<IconArrowRight />
+	</button>
+</div>

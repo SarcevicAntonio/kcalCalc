@@ -2,7 +2,7 @@
 	import ProfileLink from '$lib/ProfileLink.svelte';
 
 	import { Notifications } from 'as-comps';
-	import '../styles.css';
+	import '../css/global.css';
 
 	// polyfill: replaceAll
 	if (!String.prototype.replaceAll) {
@@ -16,7 +16,7 @@
 </script>
 
 <header class="row sb">
-	<div class="row gap aic">
+	<div class="row big-gap aic">
 		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
 	</div>
@@ -32,10 +32,10 @@
 <style>
 	h1 {
 		font-family: 'Roboto';
-		font-style: normal;
 		font-weight: 400;
 		font-size: 36px;
 		line-height: 44px;
+		font-weight: bold;
 	}
 	img {
 		height: auto;

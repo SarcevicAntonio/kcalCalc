@@ -5,7 +5,7 @@
 </script>
 
 {#if $user}
-	<a class="btn txt-only" href="/profile"> asdf <IconProfile /> </a>
+	<a class="btn txt-only" href="/profile"> <IconProfile /> </a>
 {:else}
 	<a class="btn txt-only" href="/login">
 		<IconLogin />

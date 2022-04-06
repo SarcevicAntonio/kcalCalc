@@ -1,3 +1,4 @@
+@import './reset.css';
 @import './var.css';
 
 * {
@@ -59,54 +60,16 @@ nav > a {
 	}
 }
 
-.btn.txt-only {
-	display: flex;
-	gap: 0.25em;
-	justify-content: center;
-	align-items: center;
-	color: var(--md-primary);
-	font-size: var(--md--label--large);
-	text-decoration: none;
-	min-height: 40px;
-	& svg {
-		font-size: 18px;
-	}
-}
-
-.card {
-	background-color: var(--md-surface-variant);
-	color: var(--md-on-surface-variant);
-	text-decoration: unset;
-	padding: 0.5em;
-	border-radius: 12px;
-}
-
-.bold {
-	font-weight: 700;
-}
-
-.notice {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 33rem;
-	font-size: 1.5em;
-	text-align: center;
-	color: var(--md-on-background);
-}
-
 /* utility flexes */
 
 .col {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
 }
 
 .row {
 	display: flex;
 	flex-direction: row;
-	width: 100%;
 }
 
 .center {
@@ -126,6 +89,76 @@ nav > a {
 	gap: 0.5em;
 }
 
+.big-gap {
+	gap: 1em;
+}
+
 .grow {
 	flex-grow: 1;
+}
+
+.end {
+	justify-content: end;
+	align-items: end;
+}
+
+/* components */
+
+.btn.txt-only {
+	background: none;
+	border: none;
+	display: flex;
+	gap: 0.25em;
+	justify-content: center;
+	align-items: center;
+	color: var(--md-primary);
+	font-size: var(--md--label--large);
+	text-decoration: none;
+	min-height: 40px;
+	& svg {
+		font-size: 18px;
+	}
+}
+
+.card {
+	background-color: var(--md-surface-variant);
+	color: var(--md-on-surface-variant);
+	text-decoration: unset;
+	padding: 0.75em 1em;
+	border-radius: 0.75em;
+	&.inner {
+		background-color: var(--md-surface);
+		color: var(--md-on-surface);
+		border: 1px solid var(--md-outline);
+	}
+}
+
+.notice {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 33rem;
+	font-size: 1.5em;
+	text-align: center;
+	color: var(--md-on-background);
+}
+
+/* typo */
+
+.title-l {
+	font-size: var(--md--title--large);
+}
+
+.title-m {
+	font-size: var(--md--title--medium);
+	font-weight: bold;
+}
+
+.body-m {
+	font-size: var(--md--body--medium);
+}
+
+.label-l {
+	font-size: var(--md--label--large);
+	font-weight: bold;
 }
