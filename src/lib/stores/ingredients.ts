@@ -7,13 +7,17 @@ import { v4 as uuidv4 } from 'uuid';
 const db = getClientApp().db;
 
 export function newIngredient() {
-	return { label: '', kcalPer100: 100, amount: 100, instanceId: uuidv4() };
+	return { label: '', kcalPer100: 100, amount: 100, instanceId: uuidv4(), docId: '', portions: [] };
 }
 
 export interface Ingredient {
-	docId?: string;
+	docId: string;
 	label: string;
 	kcalPer100: number;
+	portions: Array<{
+		label: string;
+		amount: number;
+	}>;
 }
 
 export interface IngredientInstance extends Ingredient {
@@ -42,7 +46,12 @@ export function saveIngredients(ingredients: Ingredient[]) {
 
 	const requests = ingredients.map((ingredient) => {
 		ingredient.label = ingredient.label.trim();
-		if (ingredient.label && !presets.some((e) => e.label === ingredient.label)) {
+		if (
+			ingredient.label &&
+			!ingredient.label.startsWith('👻') &&
+			!ingredient.docId.startsWith('FDDB_') &&
+			!presets.some((e) => e.label === ingredient.label)
+		) {
 			saveCount++;
 			return addDoc(collection(db, 'ingredients'), {
 				kcalPer100: ingredient.kcalPer100,

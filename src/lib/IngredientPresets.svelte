@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
-	import { flip } from 'svelte/animate';
-	import { scale } from 'svelte/transition';
 	import IconDelete from '~icons/mdi/delete';
-	import animationOptions from './animationOptions';
 	import Input from './Input.svelte';
 	import { deleteIngredient, ingredientPresets, type Ingredient } from './stores/ingredients';
 
@@ -19,7 +16,7 @@
 
 <div class="wrapper col gap">
 	{#each filtered as item (item.docId)}
-		<div class="row gap" animate:flip={animationOptions} out:scale|local={animationOptions}>
+		<div class="row gap">
 			<Dialog let:toggle>
 				<svelte:fragment slot="trigger-label">
 					<IconDelete />
@@ -46,12 +43,12 @@
 				</svelte:fragment>
 			</Dialog>
 			<button
-				class="card grow"
+				class="grow tone"
 				on:click={() => {
 					dispatch('select', item);
 				}}
 			>
-				{item.label}
+				{item.label} <span style="margin-left: auto;"> </span>
 			</button>
 		</div>
 	{/each}
@@ -64,8 +61,5 @@
 		max-height: 30em;
 		min-width: 14em;
 		margin-bottom: 0.5em;
-	}
-	button {
-		text-align: unset;
 	}
 </style>

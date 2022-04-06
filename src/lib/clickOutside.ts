@@ -1,4 +1,4 @@
-export default function clickOutside(node, { enabled: initialEnabled, cb }) {
+export default function clickOutside(node: Node, { enabled: initialEnabled, cb }) {
 	const handleOutsideClick = ({ target }) => {
 		if (!node.contains(target)) {
 			cb();

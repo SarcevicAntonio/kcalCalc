@@ -7,7 +7,7 @@
 	const id = uuidv4();
 	const dispatch = createEventDispatcher();
 
-	export let value: any = '';
+	export let value: string | number;
 	export let placeholder = null;
 	export let type = 'number';
 	export let min = undefined;
@@ -18,24 +18,22 @@
 	export let options = undefined;
 	export let optionLabel = 'label';
 	let showOptions = false;
-	let limitOptions = 3;
 	let filtered = options;
 
 	$: setFiltered(options, value);
-	function setFiltered(options, value) {
-		if (!options || !value.trim()) return;
+	function setFiltered(options: any, value: string | number) {
+		if (!options || !(value + '').trim()) return;
 		const fuse = new Fuse(options, {
 			keys: [optionLabel]
 		});
-		filtered = fuse
-			.search(value)
-			.map((e) => e.item)
-			.slice(0, limitOptions);
+		filtered = fuse.search(value + '').map((e) => e.item);
 	}
 
-	const handleInput = (e) => {
+	const handleInput = (e: Event) => {
 		// handle types
-		value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
+		value = type.match(/^(number|range)$/)
+			? +(e.target as HTMLInputElement).value
+			: (e.target as HTMLInputElement).value;
 		dispatch('input', value);
 	};
 </script>
@@ -59,7 +57,7 @@
 		}}
 	/>
 	<!-- Autocomplete -->
-	{#if showOptions && filtered && value}
+	{#if showOptions && filtered?.length && value}
 		<div class="options">
 			{#each filtered as option}
 				<button
@@ -73,6 +71,7 @@
 					}}
 				>
 					{option[optionLabel]}
+					<slot name="option-button-extra" {option} />
 				</button>
 			{/each}
 		</div>
@@ -96,14 +95,16 @@
 		z-index: 999;
 		left: 0;
 		right: 0;
-		background-color: var(--bg);
+		background-color: var(--md-surface);
 		padding: 0.25em;
-		box-shadow: var(--btn-shadow);
-		border-radius: 0.5em;
+		border-radius: 28px;
+		max-height: 180px;
+		overflow-y: auto;
 	}
 	button {
 		text-align: unset;
-		padding: 0.5em;
-		background: var(--secondary);
+		border: none;
+		background: var(--md-secondary-container);
+		color: var(--md-on-secondary-container);
 	}
 </style>

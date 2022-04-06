@@ -1,6 +1,8 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
+	import { ym, ymd } from '$lib/dateFormats';
 	import eatUnits from '$lib/stores/eatUnit';
+	import { addMonths, format } from 'date-fns';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconArrowRight from '~icons/mdi/arrow-right-bold';
 	import IconMonth from '~icons/mdi/calendar-month';
@@ -11,16 +13,18 @@
 	let curDate = new Date([year, month, '01'].join('-'));
 
 	const today = new Date();
+	const todayString = format(today, ymd);
+	const thisMonthString = format(today, ym);
 
-	const thisMonthString = today.toISOString().substring(0, 7);
-
-	let curDateString;
+	let curDateString: string;
 
 	$: if (isFinite(+curDate)) {
-		curDateString = curDate.toISOString().substring(0, 7);
+		curDateString = format(curDate, ym);
 	}
 
-	$: thisMonthsUnits = $eatUnits.filter((a) => a.date.substring(0, 7) === curDateString);
+	$: thisMonthsUnits = $eatUnits
+		.filter((a) => a.date.substring(0, 7) === curDateString)
+		.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 
 	$: daysInUnit = thisMonthsUnits.reduce((acc, curVal) => {
 		const curValDay = curVal.date.substring(8, 10);
@@ -34,7 +38,7 @@
 
 	$: monthName = curDate.toLocaleString('default', { month: 'long' });
 
-	function setHeader(curDate) {
+	function setHeader(curDate: Date) {
 		if (today.getFullYear() === curDate.getFullYear()) {
 			return curDate.toLocaleString(undefined, { month: 'long' });
 		}
@@ -47,8 +51,7 @@
 	<button
 		class="ghost"
 		on:click={() => {
-			curDate.setMonth(curDate.getMonth() - 1);
-			curDate = curDate;
+			curDate = addMonths(curDate, -1);
 		}}
 	>
 		<IconArrowLeft />
@@ -62,8 +65,7 @@
 	<button
 		class="ghost"
 		on:click={() => {
-			curDate.setMonth(curDate.getMonth() + 1);
-			curDate = curDate;
+			curDate = addMonths(curDate, 1);
 		}}
 	>
 		<IconArrowRight />
@@ -72,12 +74,13 @@
 
 {#if daysInUnit}
 	{#each daysInUnit as day}
-		{@const dayDate = new Date(thisMonthString + '-' + day)}
+		{@const dayDate = new Date(curDateString + '-' + day)}
+		{@const dayDateString = format(dayDate, ymd)}
 		{@const thisDaysUnits = thisMonthsUnits.filter((a) => a.date.substring(8, 10) === day)}
 		<a
-			href="/{dayDate.toISOString().split('T')[0].replaceAll('-', '/')}"
+			href="/{dayDateString.replaceAll('-', '/')}"
 			class="card"
-			class:today={dayDate.toISOString().split('T')[0] === today.toISOString().split('T')[0]}
+			class:today={dayDateString === todayString}
 		>
 			<h2>{day}. {monthName}</h2>
 			<div class="row sb">
@@ -107,7 +110,7 @@
 		</button>
 	{/if}
 	{#if !daysInUnit.length}
-		<a href="/{today.toISOString().split('T')[0].replaceAll('-', '/')}">
+		<a href="/{todayString.replaceAll('-', '/')}">
 			<IconHome />
 		</a>
 	{/if}
@@ -116,6 +119,8 @@
 
 <style>
 	.today {
-		border-bottom: 4px solid yellowgreen;
+		background-color: var(--md-surface);
+		color: var(--md-on-surface);
+		border: 1px solid var(--md-outline);
 	}
 </style>

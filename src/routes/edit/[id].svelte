@@ -9,6 +9,7 @@
 	import { Dialog } from 'as-comps';
 	import { tick } from 'svelte';
 	import { flip } from 'svelte/animate';
+	import { fade } from 'svelte/transition';
 	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
 	import IconPortion from '~icons/mdi/circle-slice-5';
 	import IconSave from '~icons/mdi/cloud-upload';
@@ -29,7 +30,7 @@
 		window.scrollTo(0, document.body.scrollHeight);
 	}
 
-	function removeIngredient(instanceId) {
+	function removeIngredient(instanceId: string) {
 		const next = eatUnit.ingredients.filter((a) => {
 			return a.instanceId !== instanceId;
 		});
@@ -55,25 +56,35 @@
 </script>
 
 {#if eatUnit}
-	<div class="row">
+	<div class="row sb">
 		<div class="col">
 			<h1>Einheit</h1>
 			<span class="bold">
 				{eatUnit.kcal.toFixed(0)} kcal
 			</span>
 		</div>
+		{#if eatUnit.ingredients.length}
+			<div class="col end" transition:fade>
+				<span>
+					{amountSum.toFixed(0)} g|ml
+				</span>
+				<span>
+					{kcalPer100.toFixed(0)} kcal per 100x
+				</span>
+			</div>
+		{/if}
 	</div>
 
-	<Input type="date" bind:value={eatUnit.date} on:change={edited}>Datum</Input>
+	<Input type="date" bind:value={eatUnit.date} on:input={edited}>Datum</Input>
 
-	<Input type="text" placeholder="Pizza" bind:value={eatUnit.label} on:change={edited}>Label</Input>
+	<Input type="text" placeholder="Pizza" bind:value={eatUnit.label} on:input={edited}>Label</Input>
 
 	<div class="row gap">
 		<input
 			id="trackIngredients"
 			type="checkbox"
 			checked={!!eatUnit.ingredients.length}
-			on:change={() => {
+			on:input={() => {
 				if (!eatUnit.ingredients.length) {
 					addIngredient();
 				} else {
@@ -86,11 +97,11 @@
 	</div>
 
 	{#if !eatUnit.ingredients.length}
-		<Input type="number" bind:value={eatUnit.kcal} on:change={edited}>kcal</Input>
+		<Input type="number" bind:value={eatUnit.kcal} on:input={edited}>kcal</Input>
 	{:else}
 		{#each eatUnit.ingredients as ingredient (ingredient.instanceId)}
 			<div animate:flip={animationOptions}>
-				<IngredientCalculator bind:ingredient on:change={edited}>
+				<IngredientCalculator bind:ingredient on:input={edited}>
 					<button
 						on:click={() => {
 							removeIngredient(ingredient.instanceId);
@@ -101,15 +112,6 @@
 				</IngredientCalculator>
 			</div>
 		{/each}
-		<div class="row gap sb">
-			<span>Summe:</span>
-			<span>
-				{amountSum.toFixed(0)} g|ml
-			</span>
-			<span>
-				{kcalPer100.toFixed(0)} kcal per 100x
-			</span>
-		</div>
 	{/if}
 
 	<nav class="sb aic">
@@ -208,3 +210,10 @@
 		{/if}
 	</nav>
 {/if}
+
+<style>
+	.end {
+		align-items: end;
+		justify-content: end;
+	}
+</style>

@@ -7,7 +7,7 @@
 </script>
 
 {#if !$user}
-	<p>You can use kcalCalc without logging in, or login to sync your data.</p>
+	<p>You need to Login to use kcalCalc</p>
 {/if}
 
 <nav>
