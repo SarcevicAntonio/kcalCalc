@@ -11,9 +11,10 @@
 {/if}
 
 <nav>
-	<a href={todayLink}><IconHome />Heute</a>
 	{#if !$user}
-		<a href="/login" class=" primary"><IconLogin />Login</a>
+		<a href="/login"><IconLogin />Login</a>
+	{:else}
+		<a href={todayLink}><IconHome />Heute</a>
 	{/if}
 </nav>
 

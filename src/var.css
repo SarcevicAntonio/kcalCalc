@@ -1,0 +1,87 @@
+:root {
+	--shadow: 0px 0.4px 0.4px rgba(0, 0, 0, 0.02), 0px 1.1px 1.1px rgba(0, 0, 0, 0.028),
+		0px 2px 2px rgba(0, 0, 0, 0.035), 0px 3.6px 3.6px rgba(0, 0, 0, 0.042),
+		0px 6.7px 6.7px rgba(0, 0, 0, 0.05), 0px 16px 16px rgba(0, 0, 0, 0.07);
+	--as-dialog-background: var(--md-surface);
+
+/* Text-size styles */
+
+
+
+--m3--display1: 4rem;
+--m3--display2: 3.56rem;
+--m3--display3: 2.81rem;
+--m3--headline1: 2.25rem;
+--m3--headline2: 2rem;
+--m3--headline3: 1.75rem;
+--m3--headline4: 1.5rem;
+--m3--headline5: 1.38rem;
+--m3--headline6: 1.12rem;
+--m3--subhead1: 1rem;
+--m3--subhead2: 0.88rem;
+--m3--button: 0.88rem;
+--m3--body1: 1rem;
+--m3--body2: 0.88rem;
+--m3--caption: 0.75rem;
+--m3--overline: 0.75rem;
+--m3--label-small: 0.69rem;
+--m3--display--large: 3.56rem;
+--m3--display--medium: 2.81rem;
+--m3--display--small: 2.25rem;
+--m3--headline--large: 2rem;
+--m3--headline--medium: 1.75rem;
+--m3--headline--small: 1.5rem;
+--m3--title--large: 1.38rem;
+--m3--title--medium: 1rem;
+--m3--title--small: 0.88rem;
+--m3--label--large: 0.88rem;
+--m3--label--medium: 0.75rem;
+--m3--label--small: 0.69rem;
+--m3--body--large: 1rem;
+--m3--body--medium: 0.88rem;
+--m3--body--small: 0.75rem;
+
+/* Effect styles */
+--m3---elevation--light--1:  0px 1px 3px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+--m3---elevation--light--2:  0px 2px 6px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+--m3---elevation--light--3:  0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
+--m3---elevation--light--4:  0px 2px 3px rgba(0, 0, 0, 0.3), 0px 6px 10px rgba(0, 0, 0, 0.15);
+--m3---elevation--light--5:  0px 4px 4px rgba(0, 0, 0, 0.3), 0px 8px 12px rgba(0, 0, 0, 0.15);
+--m3---elevation--dark--1:  0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.15);
+--m3---elevation--dark--2:  0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px rgba(0, 0, 0, 0.15);
+--m3---elevation--dark--3:  0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
+--m3---elevation--dark--4:  0px 2px 3px rgba(0, 0, 0, 0.3), 0px 6px 10px rgba(0, 0, 0, 0.15);
+--m3---elevation--dark--5:  0px 4px 4px rgba(0, 0, 0, 0.3), 0px 8px 12px rgba(0, 0, 0, 0.15);
+
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--md-primary: #9ed75c;
+		--md-on-primary: #1c3700;
+		--md-primary-container: #2c5000;
+		--md-on-primary-container: #b9f475;
+		--md-secondary: #bfcaad;
+		--md-on-secondary: #2a331e;
+		--md-secondary-container: #404a34;
+		--md-on-secondary-container: #dbe7c7;
+		--md-tertiary: #a0d0cc;
+		--md-on-tertiary: #003735;
+		--md-tertiary-container: #1e4e4b;
+		--md-on-tertiary-container: #bcece8;
+		--md-error: #ffb4a9;
+		--md-error-container: #930006;
+		--md-on-error: #680003;
+		--md-on-error-container: #ffdad4;
+		--md-background: #1a1c17;
+		--md-on-background: #e3e3db;
+		--md-surface: #1a1c17;
+		--md-on-surface: #e3e3db;
+		--md-surface-variant: #44483d;
+		--md-on-surface-variant: #c4c8b9;
+		--md-outline: #8e9285;
+		--md-inverse-on-surface: #1a1c17;
+		--md-inverse-surface: #e3e3db;
+		--md-inverse-primary: #3c6a00;
+		--md-shadow: #000000;
+	}
+}

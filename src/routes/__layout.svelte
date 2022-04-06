@@ -16,7 +16,7 @@
 </script>
 
 <header class="row sb">
-	<div class="row gap">
+	<div class="row gap aic">
 		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
 	</div>
@@ -30,8 +30,19 @@
 <Notifications />
 
 <style>
+	h1 {
+		font-family: 'Roboto';
+		font-style: normal;
+		font-weight: 400;
+		font-size: 36px;
+		line-height: 44px;
+	}
+	img {
+		height: auto;
+		width: auto;
+	}
 	header {
-		padding-inline: 0.5em;
+		padding: 1em;
 		background-color: var(--md-surface);
 		color: var(--md-on-surface);
 	}

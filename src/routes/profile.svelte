@@ -39,5 +39,5 @@
 <button on:click={logout}><IconLogout />Logout</button>
 
 <nav>
-	<a href={todayLink} class="row gap"><IconHome />Heute</a>
+	<a href={todayLink}><IconHome />Heute</a>
 </nav>
