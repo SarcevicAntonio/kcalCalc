@@ -52,7 +52,11 @@ nav > a {
 	color: var(--md-on-primary-container);
 	display: flex;
 	align-items: center;
+	font-size: var(--md--label--large);
 	gap: 0.5em;
+	& svg {
+		font-size: 18px;
+	}
 }
 
 .btn.txt-only {
@@ -61,13 +65,12 @@ nav > a {
 	justify-content: center;
 	align-items: center;
 	color: var(--md-primary);
-	font-size: var(--m3--label--large);
+	font-size: var(--md--label--large);
 	text-decoration: none;
 	min-height: 40px;
-}
-
-.btn.txt-only svg {
-	font-size: 18px;
+	& svg {
+		font-size: 18px;
+	}
 }
 
 .card {
