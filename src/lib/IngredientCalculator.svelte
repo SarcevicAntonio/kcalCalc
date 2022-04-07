@@ -11,7 +11,7 @@
 		ingredientPresets,
 		newIngredient,
 		type Ingredient,
-		type IngredientInstance
+		type IngredientInstance,
 	} from './stores/ingredients';
 
 	const dispatch = createEventDispatcher();

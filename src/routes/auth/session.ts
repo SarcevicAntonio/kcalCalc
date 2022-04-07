@@ -21,8 +21,8 @@ export const post: RequestHandler = async ({ request }) => {
 			status: 200,
 			body: user,
 			headers: {
-				'Set-Cookie': sessionCookie
-			}
+				'Set-Cookie': sessionCookie,
+			},
 		};
 	} catch {
 		return { status: 401, body: 'Invalid auth header' };
@@ -36,7 +36,7 @@ export const del: RequestHandler = async () => {
 		status: 200,
 		headers: {
 			Location: '/success',
-			'Set-Cookie': expiredCookie
-		}
+			'Set-Cookie': expiredCookie,
+		},
 	};
 };

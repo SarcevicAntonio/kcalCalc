@@ -5,7 +5,7 @@ import {
 	isSignInWithEmailLink,
 	sendSignInLinkToEmail,
 	setPersistence,
-	signInWithEmailLink
+	signInWithEmailLink,
 } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
@@ -26,7 +26,7 @@ const firebaseConfig = {
 	projectId: import.meta.env.VITE_PROJECTID as string,
 	storageBucket: import.meta.env.VITE_STORAGEBUCKET as string,
 	messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID as string,
-	appId: import.meta.env.VITE_APPID as string
+	appId: import.meta.env.VITE_APPID as string,
 };
 
 export function getClientApp() {
@@ -46,7 +46,7 @@ export function sendMagicLink(email: string, redirectUlr: string) {
 	const auth = getAuth(getClientApp().app);
 	return sendSignInLinkToEmail(auth, email, {
 		url: redirectUlr,
-		handleCodeInApp: true
+		handleCodeInApp: true,
 	});
 }
 

@@ -9,8 +9,8 @@ const config = {
 	preprocess: [
 		preprocess({
 			postcss: true,
-			typescript: true
-		})
+			typescript: true,
+		}),
 	],
 
 	kit: {
@@ -18,11 +18,11 @@ const config = {
 		vite: {
 			plugins: [
 				Icons({
-					compiler: 'svelte'
-				})
-			]
-		}
-	}
+					compiler: 'svelte',
+				}),
+			],
+		},
+	},
 };
 
 export default config;

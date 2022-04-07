@@ -45,7 +45,7 @@
 			label: null,
 			date: curDateString,
 			kcal: 100,
-			ingredients: []
+			ingredients: [],
 		};
 
 		const id = eatUnits.add(eatUnit);

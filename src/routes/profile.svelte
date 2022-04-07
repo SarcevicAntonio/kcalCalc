@@ -3,12 +3,12 @@
 	export const load: Load = ({ session }) => {
 		if (session.user) {
 			return {
-				status: 200
+				status: 200,
 			};
 		}
 		return {
 			redirect: '/login',
-			status: 302
+			status: 302,
 		};
 	};
 </script>
@@ -21,7 +21,7 @@
 
 	async function logout() {
 		await fetch('/auth/session', {
-			method: 'DELETE'
+			method: 'DELETE',
 		});
 		setUser(null);
 		goto('/');

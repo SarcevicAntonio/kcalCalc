@@ -48,7 +48,7 @@
 					dispatch('select', item);
 				}}
 			>
-				{item.label} <span style="margin-left: auto;"> </span>
+				{item.label} <span style="margin-left: auto;" />
 			</button>
 		</div>
 	{/each}

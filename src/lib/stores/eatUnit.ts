@@ -30,7 +30,7 @@ function eatUnitStore() {
 				state[index] = unit;
 				return state;
 			});
-		}
+		},
 	};
 }
 

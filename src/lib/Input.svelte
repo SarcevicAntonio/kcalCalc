@@ -24,7 +24,7 @@
 	function setFiltered(options: any, value: string | number) {
 		if (!options || !(value + '').trim()) return;
 		const fuse = new Fuse(options, {
-			keys: [optionLabel]
+			keys: [optionLabel],
 		});
 		filtered = fuse.search(value + '').map((e) => e.item);
 	}

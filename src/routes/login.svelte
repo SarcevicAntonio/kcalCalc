@@ -4,11 +4,11 @@
 		if (session.user) {
 			return {
 				redirect: '/profile',
-				status: 302
+				status: 302,
 			};
 		}
 		return {
-			status: 200
+			status: 200,
 		};
 	};
 </script>

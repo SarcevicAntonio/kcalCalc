@@ -30,7 +30,7 @@
 		const token = await result.user.getIdToken();
 		const user = await fetch('/auth/session', {
 			method: 'POST',
-			headers: new Headers({ Authorization: 'Bearer ' + token })
+			headers: new Headers({ Authorization: 'Bearer ' + token }),
 		}).then((res) => res.json());
 
 		clearMagicEmail();

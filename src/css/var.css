@@ -4,83 +4,80 @@
 		0px 6.7px 6.7px rgba(0, 0, 0, 0.05), 0px 16px 16px rgba(0, 0, 0, 0.07);
 	--as-dialog-background: var(--md-surface);
 
+	/* Color styles */
+	--md-primary: rgba(60, 106, 0, 1);
+	--md-on-primary: rgba(255, 255, 255, 1);
+	--md-primary-container: rgba(185, 244, 117, 1);
+	--md-on-primary-container: rgba(14, 32, 0, 1);
+	--md-secondary: rgba(88, 98, 74, 1);
+	--md-on-secondary: rgba(255, 255, 255, 1);
+	--md-secondary-container: rgba(219, 231, 199, 1);
+	--md-on-secondary-container: rgba(21, 30, 11, 1);
+	--md-tertiary: rgba(56, 102, 99, 1);
+	--md-on-tertiary: rgba(255, 255, 255, 1);
+	--md-tertiary-container: rgba(188, 236, 232, 1);
+	--md-on-tertiary-container: rgba(0, 32, 30, 1);
+	--md-error: rgba(186, 27, 27, 1);
+	--md-error-container: rgba(255, 218, 212, 1);
+	--md-on-error: rgba(255, 255, 255, 1);
+	--md-on-error-container: rgba(65, 0, 1, 1);
+	--md-background: rgba(253, 252, 245, 1);
+	--md-on-background: rgba(26, 28, 23, 1);
+	--md-surface: rgba(253, 252, 245, 1);
+	--md-on-surface: rgba(26, 28, 23, 1);
+	--md-surface-variant: rgba(225, 228, 214, 1);
+	--md-on-surface-variant: rgba(68, 72, 61, 1);
+	--md-outline: rgba(117, 121, 108, 1);
+	--md-inverse-on-surface: rgba(242, 241, 234, 1);
+	--md-inverse-surface: rgba(48, 49, 45, 1);
+	--md-inverse-primary: rgba(158, 215, 92, 1);
+	--md-shadow: rgba(0, 0, 0, 1);
 
-/* Color styles */
---md-primary: rgba(60, 106, 0, 1);
---md-on-primary: rgba(255, 255, 255, 1);
---md-primary-container: rgba(185, 244, 117, 1);
---md-on-primary-container: rgba(14, 32, 0, 1);
---md-secondary: rgba(88, 98, 74, 1);
---md-on-secondary: rgba(255, 255, 255, 1);
---md-secondary-container: rgba(219, 231, 199, 1);
---md-on-secondary-container: rgba(21, 30, 11, 1);
---md-tertiary: rgba(56, 102, 99, 1);
---md-on-tertiary: rgba(255, 255, 255, 1);
---md-tertiary-container: rgba(188, 236, 232, 1);
---md-on-tertiary-container: rgba(0, 32, 30, 1);
---md-error: rgba(186, 27, 27, 1);
---md-error-container: rgba(255, 218, 212, 1);
---md-on-error: rgba(255, 255, 255, 1);
---md-on-error-container: rgba(65, 0, 1, 1);
---md-background: rgba(253, 252, 245, 1);
---md-on-background: rgba(26, 28, 23, 1);
---md-surface: rgba(253, 252, 245, 1);
---md-on-surface: rgba(26, 28, 23, 1);
---md-surface-variant: rgba(225, 228, 214, 1);
---md-on-surface-variant: rgba(68, 72, 61, 1);
---md-outline: rgba(117, 121, 108, 1);
---md-inverse-on-surface: rgba(242, 241, 234, 1);
---md-inverse-surface: rgba(48, 49, 45, 1);
---md-inverse-primary: rgba(158, 215, 92, 1);
---md-shadow: rgba(0, 0, 0, 1);
+	/* Text-size styles */
+	--md--display1: 4rem;
+	--md--display2: 3.56rem;
+	--md--display3: 2.81rem;
+	--md--headline1: 2.25rem;
+	--md--headline2: 2rem;
+	--md--headline3: 1.75rem;
+	--md--headline4: 1.5rem;
+	--md--headline5: 1.38rem;
+	--md--headline6: 1.12rem;
+	--md--subhead1: 1rem;
+	--md--subhead2: 0.88rem;
+	--md--button: 0.88rem;
+	--md--body1: 1rem;
+	--md--body2: 0.88rem;
+	--md--caption: 0.75rem;
+	--md--overline: 0.75rem;
+	--md--label-small: 0.69rem;
+	--md--display--large: 3.56rem;
+	--md--display--medium: 2.81rem;
+	--md--display--small: 2.25rem;
+	--md--headline--large: 2rem;
+	--md--headline--medium: 1.75rem;
+	--md--headline--small: 1.5rem;
+	--md--title--large: 1.38rem;
+	--md--title--medium: 1rem;
+	--md--title--small: 0.88rem;
+	--md--label--large: 0.88rem;
+	--md--label--medium: 0.75rem;
+	--md--label--small: 0.69rem;
+	--md--body--large: 1rem;
+	--md--body--medium: 0.88rem;
+	--md--body--small: 0.75rem;
 
-
-/* Text-size styles */
---md--display1: 4rem;
---md--display2: 3.56rem;
---md--display3: 2.81rem;
---md--headline1: 2.25rem;
---md--headline2: 2rem;
---md--headline3: 1.75rem;
---md--headline4: 1.5rem;
---md--headline5: 1.38rem;
---md--headline6: 1.12rem;
---md--subhead1: 1rem;
---md--subhead2: 0.88rem;
---md--button: 0.88rem;
---md--body1: 1rem;
---md--body2: 0.88rem;
---md--caption: 0.75rem;
---md--overline: 0.75rem;
---md--label-small: 0.69rem;
---md--display--large: 3.56rem;
---md--display--medium: 2.81rem;
---md--display--small: 2.25rem;
---md--headline--large: 2rem;
---md--headline--medium: 1.75rem;
---md--headline--small: 1.5rem;
---md--title--large: 1.38rem;
---md--title--medium: 1rem;
---md--title--small: 0.88rem;
---md--label--large: 0.88rem;
---md--label--medium: 0.75rem;
---md--label--small: 0.69rem;
---md--body--large: 1rem;
---md--body--medium: 0.88rem;
---md--body--small: 0.75rem;
-
-/* Effect styles */
---md---elevation--light--1:  0px 1px 3px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
---md---elevation--light--2:  0px 2px 6px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
---md---elevation--light--3:  0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
---md---elevation--light--4:  0px 2px 3px rgba(0, 0, 0, 0.3), 0px 6px 10px rgba(0, 0, 0, 0.15);
---md---elevation--light--5:  0px 4px 4px rgba(0, 0, 0, 0.3), 0px 8px 12px rgba(0, 0, 0, 0.15);
---md---elevation--dark--1:  0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.15);
---md---elevation--dark--2:  0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px rgba(0, 0, 0, 0.15);
---md---elevation--dark--3:  0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
---md---elevation--dark--4:  0px 2px 3px rgba(0, 0, 0, 0.3), 0px 6px 10px rgba(0, 0, 0, 0.15);
---md---elevation--dark--5:  0px 4px 4px rgba(0, 0, 0, 0.3), 0px 8px 12px rgba(0, 0, 0, 0.15);
-
+	/* Effect styles */
+	--md---elevation--light--1: 0px 1px 3px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+	--md---elevation--light--2: 0px 2px 6px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+	--md---elevation--light--3: 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
+	--md---elevation--light--4: 0px 2px 3px rgba(0, 0, 0, 0.3), 0px 6px 10px rgba(0, 0, 0, 0.15);
+	--md---elevation--light--5: 0px 4px 4px rgba(0, 0, 0, 0.3), 0px 8px 12px rgba(0, 0, 0, 0.15);
+	--md---elevation--dark--1: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.15);
+	--md---elevation--dark--2: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px rgba(0, 0, 0, 0.15);
+	--md---elevation--dark--3: 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
+	--md---elevation--dark--4: 0px 2px 3px rgba(0, 0, 0, 0.3), 0px 6px 10px rgba(0, 0, 0, 0.15);
+	--md---elevation--dark--5: 0px 4px 4px rgba(0, 0, 0, 0.3), 0px 8px 12px rgba(0, 0, 0, 0.15);
 }
 @media (prefers-color-scheme: dark) {
 	:root {

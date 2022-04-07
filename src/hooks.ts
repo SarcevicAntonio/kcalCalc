@@ -15,7 +15,7 @@ export const getSession: GetSession = ({ locals }) => {
 	const user = locals.token
 		? {
 				id: locals.token.sub,
-				email: locals.token.email
+				email: locals.token.email,
 		  }
 		: null;
 	return { user };

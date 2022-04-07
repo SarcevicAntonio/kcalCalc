@@ -55,7 +55,7 @@ export function saveIngredients(ingredients: Ingredient[]) {
 			saveCount++;
 			return addDoc(collection(db, 'ingredients'), {
 				kcalPer100: ingredient.kcalPer100,
-				label: ingredient.label
+				label: ingredient.label,
 			});
 		}
 	});

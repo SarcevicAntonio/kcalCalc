@@ -18,6 +18,6 @@ export default function clickOutside(node: Node, { enabled: initialEnabled, cb }
 		update,
 		destroy() {
 			window.removeEventListener('mousedown', handleOutsideClick);
-		}
+		},
 	};
 }

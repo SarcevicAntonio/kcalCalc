@@ -59,7 +59,7 @@ export const get: RequestHandler = async (request) => {
 						docId: 'FDDB_' + label,
 						label,
 						kcalPer100,
-						portions
+						portions,
 					};
 
 					ingredients.push(ingredient);
@@ -70,7 +70,7 @@ export const get: RequestHandler = async (request) => {
 
 	return Promise.all(requests).then(() => {
 		return {
-			body: JSON.stringify(ingredients)
+			body: JSON.stringify(ingredients),
 		};
 	});
 };

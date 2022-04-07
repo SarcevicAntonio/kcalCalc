@@ -13,8 +13,8 @@ const firebaseAdminConfig = {
 	credential: cert({
 		projectId: import.meta.env.VITE_PROJECTID as string,
 		clientEmail: import.meta.env.VITE_ADMIN_CLIENT_EMAIL as string,
-		privateKey: (import.meta.env.VITE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n')
-	})
+		privateKey: (import.meta.env.VITE_ADMIN_PRIVATE_KEY as string).replace(/\\n/g, '\n'),
+	}),
 };
 
 export function getAdminApp() {
@@ -30,7 +30,7 @@ export async function createSessionCookie(token: string, maxAge: number) {
 	const expiresIn = maxAge * 1000;
 	const auth = getAuth(getAdminApp());
 	const session = await auth.createSessionCookie(token, {
-		expiresIn
+		expiresIn,
 	});
 
 	return `session=${session}; SameSite=Strict; Path=/; HttpOnly; Max-Age=${maxAge};`;
