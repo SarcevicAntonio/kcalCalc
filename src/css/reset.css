@@ -1,3 +1,5 @@
 button {
-	all: unset;
+	border: unset;
+	background: unset;
+	color: unset;
 }

@@ -1,19 +1,24 @@
 <script>
+	import Bucket from '$lib/components/Bucket.svelte';
+	import Item from '$lib/components/Item.svelte';
+	import Switcher from '$lib/components/Switcher.svelte';
+	import IconWeek from '~icons/mdi/calendar-week';
 	import IconItems from '~icons/mdi/format-list-bulleted-type';
 	import IconHome from '~icons/mdi/house';
-	import IconWeek from '~icons/mdi/calendar-week';
-	import Bucket from '$lib/components/Bucket.svelte';
+	import { intake } from './_data';
 
 	const dateIsToday = true;
 	const curWeekNumber = 14;
 </script>
 
-{#each ['Breakfast', 'Lunch', 'Dinner', 'Snacks'] as label}
-	<Bucket {label}>
-		<div class="card inner">
-			<div class="title-m">item</div>
-		</div>
-	</Bucket>
+<Switcher>
+	today
+	<br />
+	xxx kcal
+</Switcher>
+
+{#each intake as { label, items }}
+	<Bucket {label} {items} />
 {/each}
 <nav>
 	<a href="/items"><IconItems /> Items</a>

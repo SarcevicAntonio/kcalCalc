@@ -24,7 +24,7 @@ html:focus-within {
 body {
 	max-width: 25em;
 	margin: auto;
-	margin-bottom: 126px;
+	margin-bottom: 2em;
 }
 
 nav {
@@ -100,6 +100,11 @@ nav > a {
 .end {
 	justify-content: end;
 	align-items: end;
+}
+
+.start {
+	justify-content: start;
+	align-items: start;
 }
 
 /* components */

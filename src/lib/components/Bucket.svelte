@@ -1,9 +1,9 @@
 <script>
 	import { slide } from 'svelte/transition';
+import Item from './Item.svelte';
 
 	export let label;
-	export let numItems = 2;
-	export let kcal = 245;
+	export let items;
 
 	let expanded = false;
 </script>
@@ -12,17 +12,29 @@
 	<button class="row sb" on:click={() => (expanded = !expanded)}>
 		<span class="title-l">{label}</span>
 		<div class="col end">
-			<span class="body-m">
-				{numItems} Item{numItems !== 1 ? 's' : ''}
-			</span>
-			<span class="label-l">{kcal} kcal</span>
+			{#if items.length}
+				<span class="body-m">
+					{items.length} Item{items.length !== 1 ? 's' : ''}
+				</span>
+				<span class="label-l">
+					{items.reduce(
+						(acc, item) =>
+							acc + (item.kcalPer100 / 100) * item.amounts.reduce((prev, cur) => prev + cur),
+						0
+					)} kcal
+				</span>
+			{:else}
+				add
+			{/if}
 		</div>
 	</button>
 
-	{#if expanded}
-		<div transition:slide>
+	{#if expanded && items.length}
+		<div transition:slide class="col gap">
 			<div class="spacer-s" />
-			<slot />
+			{#each items as item}
+				<Item bind:item />
+			{/each}
 		</div>
 	{/if}
 	<div class="spacer-m" />
@@ -33,9 +45,9 @@
 		padding-bottom: 0;
 	}
 	.spacer-m {
-		height: 0.75em;
+		min-height: 0.75em;
 	}
 	.spacer-s {
-		height: 0.5em;
+		min-height: 0.25em;
 	}
 </style>
