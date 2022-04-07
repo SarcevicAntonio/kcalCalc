@@ -4,10 +4,38 @@
 		0px 6.7px 6.7px rgba(0, 0, 0, 0.05), 0px 16px 16px rgba(0, 0, 0, 0.07);
 	--as-dialog-background: var(--md-surface);
 
+
+/* Color styles */
+--md-primary: rgba(60, 106, 0, 1);
+--md-on-primary: rgba(255, 255, 255, 1);
+--md-primary-container: rgba(185, 244, 117, 1);
+--md-on-primary-container: rgba(14, 32, 0, 1);
+--md-secondary: rgba(88, 98, 74, 1);
+--md-on-secondary: rgba(255, 255, 255, 1);
+--md-secondary-container: rgba(219, 231, 199, 1);
+--md-on-secondary-container: rgba(21, 30, 11, 1);
+--md-tertiary: rgba(56, 102, 99, 1);
+--md-on-tertiary: rgba(255, 255, 255, 1);
+--md-tertiary-container: rgba(188, 236, 232, 1);
+--md-on-tertiary-container: rgba(0, 32, 30, 1);
+--md-error: rgba(186, 27, 27, 1);
+--md-error-container: rgba(255, 218, 212, 1);
+--md-on-error: rgba(255, 255, 255, 1);
+--md-on-error-container: rgba(65, 0, 1, 1);
+--md-background: rgba(253, 252, 245, 1);
+--md-on-background: rgba(26, 28, 23, 1);
+--md-surface: rgba(253, 252, 245, 1);
+--md-on-surface: rgba(26, 28, 23, 1);
+--md-surface-variant: rgba(225, 228, 214, 1);
+--md-on-surface-variant: rgba(68, 72, 61, 1);
+--md-outline: rgba(117, 121, 108, 1);
+--md-inverse-on-surface: rgba(242, 241, 234, 1);
+--md-inverse-surface: rgba(48, 49, 45, 1);
+--md-inverse-primary: rgba(158, 215, 92, 1);
+--md-shadow: rgba(0, 0, 0, 1);
+
+
 /* Text-size styles */
-
-
-
 --md--display1: 4rem;
 --md--display2: 3.56rem;
 --md--display3: 2.81rem;
