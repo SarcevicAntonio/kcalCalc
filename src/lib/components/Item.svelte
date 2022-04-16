@@ -13,7 +13,7 @@
 			<span class="title-m">{item.label}</span>
 			<span class="body-m">{item.brand}</span>
 		</div>
-		<div class="col end">change item</div>
+		<div class="col end">(change item)</div>
 	</button>
 
 	{#if expanded}
@@ -21,7 +21,12 @@
 			<div class="spacer-s" />
 			<Input type="number" disabled value={item.kcalPer100}>kcal Per 100 g || ml</Input>
 			<Input type="calc" bind:value={item.amount}>Amount in g || ml</Input>
-			reportion
+
+			(delete) 
+
+			(reportion)
+
+			xyz kcal
 		</div>
 	{/if}
 	<div class="spacer-m" />

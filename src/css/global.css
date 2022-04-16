@@ -3,7 +3,7 @@
 
 * {
 	box-sizing: border-box;
-	font-family: 'Atkinson Hyperlegible', sans-serif;
+	font-family: Roboto, 'Atkinson Hyperlegible', sans-serif;
 	margin: 0;
 	padding: 0;
 }
@@ -53,7 +53,7 @@ nav > a {
 	color: var(--md-on-primary-container);
 	display: flex;
 	align-items: center;
-	font-size: var(--md--label--large);
+	font-size: var(--md-label--large);
 	gap: 0.5em;
 	& svg {
 		font-size: 18px;
@@ -117,7 +117,7 @@ nav > a {
 	justify-content: center;
 	align-items: center;
 	color: var(--md-primary);
-	font-size: var(--md--label--large);
+	font-size: var(--md-label--large);
 	text-decoration: none;
 	min-height: 40px;
 	& svg {
@@ -151,19 +151,19 @@ nav > a {
 /* typo */
 
 .title-l {
-	font-size: var(--md--title--large);
+	font-size: var(--md-title--large);
 }
 
 .title-m {
-	font-size: var(--md--title--medium);
-	font-weight: bold;
+	font-size: var(--md-title--medium);
+	font-weight: 500;
 }
 
 .body-m {
-	font-size: var(--md--body--medium);
+	font-size: var(--md-body--medium);
 }
 
 .label-l {
-	font-size: var(--md--label--large);
+	font-size: var(--md-label--large);
 	font-weight: bold;
 }

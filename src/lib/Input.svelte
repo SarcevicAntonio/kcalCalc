@@ -53,17 +53,21 @@
 		}
 		dispatch('blur', e);
 	};
+
+	let inputElement;
 </script>
 
 <div
+	on:click={() => inputElement.focus()}
 	use:clickOutside={{ enabled: showOptions, cb: () => (showOptions = false) }}
-	class="container"
 	class:error={canNotEvaluate}
+	class:disabled
 >
 	<label for={id}>
 		<slot />
 	</label>
 	<input
+		bind:this={inputElement}
 		{type}
 		{value}
 		{id}
@@ -109,10 +113,35 @@
 		gap: 0.25em;
 		flex-grow: 1;
 		position: relative;
+
+		padding: 0.5em 1em;
+		border-top-left-radius: 0.25em;
+		border-top-right-radius: 0.25em;
+		border-bottom: 1px solid var(--md-on-surface);
+		background-color: var(--md-surface-variant);
 	}
+
+	div:focus-within {
+		outline: 5px auto Highlight;
+		outline: 5px auto -webkit-focus-ring-color;
+	}
+
+	label {
+		font-size: var(--md-body--small);
+	}
+
 	input {
+		font-size: var(--md-body--large);
+		background-color: transparent;
+		border: none;
 		width: 100%;
+		color: inherit;
 	}
+
+	input:focus {
+		outline: none;
+	}
+
 	.options {
 		position: absolute;
 		top: 3.5em;
@@ -134,5 +163,9 @@
 	.error {
 		background-color: var(--md-error);
 		color: var(--md-on-error);
+	}
+	.disabled {
+		background-color: var(--md-on-secondary-container-0-08);
+		color: var(--md-on-surface);
 	}
 </style>
