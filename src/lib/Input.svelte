@@ -16,6 +16,8 @@
 	export let name = '';
 	export let disabled = false;
 
+	export let outlined = false;
+
 	// autocomplete
 	export let options = undefined;
 	export let optionLabel = 'label';
@@ -62,6 +64,7 @@
 	use:clickOutside={{ enabled: showOptions, cb: () => (showOptions = false) }}
 	class:error={canNotEvaluate}
 	class:disabled
+	class:outlined
 >
 	<label for={id}>
 		<slot />
@@ -106,27 +109,39 @@
 	{/if}
 </div>
 
-<style>
+<style lang="postcss">
 	div {
 		display: flex;
 		flex-direction: column;
 		gap: 0.25em;
 		flex-grow: 1;
 		position: relative;
-
 		padding: 0.5em 1em;
 		border-top-left-radius: 0.25em;
 		border-top-right-radius: 0.25em;
 		border-bottom: 1px solid var(--md-on-surface);
 		background-color: var(--md-surface-variant);
-	}
+		color: var(--md-on-surface-variant);
 
-	div:focus-within {
-		outline: 5px auto Highlight;
-		outline: 5px auto -webkit-focus-ring-color;
+		&.outlined {
+			background-color: transparent;
+			border: 1px solid var(--md-outline);
+			border-radius: 0.25em;
+			& label {
+				color: var(--md-on-surface-variant);
+			}
+			color: var(--md-on-surface);
+		}
+
+		&:focus-within {
+			/* outline: 5px auto Highlight;
+			outline: 5px auto -webkit-focus-ring-color; */
+			border-color: var(--md-primary);
+		}
 	}
 
 	label {
+		color: var(--md-primary);
 		font-size: var(--md-body--small);
 	}
 
@@ -136,10 +151,10 @@
 		border: none;
 		width: 100%;
 		color: inherit;
-	}
 
-	input:focus {
-		outline: none;
+		&:focus {
+			outline: none;
+		}
 	}
 
 	.options {
@@ -161,11 +176,17 @@
 		color: var(--md-on-secondary-container);
 	}
 	.error {
-		background-color: var(--md-error);
-		color: var(--md-on-error);
+		border-color: var(--md-error);
+		& label {
+			color: var(--md-error);
+		}
 	}
 	.disabled {
-		background-color: var(--md-on-secondary-container-0-08);
+		background-color: var(--md-on-secondary-container--opacity-008);
 		color: var(--md-on-surface);
+		border-color: var(--md-on-surface--opacity-012);
+		& > * {
+			opacity: 0.38;
+		}
 	}
 </style>

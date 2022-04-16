@@ -12,8 +12,13 @@
 	<p>You need to Login to use kcalCalc</p>
 {/if}
 
+<button class="btn tonal"> asdfasdf </button>
+<button disabled class="btn tonal"> asdfasdf </button>
+
+<Input type="text" bind:value  disabled>text</Input>
 <Input type="text" bind:value>text</Input>
-<Input type="number" bind:value>number</Input>
+<Input type="number" bind:value outlined>number</Input>
+<Input type="number" bind:value outlined disabled>number</Input>
 <Input type="calc" bind:value>Calc</Input>
 {value}
 

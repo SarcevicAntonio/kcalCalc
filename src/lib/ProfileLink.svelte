@@ -5,9 +5,9 @@
 </script>
 
 {#if $user}
-	<a class="btn txt-only" href="/profile"> <IconProfile /> </a>
+	<a class="btn text" href="/profile"> <IconProfile /> </a>
 {:else}
-	<a class="btn txt-only" href="/login">
+	<a class="btn text" href="/login">
 		<IconLogin />
 	</a>
 {/if}

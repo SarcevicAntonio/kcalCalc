@@ -12,15 +12,16 @@
 </script>
 
 <Switcher>
-	today
-	<br />
-	{kcalDisplay(
-		intake.reduce(
-			(acc, { items }) =>
-				acc + items.reduce((acc, item) => acc + (item.kcalPer100 / 100) * item.amount, 0),
-			0
-		)
-	)} kcal
+	<h2 class="headline-1">Today</h2>
+	<span class="label-l">
+		{kcalDisplay(
+			intake.reduce(
+				(acc, { items }) =>
+					acc + items.reduce((acc, item) => acc + (item.kcalPer100 / 100) * item.amount, 0),
+				0
+			)
+		)} kcal	
+	</span>
 </Switcher>
 
 {#each intake as { label, items }}

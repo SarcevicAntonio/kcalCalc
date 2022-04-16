@@ -7,13 +7,19 @@
 </script>
 
 <div class="row sb">
-	<button class="btn txt-only" on:click={() => dispatch('prev')}>
+	<button class="btn text" on:click={() => dispatch('prev')}>
 		<IconArrowLeft />
 	</button>
 	<div class="col center">
 		<slot />
 	</div>
-	<button class="btn txt-only" on:click={() => dispatch('next')}>
+	<button class="btn text" on:click={() => dispatch('next')}>
 		<IconArrowRight />
 	</button>
 </div>
+
+<style>
+	button {
+		align-self: center;
+	}
+</style>
