@@ -1,0 +1,1 @@
+add new and go to edit page
