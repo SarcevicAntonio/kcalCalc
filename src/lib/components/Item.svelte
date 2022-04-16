@@ -1,4 +1,5 @@
 <script>
+	import Input from '$lib/Input.svelte';
 	import { slide } from 'svelte/transition';
 
 	export let item;
@@ -18,18 +19,9 @@
 	{#if expanded}
 		<div transition:slide class="col gap">
 			<div class="spacer-s" />
-			<label>
-				kcal Per 100 g || ml
-				<input type="number" disabled value={item.kcalPer100}>
-			</label>
-			{#each item.amounts as amount}
-			<label>
-				Amount in g || ml
-				<input type="number" bind:value={amount}>
-				cancel
-			</label>
+			<Input type="number" disabled value={item.kcalPer100}>kcal Per 100 g || ml</Input>
+			<Input type="calc" bind:value={item.amount}>Amount in g || ml</Input>
 			reportion
-			{/each}
 		</div>
 	{/if}
 	<div class="spacer-m" />

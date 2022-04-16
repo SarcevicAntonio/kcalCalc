@@ -1,6 +1,8 @@
 <script>
+	import kcalDisplay from '$lib/kcalDisplay';
+
 	import { slide } from 'svelte/transition';
-import Item from './Item.svelte';
+	import Item from './Item.svelte';
 
 	export let label;
 	export let items;
@@ -17,11 +19,8 @@ import Item from './Item.svelte';
 					{items.length} Item{items.length !== 1 ? 's' : ''}
 				</span>
 				<span class="label-l">
-					{items.reduce(
-						(acc, item) =>
-							acc + (item.kcalPer100 / 100) * item.amounts.reduce((prev, cur) => prev + cur),
-						0
-					)} kcal
+					{kcalDisplay(items.reduce((acc, item) => acc + (item.kcalPer100 / 100) * item.amount, 0))}
+					kcal
 				</span>
 			{:else}
 				add

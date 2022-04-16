@@ -1,7 +1,7 @@
 <script>
 	import Bucket from '$lib/components/Bucket.svelte';
-	import Item from '$lib/components/Item.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
+	import kcalDisplay from '$lib/kcalDisplay';
 	import IconWeek from '~icons/mdi/calendar-week';
 	import IconItems from '~icons/mdi/format-list-bulleted-type';
 	import IconHome from '~icons/mdi/house';
@@ -14,11 +14,17 @@
 <Switcher>
 	today
 	<br />
-	xxx kcal
+	{kcalDisplay(
+		intake.reduce(
+			(acc, { items }) =>
+				acc + items.reduce((acc, item) => acc + (item.kcalPer100 / 100) * item.amount, 0),
+			0
+		)
+	)} kcal
 </Switcher>
 
 {#each intake as { label, items }}
-	<Bucket {label} {items} />
+	<Bucket {label} bind:items />
 {/each}
 <nav>
 	<a href="/items"><IconItems /> Items</a>

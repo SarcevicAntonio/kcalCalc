@@ -21,6 +21,7 @@
 		"firebase-admin": "^10.0.2",
 		"fuse.js": "^6.5.3",
 		"linkedom": "^0.14.5",
+		"mathjs": "^10.4.3",
 		"uuid": "^8.3.2"
 	},
 	"devDependencies": {

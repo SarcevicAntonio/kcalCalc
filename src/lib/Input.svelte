@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Fuse from 'fuse.js';
+	import { evaluate } from 'mathjs';
 	import { createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import clickOutside from './clickOutside';
@@ -13,6 +14,7 @@
 	export let min = undefined;
 	export let max = undefined;
 	export let name = '';
+	export let disabled = false;
 
 	// autocomplete
 	export let options = undefined;
@@ -34,11 +36,30 @@
 		value = type.match(/^(number|range)$/)
 			? +(e.target as HTMLInputElement).value
 			: (e.target as HTMLInputElement).value;
-		dispatch('input', value);
+		(e.target as HTMLInputElement).value = value + '';
+		dispatch('input', e);
+	};
+
+	let canNotEvaluate = false;
+
+	const handleBlur = (e: Event) => {
+		if (type.match(/^(calc)$/) && value) {
+			try {
+				value = evaluate((value + '').replaceAll(',', '.'));
+				canNotEvaluate = false;
+			} catch (e) {
+				canNotEvaluate = true;
+			}
+		}
+		dispatch('blur', e);
 	};
 </script>
 
-<div use:clickOutside={{ enabled: showOptions, cb: () => (showOptions = false) }}>
+<div
+	use:clickOutside={{ enabled: showOptions, cb: () => (showOptions = false) }}
+	class="container"
+	class:error={canNotEvaluate}
+>
 	<label for={id}>
 		<slot />
 	</label>
@@ -50,11 +71,14 @@
 		{min}
 		{max}
 		{name}
+		{disabled}
 		on:input={handleInput}
 		on:change
-		on:focus={() => {
+		on:focus={(e) => {
 			showOptions = true;
+			dispatch('focus', e);
 		}}
+		on:blur={handleBlur}
 	/>
 	<!-- Autocomplete -->
 	{#if showOptions && filtered?.length && value}
@@ -106,5 +130,9 @@
 		border: none;
 		background: var(--md-secondary-container);
 		color: var(--md-on-secondary-container);
+	}
+	.error {
+		background-color: var(--md-error);
+		color: var(--md-on-error);
 	}
 </style>
