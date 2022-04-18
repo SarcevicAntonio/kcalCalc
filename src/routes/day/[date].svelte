@@ -1,4 +1,5 @@
 <script>
+	import { page } from '$app/stores';
 	import Bucket from '$lib/components/Bucket.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import kcalDisplay from '$lib/kcalDisplay';
@@ -9,7 +10,11 @@
 
 	const dateIsToday = true;
 	const curWeekNumber = 14;
+
+	$: date = $page.params.date; // dynamic params!
 </script>
+
+{date}
 
 <Switcher>
 	<h2 class="headline-1">Today</h2>
@@ -20,7 +25,7 @@
 					acc + items.reduce((acc, item) => acc + (item.kcalPer100 / 100) * item.amount, 0),
 				0
 			)
-		)} kcal	
+		)} kcal
 	</span>
 </Switcher>
 

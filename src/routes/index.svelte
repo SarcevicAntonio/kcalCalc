@@ -1,29 +1,21 @@
 <script lang="ts">
 	import { user } from '$lib/stores/user';
-	import IconLogin from '~icons/mdi/login-variant';
 	import IconHome from '~icons/mdi/home';
-	import Input from '$lib/Input.svelte';
+	import IconLogin from '~icons/mdi/login-variant';
 	let todayLink = '/' + new Date().toISOString().split('T')[0].replaceAll('-', '/');
-
-	let value = 0;
 </script>
+
+<a href="/day/xyz">
+	Go to new day view
+</a>
+
+<a href="/items">
+	Go to new item view
+</a>
 
 {#if !$user}
 	<p>You need to Login to use kcalCalc</p>
 {/if}
-
-<button class="btn tonal"> asdfasdf </button>
-<button disabled class="btn tonal"> asdfasdf </button>
-
-<Input type="text" bind:value  disabled>text</Input>
-<Input type="text" bind:value>text</Input>
-<Input type="number" bind:value outlined>number</Input>
-<Input type="number" bind:value outlined disabled>number</Input>
-<Input type="calc" bind:value>Calc</Input>
-{value}
-
-<br /><br />
-{value / 2}
 
 <nav>
 	{#if !$user}
