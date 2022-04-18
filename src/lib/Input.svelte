@@ -8,7 +8,7 @@
 	const id = uuidv4();
 	const dispatch = createEventDispatcher();
 
-	export let value: string | number;
+	export let value: string | number = '';
 	export let placeholder = null;
 	export let type = 'number';
 	export let min = undefined;
@@ -35,7 +35,7 @@
 
 	const handleInput = (e: Event) => {
 		// handle types
-		value = type.match(/^(number|range)$/)
+		value = ['number', 'range'].includes(type)
 			? +(e.target as HTMLInputElement).value
 			: (e.target as HTMLInputElement).value;
 		(e.target as HTMLInputElement).value = value + '';
@@ -45,7 +45,7 @@
 	let canNotEvaluate = false;
 
 	const handleBlur = (e: Event) => {
-		if (type.match(/^(calc)$/) && value) {
+		if (type === 'calc' && value) {
 			try {
 				value = evaluate((value + '').replaceAll(',', '.'));
 				canNotEvaluate = false;
@@ -71,7 +71,7 @@
 	</label>
 	<input
 		bind:this={inputElement}
-		{type}
+		type={type === 'calc' ? 'tel' : type}
 		{value}
 		{id}
 		{placeholder}
