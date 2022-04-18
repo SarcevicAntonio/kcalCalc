@@ -64,8 +64,26 @@ nav > a {
 	align-items: center;
 	font-size: var(--md-label--large);
 	gap: 0.5em;
+	position: relative;
+
 	& svg {
 		font-size: 18px;
+	}
+
+	&:after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 1em;
+		transition: background-color 0.2s ease-in-out;
+	}
+
+	&:not(:disabled):hover:after {
+		background-color: var(--md-on-secondary-container--opacity-008);
+	}
+
+	&:not(:disabled):active:after {
+		background-color: var(--md-on-secondary-container--opacity-012);
 	}
 }
 
@@ -112,7 +130,6 @@ nav > a {
 	align-items: start;
 }
 
-
 .inc-target {
 	margin: -1em -1.25em;
 	padding: 1em 1.25em;
@@ -135,6 +152,9 @@ nav > a {
 	cursor: pointer;
 	transition: background-color 0.2s ease-in-out;
 	position: relative;
+	& svg {
+		font-size: 18px;
+	}
 
 	&:disabled {
 		cursor: default;
@@ -143,10 +163,6 @@ nav > a {
 	&.text {
 		color: var(--md-primary);
 		font-size: var(--md-label--large);
-
-		& svg {
-			font-size: 18px;
-		}
 
 		&:hover {
 			background-color: var(--md-on-primary--opacity-008);
@@ -167,16 +183,11 @@ nav > a {
 		background-color: var(--md-secondary-container);
 		color: var(--md-on-secondary-container);
 
-		& svg {
-			font-size: 18px;
-		}
-
 		&:after {
 			content: '';
 			position: absolute;
 			inset: 0;
 			border-radius: 100px;
-			background-color: hsla(0, 0%, 0%, 0);
 			transition: background-color 0.2s ease-in-out;
 		}
 
@@ -190,8 +201,7 @@ nav > a {
 
 		&:disabled {
 			color: var(--md-on-surface);
-			background-color: #1f1f1f;
-			background-opacity: 12%;
+			background-color: var(--md-on-surface-variant--opacity-012);
 			opacity: 38%;
 		}
 	}
