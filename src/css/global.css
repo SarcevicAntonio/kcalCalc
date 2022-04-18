@@ -95,11 +95,7 @@ nav > a {
 }
 
 .gap {
-	gap: 0.5em;
-}
-
-.big-gap {
-	gap: 1em;
+	gap: 0.75em;
 }
 
 .grow {
@@ -116,6 +112,11 @@ nav > a {
 	align-items: start;
 }
 
+
+.inc-target {
+	margin: -1em -1.25em;
+	padding: 1em 1.25em;
+}
 /* components */
 
 .btn {

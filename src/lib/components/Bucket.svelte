@@ -11,7 +11,7 @@
 </script>
 
 <div class="card filled col">
-	<button class="row center sb" on:click={() => (expanded = !expanded)}>
+	<button class="row center sb inc-target" on:click={() => (expanded = !expanded)}>
 		<span class="title-l">{label}</span>
 		<div class="col end">
 			{#if items.length}

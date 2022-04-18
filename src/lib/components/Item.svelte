@@ -11,7 +11,7 @@
 </script>
 
 <div class="card outlined col">
-	<button class="row sb" on:click={() => (expanded = !expanded)}>
+	<button class="row sb inc-target" on:click={() => (expanded = !expanded)}>
 		<div class="col start">
 			<span class="title-m">{item.label}</span>
 			<span class="body-m">{item.brand}</span>

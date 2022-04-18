@@ -16,7 +16,7 @@
 </script>
 
 <header class="row sb">
-	<div class="row big-gap aic">
+	<div class="row gap aic">
 		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
 	</div>
