@@ -24,7 +24,8 @@ export const post: RequestHandler = async ({ request }) => {
 				'Set-Cookie': sessionCookie,
 			},
 		};
-	} catch {
+	} catch (e) {
+		console.error(e);
 		return { status: 401, body: 'Invalid auth header' };
 	}
 };
