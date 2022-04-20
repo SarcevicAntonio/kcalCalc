@@ -15,7 +15,7 @@
 	}
 </script>
 
-<header class="row sb">
+<header class="row jcsb">
 	<div class="row gap aic">
 		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
@@ -42,7 +42,8 @@
 		width: auto;
 	}
 	header {
-		padding: 1em;
+		padding-block: 0.25em;
+		padding-left: 1em;
 		background-color: var(--md-surface);
 		color: var(--md-on-surface);
 	}

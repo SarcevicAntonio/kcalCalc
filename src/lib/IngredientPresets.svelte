@@ -53,7 +53,7 @@
 		</div>
 	{/each}
 </div>
-<Input bind:value type="text">Suchen</Input>
+<Input bind:value>Suchen</Input>
 
 <style>
 	.wrapper {

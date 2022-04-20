@@ -7,6 +7,7 @@
 	import animationOptions from './animationOptions';
 	import IngredientPresets from './IngredientPresets.svelte';
 	import Input from './Input.svelte';
+	import { calculateKcal } from './kcal';
 	import {
 		ingredientPresets,
 		newIngredient,
@@ -18,7 +19,7 @@
 
 	export let ingredient: IngredientInstance = newIngredient();
 
-	$: kcal = (ingredient.kcalPer100 / 100) * ingredient.amount;
+	$: kcal = calculateKcal(ingredient);
 
 	function handleSelect(e: CustomEvent<Ingredient>) {
 		ingredient.docId = '';
@@ -50,7 +51,6 @@
 	<div class="row gap preset-btn">
 		<Input
 			placeholder="Zwiebel"
-			type="text"
 			bind:value={ingredient.label}
 			options={[...fddbEntries, ...$ingredientPresets]}
 			on:select={handleSelect}
@@ -77,8 +77,8 @@
 	</div>
 
 	<div class="row gap preset-btn">
-		<Input bind:value={ingredient.kcalPer100} on:input>kcal per 100x</Input>
-		<Input bind:value={ingredient.amount} on:input>g|ml</Input>
+		<Input type="number" bind:value={ingredient.kcalPer100} on:input>kcal per 100x</Input>
+		<Input type="number" bind:value={ingredient.amount} on:input>g|ml</Input>
 		{#if ingredient.portions?.length}
 			<Dialog let:toggle>
 				<svelte:fragment slot="trigger-label">
@@ -101,7 +101,7 @@
 			</Dialog>
 		{/if}
 	</div>
-	<div class="row sb">
+	<div class="row jcsb">
 		<slot><span /></slot>
 		<span class="bold">
 			{kcal.toFixed(0)} kcal

@@ -53,7 +53,7 @@
 	}
 </script>
 
-<div class="row sb">
+<div class="row jcsb">
 	<button
 		class="ghost"
 		on:click={() => {
@@ -83,7 +83,7 @@
 	{#each curDateUnits as { label, kcal, ingredients, id } (id)}
 		<a href="/edit/{id}" class="card" animate:flip={animationOptions}>
 			<h2>{label || 'Kein Label'}</h2>
-			<div class="row sb">
+			<div class="row jcsb">
 				<span>
 					{#if ingredients?.length}
 						{ingredients.length} Zutaten

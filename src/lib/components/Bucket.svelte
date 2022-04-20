@@ -1,8 +1,10 @@
 <script>
+	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
-	import IcAdd from '~icons/ic/round-add';
 	import { slide } from 'svelte/transition';
+	import IcAdd from '~icons/ic/round-add';
 	import Item from './Item.svelte';
+	import ItemSelector from './ItemSelector.svelte';
 
 	export let label;
 	export let items;
@@ -11,22 +13,19 @@
 </script>
 
 <div class="card filled col">
-	<button class="row center sb inc-target" on:click={() => (expanded = !expanded)}>
+	<button class="row center jcsb inc-target" on:click={() => (expanded = !expanded)}>
 		<span class="title-l">{label}</span>
-		<div class="col end">
+		<div class="col aie jcsb">
 			{#if items.length}
 				<span class="body-m">
 					{items.length} Item{items.length !== 1 ? 's' : ''}
 				</span>
 				<span class="label-l">
-					{kcalDisplay(items.reduce((acc, item) => acc + (item.kcalPer100 / 100) * item.amount, 0))}
+					{kcalDisplay(calculateKcalFromItems(items))}
 					kcal
 				</span>
 			{:else}
-				<button class="btn text" on:click|stopPropagation>
-					<IcAdd />
-					Add Item
-				</button>
+				<ItemSelector />
 			{/if}
 		</div>
 	</button>
@@ -38,10 +37,7 @@
 				<Item bind:item />
 			{/each}
 			<div class="row end">
-				<button class="btn text">
-					<IcAdd />
-					Add Item
-				</button>
+				<ItemSelector />
 			</div>
 		</div>
 	{/if}
@@ -53,7 +49,7 @@
 		padding-bottom: 0;
 	}
 	.spacer-m {
-		min-height: 0.75em;
+		min-height: 0.5em;
 	}
 	.spacer-s {
 		min-height: 0.25em;

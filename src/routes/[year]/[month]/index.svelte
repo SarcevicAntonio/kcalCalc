@@ -47,7 +47,7 @@
 	}
 </script>
 
-<div class="row sb">
+<div class="row jcsb">
 	<button
 		class="ghost"
 		on:click={() => {
@@ -83,7 +83,7 @@
 			class:today={dayDateString === todayString}
 		>
 			<h2>{day}. {monthName}</h2>
-			<div class="row sb">
+			<div class="row jcsb">
 				<span>
 					{thisDaysUnits.length} Einheiten
 				</span>

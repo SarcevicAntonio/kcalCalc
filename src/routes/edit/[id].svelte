@@ -56,7 +56,7 @@
 </script>
 
 {#if eatUnit}
-	<div class="row sb">
+	<div class="row jcsb">
 		<div class="col">
 			<h1>Einheit</h1>
 			<span class="bold">
@@ -77,7 +77,7 @@
 
 	<Input type="date" bind:value={eatUnit.date} on:input={edited}>Datum</Input>
 
-	<Input type="text" placeholder="Pizza" bind:value={eatUnit.label} on:input={edited}>Label</Input>
+	<Input placeholder="Pizza" bind:value={eatUnit.label} on:input={edited}>Label</Input>
 
 	<div class="row gap">
 		<input
@@ -114,7 +114,7 @@
 		{/each}
 	{/if}
 
-	<nav class="sb aic">
+	<nav class="jcsb aic">
 		<button on:click={addIngredient}><IconPlus /> Zutat</button>
 		<Dialog let:toggle>
 			<svelte:fragment slot="trigger-label">

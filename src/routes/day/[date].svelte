@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import Bucket from '$lib/components/Bucket.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
+	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import IconWeek from '~icons/mdi/calendar-week';
 	import IconItems from '~icons/mdi/format-list-bulleted-type';
@@ -14,13 +15,10 @@
 	$: date = $page.params.date; // dynamic params!
 
 	$: kcalInDay = Object.values(dayIntake).reduce(
-		(acc, items) =>
-			acc + (items as any[]).reduce((acc, item) => acc + (item.kcalPer100 / 100) * item.amount, 0),
+		(acc, items) => acc + calculateKcalFromItems(items),
 		0
 	);
 </script>
-
-{date}
 
 <Switcher>
 	<h2 class="headline-1">Today</h2>

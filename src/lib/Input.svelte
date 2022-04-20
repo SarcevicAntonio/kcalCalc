@@ -10,7 +10,7 @@
 
 	export let value: string | number = '';
 	export let placeholder = null;
-	export let type = 'number';
+	export let type = 'text';
 	export let min = undefined;
 	export let max = undefined;
 	export let name = '';
@@ -186,7 +186,7 @@
 		color: var(--md-on-surface);
 		border-color: var(--md-on-surface--opacity-012);
 		& > * {
-			opacity: 0.38;
+			opacity: 0.75;
 		}
 	}
 </style>

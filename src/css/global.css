@@ -27,6 +27,10 @@ body {
 	margin-bottom: 4em;
 }
 
+button {
+	text-align: unset;
+}
+
 h1,
 h2,
 h3,
@@ -104,20 +108,12 @@ nav > a {
 	align-items: center;
 }
 
-.sb {
+.jcsb {
 	justify-content: space-between;
 }
 
-.aic {
-	align-items: center;
-}
-
-.gap {
-	gap: 0.75em;
-}
-
-.grow {
-	flex-grow: 1;
+.jcc {
+	justify-content: center;
 }
 
 .end {
@@ -130,15 +126,39 @@ nav > a {
 	align-items: start;
 }
 
+.ais {
+	align-items: start;
+}
+
+.aistch {
+	align-items: stretch;
+}
+
+.aic {
+	align-items: center;
+}
+
+.aie {
+	align-items: end;
+}
+
+.gap {
+	gap: 0.75em;
+}
+
+.grow {
+	flex-grow: 1;
+}
+
 .inc-target {
-	margin: -1em -1.25em;
-	padding: 1em 1.25em;
+	margin: -0.5em -0.75em;
+	padding: 0.5em 0.75em;
 }
 /* components */
 
 .btn {
 	width: fit-content;
-	padding-block: 0.625rem;
+	padding-block: 0.5rem;
 	padding-inline: 0.75rem;
 	background: none;
 	border: none;
@@ -152,6 +172,7 @@ nav > a {
 	cursor: pointer;
 	transition: background-color 0.2s ease-in-out;
 	position: relative;
+	font-size: var(--md-label--large);
 	& svg {
 		font-size: 18px;
 	}
@@ -162,7 +183,6 @@ nav > a {
 
 	&.text {
 		color: var(--md-primary);
-		font-size: var(--md-label--large);
 
 		&:hover {
 			background-color: var(--md-on-primary--opacity-008);
@@ -209,7 +229,7 @@ nav > a {
 
 .card {
 	text-decoration: unset;
-	padding: 0.75em 1em;
+	padding: 0.5em 0.75em;
 	border-radius: 0.75em;
 
 	&.filled {
@@ -238,6 +258,15 @@ nav > a {
 
 .headline-1 {
 	font-size: var(--md-headline1);
+}
+.headline-2 {
+	font-size: var(--md-headline2);
+}
+.headline-3 {
+	font-size: var(--md-headline3);
+}
+.headline-4 {
+	font-size: var(--md-headline4);
 }
 
 .title-l {

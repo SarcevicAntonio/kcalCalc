@@ -6,7 +6,7 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<div class="row sb">
+<div class="row jcsb">
 	<button class="btn text" on:click={() => dispatch('prev')}>
 		<IconArrowLeft />
 	</button>
