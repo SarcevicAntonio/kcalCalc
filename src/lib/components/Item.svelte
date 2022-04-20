@@ -1,20 +1,31 @@
 <script>
 	import Input from '$lib/Input.svelte';
-	import { slide } from 'svelte/transition';
-	import IcEdit from '~icons/ic/round-edit';
-	import IcDelete from '~icons/ic/round-delete-forever';
-	import IcPortion from '~icons/ic/round-photo-size-select-small';
 	import kcalDisplay from '$lib/kcalDisplay';
+	import { slide } from 'svelte/transition';
+	import IcDelete from '~icons/ic/round-delete-forever';
+	import IcEdit from '~icons/ic/round-edit';
+	import IcPortion from '~icons/ic/round-photo-size-select-small';
+
 	export let item;
 
 	let expanded = false;
+
+	$: kcalLabel = kcalDisplay((item.kcalPer100 / 100) * item.amount);
 </script>
 
 <div class="card outlined col">
 	<button class="row sb inc-target" on:click={() => (expanded = !expanded)}>
 		<div class="col start">
 			<span class="title-m">{item.label}</span>
-			<span class="body-m">{item.brand}</span>
+			{#if expanded}
+				<span class="body-m">
+					{item.brand}
+				</span>
+			{:else}
+				<span class="body-m">
+					{kcalLabel} kcal
+				</span>
+			{/if}
 		</div>
 		<div class="col end">
 			<button class="btn text" on:click|stopPropagation>
@@ -35,7 +46,7 @@
 				<button class="btn text">
 					<IcPortion />
 				</button>
-				<span class="label-l"> {kcalDisplay((item.kcalPer100 / 100) * item.amount)} kcal </span>
+				<span class="label-l"> {kcalLabel} kcal </span>
 			</div>
 		</div>
 	{/if}
