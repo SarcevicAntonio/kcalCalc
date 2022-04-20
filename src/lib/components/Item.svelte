@@ -53,7 +53,7 @@
 	</button>
 
 	{#if expanded}
-		<div transition:slide class="col gap">
+		<div transition:slide|local class="col gap">
 			<div class="spacer-s" />
 			{#if typeof item.id === 'string' && item.id.startsWith('CUSTOM')}
 				<Input bind:value={item.label}>Custom Label</Input>

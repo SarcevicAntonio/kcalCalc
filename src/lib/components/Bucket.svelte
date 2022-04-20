@@ -31,7 +31,7 @@
 	</button>
 
 	{#if expanded && items.length}
-		<div transition:slide class="col gap">
+		<div transition:slide|local class="col gap">
 			<div class="spacer-s" />
 			{#each items as item}
 				<Item bind:item />
