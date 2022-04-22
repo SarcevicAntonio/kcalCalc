@@ -5,16 +5,16 @@
 	export let item;
 </script>
 
-<div class="card filled row jcsb">
-	<div class="col ais">
+<div class="card filled">
+	<div class="item-info">
 		<span class="title-l">{item.label}</span>
 		<span class="body-m">
 			{item.brand}
 		</span>
 	</div>
-	<div class="col aie jcsb">
+	<div class="item-data">
 		<span class="body-m">
-			{#if item.portions.lenght}
+			{#if item.portions.length}
 				{item.portions.length} port.
 			{/if}
 		</span>
@@ -23,3 +23,20 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.card {
+		display: flex;
+		justify-content: space-between;
+	}
+	.item-info {
+		display: flex;
+		flex-direction: column;
+	}
+	.item-data {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: end;
+	}
+</style>

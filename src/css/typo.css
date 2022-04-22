@@ -1,0 +1,30 @@
+.headline-1 {
+	font-size: var(--md-headline1);
+}
+.headline-2 {
+	font-size: var(--md-headline2);
+}
+.headline-3 {
+	font-size: var(--md-headline3);
+}
+.headline-4 {
+	font-size: var(--md-headline4);
+}
+
+.title-l {
+	font-size: var(--md-title--large);
+}
+
+.title-m {
+	font-size: var(--md-title--medium);
+	font-weight: 500;
+}
+
+.body-m {
+	font-size: var(--md-body--medium);
+}
+
+.label-l {
+	font-size: var(--md-label--large);
+	font-weight: 500;
+}

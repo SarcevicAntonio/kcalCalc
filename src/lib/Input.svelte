@@ -111,6 +111,7 @@
 
 <style lang="postcss">
 	div {
+		cursor: text;
 		display: flex;
 		flex-direction: column;
 		gap: 0.25em;
@@ -141,6 +142,7 @@
 	}
 
 	label {
+		cursor: text;
 		color: var(--md-primary);
 		font-size: var(--md-body--small);
 	}

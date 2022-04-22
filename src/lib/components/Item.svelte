@@ -14,9 +14,9 @@
 	$: kcalLabel = kcalDisplay(calculateKcal(item));
 </script>
 
-<div class="card outlined col">
-	<button class="row jcsb aistch inc-target" on:click={() => (expanded = !expanded)}>
-		<div class="col ais jcc">
+<button on:click={() => (expanded = !expanded)} class="card outlined">
+	<div class="row">
+		<div class="col item-info">
 			<span class="title-m">
 				{#if !item.label}
 					{#if item.id === 'CUSTOM:KCAL_COUNT'}
@@ -34,27 +34,14 @@
 				</span>
 			{/if}
 		</div>
-		<div class="col aie jcsb">
-			{#if expanded}
-				<ItemSelector edit />
-			{:else}
-				<span class="body-m">
-					{#if item.id !== 'CUSTOM:KCAL_COUNT'}
-						{item.amount} g || ml
-					{:else}
-						&nbsp;
-					{/if}
-				</span>
-				<span class="label-l">
-					{kcalLabel} kcal
-				</span>
-			{/if}
-		</div>
-	</button>
+		<span class="label-l">
+			{kcalLabel} kcal
+		</span>
+	</div>
 
 	{#if expanded}
-		<div transition:slide|local class="col gap">
-			<div class="spacer-s" />
+		<div transition:slide|local class="col" on:click|stopPropagation>
+			<div class="pad" />
 			{#if typeof item.id === 'string' && item.id.startsWith('CUSTOM')}
 				<Input bind:value={item.label}>Custom Label</Input>
 			{/if}
@@ -73,30 +60,44 @@
 					Kcal
 				{/if}
 			</Input>
-			<div class="row jcsb aic">
-				<button class="btn text">
-					<IcDelete />
-				</button>
+			<div class="row">
 				<button class="btn text">
 					<IcPortion />
 				</button>
-				<div class="col aie">
-					<span class="label-l"> {kcalLabel} kcal </span>
-				</div>
+				<button class="btn text">
+					<IcDelete />
+				</button>
+				<ItemSelector edit />
 			</div>
 		</div>
 	{/if}
-	<div class="spacer-m" />
-</div>
+	<div class="pad" />
+</button>
 
 <style>
+	.row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	.card {
 		padding-bottom: 0;
 	}
-	.spacer-m {
-		min-height: 0.5em;
+
+	.col {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: center;
+		gap: 0.5em;
 	}
-	.spacer-s {
-		min-height: 0.25em;
+
+	.item-info {
+		min-height: 4.1em;
+	}
+
+	.pad {
+		min-height: 0.5em;
 	}
 </style>

@@ -8,9 +8,10 @@
 	import Fuse from 'fuse.js';
 
 	export let edit = false;
-
+	export let end = false;
+	export let tonal = false;
+	export let noCustomKcal = false;
 	let search = '';
-
 	let filtered = items;
 
 	$: setFiltered(items, search);
@@ -42,7 +43,7 @@
 	}
 </script>
 
-<button class="btn text" on:click|stopPropagation={toggle}>
+<button class:end class="btn {tonal ? 'tonal' : 'text'}" on:click|stopPropagation={toggle}>
 	{#if edit}
 		<IcEdit />
 	{:else}
@@ -52,23 +53,27 @@
 
 <Dialog bind:open={dialogOpen} includedTrigger={false}>
 	<svelte:fragment slot="trigger-label" />
-	<div class="col gap content">
+	<div class="content">
 		<h2 class="headline-2">Select Item</h2>
+
+		{#if !noCustomKcal}
+			<button
+				on:click={() => {
+					alert('TODO');
+				}}
+			>
+				<div class="card filled">
+					<span class="title-l">Custom kcal count</span>
+				</div>
+			</button>
+		{/if}
+
 		<button
 			on:click={() => {
 				alert('TODO');
 			}}
 		>
-			<div class="card filled row jcsb aie">
-				<span class="title-l">Custom kcal count</span>
-			</div>
-		</button>
-		<button
-			on:click={() => {
-				alert('TODO');
-			}}
-		>
-			<div class="card filled row jcsb aie">
+			<div class="card filled">
 				<span class="title-l">Custom kcal & amount</span>
 			</div>
 		</button>
@@ -84,7 +89,7 @@
 		{/each}
 		{#if search}
 			{#if !fddbEntries.length}
-				<button class="card filled row jcsb aie..." on:click={searchFddb}>
+				<button class="card filled" on:click={searchFddb}>
 					<span class="title-l"> Search FDDB... </span>
 				</button>
 			{:else}
@@ -103,7 +108,14 @@
 </Dialog>
 
 <style>
+	.end {
+		margin-left: auto;
+	}
 	.content {
-		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+
+		width: min(calc(100vw - 6em), 400px);
 	}
 </style>

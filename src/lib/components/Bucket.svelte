@@ -2,7 +2,6 @@
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { slide } from 'svelte/transition';
-	import IcAdd from '~icons/ic/round-add';
 	import Item from './Item.svelte';
 	import ItemSelector from './ItemSelector.svelte';
 
@@ -12,10 +11,10 @@
 	let expanded = false;
 </script>
 
-<div class="card filled col">
-	<button class="row center jcsb inc-target" on:click={() => (expanded = !expanded)}>
+<button class="card filled" on:click={() => (expanded = !expanded)}>
+	<div class="row">
 		<span class="title-l">{label}</span>
-		<div class="col aie jcsb">
+		<div class="bucket-info">
 			{#if items.length}
 				<span class="body-m">
 					{items.length} Item{items.length !== 1 ? 's' : ''}
@@ -28,30 +27,52 @@
 				<ItemSelector />
 			{/if}
 		</div>
-	</button>
+	</div>
 
 	{#if expanded && items.length}
-		<div transition:slide|local class="col gap">
-			<div class="spacer-s" />
+		<div transition:slide|local class="col" on:click|stopPropagation>
+			<div class="pad" />
 			{#each items as item}
 				<Item bind:item />
 			{/each}
-			<div class="row end">
-				<ItemSelector />
-			</div>
+			<ItemSelector end />
 		</div>
 	{/if}
-	<div class="spacer-m" />
-</div>
+	<div class="pad" />
+</button>
 
 <style>
-	.card {
+	.row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	button {
 		padding-bottom: 0;
 	}
-	.spacer-m {
-		min-height: 0.5em;
+
+	.bucket-info {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: end;
 	}
-	.spacer-s {
-		min-height: 0.25em;
+	.col {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: center;
+		gap: 0.5em;
+	}
+
+	.title-l {
+		display: flex;
+		align-items: center;
+		min-height: 2em;
+	}
+
+	.pad {
+		min-height: 0.5em;
 	}
 </style>

@@ -1,5 +1,6 @@
-@import './reset.css';
+@import './components.css';
 @import './var.css';
+@import './typo.css';
 
 * {
 	box-sizing: border-box;
@@ -22,13 +23,20 @@ html:focus-within {
 }
 
 body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75em;
 	max-width: 25em;
 	margin: auto;
 	margin-bottom: 4em;
+	padding-inline: 0.5em;
 }
 
 button {
 	text-align: unset;
+	border: unset;
+	background: unset;
+	color: unset;
 }
 
 h1,
@@ -38,251 +46,4 @@ h4,
 h5,
 h6 {
 	all: unset;
-}
-
-nav {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	width: 100%;
-	padding: 1em;
-	display: flex;
-	flex-direction: row-reverse;
-	justify-content: space-between;
-	max-width: 25em;
-	padding: 0.75em;
-	margin: auto;
-}
-
-nav > button,
-nav > a {
-	border-radius: 1em;
-	border: none;
-	box-shadow: var(--shadow);
-	text-decoration: none;
-	padding: 1em;
-	background-color: var(--md-primary-container);
-	color: var(--md-on-primary-container);
-	display: flex;
-	align-items: center;
-	font-size: var(--md-label--large);
-	gap: 0.5em;
-	position: relative;
-
-	& svg {
-		font-size: 18px;
-	}
-
-	&:after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: 1em;
-		transition: background-color 0.2s ease-in-out;
-	}
-
-	&:not(:disabled):hover:after {
-		background-color: var(--md-on-secondary-container--opacity-008);
-	}
-
-	&:not(:disabled):active:after {
-		background-color: var(--md-on-secondary-container--opacity-012);
-	}
-}
-
-/* utility flexes */
-
-.col {
-	display: flex;
-	flex-direction: column;
-}
-
-.row {
-	display: flex;
-	flex-direction: row;
-}
-
-.center {
-	justify-content: center;
-	align-items: center;
-}
-
-.jcsb {
-	justify-content: space-between;
-}
-
-.jcc {
-	justify-content: center;
-}
-
-.end {
-	justify-content: end;
-	align-items: end;
-}
-
-.start {
-	justify-content: start;
-	align-items: start;
-}
-
-.ais {
-	align-items: start;
-}
-
-.aistch {
-	align-items: stretch;
-}
-
-.aic {
-	align-items: center;
-}
-
-.aie {
-	align-items: end;
-}
-
-.gap {
-	gap: 0.75em;
-}
-
-.grow {
-	flex-grow: 1;
-}
-
-.inc-target {
-	margin: -0.5em -0.75em;
-	padding: 0.5em 0.75em;
-}
-/* components */
-
-.btn {
-	width: fit-content;
-	padding-block: 0.5rem;
-	padding-inline: 0.75rem;
-	background: none;
-	border: none;
-	display: flex;
-	gap: 0.5rem;
-	justify-content: center;
-	align-items: center;
-	text-decoration: none;
-	border-radius: 100px;
-	min-height: 40px;
-	cursor: pointer;
-	transition: background-color 0.2s ease-in-out;
-	position: relative;
-	font-size: var(--md-label--large);
-	& svg {
-		font-size: 18px;
-	}
-
-	&:disabled {
-		cursor: default;
-	}
-
-	&.text {
-		color: var(--md-primary);
-
-		&:hover {
-			background-color: var(--md-on-primary--opacity-008);
-		}
-
-		&:active {
-			background-color: var(--md-on-primary--opacity-012);
-		}
-
-		&:disabled {
-			color: var(--md-on-surface);
-			background-color: transparent;
-			opacity: 38%;
-		}
-	}
-
-	&.tonal {
-		background-color: var(--md-secondary-container);
-		color: var(--md-on-secondary-container);
-
-		&:after {
-			content: '';
-			position: absolute;
-			inset: 0;
-			border-radius: 100px;
-			transition: background-color 0.2s ease-in-out;
-		}
-
-		&:not(:disabled):hover:after {
-			background-color: var(--md-on-secondary-container--opacity-008);
-		}
-
-		&:not(:disabled):active:after {
-			background-color: var(--md-on-secondary-container--opacity-012);
-		}
-
-		&:disabled {
-			color: var(--md-on-surface);
-			background-color: var(--md-on-surface-variant--opacity-012);
-			opacity: 38%;
-		}
-	}
-}
-
-.card {
-	text-decoration: unset;
-	padding: 0.5em 0.75em;
-	border-radius: 0.75em;
-
-	&.filled {
-		background-color: var(--md-surface-variant);
-		color: var(--md-on-surface-variant);
-	}
-
-	&.outlined {
-		background-color: var(--md-surface);
-		color: var(--md-on-surface);
-		border: 1px solid var(--md-outline);
-	}
-}
-
-.notice {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 33rem;
-	font-size: 1.5em;
-	text-align: center;
-	color: var(--md-on-background);
-}
-
-/* typo */
-
-.headline-1 {
-	font-size: var(--md-headline1);
-}
-.headline-2 {
-	font-size: var(--md-headline2);
-}
-.headline-3 {
-	font-size: var(--md-headline3);
-}
-.headline-4 {
-	font-size: var(--md-headline4);
-}
-
-.title-l {
-	font-size: var(--md-title--large);
-}
-
-.title-m {
-	font-size: var(--md-title--medium);
-	font-weight: 500;
-}
-
-.body-m {
-	font-size: var(--md-body--medium);
-}
-
-.label-l {
-	font-size: var(--md-label--large);
-	font-weight: 500;
 }

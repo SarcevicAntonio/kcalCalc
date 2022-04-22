@@ -15,17 +15,13 @@
 	}
 </script>
 
-<header class="row jcsb">
-	<div class="row gap aic">
-		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
-		<h1>kcalCalc</h1>
-	</div>
+<header>
+	<img src="/icon-mono.svg" alt="kcalCalc Logo" />
+	<h1>kcalCalc</h1>
 	<ProfileLink />
 </header>
 
-<div class="col gap content">
-	<slot />
-</div>
+<slot />
 
 <Notifications />
 
@@ -42,12 +38,11 @@
 		width: auto;
 	}
 	header {
+		display: flex;
+		justify-content: space-between;
 		padding-block: 0.25em;
 		padding-left: 1em;
 		background-color: var(--md-surface);
 		color: var(--md-on-surface);
-	}
-	.content {
-		padding: 0.5em;
 	}
 </style>
