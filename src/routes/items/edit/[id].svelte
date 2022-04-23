@@ -1,11 +1,14 @@
 <script lang="ts">
+	import { browser } from '$app/env';
+
 	import { page } from '$app/stores';
-	import ItemSelector from '$lib/components/ItemSelector.svelte';
 	import Item from '$lib/components/Item.svelte';
+	import ItemSelector from '$lib/components/ItemSelector.svelte';
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { Dialog } from 'as-comps';
+	import { onMount } from 'svelte';
 	import MdiArrowLeft from '~icons/ic/round-arrow-back';
 	import MdiDeleteForever from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
@@ -13,32 +16,57 @@
 
 	const id = parseInt($page.params.id);
 
-	const item = getItem(id);
+	let item = getItem(id);
+
+	let sumInputEl = null;
+	let activeEl = undefined;
+	function update(event) {
+		activeEl = document.activeElement;
+	}
+	onMount(() => {
+		document.addEventListener('focus', update, true);
+		document.addEventListener('blur', update, true);
+		return () => {
+			document.removeEventListener('focus', update, true);
+			document.removeEventListener('blur', update, true);
+		};
+	});
 </script>
 
 <h2 class="headline-1">Edit Item</h2>
 
 <Input bind:value={item.label}>Label</Input>
+
 <Input bind:value={item.brand}>Brand</Input>
-<Input type="calc" disabled value={kcalDisplay(calculateKcalPer100FromItems(item.items))}>
-	kcal per 100 g || ml
-</Input>
+
+{#if !item.items.length}
+	<Input type="calc" bind:value={item.kcalPer100}>kcal per 100 g || ml</Input>
+{:else}
+	<Input
+		type="calc"
+		disabled
+		value={kcalDisplay(calculateKcalPer100FromItems(item.items, item.amount))}
+	>
+		kcal per 100 g || ml
+	</Input>
+{/if}
+
 <div class="row">
 	<input
 		aria-label="Override Amount"
 		id="override-amount"
 		type="checkbox"
-		value={item.overrideAmount}
+		checked={item.amount ? true : false}
 		on:input={() => {
-			if (item.overrideAmount) {
-				item.overrideAmount = 0;
+			if (item.amount) {
+				item.amount = 0;
 			} else {
-				item.overrideAmount = calculateAmountSum(item.items);
+				item.amount = calculateAmountSum(item.items) || 100;
 			}
 		}}
 	/>
-	{#if item.overrideAmount}
-		<Input type="calc" bind:value={item.overrideAmount}>Amount Sum</Input>
+	{#if item.amount || activeEl === sumInputEl}
+		<Input type="calc" bind:value={item.amount} bind:inputElement={sumInputEl}>Amount Sum</Input>
 	{:else}
 		<Input type="calc" disabled value={calculateAmountSum(item.items)}>Amount Sum</Input>
 	{/if}
@@ -46,8 +74,15 @@
 
 <h3 class="headline-4">Items</h3>
 
-{#each item.items as child}
-	<Item bind:item={child} />
+{#each item.items as child, index}
+	<Item
+		bind:item={child}
+		on:delete={() => {
+			item.items.splice(index, 1);
+			if (!item.items.length) item.kcalPer100 = 100;
+			item = item;
+		}}
+	/>
 {/each}
 
 <ItemSelector noCustomKcal end tonal />

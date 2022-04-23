@@ -4,6 +4,8 @@ export const items = [
 		id: 1,
 		label: 'Brot town',
 		brand: 'asdf laden',
+		kcalPer100: 0, // 0 means no override
+		amount: 0, // 0 means no override
 		items: [
 			{
 				id: 1234,
@@ -20,7 +22,6 @@ export const items = [
 				amount: 20,
 			},
 		],
-		overrideAmount: 0, // 0 means no override
 		portions: [
 			{
 				label: 'Scheibe',

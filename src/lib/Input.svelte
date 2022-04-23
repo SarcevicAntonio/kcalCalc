@@ -45,7 +45,8 @@
 	let canNotEvaluate = false;
 
 	const handleBlur = (e: Event) => {
-		if (type === 'calc' && value) {
+		if (type === 'calc') {
+			if (!value) value = 0;
 			try {
 				value = evaluate((value + '').replaceAll(',', '.'));
 				canNotEvaluate = false;
@@ -56,7 +57,7 @@
 		dispatch('blur', e);
 	};
 
-	let inputElement;
+	export let inputElement = null;
 </script>
 
 <div

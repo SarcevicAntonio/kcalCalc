@@ -2,10 +2,13 @@
 	import Input from '$lib/Input.svelte';
 	import { calculateKcal } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
+	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcPortion from '~icons/ic/round-photo-size-select-small';
 	import ItemSelector from './ItemSelector.svelte';
+
+	const dispatch = createEventDispatcher();
 
 	export let item;
 
@@ -61,7 +64,7 @@
 				{/if}
 			</Input>
 			<div class="row">
-				<button class="btn text">
+				<button class="btn text" on:click={() => dispatch('delete')}>
 					<IcDelete />
 				</button>
 				<button class="btn text">
