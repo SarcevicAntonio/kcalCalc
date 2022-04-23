@@ -57,7 +57,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
-		align-items: end;
+		align-items: flex-end;
 	}
 	.col {
 		display: flex;
