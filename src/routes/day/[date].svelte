@@ -1,21 +1,21 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Bucket from '$lib/components/Bucket.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
+	import type { ItemInstance } from '$lib/stores/items';
 	import IconWeek from '~icons/mdi/calendar-week';
 	import IconItems from '~icons/mdi/format-list-bulleted-type';
 	import IconHome from '~icons/mdi/house';
-	import { dayIntake } from './_data';
+	import { day } from './_data';
 
 	const dateIsToday = true;
 	const curWeekNumber = 14;
 
-	$: date = $page.params.date; // dynamic params!
+	// $: date = $page.params.date; // dynamic params!
 
-	$: kcalInDay = Object.values(dayIntake).reduce(
-		(acc, items) => acc + calculateKcalFromItems(items),
+	$: kcalInDay = Object.values(day.intake).reduce(
+		(acc, items: ItemInstance[]) => acc + calculateKcalFromItems(items),
 		0
 	);
 </script>
@@ -27,8 +27,8 @@
 	</span>
 </Switcher>
 
-{#each Object.keys(dayIntake) as label}
-	<Bucket {label} bind:items={dayIntake[label]} />
+{#each Object.keys(day.intake) as label}
+	<Bucket {label} bind:items={day.intake[label]} />
 {/each}
 <nav>
 	<a href="/items"><IconItems /> Items</a>

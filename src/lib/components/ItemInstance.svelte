@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
 	import Input from '$lib/Input.svelte';
 	import { calculateKcal } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
+	import type { ItemInstance } from '$lib/stores/items';
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import IcDelete from '~icons/ic/round-delete-forever';
@@ -10,7 +11,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let item;
+	export let item: ItemInstance;
 
 	let expanded = false;
 
@@ -45,7 +46,7 @@
 	{#if expanded}
 		<div transition:slide|local class="col" on:click|stopPropagation>
 			<div class="pad" />
-			{#if typeof item.id === 'string' && item.id.startsWith('CUSTOM')}
+			{#if item.id.startsWith('CUSTOM')}
 				<Input bind:value={item.label}>Custom Label</Input>
 			{/if}
 

@@ -1,10 +1,9 @@
 <script>
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import Input from '$lib/Input.svelte';
+	import { items } from '$lib/stores/items';
 	import IcAdd from '~icons/ic/round-add';
 	import IcHouse from '~icons/mdi/house';
-	import { items } from './_items';
-
 	let filterValue = '';
 </script>
 

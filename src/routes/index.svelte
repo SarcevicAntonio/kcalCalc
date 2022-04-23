@@ -3,9 +3,7 @@
 
 	import IconHome from '~icons/mdi/home';
 	import IconLogin from '~icons/mdi/login-variant';
-	let todayLink = '/' + new Date().toISOString().split('T')[0].replaceAll('-', '/');
-
-	$: console.log($user);
+	// let todayLink = '/' + new Date().toISOString().split('T')[0].replaceAll('-', '/');
 </script>
 
 <a href="/day/xyz"> Go to new day view </a>

@@ -1,26 +1,24 @@
 <script lang="ts">
-	import { browser } from '$app/env';
-
 	import { page } from '$app/stores';
-	import Item from '$lib/components/Item.svelte';
+	import ItemInstance from '$lib/components/ItemInstance.svelte';
 	import ItemSelector from '$lib/components/ItemSelector.svelte';
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
+	import { getItem } from '$lib/stores/items';
 	import { Dialog } from 'as-comps';
 	import { onMount } from 'svelte';
 	import MdiArrowLeft from '~icons/ic/round-arrow-back';
 	import MdiDeleteForever from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
-	import { getItem } from '../_items';
 
-	const id = parseInt($page.params.id);
+	const id = $page.params.id;
 
 	let item = getItem(id);
 
 	let sumInputEl = null;
 	let activeEl = undefined;
-	function update(event) {
+	function update() {
 		activeEl = document.activeElement;
 	}
 	onMount(() => {
@@ -75,7 +73,7 @@
 <h3 class="headline-4">Items</h3>
 
 {#each item.items as child, index}
-	<Item
+	<ItemInstance
 		bind:item={child}
 		on:delete={() => {
 			item.items.splice(index, 1);

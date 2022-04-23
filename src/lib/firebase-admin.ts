@@ -5,7 +5,7 @@ import { getDatabase } from 'firebase-admin/database';
 const adminCreds = {
 	projectId: import.meta.env.VITE_FIRE_PROJECTID as string,
 	clientEmail: import.meta.env.VITE_FIRE_ADMIN_EMAIL as string,
-	privateKey: (import.meta.env.VITE_FIRE_ADMIN_KEY as string).replace(/\\n/g, '\n')
+	privateKey: (import.meta.env.VITE_FIRE_ADMIN_KEY as string).replace(/\\n/g, '\n'),
 };
 
 if (!adminCreds.clientEmail) {
@@ -19,7 +19,7 @@ export function getAdmin() {
 	} else {
 		app = initializeApp({
 			credential: cert(adminCreds),
-			databaseURL: import.meta.env.VITE_FIRE_DATABASEURL
+			databaseURL: import.meta.env.VITE_FIRE_DATABASEURL,
 		});
 	}
 

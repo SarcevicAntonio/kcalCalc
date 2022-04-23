@@ -1,5 +1,5 @@
-const kcalDisplay = (val) => {
-	if (Number.isNaN(val)) {
+const kcalDisplay = (val: number | string) => {
+	if (Number.isNaN(val) || typeof val !== 'number') {
 		return '...';
 	}
 

@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
 	import Input from '$lib/Input.svelte';
+	import { items, type Item } from '$lib/stores/items';
 	import { Dialog } from 'as-comps';
 	import Fuse from 'fuse.js';
 	import IcPlus from '~icons/ic/round-plus';
 	import IcEdit from '~icons/ic/round-swap-horiz';
-	import { items } from '../../routes/items/_items';
 	import ItemCard from './ItemCard.svelte';
 
 	export let edit = false;
@@ -15,7 +15,7 @@
 	let filtered = items;
 
 	$: setFiltered(items, search);
-	function setFiltered(options, value) {
+	function setFiltered(options: Item[], value: string) {
 		if (!options || !(value + '').trim()) {
 			filtered = items;
 			return;

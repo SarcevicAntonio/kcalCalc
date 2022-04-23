@@ -1,12 +1,13 @@
-<script>
+<script type="ts">
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
+	import type { ItemInstance } from '$lib/stores/items';
 	import { slide } from 'svelte/transition';
-	import Item from './Item.svelte';
+	import ItemI from './ItemInstance.svelte';
 	import ItemSelector from './ItemSelector.svelte';
 
-	export let label;
-	export let items;
+	export let label: string;
+	export let items: ItemInstance[];
 
 	let expanded = false;
 </script>
@@ -33,7 +34,7 @@
 		<div transition:slide|local class="col" on:click|stopPropagation>
 			<div class="pad" />
 			{#each items as item}
-				<Item bind:item />
+				<ItemI bind:item />
 			{/each}
 			<ItemSelector end />
 		</div>
