@@ -4,10 +4,10 @@
 	import IconProfile from '~icons/mdi/person';
 </script>
 
-{#if $user}
-	<a class="btn text" href="/profile"> <IconProfile /> </a>
-{:else}
-	<a class="btn text" href="/login">
+<a class="btn text" href="/auth">
+	{#if $user}
+		<IconProfile />
+	{:else}
 		<IconLogin />
-	</a>
-{/if}
+	{/if}
+</a>

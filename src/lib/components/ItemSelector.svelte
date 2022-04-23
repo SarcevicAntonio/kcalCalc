@@ -1,7 +1,7 @@
 <script>
 	import Input from '$lib/Input.svelte';
 	import { Dialog } from 'as-comps';
-	import IcEdit from '~icons/ic/round-edit';
+	import IcEdit from '~icons/ic/round-swap-horiz'
 	import IcPlus from '~icons/ic/round-plus';
 	import { items } from '../../routes/items/_items';
 	import ItemCard from './ItemCard.svelte';

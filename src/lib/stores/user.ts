@@ -1,15 +1,10 @@
-import { session } from '$app/stores';
-import { derived, type Writable } from 'svelte/store';
+import { auth } from '$lib/firebase';
+import type { User } from 'firebase/auth';
+import { readable } from 'svelte/store';
 
-export interface User {
-	id: string;
-	email: string;
-}
-
-export const user = derived<Writable<App.Session>, User>(session, ($session, set) => {
-	set($session.user);
+export const user = readable<string | User>('INIT', (set) => {
+	auth.onAuthStateChanged((userChanged) => {
+		console.log('user', userChanged);
+		set(userChanged);
+	});
 });
-
-export function setUser(user: User | null) {
-	session.update(($session) => ({ ...$session, user }));
-}

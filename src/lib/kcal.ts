@@ -1,6 +1,6 @@
 export const calculateKcal = (item) => (item.kcalPer100 / 100) * item.amount;
 
-// TODO: check out the custom kcal output
+// TODO: check out the custom kcal input etc
 export const calculateAmountSum = (items) =>
 	items.reduce((acc, ingredient) => acc + ingredient.amount, 0);
 

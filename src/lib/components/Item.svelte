@@ -62,10 +62,10 @@
 			</Input>
 			<div class="row">
 				<button class="btn text">
-					<IcPortion />
+					<IcDelete />
 				</button>
 				<button class="btn text">
-					<IcDelete />
+					<IcPortion />
 				</button>
 				<ItemSelector edit />
 			</div>
