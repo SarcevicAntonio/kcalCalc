@@ -1,6 +1,6 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_APIKEY,
@@ -26,7 +26,7 @@ export function getClient() {
 	if (!app) throw new Error('something went wrong with app: ' + JSON.stringify(app, null, 2));
 
 	const auth = getAuth(app);
-	const db = getDatabase();
+	const db = getFirestore();
 
 	return { app, db, auth };
 }
