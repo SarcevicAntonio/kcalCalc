@@ -1,4 +1,3 @@
-import type { Ingredient } from '$lib/stores/ingredients';
 import type { RequestHandler } from '@sveltejs/kit';
 import { parseHTML } from 'linkedom';
 
@@ -11,7 +10,7 @@ export const get: RequestHandler = async (request) => {
 	}
 	const { document } = parseHTML(await searchRes.text());
 
-	const ingredients: Ingredient[] = [];
+	const ingredients = [];
 
 	const requests = Array.from(document.querySelectorAll('td a')).map(
 		async (a: HTMLAnchorElement) => {
@@ -22,9 +21,8 @@ export const get: RequestHandler = async (request) => {
 
 				const { document } = parseHTML(await itemRes.text());
 
-				const title = document.querySelector('h3').textContent;
-				const brand = document.querySelector('p').textContent.match(/\(.+\)/);
-				const label = title + ' ' + brand;
+				const label = document.querySelector('h3').textContent;
+				const brand = document.querySelector('p').textContent.match(/\((.+)\)/)[1];
 
 				let kcalPer100 = 0;
 
@@ -34,7 +32,7 @@ export const get: RequestHandler = async (request) => {
 					}
 				});
 
-				const portions: Ingredient['portions'] = [];
+				const portions = [];
 
 				document.querySelectorAll('h4').forEach((h4) => {
 					if (h4.textContent.includes('Portionen')) {
@@ -58,6 +56,7 @@ export const get: RequestHandler = async (request) => {
 					const ingredient = {
 						docId: 'FDDB_' + label,
 						label,
+						brand,
 						kcalPer100,
 						portions,
 					};

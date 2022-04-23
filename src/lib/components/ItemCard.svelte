@@ -6,37 +6,32 @@
 </script>
 
 <div class="card filled">
-	<div class="item-info">
+	<div class="row">
 		<span class="title-l">{item.label}</span>
-		<span class="body-m">
-			{item.brand}
-		</span>
-	</div>
-	<div class="item-data">
 		<span class="body-m">
 			{#if item.portions.length}
 				{item.portions.length} port.
 			{/if}
 		</span>
-		<div class="label-l">
+	</div>
+	<div class="row">
+		<span class="body-m">
+			{item.brand}
+		</span>
+		<span class="label-l">
 			{kcalDisplay(item.items ? calculateKcalPer100FromItems(item.items) : item.kcalPer100)} kcal%g||ml
-		</div>
+		</span>
 	</div>
 </div>
 
 <style>
 	.card {
 		display: flex;
+		flex-direction: column;
 		justify-content: space-between;
 	}
-	.item-info {
+	.row {
 		display: flex;
-		flex-direction: column;
-	}
-	.item-data {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-		align-items: end;
+		justify-content: space-between;
 	}
 </style>

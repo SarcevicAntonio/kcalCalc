@@ -1,11 +1,11 @@
 <script>
 	import Input from '$lib/Input.svelte';
 	import { Dialog } from 'as-comps';
-	import IcEdit from '~icons/ic/round-swap-horiz'
+	import Fuse from 'fuse.js';
 	import IcPlus from '~icons/ic/round-plus';
+	import IcEdit from '~icons/ic/round-swap-horiz';
 	import { items } from '../../routes/items/_items';
 	import ItemCard from './ItemCard.svelte';
-	import Fuse from 'fuse.js';
 
 	export let edit = false;
 	export let end = false;
@@ -34,11 +34,14 @@
 
 	let fddbEntries = [];
 
+	let loadingFddb = false;
 	async function searchFddb() {
+		loadingFddb = true;
 		await fetch('/search/' + encodeURIComponent(search))
 			.then((res) => res.json())
 			.then((res) => {
 				fddbEntries = res;
+				loadingFddb = false;
 			});
 	}
 </script>
@@ -77,7 +80,9 @@
 				<span class="title-l">Custom kcal & amount</span>
 			</div>
 		</button>
-		<Input bind:value={search}>Search</Input>
+
+		<Input bind:value={search} on:input={() => (fddbEntries = [])}>Search</Input>
+
 		{#each filtered as item}
 			<button
 				on:click={() => {
@@ -87,10 +92,11 @@
 				<ItemCard {item} />
 			</button>
 		{/each}
+
 		{#if search}
 			{#if !fddbEntries.length}
-				<button class="card filled" on:click={searchFddb}>
-					<span class="title-l"> Search FDDB... </span>
+				<button class="btn tonal fddb" disabled={loadingFddb} on:click={searchFddb}>
+					Crawl FDDB...
 				</button>
 			{:else}
 				{#each fddbEntries as item}
@@ -117,5 +123,9 @@
 		gap: 1em;
 
 		width: min(calc(100vw - 6em), 400px);
+	}
+
+	.fddb {
+		margin-left: auto;
 	}
 </style>
