@@ -1,11 +1,16 @@
 <script lang="ts">
 	import Input from '$lib/Input.svelte';
-	import { items, type Item } from '$lib/stores/items';
+	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
+	import { items, type Item, type ItemInstance } from '$lib/stores/items';
 	import { Dialog } from 'as-comps';
 	import Fuse from 'fuse.js';
+	import { createEventDispatcher } from 'svelte';
+	import { v4 as uuid } from 'uuid';
 	import IcPlus from '~icons/ic/round-plus';
 	import IcEdit from '~icons/ic/round-swap-horiz';
 	import ItemCard from './ItemCard.svelte';
+
+	const dispatch = createEventDispatcher();
 
 	export let edit = false;
 	export let end = false;
@@ -43,6 +48,19 @@
 				fddbEntries = res;
 				loadingFddb = false;
 			});
+	}
+
+	function selectItem(item: Item) {
+		const itemInstance: ItemInstance = {
+			key: uuid(),
+			id: item.id,
+			label: item.label,
+			brand: item.brand,
+			kcalPer100: item.kcalPer100 || calculateKcalPer100FromItems(item.items),
+			amount: 100,
+		};
+		dispatch('select', itemInstance);
+		dialogOpen = false;
 	}
 </script>
 
@@ -84,11 +102,7 @@
 		<Input bind:value={search} on:input={() => (fddbEntries = [])}>Search</Input>
 
 		{#each filtered as item}
-			<button
-				on:click={() => {
-					alert('TODO');
-				}}
-			>
+			<button on:click={() => selectItem(item)}>
 				<ItemCard {item} />
 			</button>
 		{/each}

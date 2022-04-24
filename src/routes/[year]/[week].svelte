@@ -1,20 +1,12 @@
-<script context="module" lang="ts">
+<script lang="ts">
+	import IconHome from '~icons/mdi/house';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Switcher from '$lib/components/Switcher.svelte';
-	import { db } from '$lib/firebase';
-	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
-	import type { Load } from '@sveltejs/kit';
+	import type { Day } from '$lib/stores/intake';
 	import { getISOWeeksInYear, setISOWeek } from 'date-fns';
-	import {
-		collection,
-		getDocs,
-		QuerySnapshot,
-		type CollectionReference,
-		type DocumentData,
-	} from 'firebase/firestore';
-	import type { Day, Meal } from '../day/_data';
+	import { toISODateString } from '$lib/dateHelpers';
 
 	interface DayWithKcal extends Day {
 		kcal: number;
@@ -23,36 +15,6 @@
 		[date: string]: DayWithKcal;
 	}
 
-	export const load: Load = async ({ params }) => {
-		const collectionRef: CollectionReference<DocumentData> = collection(
-			db,
-			`Users/1/Years/${params.year}/Weeks/${params.week}/Days`
-		);
-
-		const docsRefs: QuerySnapshot<DocumentData> = await getDocs(collectionRef);
-
-		const data = {};
-
-		docsRefs.docs.forEach((doc) => {
-			const docData = doc.data();
-			data[doc.id] = {
-				...docData,
-				kcal: docData.meals.reduce(
-					(acc: number, meal: Meal) => acc + calculateKcalFromItems(meal.intake),
-					0
-				),
-			};
-		});
-
-		return {
-			props: {
-				data,
-			},
-		};
-	};
-</script>
-
-<script lang="ts">
 	export let data: Week;
 
 	$: year = parseInt($page.params.year);
@@ -104,6 +66,12 @@
 		</div>
 	</a>
 {/each}
+
+<nav>
+	<a href="/day/{toISODateString(new Date())}">
+		<IconHome />
+	</a>
+</nav>
 
 <style>
 	.row {

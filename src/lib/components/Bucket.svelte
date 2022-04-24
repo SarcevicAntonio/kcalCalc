@@ -10,6 +10,11 @@
 	export let items: ItemInstance[];
 
 	let expanded = false;
+
+	function addItem(item) {
+		items = [...items, item];
+		expanded = true;
+	}
 </script>
 
 <button class="card filled" on:click={() => (expanded = !expanded)}>
@@ -25,7 +30,11 @@
 					kcal
 				</span>
 			{:else}
-				<ItemSelector />
+				<ItemSelector
+					on:select={({ detail }) => {
+						addItem(detail);
+					}}
+				/>
 			{/if}
 		</div>
 	</div>
@@ -36,7 +45,12 @@
 			{#each items as item}
 				<ItemI bind:item />
 			{/each}
-			<ItemSelector end />
+			<ItemSelector
+				end
+				on:select={({ detail }) => {
+					addItem(detail);
+				}}
+			/>
 		</div>
 	{/if}
 	<div class="pad" />

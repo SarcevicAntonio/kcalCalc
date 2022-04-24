@@ -54,4 +54,13 @@ export const items: Item[] = [
 			},
 		],
 	},
+	{
+		id: '2',
+		label: 'Brot Laden',
+		brand: 'asdf town',
+		kcalPer100: 300, // 0 means no override
+		amount: 0, // 0 means no override
+		items: [],
+		portions: [],
+	},
 ];

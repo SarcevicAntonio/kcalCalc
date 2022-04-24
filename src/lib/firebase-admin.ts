@@ -1,6 +1,6 @@
 import { cert, getApp, getApps, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase-admin/firestore';
 
 const adminCreds = {
 	projectId: import.meta.env.VITE_PROJECTID as string,

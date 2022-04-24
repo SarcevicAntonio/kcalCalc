@@ -13,7 +13,7 @@
 
 	export let item: ItemInstance;
 
-	let expanded = false;
+	export let expanded = false;
 
 	$: kcalLabel = kcalDisplay(calculateKcal(item));
 </script>
@@ -71,7 +71,12 @@
 				<button class="btn text">
 					<IcPortion />
 				</button>
-				<ItemSelector edit />
+				<ItemSelector
+					edit
+					on:select={({ detail }) => {
+						item = detail;
+					}}
+				/>
 			</div>
 		</div>
 	{/if}
