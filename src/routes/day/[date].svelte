@@ -1,36 +1,71 @@
-<script lang="ts">
+<script context="module" lang="ts">
 	import Bucket from '$lib/components/Bucket.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
+	import { db } from '$lib/firebase';
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
+	import type { Load } from '@sveltejs/kit';
+	import { addDays, formatISO, getISOWeek, getYear } from 'date-fns';
+	import { doc, getDoc } from 'firebase/firestore';
 	import IconWeek from '~icons/mdi/calendar-week';
 	import IconItems from '~icons/mdi/format-list-bulleted-type';
 	import IconHome from '~icons/mdi/house';
-	import { day } from './_data';
+	import { defaultDay, type Day } from '../day/_data';
 
-	const dateIsToday = true;
-	const curWeekNumber = 14;
+	export const load: Load = async ({ params }) => {
+		const dateObj = new Date(params.date);
+		const year = getYear(dateObj);
+		const week = getISOWeek(dateObj);
 
-	// $: date = $page.params.date; // dynamic params!
+		const docRef = doc(db, `Users/1/Years/${year}/Weeks/${week}/Days/${params.date}`);
+		let data = (await getDoc(docRef)).data();
 
-	// $: kcalInDay = Object.values(day.intake).reduce(
-	// 	(acc, items: ItemInstance[]) => acc + calculateKcalFromItems(items),
-	// 	0
-	// );
+		if (!data) {
+			data = defaultDay;
+		}
 
-	$: kcalInDay = day.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
+		return {
+			props: {
+				data,
+			},
+		};
+	};
 </script>
 
-<Switcher>
+<script lang="ts">
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
+	export let data: Day;
+
+	const dateIsToday = true;
+
+	$: dateObj = new Date($page.params.date);
+	$: week = getISOWeek(dateObj);
+	$: year = getYear(dateObj);
+
+	function goToNext() {
+		goto('/day/' + formatISO(addDays(dateObj, 1), { representation: 'date' }));
+	}
+	function goToPref() {
+		goto('/day/' + formatISO(addDays(dateObj, -1), { representation: 'date' }));
+	}
+
+	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
+</script>
+
+<Switcher on:prev={goToPref} on:next={goToNext}>
 	<h2 class="headline-1">Today</h2>
 	<span class="label-l">
 		{kcalDisplay(kcalInDay)} kcal
 	</span>
 </Switcher>
 
-{#each day.meals as { label, intake }}
-	<Bucket {label} bind:items={intake} />
-{/each}
+{#if data}
+	{#each data.meals as { label, intake }}
+		<Bucket {label} bind:items={intake} />
+	{/each}
+{/if}
+
 <nav>
 	<a href="/items"><IconItems /> Items</a>
 	{#if dateIsToday}
@@ -38,7 +73,7 @@
 			<IconHome />
 		</button>
 	{/if}
-	<a href="/week/{curWeekNumber}">
+	<a href="/{year}/{week}">
 		<IconWeek />
 		Week
 	</a>

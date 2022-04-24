@@ -14,29 +14,29 @@
 		setDoc,
 		type DocumentData,
 	} from 'firebase/firestore';
-	import { db } from '$lib/firebase';
-	import { day } from './day/_data';
+	// import { db } from '$lib/firebase';
+	// import { day } from './day/_data';
 
-	async function read() {
-		const collectionRef: CollectionReference<DocumentData> = collection(
-			db,
-			'Users/1/Years/2022/Weeks/41/Days'
-		);
-		const docsRefs: QuerySnapshot<DocumentData> = await getDocs(collectionRef);
+	// async function read() {
+	// 	const collectionRef: CollectionReference<DocumentData> = collection(
+	// 		db,
+	// 		'Users/1/Years/2022/Weeks/41/Days'
+	// 	);
+	// 	const docsRefs: QuerySnapshot<DocumentData> = await getDocs(collectionRef);
 
-		docsRefs.docs.forEach((doc) => {
-			console.log(doc.id, doc.data());
-		});
+	// 	docsRefs.docs.forEach((doc) => {
+	// 		console.log(doc.id, doc.data());
+	// 	});
 
-		const docRef = doc(db, 'Users/1/Years/2022/Weeks/41/Days/2022-10-15');
-		const docSnap = await getDoc(docRef);
+	// 	const docRef = doc(db, 'Users/1/Years/2022/Weeks/41/Days/2022-10-15');
+	// 	const docSnap = await getDoc(docRef);
 
-		console.log(docSnap.id, docSnap.data());
-	}
+	// 	console.log(docSnap.id, docSnap.data());
+	// }
 
-	async function update() {
-		setDoc(doc(db, 'Users/1/Years/2022/Weeks/41/Days/2022-10-15'), day);
-	}
+	// async function update() {
+	// 	setDoc(doc(db, 'Users/1/Years/2022/Weeks/41/Days/2022-10-15'), day);
+	// }
 </script>
 
 <a href="/day/xyz"> Go to new day view </a>
@@ -48,9 +48,9 @@
 		<p>You need to Login to use kcalCalc</p>
 	{/if}
 
-	<button class="btn tonal" on:click={read}> Read </button>
+	<!-- <button class="btn tonal" on:click={read}> Read </button>
 
-	<button class="btn tonal" on:click={update}> Update </button>
+	<button class="btn tonal" on:click={update}> Update </button> -->
 
 	<nav>
 		{#if !$user}

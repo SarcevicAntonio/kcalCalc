@@ -1,8 +1,12 @@
 <script context="module" lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import Switcher from '$lib/components/Switcher.svelte';
 	import { db } from '$lib/firebase';
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import type { Load } from '@sveltejs/kit';
+	import { getISOWeeksInYear, setISOWeek } from 'date-fns';
 	import {
 		collection,
 		getDocs,
@@ -10,7 +14,7 @@
 		type CollectionReference,
 		type DocumentData,
 	} from 'firebase/firestore';
-	import type { Day } from '../day/_data';
+	import type { Day, Meal } from '../day/_data';
 
 	interface DayWithKcal extends Day {
 		kcal: number;
@@ -33,7 +37,10 @@
 			const docData = doc.data();
 			data[doc.id] = {
 				...docData,
-				kcal: docData.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0),
+				kcal: docData.meals.reduce(
+					(acc: number, meal: Meal) => acc + calculateKcalFromItems(meal.intake),
+					0
+				),
 			};
 		});
 
@@ -46,11 +53,6 @@
 </script>
 
 <script lang="ts">
-	import Switcher from '$lib/components/Switcher.svelte';
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import { getISOWeeksInYear, setISOWeek } from 'date-fns';
-
 	export let data: Week;
 
 	$: year = parseInt($page.params.year);
