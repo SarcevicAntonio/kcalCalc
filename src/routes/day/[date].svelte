@@ -1,12 +1,16 @@
 <script lang="ts">
+	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Bucket from '$lib/components/Bucket.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
+	import { db } from '$lib/firebase';
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
-	import { addDays, formatISO, getISOWeek, getYear, isSameDay } from 'date-fns';
+	import { user } from '$lib/stores/user';
+	import { addDays,getISOWeek,getYear,isSameDay } from 'date-fns';
+	import { doc,setDoc } from 'firebase/firestore';
 	import IconWeek from '~icons/mdi/calendar-week';
 	import IconItems from '~icons/mdi/format-list-bulleted-type';
 	import IconHome from '~icons/mdi/house';
@@ -26,6 +30,17 @@
 	}
 
 	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
+
+	async function updateData(newData) {
+		if (!browser || !$user) return;
+
+		await setDoc(
+			doc(db, `Users/${$user.id}/Years/${year}/Weeks/${week}/Days/${$page.params.date}`),
+			newData
+		);
+	}
+
+	$: updateData(data);
 </script>
 
 <Switcher on:prev={goToPref} on:next={goToNext}>

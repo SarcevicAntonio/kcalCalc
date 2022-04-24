@@ -26,7 +26,7 @@ export function getClient() {
 	if (!app) throw new Error('something went wrong with app: ' + JSON.stringify(app, null, 2));
 
 	const auth = getAuth(app);
-	setPersistence(auth, inMemoryPersistence);
+	// setPersistence(auth, inMemoryPersistence);
 
 	const db = getFirestore();
 

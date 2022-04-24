@@ -44,9 +44,11 @@
 	{/if}
 </div>
 
-<nav>
-	<a href="/day/{toISODateString(new Date())}"><IcHome /> Go Home</a>
-</nav>
+{#if $user}
+	<nav>
+		<a href="/day/{toISODateString(new Date())}"><IcHome /> Go Home</a>
+	</nav>
+{/if}
 
 <style>
 	.container {
