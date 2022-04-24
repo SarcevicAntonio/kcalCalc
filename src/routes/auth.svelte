@@ -1,10 +1,11 @@
 <script>
+	import { toISODateString } from '$lib/dateHelpers';
 	import { auth } from '$lib/firebase';
+	import { setUser, user } from '$lib/stores/user';
 	import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+	import IcHome from '~icons/ic/round-home';
 	import IcLogin from '~icons/ic/round-key';
 	import IcLogout from '~icons/ic/round-logout';
-	import IcHome from '~icons/ic/round-home';
-	import { setUser, user } from '$lib/stores/user';
 	const provider = new GoogleAuthProvider();
 
 	async function logout() {
@@ -44,7 +45,7 @@
 </div>
 
 <nav>
-	<a href="/"><IcHome /> Go Home</a>
+	<a href="/day/{toISODateString(new Date())}"><IcHome /> Go Home</a>
 </nav>
 
 <style>
