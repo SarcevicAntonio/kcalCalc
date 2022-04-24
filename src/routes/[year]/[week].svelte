@@ -5,7 +5,7 @@
 	import Switcher from '$lib/components/Switcher.svelte';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import type { Day } from '$lib/stores/intake';
-	import { getISOWeeksInYear, getYear, isSameYear, setISOWeek } from 'date-fns';
+	import { getISOWeeksInYear, getYear, isSameYear, setISOWeek, setYear } from 'date-fns';
 	import { toISODateString } from '$lib/dateHelpers';
 
 	interface DayWithKcal extends Day {
@@ -25,7 +25,7 @@
 		let newYear = year;
 		let newWeek = week + 1;
 
-		const thisWeek = setISOWeek(new Date(year + ''), week);
+		const thisWeek = setISOWeek(setYear(new Date(), year), week);
 		const weeks = getISOWeeksInYear(thisWeek);
 		if (newWeek > weeks) {
 			newYear = year + 1;
@@ -54,7 +54,7 @@
 	{/if}
 	<h2 class="headline-1">Week {week}</h2>
 	<span class="label-l">
-		{kcalDisplay(Object.values(data).reduce((acc, day) => acc + day.kcal, 0))} kcal
+		{kcalDisplay(Object.values(data).reduce((acc, day) => acc + day.kcal || 0, 0))} kcal
 	</span>
 </Switcher>
 
@@ -62,10 +62,12 @@
 	<a class="card filled" href="/day/{date}">
 		<div class="row">
 			<span class="title-l">{new Date(date).toLocaleString(undefined, { weekday: 'long' })}</span>
-			<span class="label-l">
-				{kcalDisplay(item.kcal)}
-				kcal
-			</span>
+			{#if item?.kcal}
+				<span class="label-l">
+					{kcalDisplay(item.kcal)}
+					kcal
+				</span>
+			{/if}
 		</div>
 	</a>
 {/each}
