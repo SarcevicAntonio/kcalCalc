@@ -9,8 +9,8 @@
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { user } from '$lib/stores/user';
-	import { addDays,getISOWeek,getYear,isSameDay } from 'date-fns';
-	import { doc,setDoc } from 'firebase/firestore';
+	import { addDays, getISOWeek, getYear, isSameDay } from 'date-fns';
+	import { doc, setDoc } from 'firebase/firestore';
 	import IconWeek from '~icons/mdi/calendar-week';
 	import IconItems from '~icons/mdi/format-list-bulleted-type';
 	import IconHome from '~icons/mdi/house';
@@ -32,6 +32,7 @@
 	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
 
 	async function updateData(newData) {
+		console.log(newData, $page.params.date);
 		if (!browser || !$user) return;
 
 		await setDoc(
