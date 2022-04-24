@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, inMemoryPersistence, setPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -26,6 +26,8 @@ export function getClient() {
 	if (!app) throw new Error('something went wrong with app: ' + JSON.stringify(app, null, 2));
 
 	const auth = getAuth(app);
+	setPersistence(auth, inMemoryPersistence);
+
 	const db = getFirestore();
 
 	return { app, db, auth };
