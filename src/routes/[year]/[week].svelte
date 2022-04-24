@@ -5,12 +5,13 @@
 	import Switcher from '$lib/components/Switcher.svelte';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import type { Day } from '$lib/stores/intake';
-	import { getISOWeeksInYear, setISOWeek } from 'date-fns';
+	import { getISOWeeksInYear, getYear, isSameYear, setISOWeek } from 'date-fns';
 	import { toISODateString } from '$lib/dateHelpers';
 
 	interface DayWithKcal extends Day {
 		kcal: number;
 	}
+
 	interface Week {
 		[date: string]: DayWithKcal;
 	}
@@ -48,7 +49,9 @@
 </script>
 
 <Switcher on:prev={goToPrev} on:next={goToNext}>
-	<span>{year}</span>
+	{#if year !== getYear(new Date())}
+		<span>{year}</span>
+	{/if}
 	<h2 class="headline-1">Week {week}</h2>
 	<span class="label-l">
 		{kcalDisplay(Object.values(data).reduce((acc, day) => acc + day.kcal, 0))} kcal
@@ -58,7 +61,7 @@
 {#each Object.entries(data) as [date, item]}
 	<a class="card filled" href="/day/{date}">
 		<div class="row">
-			<span class="title-l">{new Date(date).toLocaleString('en-US', { weekday: 'long' })}</span>
+			<span class="title-l">{new Date(date).toLocaleString(undefined, { weekday: 'long' })}</span>
 			<span class="label-l">
 				{kcalDisplay(item.kcal)}
 				kcal
