@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import Bucket from '$lib/components/Bucket.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
@@ -32,8 +32,7 @@
 	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
 
 	async function updateData(newData) {
-		console.log(newData, $page.params.date);
-		if (!browser || !$user) return;
+		if (!browser || !$user || $navigating) return;
 
 		await setDoc(
 			doc(db, `Users/${$user.id}/Years/${year}/Weeks/${week}/Days/${$page.params.date}`),
