@@ -144,7 +144,7 @@
 				<button
 					class="btn tonal"
 					on:click={async () => {
-						deleteDoc(docRef);
+						await deleteDoc(docRef);
 						goto('/items');
 					}}
 				>
