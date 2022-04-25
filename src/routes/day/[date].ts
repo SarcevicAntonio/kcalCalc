@@ -14,8 +14,6 @@ export const get: RequestHandler = async ({ params, locals }) => {
 			.get()
 	).data();
 
-	console.log(params.date);
-
 	if (!data) {
 		data = defaultDay;
 	}
