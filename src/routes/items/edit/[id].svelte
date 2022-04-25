@@ -1,20 +1,23 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { browser } from '$app/env';
+	import { goto } from '$app/navigation';
+	import { navigating, page } from '$app/stores';
 	import ItemInstance from '$lib/components/ItemInstance.svelte';
 	import ItemSelector from '$lib/components/ItemSelector.svelte';
+	import { db } from '$lib/firebase';
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
-	import { getItem } from '$lib/stores/items';
+	import { defaultPortion } from '$lib/stores/items';
+	import { user } from '$lib/stores/user';
 	import { Dialog } from 'as-comps';
-	import { onMount } from 'svelte';
+	import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+	import { onMount, tick } from 'svelte';
 	import MdiArrowLeft from '~icons/ic/round-arrow-back';
 	import MdiDeleteForever from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
 
-	const id = $page.params.id;
-
-	let item = getItem(id);
+	export let data;
 
 	let sumInputEl = null;
 	let activeEl = undefined;
@@ -29,21 +32,31 @@
 			document.removeEventListener('blur', update, true);
 		};
 	});
+
+	const docRef = doc(db, `Items/${$page.params.id}`);
+
+	async function updateData(newData) {
+		if (!browser || !$user || $navigating) return;
+
+		await setDoc(docRef, newData);
+	}
+
+	$: updateData(data);
 </script>
 
 <h2 class="headline-1">Edit Item</h2>
 
-<Input bind:value={item.label}>Label</Input>
+<Input bind:value={data.label}>Label</Input>
 
-<Input bind:value={item.brand}>Brand</Input>
+<Input bind:value={data.brand}>Brand</Input>
 
-{#if !item.items.length}
-	<Input type="calc" bind:value={item.kcalPer100}>kcal per 100 g || ml</Input>
+{#if !data.items.length}
+	<Input type="calc" bind:value={data.kcalPer100}>kcal per 100 g || ml</Input>
 {:else}
 	<Input
 		type="calc"
 		disabled
-		value={kcalDisplay(calculateKcalPer100FromItems(item.items, item.amount))}
+		value={kcalDisplay(calculateKcalPer100FromItems(data.items, data.amount))}
 	>
 		kcal per 100 g || ml
 	</Input>
@@ -54,31 +67,31 @@
 		aria-label="Override Amount"
 		id="override-amount"
 		type="checkbox"
-		checked={item.amount ? true : false}
+		checked={data.amount ? true : false}
 		on:input={() => {
-			if (item.amount) {
-				item.amount = 0;
+			if (data.amount) {
+				data.amount = 0;
 			} else {
-				item.amount = calculateAmountSum(item.items) || 100;
+				data.amount = calculateAmountSum(data.items) || 100;
 			}
 		}}
 	/>
-	{#if item.amount || activeEl === sumInputEl}
-		<Input type="calc" bind:value={item.amount} bind:inputElement={sumInputEl}>Amount Sum</Input>
+	{#if data.amount || activeEl === sumInputEl}
+		<Input type="calc" bind:value={data.amount} bind:inputElement={sumInputEl}>Amount Sum</Input>
 	{:else}
-		<Input type="calc" disabled value={calculateAmountSum(item.items)}>Amount Sum</Input>
+		<Input type="calc" disabled value={calculateAmountSum(data.items)}>Amount Sum</Input>
 	{/if}
 </div>
 
 <h3 class="headline-4">Items</h3>
 
-{#each item.items as child, index}
+{#each data.items as child, index}
 	<ItemInstance
 		bind:item={child}
 		on:delete={() => {
-			item.items.splice(index, 1);
-			if (!item.items.length) item.kcalPer100 = 100;
-			item = item;
+			data.items.splice(index, 1);
+			if (!data.items.length) data.kcalPer100 = 100;
+			data = data;
 		}}
 	/>
 {/each}
@@ -87,7 +100,7 @@
 
 <h3 class="headline-4">Portions</h3>
 
-{#each item.portions as portion}
+{#each data.portions as portion}
 	<div class="card outlined">
 		<button class="btn text" on:click={() => alert('TODO')}>
 			<MdiDeleteForever />
@@ -97,7 +110,12 @@
 	</div>
 {/each}
 
-<button class="btn tonal add"><IcPlus /> Add</button>
+<button
+	class="btn tonal add"
+	on:click={() => {
+		data.portions = [...data.portions, defaultPortion];
+	}}><IcPlus /> Add</button
+>
 
 <nav>
 	<Dialog let:toggle>
@@ -106,10 +124,16 @@
 		</svelte:fragment>
 		<div class="col gap">
 			<h2 class="headline-2">Are you sure?</h2>
-			<p class="body-m">Deleting the item "{item.label}" can not be undone.</p>
+			<p class="body-m">Deleting the item "{data.label}" can not be undone.</p>
 			<div class="row jcsb">
 				<button class="btn tonal" on:click={toggle}><MdiArrowLeft /> Do nothing </button>
-				<button class="btn tonal" on:click={() => alert('TODO')}>
+				<button
+					class="btn tonal"
+					on:click={async () => {
+						deleteDoc(docRef);
+						goto('/items');
+					}}
+				>
 					<MdiDeleteForever />
 					Delete
 				</button>

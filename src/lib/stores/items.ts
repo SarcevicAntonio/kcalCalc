@@ -24,6 +24,21 @@ export interface Portion {
 
 export const getItem = (id: string) => items.find((item) => item.id === id);
 
+export const defaultItem = {
+	id: '',
+	label: '',
+	brand: '',
+	kcalPer100: 0, // 0 means no override
+	amount: 0, // 0 means no override
+	items: [],
+	portions: [],
+};
+
+export const defaultPortion = {
+	label: '',
+	amount: 0,
+};
+
 export const items: Item[] = [
 	{
 		id: '1',

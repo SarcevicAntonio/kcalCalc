@@ -1,17 +1,18 @@
 <script>
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import Input from '$lib/Input.svelte';
-	import { items } from '$lib/stores/items';
 	import IcAdd from '~icons/ic/round-add';
 	import IcHouse from '~icons/mdi/house';
 	let filterValue = '';
+
+	export let data;
 </script>
 
 <h2 class="headline-1">Saved Items</h2>
 <Input bind:value={filterValue}>Filter</Input>
 
-{#each items as item}
-	<a href="/items/edit/{item.id}">
+{#each Object.entries(data) as [id, item]}
+	<a href="/items/edit/{id}">
 		<ItemCard {item} />
 	</a>
 {/each}
