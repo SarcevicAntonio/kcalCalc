@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { navigating, page } from '$app/stores';
 	import Bucket from '$lib/components/Bucket.svelte';
+	import Home from '$lib/components/Home.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { db } from '$lib/firebase';
@@ -11,9 +12,8 @@
 	import { user } from '$lib/stores/user';
 	import { addDays, getISOWeek, getYear, isSameDay } from 'date-fns';
 	import { doc, setDoc } from 'firebase/firestore';
-	import IconWeek from '~icons/mdi/calendar-week';
-	import IconItems from '~icons/mdi/format-list-bulleted-type';
-	import IconHome from '~icons/mdi/house';
+	import IconItems from '~icons/ic/round-category';
+	import IconWeek from '~icons/ic/round-date-range';
 	import type { Day } from '../../lib/stores/intake';
 	export let data: Day;
 
@@ -65,9 +65,7 @@
 <nav>
 	<a href="/items"><IconItems /> Items</a>
 	{#if !dateIsToday}
-		<a href="/day/{toISODateString(new Date())}">
-			<IconHome />
-		</a>
+		<Home />
 	{/if}
 	<a href="/{year}/{week}">
 		<IconWeek />

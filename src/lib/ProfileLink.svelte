@@ -1,7 +1,7 @@
 <script>
+	import IconProfile from '~icons/ic/round-account-circle';
+	import IconLogin from '~icons/ic/round-login';
 	import { user } from './stores/user';
-	import IconLogin from '~icons/mdi/login-variant';
-	import IconProfile from '~icons/mdi/person';
 </script>
 
 <a class="btn text" href="/auth">

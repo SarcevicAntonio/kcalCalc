@@ -1,12 +1,11 @@
 <script lang="ts">
-	import IconHome from '~icons/mdi/house';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import Home from '$lib/components/Home.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import type { Day } from '$lib/stores/intake';
-	import { getISOWeeksInYear, getYear, isSameYear, setISOWeek, setYear } from 'date-fns';
-	import { toISODateString } from '$lib/dateHelpers';
+	import { getISOWeeksInYear, getYear, setISOWeek, setYear } from 'date-fns';
 
 	interface DayWithKcal extends Day {
 		kcal: number;
@@ -73,9 +72,7 @@
 {/each}
 
 <nav>
-	<a href="/day/{toISODateString(new Date())}">
-		<IconHome />
-	</a>
+	<Home />
 </nav>
 
 <style>

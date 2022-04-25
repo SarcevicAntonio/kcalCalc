@@ -1,19 +1,19 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import IconArrowLeft from '~icons/mdi/arrow-left-bold';
-	import IconArrowRight from '~icons/mdi/arrow-right-bold';
+	import IcArrowBack from '~icons/ic/round-arrow-back';
+	import IcArrowForward from '~icons/ic/round-arrow-forward';
 	const dispatch = createEventDispatcher();
 </script>
 
 <div class="row">
 	<button class="btn text" on:click={() => dispatch('prev')}>
-		<IconArrowLeft />
+		<IcArrowBack />
 	</button>
 	<div class="col">
 		<slot />
 	</div>
 	<button class="btn text" on:click={() => dispatch('next')}>
-		<IconArrowRight />
+		<IcArrowForward />
 	</button>
 </div>
 

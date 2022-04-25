@@ -12,9 +12,9 @@
 	import { user } from '$lib/stores/user';
 	import { Dialog } from 'as-comps';
 	import { deleteDoc, doc, setDoc } from 'firebase/firestore';
-	import { onMount, tick } from 'svelte';
-	import MdiArrowLeft from '~icons/ic/round-arrow-back';
-	import MdiDeleteForever from '~icons/ic/round-delete-forever';
+	import { onMount } from 'svelte';
+	import IcArrowBack from '~icons/ic/round-arrow-back';
+	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
 
 	export let data;
@@ -103,7 +103,7 @@
 {#each data.portions as portion}
 	<div class="card outlined">
 		<button class="btn text" on:click={() => alert('TODO')}>
-			<MdiDeleteForever />
+			<IcDelete />
 		</button>
 		<Input bind:value={portion.label}>Label</Input>
 		<Input type="number" bind:value={portion.amount}>Amount (g||ml)</Input>
@@ -120,13 +120,13 @@
 <nav>
 	<Dialog let:toggle>
 		<svelte:fragment slot="trigger-label">
-			<MdiDeleteForever />
+			<IcDelete />
 		</svelte:fragment>
 		<div class="col gap">
 			<h2 class="headline-2">Are you sure?</h2>
 			<p class="body-m">Deleting the item "{data.label}" can not be undone.</p>
 			<div class="row jcsb">
-				<button class="btn tonal" on:click={toggle}><MdiArrowLeft /> Do nothing </button>
+				<button class="btn tonal" on:click={toggle}><IcArrowBack /> Do nothing </button>
 				<button
 					class="btn tonal"
 					on:click={async () => {
@@ -134,13 +134,13 @@
 						goto('/items');
 					}}
 				>
-					<MdiDeleteForever />
+					<IcDelete />
 					Delete
 				</button>
 			</div>
 		</div>
 	</Dialog>
-	<a href="/items"><MdiArrowLeft /> Back</a>
+	<a href="/items"><IcArrowBack /> Back</a>
 </nav>
 
 <style>

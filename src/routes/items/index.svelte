@@ -1,8 +1,8 @@
 <script>
+	import Home from '$lib/components/Home.svelte';
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import Input from '$lib/Input.svelte';
 	import IcAdd from '~icons/ic/round-add';
-	import IcHouse from '~icons/mdi/house';
 	let filterValue = '';
 
 	export let data;
@@ -19,9 +19,7 @@
 
 <nav>
 	<a href="/items/add"><IcAdd /> Add</a>
-	<a href="/day/xxx">
-		<IcHouse />
-	</a>
+	<Home />
 </nav>
 
 <style>
