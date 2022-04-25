@@ -1,16 +1,8 @@
-import { dbADMIN } from '$lib/firebase-admin';
+import { getItems } from '$lib/stores/items';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export const get: RequestHandler = async ({ params, locals }) => {
-	const collection = await dbADMIN.collection(`Items`).get();
-
-	const data = {};
-
-	collection.docs.forEach((doc) => {
-		const docData = doc.data();
-		data[doc.id] = docData;
-	});
-
+export const get: RequestHandler = async () => {
+	const data = await getItems();
 	return {
 		body: {
 			data,

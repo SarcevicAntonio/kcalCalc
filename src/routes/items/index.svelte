@@ -11,8 +11,8 @@
 <h2 class="headline-1">Saved Items</h2>
 <Input bind:value={filterValue}>Filter</Input>
 
-{#each Object.entries(data) as [id, item]}
-	<a href="/items/edit/{id}">
+{#each data as item}
+	<a href="/items/edit/{item.id}">
 		<ItemCard {item} />
 	</a>
 {/each}

@@ -20,7 +20,7 @@
 			{item.brand}
 		</span>
 		<span class="label-l">
-			{kcalDisplay(item.kcalPer100 || calculateKcalPer100FromItems(item.items))} kcal%g||ml
+			{kcalDisplay(item.kcalPer100 || calculateKcalPer100FromItems(item.items, item.amount))} kcal%g||ml
 		</span>
 	</div>
 </div>

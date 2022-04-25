@@ -36,12 +36,18 @@
 	const docRef = doc(db, `Items/${$page.params.id}`);
 
 	async function updateData(newData) {
+		console.log(data);
 		if (!browser || !$user || $navigating) return;
 
 		await setDoc(docRef, newData);
 	}
 
 	$: updateData(data);
+
+	async function addItem(newItem) {
+		data.kcalPer100 = 0;
+		data.items = [...data.items, newItem];
+	}
 </script>
 
 <h2 class="headline-1">Edit Item</h2>
@@ -96,7 +102,15 @@
 	/>
 {/each}
 
-<ItemSelector noCustomKcal end tonal />
+<ItemSelector
+	noCustomKcal
+	end
+	tonal
+	excludeId={$page.params.id}
+	on:select={({ detail }) => {
+		addItem(detail);
+	}}
+/>
 
 <h3 class="headline-4">Portions</h3>
 

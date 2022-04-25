@@ -1,3 +1,6 @@
+import { db } from '$lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
+
 export interface Item {
 	id: string;
 	label: string;
@@ -22,7 +25,15 @@ export interface Portion {
 	amount: 40;
 }
 
-export const getItem = (id: string) => items.find((item) => item.id === id);
+export async function getItems(): Promise<Item[]> {
+	const snapshot = await getDocs(collection(db, `Items`));
+	const data = [];
+	snapshot.docs.forEach((doc) => {
+		const docData = doc.data();
+		data.push({ ...docData, id: doc.id });
+	});
+	return data;
+}
 
 export const defaultItem = {
 	id: '',
