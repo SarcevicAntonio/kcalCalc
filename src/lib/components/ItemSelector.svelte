@@ -1,7 +1,13 @@
 <script lang="ts">
 	import Input from '$lib/Input.svelte';
 	import { calculateKcalPer100FromItems } from '$lib/kcal';
-	import { getItems, type Item, type ItemInstance } from '$lib/stores/items';
+	import {
+		customKcalAmountItem,
+		customKcalCountItem,
+		getItems,
+		type Item,
+		type ItemInstance,
+	} from '$lib/stores/items';
 	import { Dialog } from 'as-comps';
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher } from 'svelte';
@@ -59,9 +65,10 @@
 			key: uuid(),
 			id: item.id,
 			label: item.label,
-			brand: item.brand,
+			brand: item.brand || '',
 			kcalPer100: item.kcalPer100 || calculateKcalPer100FromItems(item.items, item.amount),
 			amount: 100,
+			portions: item.portions || [],
 		};
 		dispatch('select', itemInstance);
 		dialogOpen = false;
@@ -84,26 +91,30 @@
 		{#if !noCustomKcal}
 			<button
 				on:click={() => {
-					alert('TODO');
+					selectItem(customKcalCountItem);
 				}}
+				class="card filled"
 			>
-				<div class="card filled">
-					<span class="title-l">Custom kcal count</span>
-				</div>
+				<span class="title-l">Custom kcal count</span>
 			</button>
 		{/if}
 
 		<button
 			on:click={() => {
-				alert('TODO');
+				selectItem(customKcalAmountItem);
 			}}
+			class="card filled"
 		>
-			<div class="card filled">
-				<span class="title-l">Custom kcal & amount</span>
-			</div>
+			<span class="title-l">Custom kcal & amount</span>
 		</button>
 
 		<Input bind:value={search} on:input={() => (fddbEntries = [])}>Search</Input>
+
+		<!-- TODO: Better flow: 
+			initially show user recents,
+			fetch all items on serach and filter them,
+			fddb search as seperate section i.e.
+			hide own items and have back button -->
 
 		{#each filtered as item}
 			{#if item.id !== excludeId}
@@ -122,7 +133,7 @@
 				{#each fddbEntries as item}
 					<button
 						on:click={() => {
-							alert('TODO');
+							selectItem(item);
 						}}
 					>
 						<ItemCard {item} />

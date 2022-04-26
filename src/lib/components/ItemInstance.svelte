@@ -8,6 +8,7 @@
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcPortion from '~icons/ic/round-photo-size-select-small';
 	import ItemSelector from './ItemSelector.svelte';
+	import PortionSelector from './PortionSelector.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -44,7 +45,7 @@
 	</div>
 
 	{#if expanded}
-		<div transition:slide|local class="col" on:click|stopPropagation>
+		<div transition:slide|local class="col" on:click|stopPropagation on:keyup|preventDefault>
 			<div class="pad" />
 			{#if item.id.startsWith('CUSTOM')}
 				<Input bind:value={item.label}>Custom Label</Input>
@@ -68,9 +69,12 @@
 				<button class="btn text" on:click={() => dispatch('delete')}>
 					<IcDelete />
 				</button>
-				<button class="btn text">
-					<IcPortion />
-				</button>
+				{#if item.portions}
+					<PortionSelector
+						portions={item.portions}
+						on:select={({ detail }) => (item.amount = detail.amount)}
+					/>
+				{/if}
 				<ItemSelector
 					edit
 					on:select={({ detail }) => {

@@ -7,8 +7,8 @@ export interface Item {
 	brand?: string;
 	kcalPer100: number;
 	amount: number;
-	items: ItemInstance[];
-	portions: Portion[];
+	items?: ItemInstance[];
+	portions?: Portion[];
 }
 
 export interface ItemInstance {
@@ -18,6 +18,7 @@ export interface ItemInstance {
 	brand?: string;
 	kcalPer100: number;
 	amount: number;
+	portions?: Portion[];
 }
 
 export interface Portion {
@@ -46,8 +47,23 @@ export const defaultItem = {
 };
 
 export const defaultPortion = {
+	key: '',
 	label: '',
 	amount: 0,
+};
+
+export const customKcalCountItem = {
+	id: 'CUSTOM:KCAL_COUNT',
+	label: '',
+	kcalPer100: 100, // no input- stays at 100 so amount functions as kcal input
+	amount: 100,
+};
+
+export const customKcalAmountItem = {
+	id: 'CUSTOM:KCAL+AMOUNT',
+	label: '',
+	kcalPer100: 100,
+	amount: 100,
 };
 
 export const items: Item[] = [

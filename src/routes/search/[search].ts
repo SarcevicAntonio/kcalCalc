@@ -54,7 +54,7 @@ export const get: RequestHandler = async (request) => {
 
 				if (kcalPer100 > 0) {
 					const ingredient = {
-						docId: 'FDDB_' + label,
+						id: 'FDDB_' + label,
 						label,
 						brand,
 						kcalPer100,

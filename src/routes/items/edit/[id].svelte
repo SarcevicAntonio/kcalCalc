@@ -13,6 +13,7 @@
 	import { Dialog } from 'as-comps';
 	import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
+	import { v4 as uuid } from 'uuid';
 	import IcArrowBack from '~icons/ic/round-arrow-back';
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
@@ -114,9 +115,15 @@
 
 <h3 class="headline-4">Portions</h3>
 
-{#each data.portions as portion}
+{#each data.portions as portion, index (portion.key)}
 	<div class="card outlined">
-		<button class="btn text" on:click={() => alert('TODO')}>
+		<button
+			class="btn text"
+			on:click={() => {
+				data.portions.splice(index, 1);
+				data = data;
+			}}
+		>
 			<IcDelete />
 		</button>
 		<Input bind:value={portion.label}>Label</Input>
@@ -127,7 +134,7 @@
 <button
 	class="btn tonal add"
 	on:click={() => {
-		data.portions = [...data.portions, defaultPortion];
+		data.portions = [...data.portions, { ...defaultPortion, key: uuid() }];
 	}}><IcPlus /> Add</button
 >
 

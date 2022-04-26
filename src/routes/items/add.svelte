@@ -1,9 +1,9 @@
 <script>
-	import { db } from '$lib/firebase';
-	import { v4 as uuid } from 'uuid';
-	import { doc, setDoc } from 'firebase/firestore';
-	import { defaultItem } from '$lib/stores/items';
 	import { goto } from '$app/navigation';
+	import { db } from '$lib/firebase';
+	import { defaultItem } from '$lib/stores/items';
+	import { doc, setDoc } from 'firebase/firestore';
+	import { v4 as uuid } from 'uuid';
 
 	async function newItem() {
 		const id = uuid();
@@ -13,3 +13,5 @@
 
 	newItem();
 </script>
+
+<h2 class="headline-1">Adding new item...</h2>

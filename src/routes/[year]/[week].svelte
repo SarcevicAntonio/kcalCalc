@@ -6,6 +6,7 @@
 	import kcalDisplay from '$lib/kcalDisplay';
 	import type { Day } from '$lib/stores/intake';
 	import { getISOWeeksInYear, getYear, setISOWeek, setYear } from 'date-fns';
+	import IconItems from '~icons/ic/round-category';
 
 	interface DayWithKcal extends Day {
 		kcal: number;
@@ -72,6 +73,7 @@
 {/each}
 
 <nav>
+	<a href="/items"><IconItems /> Items</a>
 	<Home />
 </nav>
 
