@@ -5,6 +5,8 @@
 		customKcalAmountItem,
 		customKcalCountItem,
 		getItems,
+		getRecentItems,
+		setRecentItem,
 		type Item,
 		type ItemInstance,
 	} from '$lib/stores/items';
@@ -12,9 +14,19 @@
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher } from 'svelte';
 	import { v4 as uuid } from 'uuid';
+	import IcItems from '~icons/ic/round-category';
 	import IcPlus from '~icons/ic/round-plus';
 	import IcEdit from '~icons/ic/round-swap-horiz';
+	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import ItemCard from './ItemCard.svelte';
+
+	enum status {
+		recents,
+		search,
+		fddb,
+	}
+
+	let activeStatus = status.recents;
 
 	const dispatch = createEventDispatcher();
 	export let edit = false;
@@ -23,41 +35,36 @@
 	export let noCustomKcal = false;
 	export let excludeId = '';
 	let search = '';
-	let items = [];
-	let filtered = items;
 
-	async function getItemsInHere() {
-		items = await getItems();
-	}
+	let recentItems: Item[] = [];
+	let allItems: Item[] = [];
 
-	$: setFiltered(items, search);
+	let filtered = allItems;
+	$: setFiltered(allItems, search);
 	function setFiltered(options: Item[], value: string) {
 		if (!options || !(value + '').trim()) {
-			filtered = items;
+			filtered = allItems;
 			return;
 		}
 		const fuse = new Fuse(options, {
-			keys: ['label'],
+			keys: ['label', 'brand'],
 		});
 		filtered = fuse.search(value + '').map((e) => e.item);
 	}
 
 	let dialogOpen = false;
 	async function toggle() {
-		await getItemsInHere();
+		recentItems = await getRecentItems();
 		dialogOpen = !dialogOpen;
+		allItems = await getItems();
 	}
 
 	let fddbEntries = [];
-	let loadingFddb = false;
 	async function searchFddb() {
-		loadingFddb = true;
-		await fetch('/search/' + encodeURIComponent(search))
-			.then((res) => res.json())
-			.then((res) => {
-				fddbEntries = res;
-				loadingFddb = false;
-			});
+		activeStatus = status.fddb;
+		await fetch('/search/' + encodeURIComponent(search)).then(async (res) => {
+			fddbEntries = await res.json();
+		});
 	}
 
 	function selectItem(item: Item) {
@@ -72,6 +79,10 @@
 		};
 		dispatch('select', itemInstance);
 		dialogOpen = false;
+		setRecentItem(item);
+
+		search = '';
+		activeStatus = status.recents;
 	}
 </script>
 
@@ -87,64 +98,88 @@
 	<svelte:fragment slot="trigger-label" />
 	<div class="content">
 		<h2 class="headline-2">Select Item</h2>
+		<div class="row">
+			<Input
+				bind:value={search}
+				on:input={async () => {
+					if (search) {
+						activeStatus = status.search;
+					} else {
+						activeStatus = status.recents;
+					}
+				}}
+			>
+				Search
+			</Input>
+			{#if activeStatus !== status.fddb}
+				<button class="btn text fddb" disabled={!search} on:click={searchFddb}>
+					<MdiCloudSearch />
+				</button>
+			{:else}
+				<button
+					class="btn text fddb"
+					on:click={() => {
+						activeStatus = status.search;
+						fddbEntries = [];
+					}}
+				>
+					<IcItems />
+				</button>
+			{/if}
+		</div>
 
-		{#if !noCustomKcal}
+		{#if activeStatus === status.recents}
+			{#if !noCustomKcal}
+				<button
+					on:click={() => {
+						selectItem(customKcalCountItem);
+					}}
+					class="card filled"
+				>
+					<span class="title-l">Custom kcal count</span>
+				</button>
+			{/if}
 			<button
 				on:click={() => {
-					selectItem(customKcalCountItem);
+					selectItem(customKcalAmountItem);
 				}}
 				class="card filled"
 			>
-				<span class="title-l">Custom kcal count</span>
+				<span class="title-l">Custom kcal & amount</span>
 			</button>
-		{/if}
-
-		<button
-			on:click={() => {
-				selectItem(customKcalAmountItem);
-			}}
-			class="card filled"
-		>
-			<span class="title-l">Custom kcal & amount</span>
-		</button>
-
-		<Input bind:value={search} on:input={() => (fddbEntries = [])}>Search</Input>
-
-		<!-- TODO: Better flow: 
-			initially show user recents,
-			fetch all items on serach and filter them,
-			fddb search as seperate section i.e.
-			hide own items and have back button -->
-
-		{#each filtered as item}
-			{#if item.id !== excludeId}
-				<button on:click={() => selectItem(item)}>
-					<ItemCard {item} />
-				</button>
-			{/if}
-		{/each}
-
-		{#if search}
-			{#if !fddbEntries.length}
-				<button class="btn tonal fddb" disabled={loadingFddb} on:click={searchFddb}>
-					Crawl FDDB...
-				</button>
-			{:else}
-				{#each fddbEntries as item}
-					<button
-						on:click={() => {
-							selectItem(item);
-						}}
-					>
+			{#each recentItems as item}
+				{#if item.id !== excludeId}
+					<button on:click={() => selectItem(item)}>
 						<ItemCard {item} />
 					</button>
-				{/each}
-			{/if}
+				{/if}
+			{/each}
+		{:else if activeStatus === status.search}
+			{#each filtered as item}
+				{#if item.id !== excludeId}
+					<button on:click={() => selectItem(item)}>
+						<ItemCard {item} />
+					</button>
+				{/if}
+			{/each}
+		{:else if activeStatus === status.fddb}
+			{#each fddbEntries as item}
+				<button
+					on:click={() => {
+						selectItem(item);
+					}}
+				>
+					<ItemCard {item} />
+				</button>
+			{/each}
 		{/if}
 	</div>
 </Dialog>
 
 <style>
+	.row {
+		display: flex;
+	}
 	.end {
 		margin-left: auto;
 	}
@@ -153,10 +188,6 @@
 		flex-direction: column;
 		gap: 1em;
 
-		width: min(calc(100vw - 6em), 400px);
-	}
-
-	.fddb {
-		margin-left: auto;
+		min-width: 277px;
 	}
 </style>

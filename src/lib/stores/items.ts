@@ -1,5 +1,7 @@
 import { db } from '$lib/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { get } from 'svelte/store';
+import { user } from './user';
 
 export interface Item {
 	id: string;
@@ -33,6 +35,19 @@ export async function getItems(): Promise<Item[]> {
 		const docData = doc.data();
 		data.push({ ...docData, id: doc.id });
 	});
+	return data;
+}
+
+export async function setRecentItem(mostRecentItem: Item) {
+	let recentItems = (await getRecentItems()).filter((item) => item.id !== mostRecentItem.id);
+	recentItems.unshift(mostRecentItem);
+	recentItems = recentItems.splice(0, 24);
+	await setDoc(doc(db, 'Users/' + get(user).id), { recentItems });
+}
+
+export async function getRecentItems(): Promise<Item[]> {
+	const snapshot = await getDoc(doc(db, 'Users/' + get(user).id));
+	const data = (await snapshot.data()?.recentItems) || [];
 	return data;
 }
 

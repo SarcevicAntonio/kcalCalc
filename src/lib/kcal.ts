@@ -2,7 +2,6 @@ import type { ItemInstance } from './stores/items';
 
 export const calculateKcal = (item: ItemInstance) => (item.kcalPer100 / 100) * item.amount;
 
-// TODO: check out the custom kcal input etc
 export const calculateAmountSum = (items: ItemInstance[]) =>
 	items.reduce((acc, ingredient) => acc + ingredient.amount, 0);
 
