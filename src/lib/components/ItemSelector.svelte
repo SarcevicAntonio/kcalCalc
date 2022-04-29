@@ -69,6 +69,7 @@
 	}
 
 	function selectItem(item: Item) {
+		if (!item.id.startsWith('CUSTOM')) setRecentItem(item);
 		const itemInstance: ItemInstance = {
 			key: uuid(),
 			id: item.id,
@@ -80,7 +81,6 @@
 		};
 		dispatch('select', itemInstance);
 		dialogOpen = false;
-		setRecentItem(item);
 
 		search = '';
 		activeStatus = status.recents;
