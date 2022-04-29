@@ -41,7 +41,6 @@
 	const docRef = doc(db, `Items/${$page.params.id}`);
 
 	async function updateData(newData: Item) {
-		console.log(data);
 		if (!browser || !$user || $navigating) return;
 
 		await setDoc(docRef, newData);
