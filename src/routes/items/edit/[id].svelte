@@ -177,10 +177,6 @@
 </nav>
 
 <style>
-	h3 {
-		margin-top: 0.25em;
-	}
-
 	.row {
 		display: flex;
 		justify-content: space-between;
