@@ -24,8 +24,9 @@ export interface ItemInstance {
 }
 
 export interface Portion {
-	label: 'Scheibe';
-	amount: 40;
+	key?: string;
+	label: string;
+	amount: number;
 }
 
 export async function getItems(): Promise<Item[]> {

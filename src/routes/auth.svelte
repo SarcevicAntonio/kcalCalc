@@ -69,16 +69,6 @@
 		border-radius: 1rem;
 	}
 
-	.flex {
-		display: flex;
-		align-items: center;
-		gap: 2em;
-	}
-
-	img {
-		border-radius: 1em;
-	}
-
 	ul {
 		list-style: none;
 		text-align: center;

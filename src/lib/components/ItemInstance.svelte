@@ -6,7 +6,6 @@
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import IcDelete from '~icons/ic/round-delete-forever';
-	import IcPortion from '~icons/ic/round-photo-size-select-small';
 	import ItemSelector from './ItemSelector.svelte';
 	import PortionSelector from './PortionSelector.svelte';
 

@@ -31,7 +31,7 @@
 
 	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
 
-	async function updateData(newData) {
+	async function updateData(newData: Day) {
 		if (!browser || !$user || $navigating) return;
 
 		await setDoc(

@@ -8,7 +8,11 @@
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
-	import { defaultPortion } from '$lib/stores/items';
+	import {
+		defaultPortion,
+		type Item,
+		type ItemInstance as ItemInstanceType,
+	} from '$lib/stores/items';
 	import { user } from '$lib/stores/user';
 	import { Dialog } from 'as-comps';
 	import { deleteDoc, doc, setDoc } from 'firebase/firestore';
@@ -18,7 +22,7 @@
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
 
-	export let data;
+	export let data: Item;
 
 	let sumInputEl = null;
 	let activeEl = undefined;
@@ -36,7 +40,7 @@
 
 	const docRef = doc(db, `Items/${$page.params.id}`);
 
-	async function updateData(newData) {
+	async function updateData(newData: Item) {
 		console.log(data);
 		if (!browser || !$user || $navigating) return;
 
@@ -45,7 +49,7 @@
 
 	$: updateData(data);
 
-	async function addItem(newItem) {
+	async function addItem(newItem: ItemInstanceType) {
 		data.kcalPer100 = 0;
 		data.items = [...data.items, newItem];
 	}
