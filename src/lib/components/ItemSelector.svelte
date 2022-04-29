@@ -97,7 +97,7 @@
 <Dialog bind:open={dialogOpen} includedTrigger={false}>
 	<svelte:fragment slot="trigger-label" />
 	<div class="content">
-		<h2 class="headline-2">Select Item</h2>
+		<h2 class="title-l">Select Item</h2>
 		<div class="row">
 			<Input
 				bind:value={search}

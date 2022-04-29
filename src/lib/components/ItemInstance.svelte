@@ -72,6 +72,7 @@
 					<PortionSelector
 						portions={item.portions}
 						on:select={({ detail }) => (item.amount = detail.amount)}
+						on:add={({ detail }) => (item.amount += detail.amount)}
 					/>
 				{/if}
 				<ItemSelector

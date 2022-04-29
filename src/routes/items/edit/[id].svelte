@@ -148,7 +148,7 @@
 			<IcDelete />
 		</svelte:fragment>
 		<div class="col gap">
-			<h2 class="headline-2">Are you sure?</h2>
+			<h2 class="title-l">Are you sure?</h2>
 			<p class="body-m">Deleting the item "{data.label}" can not be undone.</p>
 			<div class="row jcsb">
 				<button class="btn tonal" on:click={toggle}><IcArrowBack /> Do nothing </button>
