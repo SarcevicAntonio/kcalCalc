@@ -72,86 +72,92 @@
 	</Input>
 {/if}
 
-<h3 class="headline-4">Items</h3>
-
-{#each data.items as child, index}
-	<ItemInstance
-		bind:item={child}
-		on:delete={() => {
-			data.items.splice(index, 1);
-			if (!data.items.length) data.kcalPer100 = 100;
-			data = data;
-		}}
-	/>
-{/each}
-
-<ItemSelector
-	noCustomKcal
-	end
-	tonal
-	excludeId={$page.params.id}
-	on:select={({ detail }) => {
-		addItem(detail);
-	}}
-/>
-
-{#if data.items.length}
+<div class="card filled col">
 	<div class="row">
-		<input
-			aria-label="Override Amount"
-			id="override-amount"
-			type="checkbox"
-			checked={data.amount ? true : false}
-			on:input={() => {
-				if (data.amount) {
-					data.amount = 0;
-				} else {
-					data.amount = calculateAmountSum(data.items) || 100;
-				}
+		<h3 class="headline-4">Items</h3>
+		<ItemSelector
+			noCustomKcal
+			end
+			excludeId={$page.params.id}
+			on:select={({ detail }) => {
+				addItem(detail);
 			}}
 		/>
-		{#if data.amount || activeEl === sumInputEl}
-			<Input type="calc" bind:value={data.amount} bind:inputElement={sumInputEl}>Amount Sum</Input>
-		{:else}
-			<Input type="calc" disabled value={calculateAmountSum(data.items)}>Amount Sum</Input>
-		{/if}
 	</div>
-{/if}
-
-<h3 class="headline-4">Portions</h3>
-
-{#each data.portions as portion, index (portion.key)}
-	<div class="card outlined">
-		<button
-			class="btn text"
-			on:click={() => {
-				data.portions.splice(index, 1);
+	{#each data.items as child, index}
+		<ItemInstance
+			bind:item={child}
+			on:delete={() => {
+				data.items.splice(index, 1);
+				if (!data.items.length) data.kcalPer100 = 100;
 				data = data;
 			}}
-		>
-			<IcDelete />
-		</button>
-		<Input bind:value={portion.label}>Label</Input>
-		<Input type="number" bind:value={portion.amount}>Amount (g||ml)</Input>
-	</div>
-{/each}
+		/>
+	{/each}
+	{#if data.items.length}
+		<div class="row">
+			<input
+				aria-label="Override Amount"
+				id="override-amount"
+				type="checkbox"
+				checked={data.amount ? true : false}
+				on:input={() => {
+					if (data.amount) {
+						data.amount = 0;
+					} else {
+						data.amount = calculateAmountSum(data.items) || 100;
+					}
+				}}
+			/>
+			{#if data.amount || activeEl === sumInputEl}
+				<Input type="calc" bind:value={data.amount} bind:inputElement={sumInputEl}>Amount Sum</Input
+				>
+			{:else}
+				<Input type="calc" disabled value={calculateAmountSum(data.items)}>Amount Sum</Input>
+			{/if}
+		</div>
+	{/if}
+</div>
 
-<button
-	class="btn tonal add"
-	on:click={() => {
-		data.portions = [...data.portions, { ...defaultPortion, key: uuid() }];
-	}}><IcPlus /> Add</button
->
+<div class="card filled col">
+	<div class="row">
+		<h3 class="headline-4">Portions</h3>
+		<button
+			class="btn text add"
+			on:click={() => {
+				data.portions = [...data.portions, { ...defaultPortion, key: uuid() }];
+			}}
+		>
+			<IcPlus /> Add
+		</button>
+	</div>
+
+	{#each data.portions as portion, index (portion.key)}
+		<div class="card outlined portion">
+			<button
+				class="btn text"
+				on:click={() => {
+					data.portions.splice(index, 1);
+					data = data;
+				}}
+			>
+				<IcDelete />
+			</button>
+			<Input bind:value={portion.label}>Label</Input>
+			<Input type="number" bind:value={portion.amount}>Amount (g||ml)</Input>
+		</div>
+	{/each}
+</div>
 
 <nav>
 	<Dialog let:toggle>
 		<svelte:fragment slot="trigger-label">
 			<IcDelete />
 		</svelte:fragment>
-		<div class="col gap">
+		<div class="col">
 			<h2 class="title-l">Are you sure?</h2>
 			<p class="body-m">Deleting the item "{data.label}" can not be undone.</p>
-			<div class="row jcsb">
+			<div class="row">
 				<button class="btn tonal" on:click={toggle}><IcArrowBack /> Do nothing </button>
 				<button
 					class="btn tonal"
@@ -182,11 +188,17 @@
 		gap: 0.5em;
 	}
 
-	input {
-		margin: 2em;
+	.col {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
 	}
 
-	.outlined {
+	input {
+		margin: 1em;
+	}
+
+	.portion {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
