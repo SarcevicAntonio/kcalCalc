@@ -72,27 +72,6 @@
 	</Input>
 {/if}
 
-<div class="row">
-	<input
-		aria-label="Override Amount"
-		id="override-amount"
-		type="checkbox"
-		checked={data.amount ? true : false}
-		on:input={() => {
-			if (data.amount) {
-				data.amount = 0;
-			} else {
-				data.amount = calculateAmountSum(data.items) || 100;
-			}
-		}}
-	/>
-	{#if data.amount || activeEl === sumInputEl}
-		<Input type="calc" bind:value={data.amount} bind:inputElement={sumInputEl}>Amount Sum</Input>
-	{:else}
-		<Input type="calc" disabled value={calculateAmountSum(data.items)}>Amount Sum</Input>
-	{/if}
-</div>
-
 <h3 class="headline-4">Items</h3>
 
 {#each data.items as child, index}
@@ -115,6 +94,29 @@
 		addItem(detail);
 	}}
 />
+
+{#if data.items.length}
+	<div class="row">
+		<input
+			aria-label="Override Amount"
+			id="override-amount"
+			type="checkbox"
+			checked={data.amount ? true : false}
+			on:input={() => {
+				if (data.amount) {
+					data.amount = 0;
+				} else {
+					data.amount = calculateAmountSum(data.items) || 100;
+				}
+			}}
+		/>
+		{#if data.amount || activeEl === sumInputEl}
+			<Input type="calc" bind:value={data.amount} bind:inputElement={sumInputEl}>Amount Sum</Input>
+		{:else}
+			<Input type="calc" disabled value={calculateAmountSum(data.items)}>Amount Sum</Input>
+		{/if}
+	</div>
+{/if}
 
 <h3 class="headline-4">Portions</h3>
 
@@ -156,6 +158,7 @@
 					on:click={async () => {
 						await deleteDoc(docRef);
 						goto('/items');
+						toggle();
 					}}
 				>
 					<IcDelete />

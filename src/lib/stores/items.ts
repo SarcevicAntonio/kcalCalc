@@ -1,6 +1,7 @@
 import { db } from '$lib/firebase';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { get } from 'svelte/store';
+import { v4 as uuid } from 'uuid';
 import { user } from './user';
 
 export interface Item {
@@ -50,6 +51,13 @@ export async function getRecentItems(): Promise<Item[]> {
 	const snapshot = await getDoc(doc(db, 'Users/' + get(user).id));
 	const data = (await snapshot.data()?.recentItems) || [];
 	return data;
+}
+
+export async function saveExternalItem(item: Item) {
+	item.id = uuid();
+	item.items = [];
+	item.portions = [];
+	await setDoc(doc(db, 'Items/' + item.id), item);
 }
 
 export const defaultItem = {

@@ -6,6 +6,7 @@
 		customKcalCountItem,
 		getItems,
 		getRecentItems,
+		saveExternalItem,
 		setRecentItem,
 		type Item,
 		type ItemInstance,
@@ -23,7 +24,7 @@
 	enum status {
 		recents,
 		search,
-		fddb,
+		external,
 	}
 
 	let activeStatus = status.recents;
@@ -59,11 +60,11 @@
 		allItems = await getItems();
 	}
 
-	let fddbEntries = [];
-	async function searchFddb() {
-		activeStatus = status.fddb;
+	let externalEntries = [];
+	async function searchExternal() {
+		activeStatus = status.external;
 		await fetch('/search/' + encodeURIComponent(search)).then(async (res) => {
-			fddbEntries = await res.json();
+			externalEntries = await res.json();
 		});
 	}
 
@@ -111,16 +112,16 @@
 			>
 				Search
 			</Input>
-			{#if activeStatus !== status.fddb}
-				<button class="btn text fddb" disabled={!search} on:click={searchFddb}>
+			{#if activeStatus !== status.external}
+				<button class="btn text" disabled={!search} on:click={searchExternal}>
 					<MdiCloudSearch />
 				</button>
 			{:else}
 				<button
-					class="btn text fddb"
+					class="btn text"
 					on:click={() => {
 						activeStatus = status.search;
-						fddbEntries = [];
+						externalEntries = [];
 					}}
 				>
 					<IcItems />
@@ -162,10 +163,11 @@
 					</button>
 				{/if}
 			{/each}
-		{:else if activeStatus === status.fddb}
-			{#each fddbEntries as item}
+		{:else if activeStatus === status.external}
+			{#each externalEntries as item}
 				<button
 					on:click={() => {
+						saveExternalItem(item);
 						selectItem(item);
 					}}
 				>

@@ -34,7 +34,7 @@ export const appADMIN = getAdmin().app;
 export const authADMIN = getAdmin().auth;
 export const dbADMIN = getAdmin().db;
 
-export function getTokenFromCookie(cookie: string | null) {
+export async function getTokenFromCookie(cookie: string | null) {
 	if (!cookie) return null;
 
 	return authADMIN.verifySessionCookie(cookie).catch(() => null);
