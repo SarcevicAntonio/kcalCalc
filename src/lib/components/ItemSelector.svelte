@@ -40,19 +40,6 @@
 	let recentItems: Item[] = [];
 	let allItems: Item[] = [];
 
-	let filtered = allItems;
-	$: setFiltered(allItems, search);
-	function setFiltered(options: Item[], value: string) {
-		if (!options || !(value + '').trim()) {
-			filtered = allItems;
-			return;
-		}
-		const fuse = new Fuse(options, {
-			keys: ['label', 'brand'],
-		});
-		filtered = fuse.search(value + '').map((e) => e.item);
-	}
-
 	let dialogOpen = false;
 	async function toggle() {
 		recentItems = await getRecentItems();
@@ -62,10 +49,9 @@
 
 	let externalEntries = [];
 	async function searchExternal() {
+		externalEntries = [];
 		activeStatus = status.external;
-		await fetch('/search/' + encodeURIComponent(search)).then(async (res) => {
-			externalEntries = await res.json();
-		});
+		externalEntries = await (await fetch('/search/' + encodeURIComponent(search))).json();
 	}
 
 	function selectItem(item: Item) {
@@ -156,7 +142,9 @@
 				{/if}
 			{/each}
 		{:else if activeStatus === status.search}
-			{#each filtered as item}
+			{#each new Fuse(allItems, { keys: ['label', 'brand'] })
+				.search(search + '')
+				.map((res) => res.item) as item}
 				{#if item.id !== excludeId}
 					<button on:click={() => selectItem(item)}>
 						<ItemCard {item} />
