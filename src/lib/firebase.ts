@@ -1,6 +1,7 @@
+import { browser } from '$app/env';
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { enableIndexedDbPersistence, getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_APIKEY,
@@ -16,23 +17,17 @@ if (!firebaseConfig.apiKey) {
 	throw new Error('VITE_APIKEY is not set');
 }
 
-export function getClient() {
-	let app = undefined;
+function getClient() {
 	if (getApps().length) {
-		app = getApp();
+		return getApp();
 	} else {
-		app = initializeApp(firebaseConfig);
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
+		if (browser) enableIndexedDbPersistence(db);
+		return app;
 	}
-	if (!app) throw new Error('something went wrong with app: ' + JSON.stringify(app, null, 2));
-
-	const auth = getAuth(app);
-	// setPersistence(auth, inMemoryPersistence);
-
-	const db = getFirestore();
-
-	return { app, db, auth };
 }
 
-export const app = getClient().app;
-export const auth = getClient().auth;
-export const db = getClient().db;
+export const app = getClient();
+export const auth = getAuth(getClient());
+export const db = getFirestore(getClient());
