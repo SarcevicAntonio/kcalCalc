@@ -3,15 +3,19 @@
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import Input from '$lib/Input.svelte';
 	import IcAdd from '~icons/ic/round-add';
-	let filterValue = '';
+	import Fuse from 'fuse.js';
+
+	let search = '';
 
 	export let data;
 </script>
 
 <h2 class="headline-1">Saved Items</h2>
-<Input bind:value={filterValue}>Filter</Input>
+<Input bind:value={search}>Search</Input>
 
-{#each data as item}
+{#each search ? new Fuse(data, { keys: ['label', 'brand'] })
+			.search(search + '')
+			.map((res) => res.item) : data as item}
 	<a sveltekit:prefetch href="/items/edit/{item.id}">
 		<ItemCard {item} />
 	</a>
