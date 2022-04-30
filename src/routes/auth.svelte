@@ -46,7 +46,7 @@
 
 {#if $user}
 	<nav>
-		<a href="/day/{toISODateString(new Date())}"><IcHome /> Go Home</a>
+		<a sveltekit:prefetch href="/day/{toISODateString(new Date())}"><IcHome /> Go Home</a>
 	</nav>
 {/if}
 

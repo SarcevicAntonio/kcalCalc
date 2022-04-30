@@ -16,7 +16,7 @@
 	<p>Maybe try reloading or logging in.</p>
 
 	<nav>
-		<a href="/auth">
+		<a sveltekit:prefetch href="/auth">
 			<IconLogin /> Login
 		</a>
 	</nav>

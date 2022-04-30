@@ -59,7 +59,7 @@
 </Switcher>
 
 {#each Object.entries(data) as [date, item]}
-	<a class="card filled" href="/day/{date}">
+	<a class="card filled" sveltekit:prefetch href="/day/{date}">
 		<div class="row">
 			<span class="title-l">{new Date(date).toLocaleString(undefined, { weekday: 'long' })}</span>
 			{#if item?.kcal}
@@ -73,7 +73,7 @@
 {/each}
 
 <nav>
-	<a href="/items"><IconItems /> Items</a>
+	<a sveltekit:prefetch href="/items"><IconItems /> Items</a>
 	<Home />
 </nav>
 

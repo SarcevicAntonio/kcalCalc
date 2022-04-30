@@ -173,7 +173,7 @@
 			</div>
 		</div>
 	</Dialog>
-	<a href="/items"><IcArrowBack /> Back</a>
+	<a sveltekit:prefetch href="/items"><IcArrowBack /> Back</a>
 </nav>
 
 <style>

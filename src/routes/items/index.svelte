@@ -12,13 +12,13 @@
 <Input bind:value={filterValue}>Filter</Input>
 
 {#each data as item}
-	<a href="/items/edit/{item.id}">
+	<a sveltekit:prefetch href="/items/edit/{item.id}">
 		<ItemCard {item} />
 	</a>
 {/each}
 
 <nav>
-	<a href="/items/add"><IcAdd /> Add</a>
+	<a sveltekit:prefetch href="/items/add"><IcAdd /> Add</a>
 	<Home />
 </nav>
 

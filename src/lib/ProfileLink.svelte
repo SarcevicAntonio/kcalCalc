@@ -4,7 +4,7 @@
 	import { user } from './stores/user';
 </script>
 
-<a class="btn text" href="/auth">
+<a sveltekit:prefetch class="btn text" href="/auth">
 	{#if $user}
 		<IconProfile />
 	{:else}

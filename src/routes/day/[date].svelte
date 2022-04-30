@@ -63,11 +63,11 @@
 {/if}
 
 <nav>
-	<a href="/items"><IconItems /> Items</a>
+	<a sveltekit:prefetch href="/items"><IconItems /> Items</a>
 	{#if !dateIsToday}
 		<Home />
 	{/if}
-	<a href="/{year}/{week}">
+	<a sveltekit:prefetch href="/{year}/{week}">
 		<IconWeek />
 		Week
 	</a>
