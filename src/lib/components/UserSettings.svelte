@@ -6,5 +6,12 @@
 {#await userSettings.load()}
 	Loading User Settings...
 {:then}
-	<Input type="number" bind:value={$userSettings.kcalLimit}>Kcal Day Limit</Input>
+	<Input type="number" bind:value={$userSettings.kcalLimit}>Kcal Day Limit / Warning</Input>
 {/await}
+
+<a
+	href="https://www.tk.de/service/app/2004134/kalorienrechner/einstieg.app?tkcm=ab"
+	target="_blank"
+>
+	Kalo­ri­en­be­darfs­rechner von TK
+</a>
