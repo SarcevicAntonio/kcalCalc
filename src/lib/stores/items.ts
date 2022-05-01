@@ -5,6 +5,9 @@ import { v4 as uuid } from 'uuid';
 import { user } from './user';
 
 export interface Item {
+	owner?: string;
+	createdAt?: number;
+	updatedAt?: number;
 	id: string;
 	label: string;
 	brand?: string;

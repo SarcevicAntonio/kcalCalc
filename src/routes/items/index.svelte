@@ -1,14 +1,15 @@
-<script>
+<script lang="ts">
 	import Home from '$lib/components/Home.svelte';
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import Input from '$lib/Input.svelte';
 	import IcAdd from '~icons/ic/round-add';
 	import Fuse from 'fuse.js';
 	import { user } from '$lib/stores/user';
+	import type { Item } from '$lib/stores/items';
 
 	let search = '';
 
-	export let data;
+	export let data: Item[];
 </script>
 
 <h2 class="headline-1">Saved Items</h2>
@@ -16,7 +17,7 @@
 
 {#each search ? new Fuse(data, { keys: ['label', 'brand'] })
 			.search(search + '')
-			.map((res) => res.item) : data as item}
+			.map((res) => res.item) : data.sort((a, b) => b.updatedAt - a.updatedAt) as item}
 	{@const owner = item.owner ? $user.id === item.owner : true}
 	<a sveltekit:prefetch href={owner ? `/items/edit/${item.id}` : ''} class:disabled={!owner}>
 		<ItemCard {item} />

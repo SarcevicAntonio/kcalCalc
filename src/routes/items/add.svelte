@@ -8,7 +8,13 @@
 
 	async function newItem() {
 		const id = uuid();
-		await setDoc(doc(db, 'Items/' + id), { ...defaultItem, id, owner: $user.id });
+		await setDoc(doc(db, 'Items/' + id), {
+			...defaultItem,
+			id,
+			owner: $user.id,
+			createdAt: Date.now(),
+			updatedAt: Date.now(),
+		});
 		goto('/items/edit/' + id);
 	}
 

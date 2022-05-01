@@ -44,7 +44,7 @@
 	async function updateData(newData: Item) {
 		if (!browser || !$user || $navigating) return;
 
-		await setDoc(docRef, newData);
+		await setDoc(docRef, { ...newData, updatedAt: Date.now() });
 	}
 
 	$: updateData(data);
