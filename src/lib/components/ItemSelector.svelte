@@ -57,6 +57,7 @@
 
 	function selectItem(item: Item) {
 		if (!item.id.startsWith('CUSTOM')) setRecentItem(item);
+		console.log(item);
 		const itemInstance: ItemInstance = {
 			key: uuid(),
 			id: item.id,
@@ -86,14 +87,14 @@
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}
 	dialogOut={fly}
-	--background="var(--md-surface)"
-	--border-radius="0"
-	--width="100vw"
-	--max-width="800px"
-	--height="100vh"
-	--max-height="100vh"
-	--close-btn-color="var(--md-on-surface)"
-	--close-btn-border="1px solid var(--md-on-surface)"
+	--as-dialog-left="auto"
+	--as-dialog-right="0"
+	--as-dialog-transform="translateY(-50%)"
+	--as-dialog-border-radius="0"
+	--as-dialog-width="100%"
+	--as-dialog-max-width="800px"
+	--as-dialog-height="100%"
+	--as-dialog-max-height="100%"
 	bind:open={dialogOpen}
 	includedTrigger={false}
 >

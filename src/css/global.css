@@ -16,6 +16,9 @@ html {
 	color: var(--md-on-background);
 	padding: 0;
 	accent-color: var(--md-primary);
+	--as-dialog-background: var(--md-surface);
+	--as-dialog--close-btn-color: var(--md-on-surface);
+	--as-dialog--close-btn-border: 1px solid var(--md-on-surface);
 }
 
 html:focus-within {

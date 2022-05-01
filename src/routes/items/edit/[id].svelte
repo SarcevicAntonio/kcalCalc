@@ -150,7 +150,7 @@
 </div>
 
 <nav>
-	<Dialog --background="var(--md-surface)" noCloseButton let:toggle>
+	<Dialog noCloseButton let:toggle>
 		<svelte:fragment slot="trigger-label">
 			<IcDelete />
 		</svelte:fragment>
