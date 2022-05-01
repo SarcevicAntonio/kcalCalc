@@ -57,7 +57,6 @@
 
 	function selectItem(item: Item) {
 		if (!item.id.startsWith('CUSTOM')) setRecentItem(item);
-		console.log(item);
 		const itemInstance: ItemInstance = {
 			key: uuid(),
 			id: item.id,

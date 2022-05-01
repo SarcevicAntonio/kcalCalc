@@ -19,7 +19,6 @@
 
 	export let data: Week;
 
-	$: console.log(maxKcal);
 	$: kcalSum = Object.values(data).reduce((acc, day) => acc + day.kcal || 0, 0);
 	$: maxKcal = Math.max(...Object.values(data).map(({ kcal }) => kcal));
 	$: year = parseInt($page.params.year);
