@@ -66,10 +66,10 @@
 	}
 	@keyframes loading {
 		from {
-			opacity: 0.6;
+			opacity: 0.66;
 		}
 		to {
-			opacity: 1;
+			opacity: 0.33;
 		}
 	}
 </style>
