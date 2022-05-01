@@ -9,6 +9,7 @@
 	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import {
+		defaultItem,
 		defaultPortion,
 		type Item,
 		type ItemInstance as ItemInstanceType,
@@ -22,7 +23,7 @@
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
 
-	export let data: Item;
+	export let data: Item = defaultItem;
 
 	let sumInputEl = null;
 	let activeEl = undefined;

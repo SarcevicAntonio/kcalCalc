@@ -4,6 +4,7 @@
 	import Input from '$lib/Input.svelte';
 	import IcAdd from '~icons/ic/round-add';
 	import Fuse from 'fuse.js';
+	import { user } from '$lib/stores/user';
 
 	let search = '';
 
@@ -16,7 +17,8 @@
 {#each search ? new Fuse(data, { keys: ['label', 'brand'] })
 			.search(search + '')
 			.map((res) => res.item) : data as item}
-	<a sveltekit:prefetch href="/items/edit/{item.id}">
+	{@const owner = item.owner ? $user.id === item.owner : true}
+	<a sveltekit:prefetch href={owner ? `/items/edit/${item.id}` : ''} class:disabled={!owner}>
 		<ItemCard {item} />
 	</a>
 {/each}
@@ -29,5 +31,9 @@
 <style>
 	a {
 		text-decoration: none;
+	}
+	.disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
 	}
 </style>

@@ -31,7 +31,8 @@ A free calorie counting app made to fit my needs.
         }
         match /Items/{documents=**} {
           allow read: if true;
-          allow write: if true; // TODO: only owner can write
+          allow create: if true;
+          allow write: if !resource.data.keys().hasAny(["owner"]) || resource.data.owner == request.auth.uid;
         }
       }
     }
