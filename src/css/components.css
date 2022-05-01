@@ -111,8 +111,8 @@ nav {
 	margin: auto;
 }
 
-nav > button,
-nav > a {
+nav button,
+nav a {
 	border-radius: 1em;
 	border: none;
 	box-shadow: var(--shadow);

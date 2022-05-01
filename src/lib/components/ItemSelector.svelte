@@ -14,6 +14,7 @@
 	import { Dialog } from 'as-comps';
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher } from 'svelte';
+	import { fly } from 'svelte/transition';
 	import { v4 as uuid } from 'uuid';
 	import IcItems from '~icons/ic/round-category';
 	import IcPlus from '~icons/ic/round-plus';
@@ -81,7 +82,21 @@
 	{/if}
 </button>
 
-<Dialog bind:open={dialogOpen} includedTrigger={false}>
+<Dialog
+	dialogIn={fly}
+	transitionOptions={{ x: 500 }}
+	dialogOut={fly}
+	--background="var(--md-surface)"
+	--border-radius="0"
+	--width="100vw"
+	--max-width="100vw"
+	--height="100vh"
+	--max-height="100vh"
+	--close-btn-color="var(--md-on-surface)"
+	--close-btn-border="1px solid var(--md-on-surface)"
+	bind:open={dialogOpen}
+	includedTrigger={false}
+>
 	<svelte:fragment slot="trigger-label" />
 	<div class="content">
 		<h2 class="title-l">Select Item</h2>

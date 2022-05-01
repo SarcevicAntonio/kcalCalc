@@ -150,7 +150,7 @@
 </div>
 
 <nav>
-	<Dialog let:toggle>
+	<Dialog --background="var(--md-surface)" noCloseButton let:toggle>
 		<svelte:fragment slot="trigger-label">
 			<IcDelete />
 		</svelte:fragment>
@@ -187,7 +187,7 @@
 	.col {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5em;
+		gap: 1em;
 	}
 
 	input {

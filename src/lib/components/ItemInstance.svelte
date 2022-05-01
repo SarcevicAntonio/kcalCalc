@@ -68,7 +68,7 @@
 				<button class="btn text" on:click={() => dispatch('delete')}>
 					<IcDelete />
 				</button>
-				{#if item.portions}
+				{#if item.portions?.length}
 					<PortionSelector
 						portions={item.portions}
 						on:select={({ detail }) => (item.amount = detail.amount)}
