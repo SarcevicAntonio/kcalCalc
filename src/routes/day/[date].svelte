@@ -48,7 +48,7 @@
 		{#if dateIsToday}
 			Today
 		{:else}
-			{dateObj.toLocaleString(undefined, { month: 'short', day: 'numeric' })}
+			{dateObj.toLocaleString(undefined, { month: 'short', day: 'numeric', weekday: 'short' })}
 		{/if}
 	</h2>
 	{#await userSettings.load()}
