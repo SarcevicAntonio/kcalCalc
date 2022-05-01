@@ -4,6 +4,7 @@ specifiers:
   '@firebase/app-compat': ~0.1.22
   '@firebase/app-types': ~0.7.0
   '@iconify/json': ^2.1.29
+  '@square/svelte-store': ^0.1.0
   '@sveltejs/adapter-auto': next
   '@sveltejs/kit': next
   '@types/uuid': ^8.3.4
@@ -38,6 +39,7 @@ specifiers:
 dependencies:
   '@firebase/app-compat': 0.1.22
   '@firebase/app-types': 0.7.0
+  '@square/svelte-store': 0.1.0
   date-fns: 2.28.0
   firebase: 9.6.11
   firebase-admin: 10.0.2_5395f954a08b86dffb8e74f386d79234
@@ -874,6 +876,12 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
+
+  /@square/svelte-store/0.1.0:
+    resolution: {integrity: sha512-SU6un77lJzS8mpXDgxkO6xunXiHSyDhnenOHgnqbY40cDC42qIMc7aTwZTbAZe2+Ws8N6S42m+PjGtTHdNUQtg==}
+    dependencies:
+      svelte: 3.47.0
+    dev: false
 
   /@sveltejs/adapter-auto/1.0.0-next.40:
     resolution: {integrity: sha512-TT6YJUF3asJ/2RbviEpcDJQ/TixPcvmH0L2266fGNT7+KfAf9wbbVdegPWRODk2E2hTN0X+h5YS9l+lap+BK9w==}
@@ -3935,7 +3943,6 @@ packages:
   /svelte/3.47.0:
     resolution: {integrity: sha512-4JaJp3HEoTCGARRWZQIZDUanhYv0iyoHikklVHVLH9xFE9db22g4TDv7CPeNA8HD1JgjXI1vlhR1JZvvhaTu2Q==}
     engines: {node: '>= 8'}
-    dev: true
 
   /table/6.8.0:
     resolution: {integrity: sha512-s/fitrbVeEyHKFa7mFdkuQMWlH1Wgw/yEXMt5xACT4ZpzWFluehAxRtUUQKPuWhaLAWhFcVx6w3oC8VKaUfPGA==}

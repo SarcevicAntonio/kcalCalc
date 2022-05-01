@@ -89,7 +89,7 @@
 	--background="var(--md-surface)"
 	--border-radius="0"
 	--width="100vw"
-	--max-width="100vw"
+	--max-width="800px"
 	--height="100vh"
 	--max-height="100vh"
 	--close-btn-color="var(--md-on-surface)"

@@ -9,7 +9,7 @@
 	import { db } from '$lib/firebase';
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
-	import { user } from '$lib/stores/user';
+	import { user, userSettings } from '$lib/stores/user';
 	import { addDays, getISOWeek, getYear, isSameDay } from 'date-fns';
 	import { doc, setDoc } from 'firebase/firestore';
 	import IconItems from '~icons/ic/round-category';
@@ -51,9 +51,15 @@
 			{dateObj.toLocaleString(undefined, { month: 'short', day: 'numeric' })}
 		{/if}
 	</h2>
-	<span class="label-l">
-		{kcalDisplay(kcalInDay)} kcal
-	</span>
+	{#await userSettings.load()}
+		<span class="label-l">
+			{kcalDisplay(kcalInDay)} kcal
+		</span>
+	{:then}
+		<span class="label-l" class:over-limit={kcalInDay > $userSettings.kcalLimit}>
+			{kcalDisplay(kcalInDay)} kcal
+		</span>
+	{/await}
 </Switcher>
 
 {#if data.meals}
@@ -72,3 +78,9 @@
 		Week
 	</a>
 </nav>
+
+<style>
+	.over-limit {
+		color: var(--md-error);
+	}
+</style>

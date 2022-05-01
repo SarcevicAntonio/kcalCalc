@@ -1,4 +1,5 @@
 <script>
+	import UserSettings from '$lib/components/UserSettings.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { auth } from '$lib/firebase';
 	import { setUser, user } from '$lib/stores/user';
@@ -32,14 +33,11 @@
 	{:else if $user}
 		<button class="btn tonal" on:click={logout}><IcLogout /> Logout</button>
 		<div class="user">
-			<!-- <div class="flex">
-				<img src={$user.picture} alt="Your Google profile" />
-				<h2>{$user.displayName}</h2>
-			</div> -->
 			<ul>
 				<li>Email: {$user.email}</li>
 				<li>id: {$user.id}</li>
 			</ul>
+			<UserSettings />
 		</div>
 	{/if}
 </div>

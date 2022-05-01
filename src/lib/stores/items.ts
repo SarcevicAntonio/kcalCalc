@@ -44,13 +44,13 @@ export async function setRecentItem(mostRecentItem: Item) {
 	let recentItems = (await getRecentItems()).filter((item) => item.id !== mostRecentItem.id);
 	recentItems.unshift(mostRecentItem);
 	recentItems = recentItems.splice(0, 24);
-	await setDoc(doc(db, 'Users/' + get(user).id), { recentItems });
+	await setDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`), { recentItems });
 }
 
 export async function getRecentItems(): Promise<Item[]> {
-	const snapshot = await getDoc(doc(db, 'Users/' + get(user).id));
-	const data = (await snapshot.data()?.recentItems) || [];
-	return data;
+	const snapshot = await getDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`));
+	const data = snapshot.data()?.recentItems || [];
+	return data as Item[];
 }
 
 export async function saveExternalItem(item: Item) {

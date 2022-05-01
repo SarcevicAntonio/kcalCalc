@@ -16,6 +16,7 @@
 	"dependencies": {
 		"@firebase/app-compat": "~0.1.22",
 		"@firebase/app-types": "~0.7.0",
+		"@square/svelte-store": "^0.1.0",
 		"date-fns": "^2.28.0",
 		"firebase": "^9.6.11",
 		"firebase-admin": "^10.0.2",
