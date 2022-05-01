@@ -1,5 +1,5 @@
 import { db } from '$lib/firebase';
-import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { get } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
 import { user } from './user';
@@ -54,9 +54,12 @@ export async function getRecentItems(): Promise<Item[]> {
 }
 
 export async function saveExternalItem(item: Item) {
-	item.id = uuid();
+	item.id = `FDDB_${item.label}_${item.brand}`;
+	if ((await getDocs(query(collection(db, `Items`), where('id', '==', item.id)))).docs.length) {
+		return;
+	}
 	item.items = [];
-	item.portions = item.portions || [];
+	item.portions = item.portions ? item.portions.map((p) => ({ ...p, key: uuid() })) : [];
 	await setDoc(doc(db, 'Items/' + item.id), item);
 }
 
