@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { navigating } from '$app/stores';
 	import ProfileLink from '$lib/ProfileLink.svelte';
-
 	import { Notifications } from 'as-comps';
 	import '../css/global.css';
 
@@ -21,13 +21,13 @@
 	<ProfileLink />
 </header>
 
-<main>
+<main class:navigating={$navigating}>
 	<slot />
 </main>
 
 <Notifications />
 
-<style>
+<style lang="postcss">
 	h1 {
 		font-family: 'Roboto';
 		font-weight: 400;
@@ -58,5 +58,18 @@
 		margin-bottom: 4em;
 		padding-left: 0.5em;
 		padding-right: 0.5em;
+		transition: opacity 0.2 ease-in-out;
+	}
+
+	.navigating {
+		animation: loading 0.5s infinite alternate;
+	}
+	@keyframes loading {
+		from {
+			opacity: 0.6;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 </style>
