@@ -13,7 +13,14 @@ export const get: RequestHandler = async ({ params, locals }) => {
 	const data = {};
 	let day = startOfISOWeek(setISOWeek(setYear(new Date(), +params.year), +params.week));
 	for (let index = 0; index < 7; index++) {
-		data[toISODateString(day)] = {};
+		try {
+			data[toISODateString(day)] = {};
+		} catch (e) {
+			return {
+				status: 404,
+				body: e.message,
+			};
+		}
 		day = addDays(day, 1);
 	}
 
