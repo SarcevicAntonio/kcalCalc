@@ -56,7 +56,7 @@ export async function getRecentItems(): Promise<Item[]> {
 export async function saveExternalItem(item: Item) {
 	item.id = uuid();
 	item.items = [];
-	item.portions = [];
+	item.portions = item.portions || [];
 	await setDoc(doc(db, 'Items/' + item.id), item);
 }
 
