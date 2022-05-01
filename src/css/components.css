@@ -106,7 +106,6 @@ nav {
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-between;
-	max-width: 25em;
 	padding: 0.75em;
 	margin: auto;
 }

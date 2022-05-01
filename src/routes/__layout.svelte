@@ -21,7 +21,9 @@
 	<ProfileLink />
 </header>
 
-<slot />
+<main>
+	<slot />
+</main>
 
 <Notifications />
 
@@ -37,6 +39,7 @@
 		height: auto;
 		width: auto;
 	}
+
 	header {
 		display: flex;
 		justify-content: space-between;
@@ -44,5 +47,16 @@
 		padding-left: 1em;
 		background-color: var(--md-surface);
 		color: var(--md-on-surface);
+	}
+
+	main {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75em;
+		max-width: 25em;
+		margin: auto;
+		margin-bottom: 4em;
+		padding-left: 0.5em;
+		padding-right: 0.5em;
 	}
 </style>

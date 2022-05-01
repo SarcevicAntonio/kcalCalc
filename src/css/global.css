@@ -22,16 +22,6 @@ html:focus-within {
 	scroll-behavior: smooth;
 }
 
-body {
-	display: flex;
-	flex-direction: column;
-	gap: 0.75em;
-	max-width: 25em;
-	margin: auto;
-	margin-bottom: 4em;
-	padding-inline: 0.5em;
-}
-
 button {
 	text-align: unset;
 	border: unset;
