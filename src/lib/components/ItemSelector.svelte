@@ -22,7 +22,7 @@
 	import IcEdit from '~icons/ic/round-swap-horiz';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import ItemCard from './ItemCard.svelte';
-import ItemSkeleton from './ItemSkeleton.svelte';
+	import ItemSkeleton from './ItemSkeleton.svelte';
 
 	enum status {
 		recents,

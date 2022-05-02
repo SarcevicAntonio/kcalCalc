@@ -26,7 +26,10 @@ export const userSettings = asyncWritable(
 	user,
 	async ($user) => {
 		if (!sub && browser) setSubscription();
-		return (await getDoc(doc(db, `Users/${$user.id}/Data/Settings`))).data() as UserSettings || {} as UserSettings;
+		return (
+			((await getDoc(doc(db, `Users/${$user.id}/Data/Settings`))).data() as UserSettings) ||
+			({} as UserSettings)
+		);
 	},
 	async (settings) => {
 		await setDoc(doc(db, `Users/${get(user).id}/Data/Settings`), settings);
