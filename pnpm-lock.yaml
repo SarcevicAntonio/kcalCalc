@@ -10,7 +10,7 @@ specifiers:
   '@types/uuid': ^8.3.4
   '@typescript-eslint/eslint-plugin': ^5.20.0
   '@typescript-eslint/parser': ^5.20.0
-  as-comps: 0.0.12
+  as-comps: 0.0.13
   autoprefixer: ^10.4.4
   date-fns: ^2.28.0
   eslint: ^7.32.0
@@ -55,7 +55,7 @@ devDependencies:
   '@types/uuid': 8.3.4
   '@typescript-eslint/eslint-plugin': 5.20.0_239e9cc420b3fc07e7fb5873c15604f6
   '@typescript-eslint/parser': 5.20.0_eslint@7.32.0+typescript@4.5.5
-  as-comps: 0.0.12
+  as-comps: 0.0.13
   autoprefixer: 10.4.4_postcss@8.4.12
   eslint: 7.32.0
   eslint-config-prettier: 8.5.0_eslint@7.32.0
@@ -1270,8 +1270,8 @@ packages:
     dev: false
     optional: true
 
-  /as-comps/0.0.12:
-    resolution: {integrity: sha512-vvh4GUjYg1uU5sARWTIhYFEHbKbyPwR2/A6KdE5CE327lpvhE1n6HFrVrN4zeAa767kIqdygC39i4tKM+w/Idg==}
+  /as-comps/0.0.13:
+    resolution: {integrity: sha512-btXyknVNln13XABhe4K89XAmNWhboFv/VgNj3atf8uztw8rH+BRdSPi3uCakaXRyIV53/i8SE1NV+Dit8y68Pw==}
     dependencies:
       fuse.js: 6.5.3
       uuid: 8.3.2

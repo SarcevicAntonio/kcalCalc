@@ -69,9 +69,16 @@
 		search = '';
 		activeStatus = status.recents;
 	}
+
+	let buttonRef: HTMLElement;
 </script>
 
-<button class:end class="btn {tonal ? 'tonal' : 'text'}" on:click|stopPropagation={toggle}>
+<button
+	bind:this={buttonRef}
+	class:end
+	class="btn {tonal ? 'tonal' : 'text'}"
+	on:click|stopPropagation={toggle}
+>
 	{#if edit}
 		<IcEdit />
 	{:else}
@@ -80,6 +87,7 @@
 </button>
 
 <Dialog
+	{buttonRef}
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}
 	dialogOut={fly}
