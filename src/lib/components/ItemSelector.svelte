@@ -78,6 +78,7 @@
 		<IcPlus /> Add
 	{/if}
 </button>
+
 <Dialog
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}

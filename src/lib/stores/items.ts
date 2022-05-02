@@ -48,11 +48,15 @@ export const items = asyncReadable(
 	true
 );
 
-export const recentItems = asyncReadable([], async () => {
-	const snapshot = await getDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`));
-	const data = snapshot.data()?.recentItems || [];
-	return data as Item[];
-});
+export const recentItems = asyncReadable(
+	[],
+	async () => {
+		const snapshot = await getDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`));
+		const data = snapshot.data()?.recentItems || [];
+		return data as Item[];
+	},
+	true
+);
 
 export const createItemStore = (id: string) => {
 	const store = asyncWritable(
@@ -69,7 +73,8 @@ export async function setRecentItem(mostRecentItem: Item) {
 	let newRecentItems = get(recentItems).filter((item) => item.id !== mostRecentItem.id);
 	newRecentItems.unshift(mostRecentItem);
 	newRecentItems = newRecentItems.splice(0, 24);
-	await setDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`), { newRecentItems });
+	await setDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`), { recentItems: newRecentItems });
+	await recentItems.reload();
 }
 
 export async function saveExternalItem(item: Item) {
