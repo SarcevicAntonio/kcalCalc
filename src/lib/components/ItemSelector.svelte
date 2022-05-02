@@ -4,13 +4,14 @@
 	import {
 		customKcalAmountItem,
 		customKcalCountItem,
-		getItems,
-		getRecentItems,
+		items,
+		recentItems,
 		saveExternalItem,
 		setRecentItem,
 		type Item,
 		type ItemInstance,
 	} from '$lib/stores/items';
+	import { loadAll } from '@square/svelte-store';
 	import { Dialog } from 'as-comps';
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher } from 'svelte';
@@ -21,6 +22,7 @@
 	import IcEdit from '~icons/ic/round-swap-horiz';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import ItemCard from './ItemCard.svelte';
+import ItemSkeleton from './ItemSkeleton.svelte';
 
 	enum status {
 		recents,
@@ -28,24 +30,19 @@
 		external,
 	}
 
-	let activeStatus = status.recents;
-
 	const dispatch = createEventDispatcher();
 	export let edit = false;
 	export let end = false;
 	export let tonal = false;
 	export let noCustomKcal = false;
 	export let excludeId = '';
-	let search = '';
 
-	let recentItems: Item[] = [];
-	let allItems: Item[] = [];
+	let activeStatus = status.recents;
+	let search = '';
 
 	let dialogOpen = false;
 	async function toggle() {
-		recentItems = await getRecentItems();
 		dialogOpen = !dialogOpen;
-		allItems = await getItems();
 	}
 
 	let externalEntries = [];
@@ -81,7 +78,6 @@
 		<IcPlus /> Add
 	{/if}
 </button>
-
 <Dialog
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}
@@ -130,54 +126,60 @@
 			{/if}
 		</div>
 
-		{#if activeStatus === status.recents}
-			{#if !noCustomKcal}
+		{#await loadAll([items, recentItems])}
+			{#each { length: 10 } as _}
+				<ItemSkeleton />
+			{/each}
+		{:then}
+			{#if activeStatus === status.recents}
+				{#if !noCustomKcal}
+					<button
+						on:click={() => {
+							selectItem(customKcalCountItem);
+						}}
+						class="card filled"
+					>
+						<span class="title-l">Custom kcal count</span>
+					</button>
+				{/if}
 				<button
 					on:click={() => {
-						selectItem(customKcalCountItem);
+						selectItem(customKcalAmountItem);
 					}}
 					class="card filled"
 				>
-					<span class="title-l">Custom kcal count</span>
+					<span class="title-l">Custom kcal & amount</span>
 				</button>
+				{#each $recentItems as item}
+					{#if item.id !== excludeId}
+						<button on:click={() => selectItem(item)}>
+							<ItemCard {item} />
+						</button>
+					{/if}
+				{/each}
+			{:else if activeStatus === status.search}
+				{#each new Fuse($items, { keys: ['label', 'brand'] })
+					.search(search + '')
+					.map((res) => res.item) as item}
+					{#if item.id !== excludeId}
+						<button on:click={() => selectItem(item)}>
+							<ItemCard {item} />
+						</button>
+					{/if}
+				{/each}
+			{:else if activeStatus === status.external}
+				{#each externalEntries as item}
+					<button
+						on:click={() => {
+							saveExternalItem(item);
+							selectItem(item);
+						}}
+					>
+						<ItemCard {item} />
+					</button>
+				{/each}
 			{/if}
-			<button
-				on:click={() => {
-					selectItem(customKcalAmountItem);
-				}}
-				class="card filled"
-			>
-				<span class="title-l">Custom kcal & amount</span>
-			</button>
-			{#each recentItems as item}
-				{#if item.id !== excludeId}
-					<button on:click={() => selectItem(item)}>
-						<ItemCard {item} />
-					</button>
-				{/if}
-			{/each}
-		{:else if activeStatus === status.search}
-			{#each new Fuse(allItems, { keys: ['label', 'brand'] })
-				.search(search + '')
-				.map((res) => res.item) as item}
-				{#if item.id !== excludeId}
-					<button on:click={() => selectItem(item)}>
-						<ItemCard {item} />
-					</button>
-				{/if}
-			{/each}
-		{:else if activeStatus === status.external}
-			{#each externalEntries as item}
-				<button
-					on:click={() => {
-						saveExternalItem(item);
-						selectItem(item);
-					}}
-				>
-					<ItemCard {item} />
-				</button>
-			{/each}
-		{/if}
+		{/await}
 	</div>
 </Dialog>
 

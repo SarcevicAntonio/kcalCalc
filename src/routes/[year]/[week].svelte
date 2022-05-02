@@ -47,41 +47,37 @@
 	}
 </script>
 
-{#await userSettings.load() then}
-	<Switcher on:prev={goToPrev} on:next={goToNext}>
-		{#if year !== getYear(new Date())}
-			<span>{year}</span>
-		{/if}
-		<h2 class="headline-1">Week {week}</h2>
-		<span class="label-l" class:over-limit={kcalSum > $userSettings.kcalLimit * 7}>
-			{kcalDisplay(kcalSum)} kcal
-		</span>
-	</Switcher>
+<Switcher on:prev={goToPrev} on:next={goToNext}>
+	{#if year !== getYear(new Date())}
+		<span>{year}</span>
+	{/if}
+	<h2 class="headline-1">Week {week}</h2>
+	<span class="label-l" class:over-limit={kcalSum > ($userSettings?.kcalLimit || 9999) * 7}>
+		{kcalDisplay(kcalSum)} kcal
+	</span>
+</Switcher>
 
-	<div class="col">
-		{#if maxKcal > $userSettings.kcalLimit}
-			<div class="line" style="top:{($userSettings.kcalLimit / maxKcal) * 100}%;" />
-		{/if}
-		{#each Object.entries(data) as [date, item]}
-			<a
-				class="card filled row"
-				sveltekit:prefetch
-				href="/day/{date}"
-				style={!isNaN(maxKcal) ? `height: ${(item?.kcal / maxKcal) * 100}%;` : ''}
-			>
-				<span class="title-l"
-					>{new Date(date).toLocaleString(undefined, { weekday: 'narrow' })}</span
-				>
-				<span class="label-l end" class:over-limit={item?.kcal > $userSettings.kcalLimit}>
-					{#if item?.kcal}
-						{kcalDisplay(item.kcal)}
-						kcal
-					{/if}
-				</span>
-			</a>
-		{/each}
-	</div>
-{/await}
+<div class="col">
+	{#if $userSettings && maxKcal > $userSettings.kcalLimit}
+		<div class="line" style="top:{(($userSettings?.kcalLimit || 0) / maxKcal) * 100}%;" />
+	{/if}
+	{#each Object.entries(data) as [date, item]}
+		<a
+			class="card filled row"
+			sveltekit:prefetch
+			href="/day/{date}"
+			style={!isNaN(maxKcal) ? `height: ${(item?.kcal / maxKcal) * 100}%;` : ''}
+		>
+			<span class="title-l">{new Date(date).toLocaleString(undefined, { weekday: 'narrow' })}</span>
+			<span class="label-l end" class:over-limit={item?.kcal > ($userSettings?.kcalLimit || 9999)}>
+				{#if item?.kcal}
+					{kcalDisplay(item.kcal)}
+					kcal
+				{/if}
+			</span>
+		</a>
+	{/each}
+</div>
 
 <nav>
 	<a sveltekit:prefetch href="/items"><IconItems /> Items</a>

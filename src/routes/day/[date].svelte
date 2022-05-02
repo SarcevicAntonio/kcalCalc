@@ -51,15 +51,9 @@
 			{dateObj.toLocaleString(undefined, { month: 'short', day: 'numeric', weekday: 'short' })}
 		{/if}
 	</h2>
-	{#await userSettings.load()}
-		<span class="label-l">
-			{kcalDisplay(kcalInDay)} kcal
-		</span>
-	{:then}
-		<span class="label-l" class:over-limit={kcalInDay > $userSettings.kcalLimit}>
-			{kcalDisplay(kcalInDay)} kcal
-		</span>
-	{/await}
+	<span class="label-l" class:over-limit={kcalInDay > ($userSettings?.kcalLimit || 9999)}>
+		{kcalDisplay(kcalInDay)} kcal
+	</span>
 </Switcher>
 
 {#if data.meals}

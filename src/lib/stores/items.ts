@@ -1,4 +1,5 @@
 import { db } from '$lib/firebase';
+import { asyncReadable, asyncWritable } from '@square/svelte-store';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { get } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
@@ -33,27 +34,42 @@ export interface Portion {
 	amount: number;
 }
 
-export async function getItems(): Promise<Item[]> {
-	const snapshot = await getDocs(collection(db, `Items`));
-	const data = [];
-	snapshot.docs.forEach((doc) => {
-		const docData = doc.data();
-		data.push({ ...docData, id: doc.id });
-	});
-	return data;
-}
+export const items = asyncReadable(
+	[],
+	async () => {
+		const snapshot = await getDocs(collection(db, `Items`));
+		const data = [];
+		snapshot.docs.forEach((doc) => {
+			const docData = doc.data();
+			data.push({ ...docData, id: doc.id });
+		});
+		return data;
+	},
+	true
+);
 
-export async function setRecentItem(mostRecentItem: Item) {
-	let recentItems = (await getRecentItems()).filter((item) => item.id !== mostRecentItem.id);
-	recentItems.unshift(mostRecentItem);
-	recentItems = recentItems.splice(0, 24);
-	await setDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`), { recentItems });
-}
-
-export async function getRecentItems(): Promise<Item[]> {
+export const recentItems = asyncReadable([], async () => {
 	const snapshot = await getDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`));
 	const data = snapshot.data()?.recentItems || [];
 	return data as Item[];
+});
+
+export const createItemStore = (id: string) => {
+	const store = asyncWritable(
+		[],
+		async () => (await getDoc(doc(db, `Items/${id}`))).data() as Item,
+		async (data: Item) => {
+			await setDoc(doc(db, `Items/${data.id}`), { ...data, updatedAt: Date.now() });
+		}
+	);
+	return store;
+};
+
+export async function setRecentItem(mostRecentItem: Item) {
+	let newRecentItems = get(recentItems).filter((item) => item.id !== mostRecentItem.id);
+	newRecentItems.unshift(mostRecentItem);
+	newRecentItems = newRecentItems.splice(0, 24);
+	await setDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`), { newRecentItems });
 }
 
 export async function saveExternalItem(item: Item) {
@@ -95,44 +111,3 @@ export const customKcalAmountItem = {
 	kcalPer100: 100,
 	amount: 100,
 };
-
-export const items: Item[] = [
-	{
-		id: '1',
-		label: 'Brot town',
-		brand: 'asdf laden',
-		kcalPer100: 0, // 0 means no override
-		amount: 0, // 0 means no override
-		items: [
-			{
-				id: '1234',
-				label: 'Leerdammer, Original',
-				brand: 'Bel',
-				kcalPer100: 283,
-				amount: 20,
-			},
-			{
-				id: '4312',
-				label: 'Emmer-Dinkelbrot',
-				brand: "Essmann's Backstube",
-				kcalPer100: 312,
-				amount: 20,
-			},
-		],
-		portions: [
-			{
-				label: 'Scheibe',
-				amount: 40,
-			},
-		],
-	},
-	{
-		id: '2',
-		label: 'Brot Laden',
-		brand: 'asdf town',
-		kcalPer100: 300, // 0 means no override
-		amount: 0, // 0 means no override
-		items: [],
-		portions: [],
-	},
-];

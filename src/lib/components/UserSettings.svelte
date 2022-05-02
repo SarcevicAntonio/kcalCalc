@@ -4,7 +4,7 @@
 </script>
 
 {#await userSettings.load()}
-	Loading User Settings...
+	Loading ...
 {:then}
 	<Input type="number" bind:value={$userSettings.kcalLimit}>Kcal Day Limit / Warning</Input>
 {/await}
