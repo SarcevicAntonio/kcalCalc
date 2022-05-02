@@ -49,7 +49,7 @@
 	{#if expanded && items.length}
 		<div transition:slide|local class="col" on:click|stopPropagation>
 			<div class="pad" />
-			{#each items as item, index}
+			{#each items as item, index (item.key)}
 				<ItemInstance bind:item on:delete={() => delItem(index)} />
 			{/each}
 			<ItemSelector

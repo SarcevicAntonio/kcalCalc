@@ -61,7 +61,7 @@
 	{#if $userSettings && maxKcal > $userSettings.kcalLimit}
 		<div class="line" style="top:{(($userSettings?.kcalLimit || 0) / maxKcal) * 100}%;" />
 	{/if}
-	{#each Object.entries(data) as [date, item]}
+	{#each Object.entries(data) as [date, item] (date)}
 		<a
 			class="card filled row"
 			sveltekit:prefetch
@@ -89,7 +89,7 @@
 		position: relative;
 		display: flex;
 		justify-content: space-between;
-		align-items: start;
+		align-items: flex-start;
 		height: calc(100vh - 12em);
 	}
 

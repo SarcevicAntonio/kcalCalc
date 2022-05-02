@@ -16,7 +16,7 @@
 	</svelte:fragment>
 	<div class="col gap">
 		<h2 class="title-l">Select a portion size</h2>
-		{#each portions as portion}
+		{#each portions as portion (portion.key)}
 			<button
 				class="card filled"
 				on:click={() => {

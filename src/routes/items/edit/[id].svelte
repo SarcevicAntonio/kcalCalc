@@ -83,7 +83,7 @@
 				}}
 			/>
 		</div>
-		{#each $dataStore.items as child, index}
+		{#each $dataStore.items as child, index (child.key)}
 			<ItemInstance
 				bind:item={child}
 				on:delete={() => {

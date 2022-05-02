@@ -151,7 +151,7 @@
 				>
 					<span class="title-l">Custom kcal & amount</span>
 				</button>
-				{#each $recentItems as item}
+				{#each $recentItems as item (item.id)}
 					{#if item.id !== excludeId}
 						<button on:click={() => selectItem(item)}>
 							<ItemCard {item} />
@@ -161,7 +161,7 @@
 			{:else if activeStatus === status.search}
 				{#each new Fuse($items, { keys: ['label', 'brand'] })
 					.search(search + '')
-					.map((res) => res.item) as item}
+					.map((res) => res.item) as item (item.id)}
 					{#if item.id !== excludeId}
 						<button on:click={() => selectItem(item)}>
 							<ItemCard {item} />
@@ -169,7 +169,7 @@
 					{/if}
 				{/each}
 			{:else if activeStatus === status.external}
-				{#each externalEntries as item}
+				{#each externalEntries as item (item.id)}
 					<button
 						on:click={() => {
 							saveExternalItem(item);
