@@ -20,7 +20,7 @@
 	export let data: Week;
 
 	$: kcalSum = Object.values(data).reduce((acc, day) => acc + day.kcal || 0, 0);
-	$: maxKcal = Math.max(...Object.values(data).map(({ kcal }) => kcal));
+	$: maxKcal = Math.max(...Object.values(data).map(({ kcal }) => kcal || 0));
 	$: year = parseInt($page.params.year);
 	$: week = parseInt($page.params.week);
 
