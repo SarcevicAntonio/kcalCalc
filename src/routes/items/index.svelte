@@ -17,7 +17,7 @@
 
 {#each search ? new Fuse(data, { keys: ['label', 'brand'] })
 			.search(search + '')
-			.map((res) => res.item) : data.sort((a, b) => b.updatedAt - a.updatedAt) as item}
+			.map((res) => res.item) : data.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)) as item}
 	{@const owner = item.owner ? $user.id === item.owner : true}
 	<a sveltekit:prefetch href={owner ? `/items/edit/${item.id}` : ''} class:disabled={!owner}>
 		<ItemCard {item} />
