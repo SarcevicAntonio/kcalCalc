@@ -8,6 +8,7 @@ export const get: RequestHandler = async ({ params, locals }) => {
 	const year = getYear(dateObj);
 	const week = getISOWeek(dateObj);
 
+	console.log('dbADMIN.doc.get [date]', params.date, year, week);
 	let data = (
 		await dbADMIN
 			.doc(`Users/${locals.token.user_id}/Years/${year}/Weeks/${week}/Days/${params.date}`)

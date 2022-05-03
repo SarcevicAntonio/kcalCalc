@@ -172,6 +172,7 @@
 					<button
 						class="btn tonal"
 						on:click={async () => {
+							console.log('deleteDoc', $dataStore.id);
 							await Promise.all([deleteDoc(doc(db, `Items/${$dataStore.id}`)), items.reload()]);
 							toggle();
 							goto('/items');

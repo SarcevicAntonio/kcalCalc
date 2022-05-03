@@ -8,6 +8,7 @@
 
 	async function newItem() {
 		const id = uuid();
+		console.log('setDoc newItem', id);
 		await setDoc(doc(db, 'Items/' + id), {
 			...defaultItem,
 			id,

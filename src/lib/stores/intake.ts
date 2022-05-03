@@ -43,6 +43,7 @@ export const weekData = asyncDerived(
 	[curYear, curWeek, user],
 	async ([year, week, user]) => {
 		const colRef = collection(db, `Users/${user.id}/Years/${year}/Weeks/${week}/Days`);
+		console.log('getDocs weekData', year, week);
 		const weekData = await getDocs(colRef);
 
 		const data = {};

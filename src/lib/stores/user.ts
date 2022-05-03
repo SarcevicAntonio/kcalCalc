@@ -1,8 +1,7 @@
-import { browser } from '$app/env';
 import { session } from '$app/stores';
 import { db } from '$lib/firebase';
 import { asyncWritable } from '@square/svelte-store';
-import { doc, getDoc, onSnapshot, setDoc, type Unsubscribe } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { derived, get, type Writable } from 'svelte/store';
 
 export interface User {
@@ -25,21 +24,15 @@ export interface UserSettings {
 export const userSettings = asyncWritable(
 	user,
 	async ($user) => {
-		if (!sub && browser) setSubscription();
+		console.log('getDoc userSettings');
 		return (
 			((await getDoc(doc(db, `Users/${$user.id}/Data/Settings`))).data() as UserSettings) ||
 			({} as UserSettings)
 		);
 	},
 	async (settings) => {
+		console.log('setDoc userSettings');
 		await setDoc(doc(db, `Users/${get(user).id}/Data/Settings`), settings);
 	},
 	true
 );
-
-let sub: Unsubscribe;
-function setSubscription() {
-	sub = onSnapshot(doc(db, `Users/${get(user).id}/Data/Settings`), () => {
-		userSettings.reload();
-	});
-}

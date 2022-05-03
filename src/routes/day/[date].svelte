@@ -34,6 +34,7 @@
 	async function updateData(newData: Day) {
 		if (!browser || !$user || $navigating) return;
 
+		console.log('setDoc updateData', $page.params.date);
 		await setDoc(
 			doc(db, `Users/${$user.id}/Years/${year}/Weeks/${week}/Days/${$page.params.date}`),
 			newData

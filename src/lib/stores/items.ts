@@ -37,6 +37,7 @@ export interface Portion {
 export const items = asyncReadable(
 	[],
 	async () => {
+		console.count('getDoc items');
 		const snapshot = await getDocs(collection(db, `Items`));
 		const data = [];
 		snapshot.docs.forEach((doc) => {
@@ -51,8 +52,12 @@ export const items = asyncReadable(
 export const createItemStore = (id: string) => {
 	const store = asyncWritable(
 		[],
-		async () => (await getDoc(doc(db, `Items/${id}`))).data() as Item,
+		async () => {
+			console.log('getDoc new ItemStore', id);
+			return (await getDoc(doc(db, `Items/${id}`))).data() as Item;
+		},
 		async (data: Item) => {
+			console.log('setDoc ItemStore', id);
 			await setDoc(doc(db, `Items/${data.id}`), { ...data, updatedAt: Date.now() });
 		}
 	);
@@ -62,6 +67,7 @@ export const createItemStore = (id: string) => {
 export const recentItems = asyncDerived(
 	user,
 	async ($user) => {
+		console.log('getDoc recentItems');
 		const snapshot = await getDoc(doc(db, `Users/${$user.id}/Data/RecentItems`));
 		const data = snapshot.data()?.recentItems || [];
 		return data as Item[];
@@ -73,17 +79,20 @@ export async function setRecentItem(mostRecentItem: Item) {
 	let newRecentItems = get(recentItems).filter((item) => item.id !== mostRecentItem.id);
 	newRecentItems.unshift(mostRecentItem);
 	newRecentItems = newRecentItems.splice(0, 24);
+	console.log('setDoc RecentItem', mostRecentItem.id);
 	await setDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`), { recentItems: newRecentItems });
 	await recentItems.reload();
 }
 
 export async function saveExternalItem(item: Item) {
 	item.id = `FDDB_${item.label}_${item.brand}`;
+	console.log('getDocs saveExternalItem', item.id);
 	if ((await getDocs(query(collection(db, `Items`), where('id', '==', item.id)))).docs.length) {
 		return;
 	}
 	item.items = [];
 	item.portions = item.portions ? item.portions.map((p) => ({ ...p, key: uuid() })) : [];
+	console.log('setDoc saveExternalItem', item.id);
 	await setDoc(doc(db, 'Items/' + item.id), item);
 }
 
