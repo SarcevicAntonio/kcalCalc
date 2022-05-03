@@ -78,9 +78,7 @@
 				<ItemSelector
 					edit
 					on:select={({ detail }) => {
-						const amount = item.amount;
-						item = detail;
-						item.amount = amount;
+						item = { ...detail, amount: item.amount, key: item.key };
 					}}
 				/>
 			</div>
