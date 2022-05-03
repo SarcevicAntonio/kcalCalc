@@ -1,5 +1,5 @@
 import { db } from '$lib/firebase';
-import { asyncReadable, asyncWritable } from '@square/svelte-store';
+import { asyncDerived, asyncReadable, asyncWritable } from '@square/svelte-store';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { get } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
@@ -48,16 +48,6 @@ export const items = asyncReadable(
 	true
 );
 
-export const recentItems = asyncReadable(
-	[],
-	async () => {
-		const snapshot = await getDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`));
-		const data = snapshot.data()?.recentItems || [];
-		return data as Item[];
-	},
-	true
-);
-
 export const createItemStore = (id: string) => {
 	const store = asyncWritable(
 		[],
@@ -68,6 +58,16 @@ export const createItemStore = (id: string) => {
 	);
 	return store;
 };
+
+export const recentItems = asyncDerived(
+	user,
+	async ($user) => {
+		const snapshot = await getDoc(doc(db, `Users/${$user.id}/Data/RecentItems`));
+		const data = snapshot.data()?.recentItems || [];
+		return data as Item[];
+	},
+	true
+);
 
 export async function setRecentItem(mostRecentItem: Item) {
 	let newRecentItems = get(recentItems).filter((item) => item.id !== mostRecentItem.id);
