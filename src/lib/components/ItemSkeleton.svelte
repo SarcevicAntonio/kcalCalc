@@ -1,16 +1,15 @@
 <script>
-	export let noSub = false;
 </script>
 
 <div class="card filled">
-	<div class="row">
-		<span class="title-l">Item Label</span>
-	</div>
-	{#if !noSub}
+	<slot>
+		<div class="row">
+			<span class="title-l">Item Label</span>
+		</div>
 		<div class="row">
 			<span class="body-m">Item Brand</span>
 		</div>
-	{/if}
+	</slot>
 </div>
 
 <style lang="postcss">
@@ -29,9 +28,12 @@
 			var(--md-secondary-container) 100%
 		);
 		background-size: 500px 100%;
-		color: transparent;
+		color: transparent !important;
 		user-select: none;
 		cursor: wait;
+		& :global(*) {
+			color: transparent !important;
+		}
 	}
 	@keyframes shimmer {
 		0% {

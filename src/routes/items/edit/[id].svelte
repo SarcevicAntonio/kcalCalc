@@ -52,8 +52,15 @@
 	<Input disabled>Label</Input>
 	<Input disabled>Brand</Input>
 	<Input disabled>kcal per 100 g || ml</Input>
-	<ItemSkeleton noSub />
-	<ItemSkeleton noSub />
+
+	{#each { length: 2 } as _}
+		<ItemSkeleton>
+			<div class="row">
+				<h3 class="headline-4">Portions</h3>
+				<button class="btn text add" />
+			</div>
+		</ItemSkeleton>
+	{/each}
 {:then}
 	<Input bind:value={$dataStore.label}>Label</Input>
 
