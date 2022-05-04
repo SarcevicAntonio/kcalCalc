@@ -8,7 +8,6 @@
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import ItemSelector from './ItemSelector.svelte';
 	import PortionSelector from './PortionSelector.svelte';
-
 	const dispatch = createEventDispatcher();
 
 	export let item: ItemInstance;
@@ -16,6 +15,10 @@
 	export let expanded = false;
 
 	$: kcalLabel = kcalDisplay(calculateKcal(item));
+
+	function dispatchUpdate() {
+		dispatch('update');
+	}
 </script>
 
 <button on:click={() => (expanded = !expanded)} class="card outlined">
@@ -47,17 +50,19 @@
 		<div transition:slide|local class="col" on:click|stopPropagation on:keyup|preventDefault>
 			<div class="pad" />
 			{#if item.id.startsWith('CUSTOM')}
-				<Input bind:value={item.label}>Custom Label</Input>
+				<Input bind:value={item.label} on:input={dispatchUpdate}>Custom Label</Input>
 			{/if}
 
 			{#if typeof item.id === 'string' && item.id.startsWith('CUSTOM')}
 				{#if item.id === 'CUSTOM:KCAL+AMOUNT'}
-					<Input type="calc" bind:value={item.kcalPer100}>kcal Per 100 g || ml</Input>
+					<Input type="calc" bind:value={item.kcalPer100} on:input={dispatchUpdate}
+						>kcal Per 100 g || ml</Input
+					>
 				{/if}
 			{:else}
 				<Input type="number" disabled value={item.kcalPer100}>kcal Per 100 g || ml</Input>
 			{/if}
-			<Input type="calc" bind:value={item.amount}>
+			<Input type="calc" bind:value={item.amount} on:input={dispatchUpdate}>
 				{#if item.id !== 'CUSTOM:KCAL_COUNT'}
 					Amount in g || ml
 				{:else}
@@ -71,14 +76,21 @@
 				{#if item.portions?.length}
 					<PortionSelector
 						portions={item.portions}
-						on:select={({ detail }) => (item.amount = detail.amount)}
-						on:add={({ detail }) => (item.amount += detail.amount)}
+						on:select={({ detail }) => {
+							item.amount = detail.amount;
+							dispatchUpdate();
+						}}
+						on:add={({ detail }) => {
+							item.amount += detail.amount;
+							dispatchUpdate();
+						}}
 					/>
 				{/if}
 				<ItemSelector
 					edit
 					on:select={({ detail }) => {
 						item = { ...detail, amount: item.amount, key: item.key };
+						dispatchUpdate();
 					}}
 				/>
 			</div>

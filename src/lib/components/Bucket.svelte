@@ -2,10 +2,11 @@
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import type { ItemInstance as ItemInstanceType } from '$lib/stores/items';
-	import { tick } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import ItemInstance from './ItemInstance.svelte';
 	import ItemSelector from './ItemSelector.svelte';
+	const dispatch = createEventDispatcher();
 
 	export let label: string;
 	export let items: ItemInstanceType[];
@@ -16,11 +17,13 @@
 		expanded = true;
 		await tick();
 		items = [...items, item];
+		dispatch('update');
 	}
 
 	function delItem(index: number) {
 		items.splice(index, 1);
 		items = items;
+		dispatch('update');
 	}
 </script>
 
@@ -50,7 +53,7 @@
 		<div transition:slide|local class="col" on:click|stopPropagation>
 			<div class="pad" />
 			{#each items as item, index (item.key)}
-				<ItemInstance bind:item on:delete={() => delItem(index)} />
+				<ItemInstance bind:item on:delete={() => delItem(index)} on:update />
 			{/each}
 			<ItemSelector
 				end

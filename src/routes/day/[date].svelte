@@ -29,12 +29,12 @@
 
 	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
 
-	async function updateData(newData: Day) {
+	async function updateData() {
 		if (!browser || !$user || $navigating) return;
-		setDayData($page.params.date, newData);
+		setDayData($page.params.date, data);
 	}
 
-	$: updateData(data);
+	// $: updateData(data);
 </script>
 
 <Switcher on:prev={goToPref} on:next={goToNext}>
@@ -52,7 +52,7 @@
 
 {#if data.meals}
 	{#each data.meals as { label, intake } ($page.params.date + label)}
-		<Bucket {label} bind:items={intake} />
+		<Bucket {label} bind:items={intake} on:update={updateData}/>
 	{/each}
 {/if}
 
