@@ -13,7 +13,7 @@
 	import { addDays, getISOWeek, getYear, isSameDay } from 'date-fns';
 	import IconItems from '~icons/ic/round-category';
 	import IconWeek from '~icons/ic/round-date-range';
-	import { getDayData, setDayData, type Day } from '../../lib/stores/intake';
+	import { getDayData, setDayData, weekData, type Day } from '../../lib/stores/intake';
 
 	let data = null as Day;
 
@@ -80,10 +80,15 @@
 	{#if !dateIsToday}
 		<Home />
 	{/if}
-	<a sveltekit:prefetch href="/{year}/{week}">
+	<button
+		on:click={async () => {
+			await weekData.reload();
+			goto(`/${year}/${week}`);
+		}}
+	>
 		<IconWeek />
 		Week
-	</a>
+	</button>
 </nav>
 
 <style>
