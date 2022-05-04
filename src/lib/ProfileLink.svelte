@@ -6,8 +6,22 @@
 
 <a sveltekit:prefetch class="btn text" href="/auth">
 	{#if $user}
-		<IconProfile />
+		{#if $user.photoURL}
+			<img src={$user.photoURL} alt="Your Profile" />
+		{:else}
+			<IconProfile />
+		{/if}
 	{:else}
 		<IconLogin />
 	{/if}
 </a>
+
+<style>
+	img {
+		aspect-ratio: 1/1;
+		border-radius: 50%;
+		height: 1rem;
+		outline: 1px solid var(--md-primary);
+		outline-offset: 1px;
+	}
+</style>

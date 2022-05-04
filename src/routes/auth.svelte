@@ -22,14 +22,15 @@
 	{#if !$user}
 		<button class="btn tonal" on:click={popAuth}><IcLogin /> Login with Google</button>
 	{:else if $user}
-		<button class="btn tonal" on:click={logout}><IcLogout /> Logout</button>
 		<div class="user">
+			<img src={$user.photoURL} alt="Your Profile" />
 			<ul>
 				<li>Email: {$user.email}</li>
 				<li>id: {$user.id}</li>
 			</ul>
-			<UserSettings />
 		</div>
+		<UserSettings />
+		<button class="btn tonal" on:click={logout}><IcLogout /> Logout</button>
 	{/if}
 </div>
 
@@ -41,7 +42,7 @@
 
 <style>
 	.container {
-		height: 60vh;
+		height: 80vh;
 		display: grid;
 		place-items: center;
 		gap: 2rem;
