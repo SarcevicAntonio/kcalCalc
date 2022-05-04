@@ -28,3 +28,8 @@
 	font-size: var(--md-label--large);
 	font-weight: 500;
 }
+
+.label-m {
+	font-size: var(--md-label--medium);
+	font-weight: 500;
+}

@@ -63,20 +63,20 @@
 			href="/day/{date}"
 			style={!isNaN(maxKcal) ? `height: ${(item?.kcal / maxKcal) * 100}%;` : ''}
 		>
-			<span class="title-l">{new Date(date).toLocaleString(undefined, { weekday: 'narrow' })}</span>
-			<span class="label-l end" class:over-limit={item?.kcal > ($userSettings?.kcalLimit || 9999)}>
-				{#if item?.kcal}
+			<span class="title-m">{new Date(date).toLocaleString(undefined, { weekday: 'narrow' })}</span>
+			{#if item?.kcal}
+				<span
+					class="label-m end"
+					class:over-limit={item?.kcal > ($userSettings?.kcalLimit || 9999)}
+				>
 					{kcalDisplay(item.kcal)}
 					kcal
-				{/if}
-			</span>
+				</span>
+			{/if}
 		</a>
 	{:else}
 		{#each { length: 7 } as _}
-			<ItemSkeleton>
-				<span class="title-l" />
-				<span class="label-l end" />
-			</ItemSkeleton>
+			<div class="card filled row skeleton" />
 		{/each}
 	{/each}
 </div>
@@ -93,20 +93,24 @@
 		justify-content: space-between;
 		align-items: flex-start;
 		height: calc(100vh - 12rem);
+		gap: 0.25rem;
 	}
 
 	.row {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		min-height: 2.8rem;
+		min-height: 2.5rem;
+		flex-basis: 100%;
+		flex-grow: 1;
+		gap: 1.1em;
 	}
 
 	.end {
 		writing-mode: vertical-rl;
 		transform: rotate(180deg);
 		margin-top: auto;
-		min-width: 1.5rem;
+		white-space: nowrap;
 	}
 
 	.over-limit {
