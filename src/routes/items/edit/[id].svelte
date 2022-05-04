@@ -56,7 +56,9 @@
 		<ItemSkeleton>
 			<div class="row">
 				<h3 class="headline-4">Portions</h3>
-				<button class="btn text add" />
+				<button class="btn text add">
+					<IcPlus /> Add
+				</button>
 			</div>
 		</ItemSkeleton>
 	{/each}
