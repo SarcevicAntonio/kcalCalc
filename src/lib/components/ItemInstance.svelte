@@ -4,7 +4,7 @@
 	import kcalDisplay from '$lib/kcalDisplay';
 	import type { ItemInstance } from '$lib/stores/items';
 	import { createEventDispatcher } from 'svelte';
-	import { slide } from 'svelte/transition';
+	import { scale, slide } from 'svelte/transition';
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import ItemSelector from './ItemSelector.svelte';
 	import PortionSelector from './PortionSelector.svelte';
@@ -21,7 +21,7 @@
 	}
 </script>
 
-<button on:click={() => (expanded = !expanded)} class="card outlined">
+<button transition:scale|local on:click={() => (expanded = !expanded)} class="card outlined">
 	<div class="row">
 		<div class="col item-info">
 			<span class="title-m">
@@ -117,7 +117,6 @@
 		justify-content: center;
 		gap: 0.5rem;
 	}
-
 
 	.pad {
 		min-height: 0.5rem;

@@ -76,10 +76,6 @@
 		white-space: nowrap;
 	}
 
-	.over-limit {
-		color: var(--md-error);
-	}
-
 	.line {
 		width: 100%;
 		border-top: 1px solid var(--md-error);

@@ -186,3 +186,7 @@
 	flex-direction: column;
 	gap: 0.75rem;
 }
+
+.over-limit {
+	color: var(--md-error);
+}

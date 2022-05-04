@@ -1,10 +1,13 @@
 <script>
 	import { toISODateString } from '$lib/dateHelpers';
+	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { curDay, curWeek, curYear, weekData } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import { addDays, getYear } from 'date-fns';
 	import Switcher from './Switcher.svelte';
+
+	export let overrideData = null;
 
 	function goToNext() {
 		$curDay = toISODateString(addDays(new Date($curDay), +7));
@@ -14,7 +17,9 @@
 		$curDay = toISODateString(addDays(new Date($curDay), -7));
 	}
 
-	$: kcalSum = Object.values($weekData).reduce((acc, day) => acc + day.kcal || 0, 0);
+	$: kcalSum = (overrideData || Object.values($weekData)).reduce((acc, day) => {
+		return acc + day.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0) || 0;
+	}, 0);
 </script>
 
 <Switcher on:prev={goToPrev} on:next={goToNext}>

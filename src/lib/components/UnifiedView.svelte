@@ -22,11 +22,14 @@
 	}
 
 	$: scrollToView($weekData);
+
+	$: entries = Object.entries($weekData);
 </script>
 
-<WeekSelector />
+<WeekSelector overrideData={entries.map(([_, data]) => data)} />
+
 <div class="scroll-hori">
-	{#each Object.entries($weekData) as [date, data] (date)}
+	{#each entries as [date, data] (date)}
 		{@const dateObj = new Date(date)}
 		{@const kcalInDay = data?.meals.reduce(
 			(acc, meal) => acc + calculateKcalFromItems(meal.intake),
@@ -90,7 +93,6 @@
 		padding: 0.5rem;
 		border-radius: 0.75rem;
 		border: 1px solid transparent;
-
 	}
 
 	.today {
