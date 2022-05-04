@@ -2,14 +2,13 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Home from '$lib/components/Home.svelte';
-	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
+	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { curWeek, curYear, weekData, type Week } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import type { Loadable } from '@square/svelte-store';
 	import { getISOWeeksInYear, getYear, setISOWeek, setYear } from 'date-fns';
-	import IconItems from '~icons/ic/round-category';
 
 	export let data: Loadable<Week> = weekData;
 
@@ -82,7 +81,7 @@
 </div>
 
 <nav>
-	<a sveltekit:prefetch href="/items"><IconItems /> Items</a>
+	<ItemDrawer />
 	<Home />
 </nav>
 

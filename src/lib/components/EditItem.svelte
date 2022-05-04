@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import ItemInstance from '$lib/components/ItemInstance.svelte';
 	import ItemSelector from '$lib/components/ItemSelector.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
@@ -17,13 +15,15 @@
 	} from '$lib/stores/items';
 	import type { WritableLoadable } from '@square/svelte-store';
 	import { Dialog } from 'as-comps';
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { v4 as uuid } from 'uuid';
 	import IcArrowBack from '~icons/ic/round-arrow-back';
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
+	const dispatch = createEventDispatcher();
 
-	export let dataStore: WritableLoadable<Item> = createItemStore($page.params.id);
+	export let id: string;
+	let dataStore: WritableLoadable<Item> = createItemStore(id);
 
 	let sumInputEl = null;
 	let activeEl = undefined;
@@ -85,7 +85,7 @@
 			<ItemSelector
 				noCustomKcal
 				end
-				excludeId={$page.params.id}
+				excludeId={id}
 				on:select={({ detail }) => {
 					addItem(detail);
 				}}
@@ -175,7 +175,7 @@
 						on:click={async () => {
 							await Promise.all([deleteItem($dataStore.id), items.reload()]);
 							toggle();
-							goto('/items');
+							dispatch('done');
 						}}
 					>
 						<IcDelete />
@@ -185,7 +185,7 @@
 			</div>
 		</Dialog>
 	{/await}
-	<a sveltekit:prefetch href="/items" on:click={() => items.reload()}><IcArrowBack /> Back</a>
+	<button on:click={() => dispatch('done')}><IcArrowBack /> Back</button>
 </nav>
 
 <style>

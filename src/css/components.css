@@ -181,3 +181,9 @@ nav a {
 		background-position: 500px 0;
 	}
 }
+
+.flow {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}

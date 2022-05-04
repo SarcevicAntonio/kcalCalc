@@ -125,7 +125,7 @@ export const defaultItem = {
 	id: '',
 	label: '',
 	brand: '',
-	kcalPer100: 0, // 0 means no override
+	kcalPer100: 100, // 0 means no override
 	amount: 0, // 0 means no override
 	items: [],
 	portions: [],

@@ -2,6 +2,7 @@
 	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
 	import { navigating, page } from '$app/stores';
+	import Items from '$lib/components/ItemDrawer.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { auth } from '$lib/firebase';
 	import ProfileLink from '$lib/ProfileLink.svelte';
@@ -36,7 +37,7 @@
 	<ProfileLink />
 </header>
 
-<main>
+<main class="flow">
 	<slot />
 </main>
 
@@ -64,14 +65,10 @@
 	}
 
 	main {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
 		max-width: 25rem;
 		margin: auto;
 		margin-bottom: 4rem;
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
-		transition: opacity 0.2 ease-in-out;
 	}
 </style>

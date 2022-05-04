@@ -96,7 +96,7 @@
 	--as-dialog-transform="translateY(-50%)"
 	--as-dialog-border-radius="0"
 	--as-dialog-width="100%"
-	--as-dialog-max-width="800px"
+	--as-dialog-max-width="400px"
 	--as-dialog-height="100%"
 	--as-dialog-max-height="100%"
 	bind:open={dialogOpen}

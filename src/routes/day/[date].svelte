@@ -4,6 +4,7 @@
 	import { navigating, page } from '$app/stores';
 	import Bucket from '$lib/components/Bucket.svelte';
 	import Home from '$lib/components/Home.svelte';
+	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
@@ -11,7 +12,6 @@
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { user, userSettings } from '$lib/stores/user';
 	import { addDays, getISOWeek, getYear, isSameDay } from 'date-fns';
-	import IconItems from '~icons/ic/round-category';
 	import IconWeek from '~icons/ic/round-date-range';
 	import { getDayData, setDayData, weekData, type Day } from '../../lib/stores/intake';
 
@@ -80,7 +80,7 @@
 {/if}
 
 <nav>
-	<a sveltekit:prefetch href="/items"><IconItems /> Items</a>
+	<ItemDrawer />
 	{#if !dateIsToday}
 		<Home />
 	{/if}
