@@ -55,7 +55,11 @@
 			{dateObj.toLocaleString(undefined, { month: 'short', day: 'numeric', weekday: 'short' })}
 		{/if}
 	</h2>
-	<span class="label-l" class:over-limit={kcalInDay > ($userSettings?.kcalLimit || 9999)}>
+	<span
+		class="label-l"
+		class:over-limit={kcalInDay > ($userSettings?.kcalLimit || 9999)}
+		class:stale
+	>
 		{kcalDisplay(kcalInDay)} kcal
 	</span>
 </Switcher>
@@ -105,7 +109,7 @@
 	}
 
 	.stale {
-		animation: loading 0.5s infinite alternate;
+		animation: loading 2s infinite alternate;
 	}
 
 	@keyframes loading {
