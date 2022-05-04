@@ -1,21 +1,16 @@
-import { session } from '$app/stores';
 import { db } from '$lib/firebase';
 import { asyncWritable } from '@square/svelte-store';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { derived, type Writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 export interface User {
 	id: string;
 	email: string;
+	displayName: string;
+	photoURL: string;
 }
 
-export const user = derived<Writable<App.Session>, User>(session, ($session, set) => {
-	set($session.user);
-});
-
-export function setUser(user: User | null) {
-	session.update(($session) => ({ ...$session, user }));
-}
+export const user = writable<User>(undefined);
 
 export interface UserSettings {
 	kcalLimit?: number;

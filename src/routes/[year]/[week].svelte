@@ -56,36 +56,29 @@
 		<div class="line" style="top:{(($userSettings?.kcalLimit || 0) / maxKcal) * 100}%;" />
 	{/if}
 
-	{#await data.load()}
+	{#each Object.entries($data) as [date, item] (date)}
+		<a
+			class="card filled row"
+			sveltekit:prefetch
+			href="/day/{date}"
+			style={!isNaN(maxKcal) ? `height: ${(item?.kcal / maxKcal) * 100}%;` : ''}
+		>
+			<span class="title-l">{new Date(date).toLocaleString(undefined, { weekday: 'narrow' })}</span>
+			<span class="label-l end" class:over-limit={item?.kcal > ($userSettings?.kcalLimit || 9999)}>
+				{#if item?.kcal}
+					{kcalDisplay(item.kcal)}
+					kcal
+				{/if}
+			</span>
+		</a>
+	{:else}
 		{#each { length: 7 } as _}
 			<ItemSkeleton>
 				<span class="title-l" />
 				<span class="label-l end" />
 			</ItemSkeleton>
 		{/each}
-	{:then}
-		{#each Object.entries($data) as [date, item] (date)}
-			<a
-				class="card filled row"
-				sveltekit:prefetch
-				href="/day/{date}"
-				style={!isNaN(maxKcal) ? `height: ${(item?.kcal / maxKcal) * 100}%;` : ''}
-			>
-				<span class="title-l"
-					>{new Date(date).toLocaleString(undefined, { weekday: 'narrow' })}</span
-				>
-				<span
-					class="label-l end"
-					class:over-limit={item?.kcal > ($userSettings?.kcalLimit || 9999)}
-				>
-					{#if item?.kcal}
-						{kcalDisplay(item.kcal)}
-						kcal
-					{/if}
-				</span>
-			</a>
-		{/each}
-	{/await}
+	{/each}
 </div>
 
 <nav>

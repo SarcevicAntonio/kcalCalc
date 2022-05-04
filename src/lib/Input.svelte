@@ -33,6 +33,7 @@
 			try {
 				value = evaluate((value + '').replaceAll(',', '.'));
 				canNotEvaluate = false;
+				dispatch('input', e);
 			} catch (e) {
 				canNotEvaluate = true;
 			}

@@ -1,8 +1,33 @@
 <script lang="ts">
-	import { navigating } from '$app/stores';
+	import { browser } from '$app/env';
+	import { goto } from '$app/navigation';
+	import { navigating, page } from '$app/stores';
+	import { toISODateString } from '$lib/dateHelpers';
+	import { auth } from '$lib/firebase';
 	import ProfileLink from '$lib/ProfileLink.svelte';
+	import { user } from '$lib/stores/user';
 	import { Notifications } from 'as-comps';
 	import '../css/global.css';
+
+	auth.onAuthStateChanged((changedUser) => {
+		if (!changedUser) {
+			$user = null;
+			if (browser) goto('/auth');
+			return;
+		}
+
+		const { displayName, email, uid, photoURL } = changedUser;
+		$user = {
+			id: uid,
+			email,
+			displayName,
+			photoURL,
+		};
+
+		if ($page.url.pathname === '/') {
+			goto('/day/' + toISODateString(new Date()));
+		}
+	});
 </script>
 
 <header>
@@ -11,7 +36,7 @@
 	<ProfileLink />
 </header>
 
-<main class:navigating={$navigating}>
+<main>
 	<slot />
 </main>
 
@@ -48,17 +73,5 @@
 		padding-left: 0.5rem;
 		padding-right: 0.5rem;
 		transition: opacity 0.2 ease-in-out;
-	}
-
-	.navigating {
-		animation: loading 0.5s infinite alternate;
-	}
-	@keyframes loading {
-		from {
-			opacity: 0.66;
-		}
-		to {
-			opacity: 0.33;
-		}
 	}
 </style>

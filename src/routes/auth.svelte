@@ -2,28 +2,19 @@
 	import UserSettings from '$lib/components/UserSettings.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { auth } from '$lib/firebase';
-	import { setUser, user } from '$lib/stores/user';
-	import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+	import { user } from '$lib/stores/user';
+	import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 	import IcHome from '~icons/ic/round-home';
 	import IcLogin from '~icons/ic/round-key';
 	import IcLogout from '~icons/ic/round-logout';
 	const provider = new GoogleAuthProvider();
 
 	async function logout() {
-		await fetch('/session', {
-			method: 'DELETE',
-		});
-		setUser(null);
+		await signOut(auth);
 	}
 
 	async function popAuth() {
-		const result = await signInWithPopup(auth, provider);
-		const token = await result.user.getIdToken();
-		const user = await fetch('/session', {
-			method: 'POST',
-			headers: new Headers({ Authorization: 'Bearer ' + token }),
-		}).then((res) => res.json());
-		setUser(user);
+		await signInWithPopup(auth, provider);
 	}
 </script>
 
