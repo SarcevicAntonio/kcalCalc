@@ -5,20 +5,23 @@
 	import { curDay, weekData } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import { isSameDay, isSameWeek } from 'date-fns';
+	import { tick } from 'svelte';
 	import IcHome from '~icons/ic/round-home';
 	import Day from './Day.svelte';
 	import ItemDrawer from './ItemDrawer.svelte';
 	import WeekSelector from './WeekSelector.svelte';
 
-	// function scrollToView(data) {
-	// 	console.log(Object.keys(data))
-	// 	if (!Object.keys(data).length) return;
-	// 	const el = document.getElementById(toISODateString(new Date('2022-05-07')));
-	// 	console.log(el)
-	// 	el.scrollIntoView({
-	// 		behavior: 'smooth',
-	// 	});
-	// }
+	async function scrollToView(data) {
+		if (!Object.keys(data).length) return;
+		await tick();
+		const el = document.getElementById(toISODateString(new Date()));
+		if (!el) return;
+		el.scrollIntoView({
+			behavior: 'smooth',
+		});
+	}
+
+	$: scrollToView($weekData);
 </script>
 
 <WeekSelector />
