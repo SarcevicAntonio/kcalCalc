@@ -52,7 +52,7 @@
 
 {#if data.meals}
 	{#each data.meals as { label, intake } ($page.params.date + label)}
-		<Bucket {label} bind:items={intake} on:update={updateData}/>
+		<Bucket {label} bind:items={intake} on:update={updateData} />
 	{/each}
 {/if}
 

@@ -74,9 +74,6 @@ export const setDayData = async (date: string, data: Day) => {
 	const dateObj = new Date(date);
 	const week = getISOWeek(dateObj);
 	const year = getYear(dateObj);
-	console.log('setDoc updateData',date);
-	await setDoc(
-		doc(db, `Users/${get(user).id}/Years/${year}/Weeks/${week}/Days/${date}`),
-		data
-	);
-}
+	console.log('setDoc updateData', date);
+	await setDoc(doc(db, `Users/${get(user).id}/Years/${year}/Weeks/${week}/Days/${date}`), data);
+};
