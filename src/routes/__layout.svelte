@@ -29,7 +29,6 @@
 
 <style lang="postcss">
 	h1 {
-		font-family: 'Roboto';
 		font-weight: 400;
 		font-size: 36px;
 		line-height: 44px;
