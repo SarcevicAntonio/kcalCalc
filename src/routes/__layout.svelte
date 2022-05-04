@@ -3,16 +3,6 @@
 	import ProfileLink from '$lib/ProfileLink.svelte';
 	import { Notifications } from 'as-comps';
 	import '../css/global.css';
-
-	// polyfill: replaceAll
-	if (!String.prototype.replaceAll) {
-		String.prototype.replaceAll = function (
-			str: string | RegExp,
-			newStr: string | ((substring: string, ...args: any[]) => string)
-		) {
-			return this.replace(new RegExp(str, 'g'), newStr);
-		};
-	}
 </script>
 
 <header>
