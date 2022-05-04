@@ -32,10 +32,11 @@
 			(acc, meal) => acc + calculateKcalFromItems(meal.intake),
 			0
 		)}
+		{@const today = isSameDay(dateObj, new Date())}
 		<div class="flow">
-			<div class="day-title">
+			<div class="day-title" class:today>
 				<span class="headline-2" id={date}>
-					{#if isSameDay(dateObj, new Date())}
+					{#if today}
 						Today
 					{:else}
 						{dateObj.toLocaleString(undefined, {
@@ -86,5 +87,14 @@
 		align-items: flex-end;
 		justify-content: space-between;
 		padding-inline: 0.5rem;
+		padding: 0.5rem;
+		border-radius: 0.75rem;
+		border: 1px solid transparent;
+
+	}
+
+	.today {
+		border-color: var(--md-outline);
+		box-shadow: var(--shadow);
 	}
 </style>
