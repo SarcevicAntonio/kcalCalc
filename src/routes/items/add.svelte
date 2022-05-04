@@ -1,21 +1,11 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { db } from '$lib/firebase';
-	import { defaultItem } from '$lib/stores/items';
-	import { user } from '$lib/stores/user';
-	import { doc, setDoc } from 'firebase/firestore';
+	import { createItem } from '$lib/stores/items';
 	import { v4 as uuid } from 'uuid';
 
 	async function newItem() {
 		const id = uuid();
-		console.log('setDoc newItem', id);
-		await setDoc(doc(db, 'Items/' + id), {
-			...defaultItem,
-			id,
-			owner: $user.id,
-			createdAt: Date.now(),
-			updatedAt: Date.now(),
-		});
+		await createItem(id);
 		goto('/items/edit/' + id);
 	}
 

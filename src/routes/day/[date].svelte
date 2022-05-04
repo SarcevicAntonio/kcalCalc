@@ -6,15 +6,13 @@
 	import Home from '$lib/components/Home.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
-	import { db } from '$lib/firebase';
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { user, userSettings } from '$lib/stores/user';
 	import { addDays, getISOWeek, getYear, isSameDay } from 'date-fns';
-	import { doc, setDoc } from 'firebase/firestore';
 	import IconItems from '~icons/ic/round-category';
 	import IconWeek from '~icons/ic/round-date-range';
-	import type { Day } from '../../lib/stores/intake';
+	import { setDayData, type Day } from '../../lib/stores/intake';
 	export let data: Day;
 
 	$: dateObj = new Date($page.params.date);
@@ -33,12 +31,7 @@
 
 	async function updateData(newData: Day) {
 		if (!browser || !$user || $navigating) return;
-
-		console.log('setDoc updateData', $page.params.date);
-		await setDoc(
-			doc(db, `Users/${$user.id}/Years/${year}/Weeks/${week}/Days/${$page.params.date}`),
-			newData
-		);
+		setDayData($page.params.date, newData);
 	}
 
 	$: updateData(data);

@@ -1,6 +1,15 @@
 import { db } from '$lib/firebase';
 import { asyncDerived, asyncReadable, asyncWritable } from '@square/svelte-store';
-import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import {
+	collection,
+	deleteDoc,
+	doc,
+	getDoc,
+	getDocs,
+	query,
+	setDoc,
+	where,
+} from 'firebase/firestore';
 import { get } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
 import { user } from './user';
@@ -37,7 +46,7 @@ export interface Portion {
 export const items = asyncReadable(
 	[],
 	async () => {
-		console.count('getDoc items');
+		console.count('getDocs items');
 		const snapshot = await getDocs(collection(db, `Items`));
 		const data = [];
 		snapshot.docs.forEach((doc) => {
@@ -48,6 +57,17 @@ export const items = asyncReadable(
 	},
 	true
 );
+
+export const createItem = (id: string) => {
+	console.log('setDoc newItem', id);
+	return setDoc(doc(db, 'Items/' + id), {
+		...defaultItem,
+		id,
+		owner: get(user).id,
+		createdAt: Date.now(),
+		updatedAt: Date.now(),
+	});
+};
 
 export const createItemStore = (id: string) => {
 	const store = asyncWritable(
@@ -62,6 +82,11 @@ export const createItemStore = (id: string) => {
 		}
 	);
 	return store;
+};
+
+export const deleteItem = (id: string) => {
+	console.log('deleteDoc', id);
+	return deleteDoc(doc(db, `Items/${id}`));
 };
 
 export const recentItems = asyncDerived(

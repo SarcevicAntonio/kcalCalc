@@ -4,8 +4,8 @@ import { calculateKcalFromItems } from '$lib/kcal';
 import type { ItemInstance } from '$lib/stores/items';
 import { asyncDerived } from '@square/svelte-store';
 import { addDays, getISOWeek, getYear, setISOWeek, setYear, startOfISOWeek } from 'date-fns';
-import { collection, getDocs } from 'firebase/firestore';
-import { writable } from 'svelte/store';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { get, writable } from 'svelte/store';
 import { user } from './user';
 
 export interface Meal {
@@ -69,3 +69,14 @@ export const weekData = asyncDerived(
 	true,
 	{}
 );
+
+export const setDayData = async (date: string, data: Day) => {
+	const dateObj = new Date(date);
+	const week = getISOWeek(dateObj);
+	const year = getYear(dateObj);
+	console.log('setDoc updateData',date);
+	await setDoc(
+		doc(db, `Users/${get(user).id}/Years/${year}/Weeks/${week}/Days/${date}`),
+		data
+	);
+}

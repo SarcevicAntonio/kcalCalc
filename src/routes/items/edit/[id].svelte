@@ -4,20 +4,19 @@
 	import ItemInstance from '$lib/components/ItemInstance.svelte';
 	import ItemSelector from '$lib/components/ItemSelector.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
-	import { db } from '$lib/firebase';
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import {
 		createItemStore,
 		defaultPortion,
+		deleteItem,
 		items,
 		type Item,
 		type ItemInstance as ItemInstanceType,
 	} from '$lib/stores/items';
 	import type { WritableLoadable } from '@square/svelte-store';
 	import { Dialog } from 'as-comps';
-	import { deleteDoc, doc } from 'firebase/firestore';
 	import { onMount } from 'svelte';
 	import { v4 as uuid } from 'uuid';
 	import IcArrowBack from '~icons/ic/round-arrow-back';
@@ -172,8 +171,7 @@
 					<button
 						class="btn tonal"
 						on:click={async () => {
-							console.log('deleteDoc', $dataStore.id);
-							await Promise.all([deleteDoc(doc(db, `Items/${$dataStore.id}`)), items.reload()]);
+							await Promise.all([deleteItem($dataStore.id), items.reload()]);
 							toggle();
 							goto('/items');
 						}}
