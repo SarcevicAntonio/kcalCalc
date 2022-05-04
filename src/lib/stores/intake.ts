@@ -73,8 +73,6 @@ export const weekData = asyncDerived(
 			};
 		});
 
-		console.log('weekData', data);
-
 		return data as Week;
 	},
 	true,
