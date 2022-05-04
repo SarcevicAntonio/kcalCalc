@@ -54,7 +54,7 @@ export const get: RequestHandler = async (request) => {
 
 				if (kcalPer100 > 0) {
 					const ingredient = {
-						id: 'FDDB_' + label,
+						id: `FDDB||${label}||${brand}`.replaceAll('/', '_').replaceAll(' ', '_'),
 						label,
 						brand,
 						kcalPer100,

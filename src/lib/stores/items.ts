@@ -110,7 +110,6 @@ export async function setRecentItem(mostRecentItem: Item) {
 }
 
 export async function saveExternalItem(item: Item) {
-	item.id = `FDDB_${item.label}_${item.brand}`;
 	console.log('getDocs saveExternalItem', item.id);
 	if ((await getDocs(query(collection(db, `Items`), where('id', '==', item.id)))).docs.length) {
 		return;
@@ -119,6 +118,7 @@ export async function saveExternalItem(item: Item) {
 	item.portions = item.portions ? item.portions.map((p) => ({ ...p, key: uuid() })) : [];
 	console.log('setDoc saveExternalItem', item.id);
 	await setDoc(doc(db, 'Items/' + item.id), item);
+	items.reload();
 }
 
 export const defaultItem = {
