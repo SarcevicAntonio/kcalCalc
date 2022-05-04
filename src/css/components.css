@@ -169,7 +169,7 @@ nav a {
 	color: transparent !important;
 	user-select: none;
 	cursor: wait;
-	& :global(*) {
+	& * {
 		color: transparent !important;
 	}
 }
