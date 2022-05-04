@@ -3,11 +3,10 @@
 	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
 	import UnifiedView from '$lib/components/UnifiedView.svelte';
 	import WeekGraph from '$lib/components/WeekGraph.svelte';
-	import IconWeek from '~icons/ic/round-date-range';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { curDay, dateIsToday, weekData } from '$lib/stores/intake';
+	import IconWeek from '~icons/ic/round-date-range';
 	import IcHome from '~icons/ic/round-home';
-	import IcToday from '~icons/ic/round-today';
 
 	let innerWidth: number;
 

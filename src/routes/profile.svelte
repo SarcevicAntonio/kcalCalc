@@ -1,9 +1,8 @@
 <script>
 	import UserSettings from '$lib/components/UserSettings.svelte';
-	import { toISODateString } from '$lib/dateHelpers';
 	import { auth } from '$lib/firebase';
 	import { user } from '$lib/stores/user';
-	import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+	import { signOut } from 'firebase/auth';
 	import IcHome from '~icons/ic/round-home';
 	import IcLogout from '~icons/ic/round-logout';
 
@@ -28,8 +27,8 @@
 </div>
 
 {#if $user}
-	<nav>
-		<a sveltekit:prefetch href="/day/{toISODateString(new Date())}"><IcHome /> Go Home</a>
+	<nav class="fab-bar">
+		<a sveltekit:prefetch href="/"><IcHome /> Go Home</a>
 	</nav>
 {/if}
 

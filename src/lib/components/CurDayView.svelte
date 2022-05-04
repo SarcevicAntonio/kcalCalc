@@ -1,24 +1,13 @@
 <script lang="ts">
 	import { browser } from '$app/env';
-	import Home from '$lib/components/Home.svelte';
-	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { user, userSettings } from '$lib/stores/user';
-	import { addDays, getISOWeek, getYear } from 'date-fns';
-	import IcHome from '~icons/ic/round-home';
-
+	import { addDays } from 'date-fns';
 	import { createEventDispatcher } from 'svelte';
-	import IconWeek from '~icons/ic/round-date-range';
-	import {
-		curDay,
-		dateIsToday,
-		getDayData,
-		weekData,
-		type Day as DayType,
-	} from '../../lib/stores/intake';
+	import { curDay, dateIsToday, getDayData, type Day as DayType } from '../../lib/stores/intake';
 	import Day from './Day.svelte';
 	const dispatch = createEventDispatcher();
 

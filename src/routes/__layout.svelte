@@ -67,8 +67,12 @@
 	main {
 		margin: auto;
 		margin-bottom: 4rem;
-		padding-left: 0.5rem;
-		padding-right: 0.5rem;
+	}
+
+	@media only screen and (max-width: 1000px) {
+		main {
+			padding-inline: 0.5rem;
+		}
 	}
 
 	.title {

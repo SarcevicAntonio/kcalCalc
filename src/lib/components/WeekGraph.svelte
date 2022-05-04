@@ -1,13 +1,10 @@
 <script lang="ts">
-	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
-	import { toISODateString } from '$lib/dateHelpers';
 	import kcalDisplay from '$lib/kcalDisplay';
-	import { curDay, dateIsToday, weekData, type Week } from '$lib/stores/intake';
+	import { curDay, weekData, type Week } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import type { Loadable } from '@square/svelte-store';
 	import { isSameDay } from 'date-fns';
 	import { createEventDispatcher } from 'svelte';
-	import IcHome from '~icons/ic/round-home';
 	import WeekSelector from './WeekSelector.svelte';
 	const dispatch = createEventDispatcher();
 

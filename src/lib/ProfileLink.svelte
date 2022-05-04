@@ -11,8 +11,6 @@
 			<IconProfile />
 		{/if}
 	</a>
-{:else}
-	&nbsp;
 {/if}
 
 <style>

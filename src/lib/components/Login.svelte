@@ -8,14 +8,21 @@
 	}
 </script>
 
-<button class="card filled" on:click={popAuth}>
-	<div class="headline-2">
-		<IcLogin /> Login with Google
-	</div>
-</button>
+<div class="min-height">
+	<button class="card filled" on:click={popAuth}>
+		<div class="headline-2">
+			<IcLogin /> Login with Google
+		</div>
+	</button>
+</div>
 
 <style>
-	div {
+	.min-height {
+		display: grid;
+		place-items: center;
+		min-height: 400px;
+	}
+	.headline-2 {
 		display: flex;
 		justify-content: center;
 		align-items: center;

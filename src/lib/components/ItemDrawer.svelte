@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { items } from '$lib/stores/items';
-
 	import { Dialog } from 'as-comps';
 	import { fly } from 'svelte/transition';
 	import IcItems from '~icons/ic/round-category';
 	import EditItem from './EditItem.svelte';
 	import ItemList from './ItemList.svelte';
+
+	export let label = 'Items';
 
 	let editId: string = null;
 </script>
@@ -24,7 +25,8 @@
 	--as-dialog-max-height="100%"
 >
 	<svelte:fragment slot="trigger-label">
-		<IcItems /> Items
+		<IcItems />
+		{label}
 	</svelte:fragment>
 	<div class="flow">
 		{#if !editId}
