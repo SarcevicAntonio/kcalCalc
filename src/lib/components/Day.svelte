@@ -12,20 +12,20 @@
 	}
 </script>
 
-	{#if data?.meals}
-		{#each data.meals as { label, intake } (label)}
-			<Bucket {label} bind:items={intake} on:update={updateData} />
-		{/each}
-	{:else}
-		{#each { length: 4 } as _}
-			<ItemSkeleton>
-				<div class="row">
-					<span class="title-l">Fake Bucket</span>
-					<button class="btn text"> <IconWeek /> </button>
-				</div>
-			</ItemSkeleton>
-		{/each}
-	{/if}
+{#if data?.meals}
+	{#each data.meals as { label, intake } (label)}
+		<Bucket {label} bind:items={intake} on:update={updateData} />
+	{/each}
+{:else}
+	{#each { length: 4 } as _}
+		<ItemSkeleton>
+			<div class="row">
+				<span class="title-l">Fake Bucket</span>
+				<button class="btn text"> <IconWeek /> </button>
+			</div>
+		</ItemSkeleton>
+	{/each}
+{/if}
 
 <style>
 	.title-l {

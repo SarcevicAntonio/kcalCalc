@@ -1,9 +1,15 @@
 <script lang="ts">
 	import CurDayView from '$lib/components/CurDayView.svelte';
+	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
 	import UnifiedView from '$lib/components/UnifiedView.svelte';
 	import WeekGraph from '$lib/components/WeekGraph.svelte';
+	import IconWeek from '~icons/ic/round-date-range';
+	import { toISODateString } from '$lib/dateHelpers';
+	import { curDay, dateIsToday, weekData } from '$lib/stores/intake';
+	import IcHome from '~icons/ic/round-home';
+	import IcToday from '~icons/ic/round-today';
 
-	let innerWidth;
+	let innerWidth: number;
 
 	let showWeekGraph = false;
 	const toggleWeekGraph = () => {
@@ -19,15 +25,32 @@
 	{:else}
 		<CurDayView on:toggleWeekGraph={toggleWeekGraph} />
 	{/if}
+	<nav class="fab-bar">
+		{#if !showWeekGraph}
+			<button
+				on:click={async () => {
+					await weekData.reload();
+					toggleWeekGraph();
+				}}
+			>
+				<IconWeek />
+				Week
+			</button>
+		{/if}
+		{#if !$dateIsToday}
+			<button
+				on:click={() => {
+					$curDay = toISODateString(new Date());
+				}}
+			>
+				<IcHome />
+			</button>
+		{/if}
+		<ItemDrawer />
+	</nav>
 {:else}
 	<UnifiedView />
 {/if}
 
 <style>
-	.row {
-		display: flex;
-	}
-	.title-l {
-		min-height: 2em;
-	}
 </style>

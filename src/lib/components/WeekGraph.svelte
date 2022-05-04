@@ -5,6 +5,7 @@
 	import { curDay, dateIsToday, weekData, type Week } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import type { Loadable } from '@square/svelte-store';
+	import { isSameDay } from 'date-fns';
 	import { createEventDispatcher } from 'svelte';
 	import IcHome from '~icons/ic/round-home';
 	import WeekSelector from './WeekSelector.svelte';
@@ -23,15 +24,17 @@
 	{/if}
 
 	{#each Object.entries($data) as [date, item] (date)}
+		{@const dateObj = new Date(date)}
 		<button
 			class="card filled row"
+			class:today={isSameDay(dateObj, new Date())}
 			style={!isNaN(maxKcal) ? `height: ${(item?.kcal / maxKcal) * 100}%;` : ''}
 			on:click={() => {
 				$curDay = date;
 				dispatch('toggleWeekGraph');
 			}}
 		>
-			<span class="title-m">{new Date(date).toLocaleString(undefined, { weekday: 'narrow' })}</span>
+			<span class="title-m">{dateObj.toLocaleString(undefined, { weekday: 'narrow' })}</span>
 			{#if item?.kcal}
 				<span
 					class="label-m end"
@@ -48,18 +51,6 @@
 		{/each}
 	{/each}
 </div>
-
-<nav>
-	<ItemDrawer />
-	<button
-		on:click={() => {
-			$curDay = toISODateString(new Date());
-			dispatch('toggleWeekGraph');
-		}}
-	>
-		<IcHome />
-	</button>
-</nav>
 
 <style>
 	.col {
@@ -98,5 +89,10 @@
 		opacity: 0.8;
 		border-top-style: dashed;
 		position: absolute;
+	}
+
+	.today {
+		border: 1px solid var(--md-outline);
+		box-shadow: var(--shadow);
 	}
 </style>

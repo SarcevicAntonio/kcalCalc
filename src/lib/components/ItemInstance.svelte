@@ -118,9 +118,6 @@
 		gap: 0.5rem;
 	}
 
-	.item-info {
-		min-height: 4.1rem;
-	}
 
 	.pad {
 		min-height: 0.5rem;

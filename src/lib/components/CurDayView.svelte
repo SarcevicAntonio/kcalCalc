@@ -64,28 +64,6 @@
 
 <Day bind:data date={$curDay} />
 
-<nav>
-	<ItemDrawer />
-	{#if !$dateIsToday}
-		<button
-			on:click={() => {
-				$curDay = toISODateString(new Date());
-			}}
-		>
-			<IcHome />
-		</button>
-	{/if}
-	<button
-		on:click={async () => {
-			await weekData.reload();
-			dispatch('toggleWeekGraph');
-		}}
-	>
-		<IconWeek />
-		Week
-	</button>
-</nav>
-
 <style>
 	.over-limit {
 		color: var(--md-error);

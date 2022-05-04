@@ -6,8 +6,8 @@
 	import { user } from '$lib/stores/user';
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher } from 'svelte';
-	import IcAdd from '~icons/ic/round-add';
 	import { v4 as uuid } from 'uuid';
+	import IcAdd from '~icons/ic/round-add';
 	const dispatch = createEventDispatcher();
 
 	let search = '';
@@ -36,7 +36,7 @@
 	{/each}
 {/await}
 
-<nav>
+<nav class="fab-bar">
 	<button
 		on:click={async () => {
 			const id = uuid();
@@ -49,6 +49,10 @@
 </nav>
 
 <style>
+	.fab-bar {
+		position: sticky;
+		padding: 0;
+	}
 	:disabled {
 		cursor: not-allowed;
 		opacity: 0.5;

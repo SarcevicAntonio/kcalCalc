@@ -159,7 +159,7 @@
 	</div>
 {/await}
 
-<nav>
+<nav class="fab-bar">
 	{#await dataStore.load() then}
 		<Dialog noCloseButton let:toggle>
 			<svelte:fragment slot="trigger-label">
@@ -216,5 +216,10 @@
 
 	.add {
 		margin-left: auto;
+	}
+
+	.fab-bar {
+		position: sticky;
+		padding: 0;
 	}
 </style>
