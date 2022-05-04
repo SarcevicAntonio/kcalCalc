@@ -13,15 +13,17 @@
 
 <div class="container">
 	{#if $user}
+		<span class="title-l">Howdy, good lookin'!</span>
 		<div class="user">
-			<h2>{$user.displayName}</h2>
+			<span class="headline-2">{$user.displayName}</span>
 			<img src={$user.photoURL} alt="Your Profile" />
 			<ul>
 				<li>Email: {$user.email}</li>
 				<li>id: {$user.id}</li>
 			</ul>
+			<hr />
+			<UserSettings />
 		</div>
-		<UserSettings />
 		<button class="btn tonal" on:click={logout}><IcLogout /> Logout</button>
 	{/if}
 </div>
@@ -47,13 +49,24 @@
 		gap: 2rem;
 		background-color: var(--surface);
 		color: var(--on-surface);
-		padding: 0.5rem;
-		border-radius: 1rem;
+		padding: 1rem;
+		border-radius: 0.75rem;
+		box-shadow: var(--shadow-lg);
 	}
 
 	ul {
 		list-style: none;
 		text-align: center;
 		padding: 0;
+	}
+
+	hr {
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid var(--md-outline);
+	}
+
+	img {
+		border-radius: 0.75rem;
 	}
 </style>
