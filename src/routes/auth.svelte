@@ -53,14 +53,14 @@
 		height: 60vh;
 		display: grid;
 		place-items: center;
-		gap: 2em;
+		gap: 2rem;
 	}
 
 	.user {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 2em;
+		gap: 2rem;
 		background-color: var(--surface);
 		color: var(--on-surface);
 		padding: 0.5rem;

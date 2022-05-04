@@ -98,6 +98,6 @@
 	}
 
 	.pad {
-		min-height: 0.5em;
+		min-height: 0.5rem;
 	}
 </style>

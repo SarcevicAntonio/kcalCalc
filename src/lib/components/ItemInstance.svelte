@@ -115,14 +115,14 @@
 		flex-direction: column;
 		align-items: stretch;
 		justify-content: center;
-		gap: 0.5em;
+		gap: 0.5rem;
 	}
 
 	.item-info {
-		min-height: 4.1em;
+		min-height: 4.1rem;
 	}
 
 	.pad {
-		min-height: 0.5em;
+		min-height: 0.5rem;
 	}
 </style>

@@ -76,12 +76,12 @@
 		cursor: text;
 		display: flex;
 		flex-direction: column;
-		gap: 0.25em;
+		gap: 0.25rem;
 		flex-grow: 1;
 		position: relative;
-		padding: 0.5em 1em;
-		border-top-left-radius: 0.25em;
-		border-top-right-radius: 0.25em;
+		padding: 0.5rem 1rem;
+		border-top-left-radius: 0.25rem;
+		border-top-right-radius: 0.25rem;
 		border-bottom: 1px solid var(--md-on-surface);
 		background-color: var(--md-surface-variant);
 		color: var(--md-on-surface-variant);
@@ -89,7 +89,7 @@
 		&.outlined {
 			background-color: transparent;
 			border: 1px solid var(--md-outline);
-			border-radius: 0.25em;
+			border-radius: 0.25rem;
 			& label {
 				color: var(--md-on-surface-variant);
 			}

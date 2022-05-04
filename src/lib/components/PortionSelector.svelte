@@ -58,7 +58,7 @@
 		flex-direction: column;
 	}
 	.gap {
-		gap: 1em;
+		gap: 1rem;
 	}
 
 	.grow {
@@ -66,7 +66,7 @@
 	}
 	.divider {
 		border-left: 1px solid var(--md-outline);
-		height: 2em;
+		height: 2rem;
 	}
 
 	button {

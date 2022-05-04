@@ -191,25 +191,25 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		gap: 0.5em;
+		gap: 0.5rem;
 	}
 
 	.col {
 		display: flex;
 		flex-direction: column;
-		gap: 1em;
+		gap: 1rem;
 	}
 
 	input {
-		margin: 1em;
+		margin: 1rem;
 	}
 
 	.portion {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0.5em;
-		gap: 0.5em;
+		padding: 0.5rem;
+		gap: 0.5rem;
 	}
 
 	.add {

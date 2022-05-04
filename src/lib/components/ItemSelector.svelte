@@ -202,7 +202,7 @@
 	.content {
 		display: flex;
 		flex-direction: column;
-		gap: 1em;
+		gap: 1rem;
 
 		min-width: 277px;
 	}

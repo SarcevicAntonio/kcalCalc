@@ -42,8 +42,8 @@
 	header {
 		display: flex;
 		justify-content: space-between;
-		padding-block: 0.25em;
-		padding-left: 1em;
+		padding-block: 0.25rem;
+		padding-left: 1rem;
 		background-color: var(--md-surface);
 		color: var(--md-on-surface);
 	}
@@ -51,12 +51,12 @@
 	main {
 		display: flex;
 		flex-direction: column;
-		gap: 0.75em;
-		max-width: 25em;
+		gap: 0.75rem;
+		max-width: 25rem;
 		margin: auto;
-		margin-bottom: 4em;
-		padding-left: 0.5em;
-		padding-right: 0.5em;
+		margin-bottom: 4rem;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
 		transition: opacity 0.2 ease-in-out;
 	}
 

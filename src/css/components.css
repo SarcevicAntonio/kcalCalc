@@ -71,8 +71,8 @@
 
 .card {
 	text-decoration: unset;
-	padding: 0.5em 0.75em;
-	border-radius: 0.75em;
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.75rem;
 
 	&.filled {
 		background-color: var(--md-surface-variant);
@@ -91,7 +91,7 @@
 	align-items: center;
 	justify-content: center;
 	min-height: 33rem;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	text-align: center;
 	color: var(--md-on-background);
 }
@@ -102,27 +102,27 @@ nav {
 	left: 0;
 	right: 0;
 	width: 100%;
-	padding: 1em;
+	padding: 1rem;
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-between;
-	padding: 0.75em;
+	padding: 0.75rem;
 	margin: auto;
 }
 
 nav button,
 nav a {
-	border-radius: 1em;
+	border-radius: 1rem;
 	border: none;
 	box-shadow: var(--shadow);
 	text-decoration: none;
-	padding: 1em;
+	padding: 1rem;
 	background-color: var(--md-primary-container);
 	color: var(--md-on-primary-container);
 	display: flex;
 	align-items: center;
 	font-size: var(--md-label--large);
-	gap: 0.5em;
+	gap: 0.5rem;
 	position: relative;
 
 	& svg {
@@ -133,7 +133,7 @@ nav a {
 		content: '';
 		position: absolute;
 		inset: 0;
-		border-radius: 1em;
+		border-radius: 1rem;
 		transition: background-color 0.2s ease-in-out;
 	}
 
@@ -147,6 +147,6 @@ nav a {
 }
 
 .inc-target {
-	margin: -0.5em -0.75em;
-	padding: 0.5em 0.75em;
+	margin: -0.5rem -0.75rem;
+	padding: 0.5rem 0.75rem;
 }

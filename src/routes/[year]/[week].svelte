@@ -99,21 +99,21 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
-		height: calc(100vh - 12em);
+		height: calc(100vh - 12rem);
 	}
 
 	.row {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		min-height: 2.8em;
+		min-height: 2.8rem;
 	}
 
 	.end {
 		writing-mode: vertical-rl;
 		transform: rotate(180deg);
 		margin-top: auto;
-		min-width: 1.5em;
+		min-width: 1.5rem;
 	}
 
 	.over-limit {
