@@ -11,17 +11,18 @@
 	import ItemDrawer from './ItemDrawer.svelte';
 	import WeekSelector from './WeekSelector.svelte';
 
-	async function scrollToView(data) {
-		if (!Object.keys(data).length) return;
-		await tick();
-		const el = document.getElementById(toISODateString(new Date()));
-		if (!el) return;
-		el.scrollIntoView({
-			behavior: 'smooth',
-		});
-	}
+	// bug: scrolls into view when changing data
+	// async function scrollToView(data) {
+	// 	if (!Object.keys(data).length) return;
+	// 	await tick();
+	// 	const el = document.getElementById(toISODateString(new Date()));
+	// 	if (!el) return;
+	// 	el.scrollIntoView({
+	// 		behavior: 'smooth',
+	// 	});
+	// }
 
-	$: scrollToView($weekData);
+	// $: scrollToView($weekData);
 
 	$: entries = Object.entries($weekData);
 </script>
