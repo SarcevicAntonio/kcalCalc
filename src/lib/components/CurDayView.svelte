@@ -1,22 +1,28 @@
 <script lang="ts">
 	import { browser } from '$app/env';
-	import { goto } from '$app/navigation';
-	import { navigating, page } from '$app/stores';
-	import Bucket from '$lib/components/Bucket.svelte';
 	import Home from '$lib/components/Home.svelte';
 	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
-	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { calculateKcalFromItems } from '$lib/kcal';
 	import kcalDisplay from '$lib/kcalDisplay';
 	import { user, userSettings } from '$lib/stores/user';
-	import { addDays, getISOWeek, getYear, isSameDay } from 'date-fns';
+	import { addDays, getISOWeek, getYear } from 'date-fns';
+	import IcHome from '~icons/ic/round-home';
+
+	import { createEventDispatcher } from 'svelte';
 	import IconWeek from '~icons/ic/round-date-range';
-	import { getDayData, setDayData, weekData, type Day } from '../../lib/stores/intake';
+	import {
+		curDay,
+		dateIsToday,
+		getDayData,
+		weekData,
+		type Day as DayType,
+	} from '../../lib/stores/intake';
+	import Day from './Day.svelte';
+	const dispatch = createEventDispatcher();
 
-	let data = null as Day;
-
+	let data = null as DayType;
 	let stale = false;
 
 	async function getDayDataInHere(date, user) {
@@ -26,30 +32,22 @@
 		stale = false;
 	}
 
-	$: getDayDataInHere($page.params.date, $user);
+	$: getDayDataInHere($curDay, $user);
 
 	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
-	$: dateObj = new Date($page.params.date);
-	$: week = getISOWeek(dateObj);
-	$: year = getYear(dateObj);
-	$: dateIsToday = isSameDay(dateObj, new Date());
+	$: dateObj = new Date($curDay);
 
 	function goToNext() {
-		goto('/day/' + toISODateString(addDays(dateObj, 1)));
+		$curDay = toISODateString(addDays(dateObj, 1));
 	}
 	function goToPref() {
-		goto('/day/' + toISODateString(addDays(dateObj, -1)));
-	}
-
-	async function updateData() {
-		if (!browser || !$user || $navigating) return;
-		setDayData($page.params.date, data);
+		$curDay = toISODateString(addDays(dateObj, -1));
 	}
 </script>
 
 <Switcher on:prev={goToPref} on:next={goToNext}>
 	<h2 class="headline-1" class:stale>
-		{#if dateIsToday}
+		{#if $dateIsToday}
 			Today
 		{:else}
 			{dateObj.toLocaleString(undefined, { month: 'short', day: 'numeric', weekday: 'short' })}
@@ -64,30 +62,23 @@
 	</span>
 </Switcher>
 
-{#if data?.meals}
-	{#each data.meals as { label, intake } ($page.params.date + label)}
-		<Bucket {label} bind:items={intake} on:update={updateData} />
-	{/each}
-{:else}
-	{#each { length: 4 } as _}
-		<ItemSkeleton>
-			<div class="row">
-				<span class="title-l">Fake Bucket</span>
-				<button class="btn text"> <IconWeek /> </button>
-			</div>
-		</ItemSkeleton>
-	{/each}
-{/if}
+<Day bind:data date={$curDay} />
 
 <nav>
 	<ItemDrawer />
-	{#if !dateIsToday}
-		<Home />
+	{#if !$dateIsToday}
+		<button
+			on:click={() => {
+				$curDay = toISODateString(new Date());
+			}}
+		>
+			<IcHome />
+		</button>
 	{/if}
 	<button
 		on:click={async () => {
 			await weekData.reload();
-			goto(`/${year}/${week}`);
+			dispatch('toggleWeekGraph');
 		}}
 	>
 		<IconWeek />
@@ -98,14 +89,6 @@
 <style>
 	.over-limit {
 		color: var(--md-error);
-	}
-
-	.row {
-		display: flex;
-	}
-
-	.title-l {
-		min-height: 2em;
 	}
 
 	.stale {

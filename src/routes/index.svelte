@@ -1,22 +1,27 @@
 <script lang="ts">
-	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
-	import Switcher from '$lib/components/Switcher.svelte';
-	import IcEdit from '~icons/ic/round-swap-horiz';
+	import CurDayView from '$lib/components/CurDayView.svelte';
+	import UnifiedView from '$lib/components/UnifiedView.svelte';
+	import WeekGraph from '$lib/components/WeekGraph.svelte';
+
+	let innerWidth;
+
+	let showWeekGraph = false;
+	const toggleWeekGraph = () => {
+		showWeekGraph = !showWeekGraph;
+	};
 </script>
 
-<Switcher>
-	<h2 class="headline-1">Today</h2>
-	<span class="label-l"> ... kcal </span>
-</Switcher>
+<svelte:window bind:innerWidth />
 
-{#each { length: 4 } as _}
-	<ItemSkeleton>
-		<div class="row">
-			<span class="title-l">Fake Bucket</span>
-			<button class="btn text"> <IcEdit /> </button>
-		</div>
-	</ItemSkeleton>
-{/each}
+{#if innerWidth < 1000}
+	{#if showWeekGraph}
+		<WeekGraph on:toggleWeekGraph={toggleWeekGraph} />
+	{:else}
+		<CurDayView on:toggleWeekGraph={toggleWeekGraph} />
+	{/if}
+{:else}
+	<UnifiedView />
+{/if}
 
 <style>
 	.row {

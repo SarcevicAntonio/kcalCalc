@@ -1,54 +1,21 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import Home from '$lib/components/Home.svelte';
 	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
-	import Switcher from '$lib/components/Switcher.svelte';
+	import { toISODateString } from '$lib/dateHelpers';
 	import kcalDisplay from '$lib/kcalDisplay';
-	import { curWeek, curYear, weekData, type Week } from '$lib/stores/intake';
+	import { curDay, dateIsToday, weekData, type Week } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import type { Loadable } from '@square/svelte-store';
-	import { getISOWeeksInYear, getYear, setISOWeek, setYear } from 'date-fns';
+	import { createEventDispatcher } from 'svelte';
+	import IcHome from '~icons/ic/round-home';
+	import WeekSelector from './WeekSelector.svelte';
+	const dispatch = createEventDispatcher();
 
 	export let data: Loadable<Week> = weekData;
 
-	$: kcalSum = Object.values($data).reduce((acc, day) => acc + day.kcal || 0, 0);
 	$: maxKcal = Math.max(...Object.values($data).map(({ kcal }) => kcal || 0));
-	$: $curYear = parseInt($page.params.year);
-	$: $curWeek = parseInt($page.params.week);
-
-	function goToNext() {
-		let newYear = $curYear;
-		let newWeek = $curWeek + 1;
-		const thisWeek = setISOWeek(setYear(new Date(), $curYear), $curWeek);
-		const weeks = getISOWeeksInYear(thisWeek);
-		if (newWeek > weeks) {
-			newYear = $curYear + 1;
-			newWeek = 1;
-		}
-		goto('/' + newYear + '/' + newWeek);
-	}
-
-	function goToPrev() {
-		let newYear = $curYear;
-		let newWeek = $curWeek - 1;
-		if (newWeek < 1) {
-			newYear = $curYear - 1;
-			newWeek = getISOWeeksInYear(new Date(newYear + ''));
-		}
-		goto('/' + newYear + '/' + newWeek);
-	}
 </script>
 
-<Switcher on:prev={goToPrev} on:next={goToNext}>
-	{#if $curYear !== getYear(new Date())}
-		<span>{$curYear}</span>
-	{/if}
-	<h2 class="headline-1">Week {$curWeek}</h2>
-	<span class="label-l" class:over-limit={kcalSum > ($userSettings?.kcalLimit || 9999) * 7}>
-		{kcalDisplay(kcalSum)} kcal
-	</span>
-</Switcher>
+<WeekSelector />
 
 <div class="col">
 	{#if $userSettings && maxKcal > $userSettings.kcalLimit}
@@ -56,11 +23,13 @@
 	{/if}
 
 	{#each Object.entries($data) as [date, item] (date)}
-		<a
+		<button
 			class="card filled row"
-			sveltekit:prefetch
-			href="/day/{date}"
 			style={!isNaN(maxKcal) ? `height: ${(item?.kcal / maxKcal) * 100}%;` : ''}
+			on:click={() => {
+				$curDay = date;
+				dispatch('toggleWeekGraph');
+			}}
 		>
 			<span class="title-m">{new Date(date).toLocaleString(undefined, { weekday: 'narrow' })}</span>
 			{#if item?.kcal}
@@ -72,7 +41,7 @@
 					kcal
 				</span>
 			{/if}
-		</a>
+		</button>
 	{:else}
 		{#each { length: 7 } as _}
 			<div class="card filled row skeleton" />
@@ -82,7 +51,14 @@
 
 <nav>
 	<ItemDrawer />
-	<Home />
+	<button
+		on:click={() => {
+			$curDay = toISODateString(new Date());
+			dispatch('toggleWeekGraph');
+		}}
+	>
+		<IcHome />
+	</button>
 </nav>
 
 <style>

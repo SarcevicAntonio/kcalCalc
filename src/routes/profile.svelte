@@ -5,24 +5,17 @@
 	import { user } from '$lib/stores/user';
 	import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 	import IcHome from '~icons/ic/round-home';
-	import IcLogin from '~icons/ic/round-key';
 	import IcLogout from '~icons/ic/round-logout';
-	const provider = new GoogleAuthProvider();
 
 	async function logout() {
 		await signOut(auth);
 	}
-
-	async function popAuth() {
-		await signInWithPopup(auth, provider);
-	}
 </script>
 
 <div class="container">
-	{#if !$user}
-		<button class="btn tonal" on:click={popAuth}><IcLogin /> Login with Google</button>
-	{:else if $user}
+	{#if $user}
 		<div class="user">
+			<h2>{$user.displayName}</h2>
 			<img src={$user.photoURL} alt="Your Profile" />
 			<ul>
 				<li>Email: {$user.email}</li>

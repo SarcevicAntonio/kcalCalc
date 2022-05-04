@@ -3,9 +3,17 @@ import { db } from '$lib/firebase';
 import { calculateKcalFromItems } from '$lib/kcal';
 import type { ItemInstance } from '$lib/stores/items';
 import { asyncDerived } from '@square/svelte-store';
-import { addDays, getISOWeek, getYear, setISOWeek, setYear, startOfISOWeek } from 'date-fns';
+import {
+	addDays,
+	getISOWeek,
+	getYear,
+	isSameDay,
+	setISOWeek,
+	setYear,
+	startOfISOWeek,
+} from 'date-fns';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import { get, writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 import { user } from './user';
 
 export interface Meal {
@@ -35,9 +43,10 @@ export interface Week {
 	[date: string]: DayWithKcal;
 }
 
-export const curYear = writable(getYear(new Date()));
-export const curWeek = writable(getISOWeek(new Date()));
 export const curDay = writable(toISODateString(new Date()));
+export const dateIsToday = derived(curDay, (day) => isSameDay(new Date(day), new Date()));
+export const curYear = derived(curDay, (day) => getYear(new Date(day)));
+export const curWeek = derived(curDay, (day) => getISOWeek(new Date(day)));
 
 export const weekData = asyncDerived(
 	[curYear, curWeek, user],

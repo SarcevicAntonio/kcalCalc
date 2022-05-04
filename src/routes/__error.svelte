@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
-	import Home from '$lib/components/Home.svelte';
 	import { user } from '$lib/stores/user';
+	import IcHome from '~icons/ic/round-home';
 	import IconLogin from '~icons/ic/round-login';
 </script>
 
@@ -23,7 +23,9 @@
 {:else}
 	<p>Maybe try reloading or going home.</p>
 	<nav>
-		<Home />
+		<a sveltekit:prefetch href="/">
+			<IcHome />
+		</a>
 	</nav>
 {/if}
 
