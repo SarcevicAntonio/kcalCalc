@@ -97,5 +97,6 @@
 
 	.today {
 		box-shadow: var(--shadow);
+		border-color: var(--md-outline);
 	}
 </style>

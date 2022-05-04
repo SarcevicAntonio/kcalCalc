@@ -51,6 +51,7 @@
 		color: var(--on-surface);
 		padding: 1rem;
 		border-radius: 0.75rem;
+		border: 1px solid var(--md-outline);
 		box-shadow: var(--shadow-lg);
 	}
 
