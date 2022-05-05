@@ -14,44 +14,16 @@ import { get } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
 import { user } from './user';
 
-export interface Item {
-	owner?: string;
-	createdAt?: number;
-	updatedAt?: number;
-	id: string;
-	label: string;
-	brand?: string;
-	kcalPer100: number;
-	amount: number;
-	items?: ItemInstance[];
-	portions?: Portion[];
-}
-
-export interface ItemInstance {
-	key?: string;
-	id: string;
-	label: string;
-	brand?: string;
-	kcalPer100: number;
-	amount: number;
-	portions?: Portion[];
-}
-
-export interface Portion {
-	key?: string;
-	label: string;
-	amount: number;
-}
-
-export const items = asyncReadable(
+export const items = asyncReadable<Item[]>(
 	[],
 	async () => {
+		const colRef = collection(db, `Items`);
 		console.count('getDocs items');
-		const snapshot = await getDocs(collection(db, `Items`));
-		const data = [];
+		const snapshot = await getDocs(colRef);
+		const data: Item[] = [];
 		snapshot.docs.forEach((doc) => {
 			const docData = doc.data();
-			data.push({ ...docData, id: doc.id });
+			data.push({ ...(docData as Item), id: doc.id });
 		});
 		return data;
 	},
@@ -59,8 +31,9 @@ export const items = asyncReadable(
 );
 
 export const createItem = (id: string) => {
+	const colRef = doc(db, 'Items/' + id);
 	console.log('setDoc newItem', id);
-	return setDoc(doc(db, 'Items/' + id), {
+	return setDoc(colRef, {
 		...defaultItem,
 		id,
 		owner: get(user).id,
@@ -73,28 +46,33 @@ export const createItemStore = (id: string) => {
 	const store = asyncWritable(
 		[],
 		async () => {
+			const docRef = doc(db, `Items/${id}`);
 			console.log('getDoc new ItemStore', id);
-			return (await getDoc(doc(db, `Items/${id}`))).data() as Item;
+			const docSnap = await getDoc(docRef);
+			return docSnap.data() as Item;
 		},
 		async (data: Item) => {
+			const docRef = doc(db, `Items/${data.id}`);
 			console.log('setDoc ItemStore', id);
-			await setDoc(doc(db, `Items/${data.id}`), { ...data, updatedAt: Date.now() });
+			await setDoc(docRef, { ...data, updatedAt: Date.now() });
 		}
 	);
 	return store;
 };
 
 export const deleteItem = (id: string) => {
+	const docRef = doc(db, `Items/${id}`);
 	console.log('deleteDoc', id);
-	return deleteDoc(doc(db, `Items/${id}`));
+	return deleteDoc(docRef);
 };
 
 export const recentItems = asyncDerived(
 	user,
 	async ($user) => {
+		const docRef = doc(db, `Users/${$user.id}/Data/RecentItems`);
 		console.log('getDoc recentItems');
-		const snapshot = await getDoc(doc(db, `Users/${$user.id}/Data/RecentItems`));
-		const data = snapshot.data()?.recentItems || [];
+		const docSnap = await getDoc(docRef);
+		const data = docSnap.data()?.recentItems || [];
 		return data as Item[];
 	},
 	true
@@ -104,21 +82,28 @@ export async function setRecentItem(mostRecentItem: Item) {
 	let newRecentItems = get(recentItems).filter((item) => item.id !== mostRecentItem.id);
 	newRecentItems.unshift(mostRecentItem);
 	newRecentItems = newRecentItems.splice(0, 24);
+	const docRef = doc(db, `Users/${get(user).id}/Data/RecentItems`);
 	console.log('setDoc RecentItem', mostRecentItem.id);
-	await setDoc(doc(db, `Users/${get(user).id}/Data/RecentItems`), { recentItems: newRecentItems });
+	await setDoc(docRef, { recentItems: newRecentItems });
 	await recentItems.reload();
 }
 
 export async function saveExternalItem(item: Item) {
+	const colRef = collection(db, `Items`);
+	const queryInstance = query(colRef, where('id', '==', item.id));
 	console.log('getDocs saveExternalItem', item.id);
-	if ((await getDocs(query(collection(db, `Items`), where('id', '==', item.id)))).docs.length) {
-		return;
-	}
+	const querySnap = await getDocs(queryInstance);
+	if (querySnap.docs.length) return;
+
 	item.items = [];
 	item.portions = item.portions ? item.portions.map((p) => ({ ...p, key: uuid() })) : [];
+	item.createdAt = Date.now();
+	item.updatedAt = Date.now();
+
 	console.log('setDoc saveExternalItem', item.id);
-	await setDoc(doc(db, 'Items/' + item.id), item);
-	items.reload();
+	const docRef = doc(db, 'Items/' + item.id);
+	await setDoc(docRef, item);
+	await items.reload();
 }
 
 export const defaultItem = {
@@ -150,3 +135,32 @@ export const customKcalAmountItem = {
 	kcalPer100: 100,
 	amount: 100,
 };
+
+export interface Item {
+	owner?: string;
+	createdAt?: number;
+	updatedAt?: number;
+	id: string;
+	label: string;
+	brand?: string;
+	kcalPer100: number;
+	amount: number;
+	items?: ItemInstance[];
+	portions?: Portion[];
+}
+
+export interface ItemInstance {
+	key?: string;
+	id: string;
+	label: string;
+	brand?: string;
+	kcalPer100: number;
+	amount: number;
+	portions?: Portion[];
+}
+
+export interface Portion {
+	key?: string;
+	label: string;
+	amount: number;
+}
