@@ -1,6 +1,13 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { parseHTML } from 'linkedom';
 
+// polyfill for vercel
+if (!String.prototype.replaceAll) {
+	String.prototype.replaceAll = function (str, newStr) {
+		return this.replace(new RegExp(str, 'g'), newStr);
+	};
+}
+
 export const get: RequestHandler = async (request) => {
 	const searchRes = await fetch(
 		'https://fddb.mobi/search/?lang=de&search=' + request.params.search
