@@ -46,10 +46,13 @@
 	}
 
 	let externalEntries = [];
+	let loadingExternalItems = false;
 	async function searchExternal() {
 		externalEntries = [];
 		activeStatus = status.external;
+		loadingExternalItems = true;
 		externalEntries = await (await fetch('/search/' + encodeURIComponent(search))).json();
+		loadingExternalItems = false;
 	}
 
 	function selectItem(item: Item) {
@@ -186,6 +189,14 @@
 					>
 						<ItemCard {item} />
 					</button>
+				{:else}
+					{#if loadingExternalItems}
+						{#each { length: 10 } as _}
+							<ItemSkeleton />
+						{/each}
+					{:else}
+						No items found
+					{/if}
 				{/each}
 			{/if}
 		{/await}
