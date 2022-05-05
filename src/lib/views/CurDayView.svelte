@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { browser } from '$app/env';
+	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
+	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte';
+	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
+	import { curDay, dateIsToday, getDayData, type Day as DayType } from '$lib/data/intake';
 	import { user, userSettings } from '$lib/data/user';
 	import { toISODateString } from '$lib/dateHelpers';
-	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import { addDays } from 'date-fns';
-	import { curDay, dateIsToday, getDayData, type Day as DayType } from '$lib/data/intake';
 
 	let data = null as DayType;
 	let stale = false;
@@ -47,6 +49,12 @@
 		{kcalDisplay(kcalInDay)} kcal
 	</span>
 </Switcher>
+
+{#if data}
+	<KcalLimitBar {kcalInDay} />
+{:else}
+	<KcalLimitBarSkeleton />
+{/if}
 
 <DayEditor bind:data date={$curDay} />
 

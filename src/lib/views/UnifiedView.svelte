@@ -1,14 +1,16 @@
 <script>
+	import BucketSkeleton from '$lib/components/DayEditor/BucketSkeleton.svelte';
+	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
+	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte';
+	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte';
 	import WeekSwitcher from '$lib/components/WeekSwitcher.svelte';
 	import { curDay, weekData } from '$lib/data/intake';
 	import { userSettings } from '$lib/data/user';
 	import { toISODateString } from '$lib/dateHelpers';
-	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import { isSameDay, isSameWeek } from 'date-fns';
 	import IcHome from '~icons/ic/round-home';
 	import ItemDrawer from './ItemDrawer/ItemDrawer.svelte';
-import BucketSkeleton from '$lib/components/DayEditor/BucketSkeleton.svelte';
 
 	// bug: scrolls into view when changing data
 	// async function scrollToView(data) {
@@ -53,6 +55,7 @@ import BucketSkeleton from '$lib/components/DayEditor/BucketSkeleton.svelte';
 					{kcalDisplay(kcalInDay)} kcal
 				</span>
 			</div>
+			<KcalLimitBar {kcalInDay} />
 			<DayEditor bind:data {date} />
 		</div>
 	{:else}
@@ -62,6 +65,7 @@ import BucketSkeleton from '$lib/components/DayEditor/BucketSkeleton.svelte';
 					<div class="headline-2 skeleton">XX., X. XXX</div>
 					<div class="labe-l skeleton">XXX kcal</div>
 				</div>
+				<KcalLimitBarSkeleton />
 				{#each { length: 4 } as _}
 					<BucketSkeleton />
 				{/each}
@@ -85,7 +89,7 @@ import BucketSkeleton from '$lib/components/DayEditor/BucketSkeleton.svelte';
 	<ItemDrawer />
 </nav>
 
-<style>
+<style lang="postcss">
 	.scroll-hori {
 		display: flex;
 		overflow-x: auto;
