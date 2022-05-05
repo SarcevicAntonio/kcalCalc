@@ -1,12 +1,11 @@
 <script>
 	import { toISODateString } from '$lib/dateHelpers';
-	import { calculateKcalFromItems } from '$lib/kcal';
-	import { kcalDisplay } from '$lib/kcal';
+	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import { curDay, weekData } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import { isSameDay, isSameWeek } from 'date-fns';
-	import { tick } from 'svelte';
 	import IcHome from '~icons/ic/round-home';
+	import BucketSkeleton from './BucketSkeleton.svelte';
 	import Day from './Day.svelte';
 	import ItemDrawer from './ItemDrawer.svelte';
 	import WeekSelector from './WeekSelector.svelte';
@@ -56,6 +55,18 @@
 			</div>
 			<Day bind:data {date} />
 		</div>
+	{:else}
+		{#each { length: 7 } as _}
+			<div class="flow">
+				<div class="day-title">
+					<div class="headline-2 skeleton">XX., X. XXX</div>
+					<div class="labe-l skeleton">XXX kcal</div>
+				</div>
+				{#each { length: 4 } as _}
+					<BucketSkeleton />
+				{/each}
+			</div>
+		{/each}
 	{/each}
 </div>
 

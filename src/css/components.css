@@ -151,6 +151,7 @@
 }
 
 .skeleton {
+	border-radius: 0.75rem;
 	animation-duration: 4s;
 	animation-fill-mode: forwards;
 	animation-iteration-count: infinite;

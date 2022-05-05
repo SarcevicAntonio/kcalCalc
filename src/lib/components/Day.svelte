@@ -1,8 +1,7 @@
 <script>
 	import { defaultDay, setDayData } from '$lib/stores/intake';
-	import IconWeek from '~icons/ic/round-date-range';
 	import Bucket from './Bucket.svelte';
-	import ItemSkeleton from './ItemSkeleton.svelte';
+	import BucketSkeleton from './BucketSkeleton.svelte';
 
 	export let date;
 	export let data = defaultDay;
@@ -18,20 +17,6 @@
 	{/each}
 {:else}
 	{#each { length: 4 } as _}
-		<ItemSkeleton>
-			<div class="row">
-				<span class="title-l">Fake Bucket</span>
-				<button class="btn text"> <IconWeek /> </button>
-			</div>
-		</ItemSkeleton>
+		<BucketSkeleton />
 	{/each}
 {/if}
-
-<style>
-	.title-l {
-		min-height: 2em;
-	}
-	.row {
-		display: flex;
-	}
-</style>

@@ -1,14 +1,16 @@
 <script lang="ts">
+	import BucketSkeleton from '$lib/components/BucketSkeleton.svelte';
+
 	import Login from '$lib/components/Login.svelte';
 	import { auth } from '$lib/firebase';
 	import ProfileLink from '$lib/ProfileLink.svelte';
 	import { user } from '$lib/stores/user';
 	import '../css/global.css';
 
-	let authStateChanged = true;
+	let authStateUnfetched = true;
 
 	auth.onAuthStateChanged((changedUser) => {
-		authStateChanged = false;
+		authStateUnfetched = false;
 		if (!changedUser) {
 			$user = null;
 			return;
@@ -33,10 +35,10 @@
 </header>
 
 <main class="flow">
-	{#if $user}
-		<slot />
-	{:else if !authStateChanged}
+	{#if !$user && !authStateUnfetched}
 		<Login />
+	{:else}
+		<slot />
 	{/if}
 </main>
 
