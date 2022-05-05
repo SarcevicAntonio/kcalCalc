@@ -28,15 +28,20 @@
 	let canNotEvaluate = false;
 
 	const handleBlur = (e: Event) => {
-		if (type === 'calc') {
-			if (!value) value = 0;
-			try {
-				value = evaluate((value + '').replaceAll(',', '.'));
-				canNotEvaluate = false;
+		if (type !== 'calc') {
+			dispatch('blur', e);
+			return;
+		}
+		if (!value) value = 0;
+		try {
+			const evaluated = evaluate((value + '').replaceAll(',', '.'));
+			canNotEvaluate = false;
+			if (evaluated !== value) {
+				value = evaluated;
 				dispatch('input', e);
-			} catch (e) {
-				canNotEvaluate = true;
 			}
+		} catch (e) {
+			canNotEvaluate = true;
 		}
 		dispatch('blur', e);
 	};
