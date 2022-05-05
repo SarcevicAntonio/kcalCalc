@@ -3,7 +3,7 @@
 	import Switcher from '$lib/components/Switcher.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { calculateKcalFromItems } from '$lib/kcal';
-	import kcalDisplay from '$lib/kcalDisplay';
+	import { kcalDisplay } from '$lib/kcal';
 	import { user, userSettings } from '$lib/stores/user';
 	import { addDays } from 'date-fns';
 	import { createEventDispatcher } from 'svelte';

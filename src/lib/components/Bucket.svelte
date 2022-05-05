@@ -1,6 +1,6 @@
 <script type="ts">
 	import { calculateKcalFromItems } from '$lib/kcal';
-	import kcalDisplay from '$lib/kcalDisplay';
+	import { kcalDisplay } from '$lib/kcal';
 	import type { ItemInstance as ItemInstanceType } from '$lib/stores/items';
 	import { createEventDispatcher, tick } from 'svelte';
 	import { slide } from 'svelte/transition';

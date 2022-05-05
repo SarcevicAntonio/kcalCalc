@@ -4,7 +4,7 @@
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
-	import kcalDisplay from '$lib/kcalDisplay';
+	import { kcalDisplay } from '$lib/kcal';
 	import {
 		createItemStore,
 		defaultPortion,

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import kcalDisplay from '$lib/kcalDisplay';
+	import { kcalDisplay } from '$lib/kcal';
 	import { curDay, weekData, type Week } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import type { Loadable } from '@square/svelte-store';

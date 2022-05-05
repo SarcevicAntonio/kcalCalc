@@ -14,3 +14,12 @@ export const calculateKcalPer100FromItems = (items: ItemInstance[], amountSum = 
 	const kcal = calculateKcalFromItems(items);
 	return (kcal / amountSum) * 100;
 };
+
+
+export const kcalDisplay = (val: number | string) => {
+	if (Number.isNaN(val) || typeof val !== 'number') {
+		return '...';
+	}
+
+	return Math.round(val);
+};

@@ -1,7 +1,7 @@
 <script>
 	import { toISODateString } from '$lib/dateHelpers';
 	import { calculateKcalFromItems } from '$lib/kcal';
-	import kcalDisplay from '$lib/kcalDisplay';
+	import { kcalDisplay } from '$lib/kcal';
 	import { curDay, curWeek, curYear, weekData } from '$lib/stores/intake';
 	import { userSettings } from '$lib/stores/user';
 	import { addDays, getYear } from 'date-fns';
