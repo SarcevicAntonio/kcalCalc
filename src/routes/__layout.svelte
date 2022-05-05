@@ -35,7 +35,12 @@
 	{#if $user}
 		<a sveltekit:prefetch class="btn text" href="/profile">
 			{#if $user.photoURL && !imgError}
-				<img src={$user.photoURL} alt="You" on:error={() => (imgError = true)} />
+				<img
+					src={$user.photoURL}
+					alt="You"
+					class="profile-img"
+					on:error={() => (imgError = true)}
+				/>
 			{:else}
 				<IconProfile />
 			{/if}
@@ -83,7 +88,7 @@
 		}
 	}
 
-	img {
+	.profile-img {
 		aspect-ratio: 1/1;
 		border-radius: 50%;
 		height: 1rem;
