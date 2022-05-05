@@ -3,7 +3,6 @@
 	import { auth } from '$lib/firebase';
 	import ProfileLink from '$lib/ProfileLink.svelte';
 	import { user } from '$lib/stores/user';
-	import { Notifications } from 'as-comps';
 	import '../css/global.css';
 
 	let authStateChanged = true;
@@ -40,8 +39,6 @@
 		<Login />
 	{/if}
 </main>
-
-<Notifications />
 
 <style lang="postcss">
 	h1 {
