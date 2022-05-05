@@ -19,13 +19,6 @@
 		align-items: center;
 	}
 
-	.bucket-info {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-		align-items: flex-end;
-	}
-
 	.title-l {
 		display: flex;
 		align-items: center;
