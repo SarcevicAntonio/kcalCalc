@@ -1,12 +1,14 @@
 <script>
 	import IconProfile from '~icons/ic/round-account-circle';
 	import { user } from './stores/user';
+
+	let imgError = false;
 </script>
 
 {#if $user}
 	<a sveltekit:prefetch class="btn text" href="/profile">
-		{#if $user.photoURL}
-			<img src={$user.photoURL} alt="Your Profile" />
+		{#if $user.photoURL && !imgError}
+			<img src={$user.photoURL} alt="You" on:error={() => (imgError = true)} />
 		{:else}
 			<IconProfile />
 		{/if}
