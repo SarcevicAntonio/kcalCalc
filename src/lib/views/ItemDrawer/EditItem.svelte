@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ItemInstance from '$lib/components/ItemInstance.svelte';
+	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	import ItemSelector from '$lib/components/ItemSelector.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import Input from '$lib/Input.svelte';
@@ -12,7 +12,7 @@
 		items,
 		type Item,
 		type ItemInstance as ItemInstanceType,
-	} from '$lib/stores/items';
+	} from '$lib/data/items';
 	import type { WritableLoadable } from '@square/svelte-store';
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher, onMount } from 'svelte';

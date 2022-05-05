@@ -1,6 +1,3 @@
-<script>
-</script>
-
 <div class="card filled skeleton">
 	<slot>
 		<div class="row">

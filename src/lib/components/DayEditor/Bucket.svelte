@@ -1,11 +1,10 @@
 <script type="ts">
-	import { calculateKcalFromItems } from '$lib/kcal';
-	import { kcalDisplay } from '$lib/kcal';
-	import type { ItemInstance as ItemInstanceType } from '$lib/stores/items';
+	import ItemSelector from '$lib/components/ItemSelector.svelte';
+	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
+	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import { createEventDispatcher, tick } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import ItemInstance from './ItemInstance.svelte';
-	import ItemSelector from './ItemSelector.svelte';
+	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	const dispatch = createEventDispatcher();
 
 	export let label: string;

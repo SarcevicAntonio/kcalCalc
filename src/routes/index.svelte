@@ -1,10 +1,10 @@
 <script lang="ts">
-	import CurDayView from '$lib/components/CurDayView.svelte';
-	import ItemDrawer from '$lib/components/ItemDrawer.svelte';
-	import UnifiedView from '$lib/components/UnifiedView.svelte';
-	import WeekGraph from '$lib/components/WeekGraph.svelte';
+	import CurDayView from '$lib/views/CurDayView.svelte';
+	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
+	import UnifiedView from '$lib/views/UnifiedView.svelte';
+	import WeekGraph from '$lib/views/WeekGraph.svelte';
 	import { toISODateString } from '$lib/dateHelpers';
-	import { curDay, dateIsToday, weekData } from '$lib/stores/intake';
+	import { curDay, dateIsToday, weekData } from '$lib/data/intake';
 	import IconWeek from '~icons/ic/round-date-range';
 	import IcHome from '~icons/ic/round-home';
 

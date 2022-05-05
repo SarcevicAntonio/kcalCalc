@@ -2,7 +2,7 @@
 	import Input from '$lib/Input.svelte';
 	import { calculateKcal } from '$lib/kcal';
 	import { kcalDisplay } from '$lib/kcal';
-	import type { ItemInstance } from '$lib/stores/items';
+	import type { ItemInstance } from '$lib/data/items';
 	import { createEventDispatcher } from 'svelte';
 	import { scale, slide } from 'svelte/transition';
 	import IcDelete from '~icons/ic/round-delete-forever';

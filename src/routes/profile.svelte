@@ -1,14 +1,16 @@
 <script>
-	import UserSettings from '$lib/components/UserSettings.svelte';
 	import { auth } from '$lib/firebase';
-	import { user } from '$lib/stores/user';
+	import { user, userSettings } from '$lib/data/user';
 	import { signOut } from 'firebase/auth';
 	import IcHome from '~icons/ic/round-home';
 	import IcLogout from '~icons/ic/round-logout';
+	import Input from '$lib/Input.svelte';
 
 	async function logout() {
 		await signOut(auth);
 	}
+
+	let imgError = false;
 </script>
 
 <div class="container">
@@ -16,13 +18,31 @@
 		<span class="title-l">Howdy, good lookin'!</span>
 		<div class="user">
 			<span class="headline-2">{$user.displayName}</span>
-			<img src={$user.photoURL} alt="Your Profile" />
+			{#if !imgError}
+				<img
+					src={$user.photoURL}
+					alt="Your Profile"
+					on:error={() => {
+						imgError = true;
+					}}
+				/>
+			{/if}
 			<ul>
 				<li>Email: {$user.email}</li>
 				<li>id: {$user.id}</li>
 			</ul>
 			<hr />
-			<UserSettings />
+			{#await userSettings.load()}
+				<Input type="number" disabled>Kcal Day Limit / Warning</Input>
+			{:then}
+				<Input type="number" bind:value={$userSettings.kcalLimit}>Kcal Day Limit / Warning</Input>
+			{/await}
+			<a
+				href="https://www.tk.de/service/app/2004134/kalorienrechner/einstieg.app?tkcm=ab"
+				target="_blank"
+			>
+				Kalo­ri­en­be­darfs­rechner von TK
+			</a>
 		</div>
 		<button class="btn tonal" on:click={logout}><IcLogout /> Logout</button>
 	{/if}
@@ -69,5 +89,9 @@
 
 	img {
 		border-radius: 0.75rem;
+	}
+
+	a {
+		color: var(--md-primary);
 	}
 </style>

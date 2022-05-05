@@ -1,7 +1,7 @@
 import { toISODateString } from '$lib/dateHelpers';
 import { db } from '$lib/firebase';
 import { calculateKcalFromItems } from '$lib/kcal';
-import type { ItemInstance } from '$lib/stores/items';
+import type { ItemInstance } from '$lib/data/items';
 import { asyncDerived } from '@square/svelte-store';
 import {
 	addDays,

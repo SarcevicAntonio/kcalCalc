@@ -10,7 +10,7 @@
 		setRecentItem,
 		type Item,
 		type ItemInstance,
-	} from '$lib/stores/items';
+	} from '$lib/data/items';
 	import { loadAll } from '@square/svelte-store';
 	import { Dialog } from 'as-comps';
 	import Fuse from 'fuse.js';

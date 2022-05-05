@@ -2,8 +2,8 @@
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import Input from '$lib/Input.svelte';
-	import { createItem, items } from '$lib/stores/items';
-	import { user } from '$lib/stores/user';
+	import { createItem, items } from '$lib/data/items';
+	import { user } from '$lib/data/user';
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher } from 'svelte';
 	import { v4 as uuid } from 'uuid';

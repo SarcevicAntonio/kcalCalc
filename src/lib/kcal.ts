@@ -1,4 +1,4 @@
-import type { ItemInstance } from './stores/items';
+import type { ItemInstance } from './data/items';
 
 export const calculateKcal = (item: ItemInstance) => (item.kcalPer100 / 100) * item.amount;
 

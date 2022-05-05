@@ -1,5 +1,5 @@
 <script>
-	import { defaultDay, setDayData } from '$lib/stores/intake';
+	import { defaultDay, setDayData } from '$lib/data/intake';
 	import Bucket from './Bucket.svelte';
 	import BucketSkeleton from './BucketSkeleton.svelte';
 

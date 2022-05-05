@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { calculateKcalPer100FromItems } from '$lib/kcal';
 	import { kcalDisplay } from '$lib/kcal';
-	import type { Item } from '$lib/stores/items';
+	import type { Item } from '$lib/data/items';
 
 	export let item: Item;
 </script>

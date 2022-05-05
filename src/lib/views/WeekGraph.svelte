@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { kcalDisplay } from '$lib/kcal';
-	import { curDay, weekData, type Week } from '$lib/stores/intake';
-	import { userSettings } from '$lib/stores/user';
+	import { curDay, weekData, type Week } from '$lib/data/intake';
+	import { userSettings } from '$lib/data/user';
 	import type { Loadable } from '@square/svelte-store';
 	import { isSameDay } from 'date-fns';
 	import { createEventDispatcher } from 'svelte';
-	import WeekSelector from './WeekSelector.svelte';
+import WeekSwitcher from '$lib/components/WeekSwitcher.svelte';
 	const dispatch = createEventDispatcher();
 
 	export let data: Loadable<Week> = weekData;
@@ -13,7 +13,7 @@
 	$: maxKcal = Math.max(...Object.values($data).map(({ kcal }) => kcal || 0));
 </script>
 
-<WeekSelector />
+<WeekSwitcher />
 
 <div class="col">
 	{#if $userSettings && maxKcal > $userSettings.kcalLimit}

@@ -1,10 +1,8 @@
 <script lang="ts">
-	import BucketSkeleton from '$lib/components/BucketSkeleton.svelte';
-
-	import Login from '$lib/components/Login.svelte';
+	import Login from '$lib/views/Login.svelte';
 	import { auth } from '$lib/firebase';
-	import ProfileLink from '$lib/ProfileLink.svelte';
-	import { user } from '$lib/stores/user';
+	import IconProfile from '~icons/ic/round-account-circle';
+	import { user } from '$lib/data/user';
 	import '../css/global.css';
 
 	let authStateUnfetched = true;
@@ -24,6 +22,8 @@
 			photoURL,
 		};
 	});
+
+	let imgError = false;
 </script>
 
 <header>
@@ -31,7 +31,16 @@
 		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
 	</div>
-	<ProfileLink />
+
+	{#if $user}
+		<a sveltekit:prefetch class="btn text" href="/profile">
+			{#if $user.photoURL && !imgError}
+				<img src={$user.photoURL} alt="You" on:error={() => (imgError = true)} />
+			{:else}
+				<IconProfile />
+			{/if}
+		</a>
+	{/if}
 </header>
 
 <main class="flow">
@@ -72,6 +81,14 @@
 		main {
 			padding-inline: 0.5rem;
 		}
+	}
+
+	img {
+		aspect-ratio: 1/1;
+		border-radius: 50%;
+		height: 1rem;
+		outline: 1px solid var(--md-primary);
+		outline-offset: 1px;
 	}
 
 	.title {

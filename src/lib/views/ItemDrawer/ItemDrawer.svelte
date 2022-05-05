@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { items } from '$lib/stores/items';
+
+	import { items } from '$lib/data/items';
 	import { Dialog } from 'as-comps';
 	import { fly } from 'svelte/transition';
 	import IcItems from '~icons/ic/round-category';
-	import EditItem from './EditItem.svelte';
-	import ItemList from './ItemList.svelte';
+import EditItem from './EditItem.svelte';
+import ItemList from './ItemList.svelte';
 
 	export let label = 'Items';
 

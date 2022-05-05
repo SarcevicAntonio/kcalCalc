@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { browser } from '$app/env';
 	import Switcher from '$lib/components/Switcher.svelte';
+	import { user, userSettings } from '$lib/data/user';
 	import { toISODateString } from '$lib/dateHelpers';
-	import { calculateKcalFromItems } from '$lib/kcal';
-	import { kcalDisplay } from '$lib/kcal';
-	import { user, userSettings } from '$lib/stores/user';
+	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
+	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import { addDays } from 'date-fns';
-	import { createEventDispatcher } from 'svelte';
-	import { curDay, dateIsToday, getDayData, type Day as DayType } from '../../lib/stores/intake';
-	import Day from './DayEditor.svelte';
-	const dispatch = createEventDispatcher();
+	import { curDay, dateIsToday, getDayData, type Day as DayType } from '$lib/data/intake';
 
 	let data = null as DayType;
 	let stale = false;
@@ -51,7 +48,7 @@
 	</span>
 </Switcher>
 
-<Day bind:data date={$curDay} />
+<DayEditor bind:data date={$curDay} />
 
 <style>
 	.over-limit {

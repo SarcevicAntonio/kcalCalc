@@ -1,14 +1,14 @@
 <script>
+	import WeekSwitcher from '$lib/components/WeekSwitcher.svelte';
+	import { curDay, weekData } from '$lib/data/intake';
+	import { userSettings } from '$lib/data/user';
 	import { toISODateString } from '$lib/dateHelpers';
+	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
-	import { curDay, weekData } from '$lib/stores/intake';
-	import { userSettings } from '$lib/stores/user';
 	import { isSameDay, isSameWeek } from 'date-fns';
 	import IcHome from '~icons/ic/round-home';
-	import BucketSkeleton from './BucketSkeleton.svelte';
-	import Day from './DayEditor.svelte';
-	import ItemDrawer from './ItemDrawer.svelte';
-	import WeekSelector from './WeekSelector.svelte';
+	import ItemDrawer from './ItemDrawer/ItemDrawer.svelte';
+import BucketSkeleton from '$lib/components/DayEditor/BucketSkeleton.svelte';
 
 	// bug: scrolls into view when changing data
 	// async function scrollToView(data) {
@@ -26,7 +26,7 @@
 	$: entries = Object.entries($weekData);
 </script>
 
-<WeekSelector overrideData={entries.map(([_, data]) => data)} />
+<WeekSwitcher overrideData={entries.map(([_, data]) => data)} />
 
 <div class="scroll-hori">
 	{#each entries as [date, data] (date)}
@@ -53,7 +53,7 @@
 					{kcalDisplay(kcalInDay)} kcal
 				</span>
 			</div>
-			<Day bind:data {date} />
+			<DayEditor bind:data {date} />
 		</div>
 	{:else}
 		{#each { length: 7 } as _}
