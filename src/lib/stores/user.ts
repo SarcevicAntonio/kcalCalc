@@ -20,14 +20,15 @@ export const userSettings = asyncWritable(
 	[user],
 	async ([$user]) => {
 		console.log('getDoc userSettings');
-		return (
-			((await getDoc(doc(db, `Users/${$user.id}/Data/Settings`))).data() as UserSettings) ||
-			({} as UserSettings)
-		);
+		const dataDocRef = doc(db, `Users/${$user.id}/Data/Settings`);
+		const dataDocSnap = await getDoc(dataDocRef);
+		const data = dataDocSnap.data();
+		return (data || {}) as UserSettings;
 	},
 	async (settings, [$user]) => {
 		console.log('setDoc userSettings');
-		await setDoc(doc(db, `Users/${$user.id}/Data/Settings`), settings);
+		const dataDocRef = doc(db, `Users/${$user.id}/Data/Settings`);
+		await setDoc(dataDocRef, settings);
 	},
 	true
 );
