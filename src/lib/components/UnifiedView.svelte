@@ -6,7 +6,7 @@
 	import { isSameDay, isSameWeek } from 'date-fns';
 	import IcHome from '~icons/ic/round-home';
 	import BucketSkeleton from './BucketSkeleton.svelte';
-	import Day from './Day.svelte';
+	import Day from './DayEditor.svelte';
 	import ItemDrawer from './ItemDrawer.svelte';
 	import WeekSelector from './WeekSelector.svelte';
 

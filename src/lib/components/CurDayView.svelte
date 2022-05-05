@@ -8,7 +8,7 @@
 	import { addDays } from 'date-fns';
 	import { createEventDispatcher } from 'svelte';
 	import { curDay, dateIsToday, getDayData, type Day as DayType } from '../../lib/stores/intake';
-	import Day from './Day.svelte';
+	import Day from './DayEditor.svelte';
 	const dispatch = createEventDispatcher();
 
 	let data = null as DayType;
