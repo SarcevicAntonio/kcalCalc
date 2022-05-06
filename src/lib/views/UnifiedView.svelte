@@ -9,21 +9,21 @@
 	import { toISODateString } from '$lib/dateHelpers';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import { isSameDay, isSameWeek } from 'date-fns';
+	import { tick } from 'svelte';
 	import IcHome from '~icons/ic/round-home';
 	import ItemDrawer from './ItemDrawer/ItemDrawer.svelte';
 
-	// bug: scrolls into view when changing data
-	// async function scrollToView(data) {
-	// 	if (!Object.keys(data).length) return;
-	// 	await tick();
-	// 	const el = document.getElementById(toISODateString(new Date()));
-	// 	if (!el) return;
-	// 	el.scrollIntoView({
-	// 		behavior: 'smooth',
-	// 	});
-	// }
-
-	// $: scrollToView($weekData);
+	async function scrollToView(data) {
+		if (!Object.keys(data).length) return;
+		await tick();
+		const el = document.getElementById(toISODateString(new Date()));
+		if (!el) return;
+		el.scrollIntoView({
+			behavior: 'smooth',
+			inline: 'center',
+		});
+	}
+	$: scrollToView($weekData);
 
 	$: entries = Object.entries($weekData);
 </script>
@@ -38,9 +38,9 @@
 			0
 		)}
 		{@const today = isSameDay(dateObj, new Date())}
-		<div class="flow">
+		<div class="flow" id={date}>
 			<div class="day-title" class:today>
-				<span class="headline-2" id={date}>
+				<span class="headline-2">
 					{#if today}
 						Today
 					{:else}
@@ -93,12 +93,13 @@
 	.scroll-hori {
 		display: flex;
 		overflow-x: auto;
-		gap: 1.2rem;
+		gap: 1rem;
 		padding-inline: 0.5rem;
 	}
 
 	.flow {
 		min-width: 300px;
+		width: 100%;
 	}
 
 	.day-title {
