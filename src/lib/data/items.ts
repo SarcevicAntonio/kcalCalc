@@ -67,13 +67,26 @@ export const deleteItem = (id: string) => {
 	return deleteDoc(docRef);
 };
 
+const getRecentItemIds = async (): Promise<string[]> => {
+	const docRef = doc(db, `Users/${get(user).id}/Data/RecentItems`);
+	console.log('getDoc recentItemIds');
+	const docSnap = await getDoc(docRef);
+	return docSnap.data()?.recentItemIds || [];
+};
+
 export const recentItems = asyncDerived(
 	user,
-	async ($user) => {
-		const docRef = doc(db, `Users/${$user.id}/Data/RecentItems`);
-		console.log('getDoc recentItems');
-		const docSnap = await getDoc(docRef);
-		const data = docSnap.data()?.recentItems || [];
+	async () => {
+		const recentItemIds = await getRecentItemIds();
+		if (!recentItemIds.length) return [];
+		const colRef = collection(db, `Items`);
+		const queryInstance = query(colRef, where('id', 'in', recentItemIds));
+		console.log('getDocs recentItems', recentItemIds);
+		const querySnap = await getDocs(queryInstance);
+		const data: Item[] = [];
+		querySnap.forEach((doc) => {
+			data.push({ ...(doc.data() as Item), id: doc.id });
+		});
 		return data as Item[];
 	},
 	true,
@@ -81,12 +94,12 @@ export const recentItems = asyncDerived(
 );
 
 export async function setRecentItem(mostRecentItem: Item) {
-	let newRecentItems = get(recentItems).filter((item) => item.id !== mostRecentItem.id);
-	newRecentItems.unshift(mostRecentItem);
-	newRecentItems = newRecentItems.splice(0, 24);
+	let recentItemIds = await getRecentItemIds();
+	recentItemIds = recentItemIds.filter((item) => item !== mostRecentItem.id);
+	recentItemIds.unshift(mostRecentItem.id);
 	const docRef = doc(db, `Users/${get(user).id}/Data/RecentItems`);
 	console.log('setDoc RecentItem', mostRecentItem.id);
-	await setDoc(docRef, { recentItems: newRecentItems });
+	await setDoc(docRef, { recentItemIds });
 	await recentItems.reload();
 }
 
