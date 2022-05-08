@@ -56,6 +56,9 @@
 {/if}
 
 <style>
+	.home-btn {
+		margin-left: auto;
+	}
 	/* @media only screen and (min-width: 1000px) {
 		.fab-bar {
 			top: 0;
