@@ -84,22 +84,29 @@
 		</button>
 	{/if}
 {/if}
-{#if $recentItems.length && !loadingExternalItems}
-	<ItemCards
-		dontShowSkeletons
-		{excludeId}
-		items={externalEntries.length
-			? externalEntries
-			: search
-			? new Fuse($items, { keys: ['label', 'brand'] }).search(search).map((res) => res.item)
-			: $recentItems}
-		on:select={handleSelect}
-	/>
-{:else}
+
+{#await recentItems.load()}
 	{#each { length: 10 } as _}
 		<ItemSkeleton />
 	{/each}
-{/if}
+{:then}
+	{#if !loadingExternalItems}
+		<ItemCards
+			dontShowSkeletons
+			{excludeId}
+			items={externalEntries.length
+				? externalEntries
+				: search
+				? new Fuse($items, { keys: ['label', 'brand'] }).search(search).map((res) => res.item)
+				: $recentItems}
+			on:select={handleSelect}
+		/>
+	{:else}
+		{#each { length: 10 } as _}
+			<ItemSkeleton />
+		{/each}
+	{/if}
+{/await}
 
 <style>
 	.w100p {
