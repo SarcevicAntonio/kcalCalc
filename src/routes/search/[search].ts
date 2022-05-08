@@ -48,7 +48,7 @@ export const get: RequestHandler = async (request) => {
 							const split = ref.querySelector('td b').textContent.split('(');
 
 							const label = split[0].trim();
-							const amount = +split[1].split(' ')[0];
+							const amount = +split[1].split(' ')[0].replaceAll(',', '.');
 
 							if (amount !== 100) {
 								portions.push({ label, amount });
