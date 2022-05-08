@@ -20,6 +20,16 @@
 
 <svelte:window bind:innerWidth />
 
+{#if mobileView}
+	{#if showWeekGraph}
+		<WeekGraph on:toggleWeekGraph={toggleWeekGraph} />
+	{:else}
+		<CurDayView on:toggleWeekGraph={toggleWeekGraph} />
+	{/if}
+{:else}
+	<UnifiedView />
+{/if}
+
 <nav class="fab-bar">
 	{#if !showWeekGraph && mobileView}
 		<button
@@ -44,16 +54,6 @@
 	{/if}
 	<ItemDrawer />
 </nav>
-
-{#if mobileView}
-	{#if showWeekGraph}
-		<WeekGraph on:toggleWeekGraph={toggleWeekGraph} />
-	{:else}
-		<CurDayView on:toggleWeekGraph={toggleWeekGraph} />
-	{/if}
-{:else}
-	<UnifiedView />
-{/if}
 
 <style>
 	.home-btn {
