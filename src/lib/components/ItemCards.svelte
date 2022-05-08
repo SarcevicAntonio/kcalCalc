@@ -10,8 +10,6 @@
 	export let disableNotOwned = false;
 	export let dontShowSkeletons = false;
 	export let excludeId = '';
-
-	$: console.log(items);
 </script>
 
 {#each items as item (item.id)}
