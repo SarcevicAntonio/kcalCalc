@@ -97,6 +97,7 @@
 }
 
 .fab-bar {
+	pointer-events: none;
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -111,6 +112,7 @@
 
 .fab-bar button,
 .fab-bar a {
+	pointer-events: auto;
 	border-radius: 1rem;
 	border: none;
 	box-shadow: var(--shadow);
