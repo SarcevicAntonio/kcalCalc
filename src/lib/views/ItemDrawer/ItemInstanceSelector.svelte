@@ -1,4 +1,6 @@
 <script lang="ts">
+	import ItemCards from '$lib/components/ItemCards.svelte';
+	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import {
 		customKcalAmountItem,
 		customKcalCountItem,
@@ -11,10 +13,8 @@
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher } from 'svelte';
 	import IcItems from '~icons/ic/round-category';
-	import MdiCloudSearch from '~icons/mdi/cloud-search';
-	import ItemCards from './ItemCards.svelte';
-	import ItemSkeleton from './ItemSkeleton.svelte';
 	import IcRoundNumbers from '~icons/ic/round-numbers';
+	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import MdiWeight from '~icons/mdi/weight';
 	const dispatch = createEventDispatcher();
 
@@ -34,8 +34,12 @@
 
 	function handleSelect({ detail: item }: { detail: Item }) {
 		const itemInstance = instantiateItem(item);
-		dispatch('select', itemInstance);
 		search = '';
+		if (item.id.startsWith('FDDB||')) {
+			dispatch('externalItem', item);
+			return;
+		}
+		dispatch('select', itemInstance);
 	}
 </script>
 
@@ -101,6 +105,5 @@
 	.w100p {
 		width: 100%;
 		justify-content: flex-start;
-
 	}
 </style>

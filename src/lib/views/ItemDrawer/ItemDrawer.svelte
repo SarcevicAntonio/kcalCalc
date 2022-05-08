@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ItemInstanceSelector from '$lib/components/ItemInstanceSelector.svelte';
 	import { instantiateItem, items } from '$lib/data/items';
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
@@ -8,6 +7,7 @@
 	import IcAdd from '~icons/ic/round-plus';
 	import AddItem from './AddItem.svelte';
 	import EditItem from './EditItem.svelte';
+	import ItemInstanceSelector from './ItemInstanceSelector.svelte';
 	import SavedItems from './SavedItems.svelte';
 	const dispatch = createEventDispatcher();
 
@@ -63,6 +63,9 @@
 				<ItemInstanceSelector
 					{noCustomKcal}
 					{excludeId}
+					on:externalItem={({ detail }) => {
+						editId = detail.id;
+					}}
 					on:select={({ detail }) => {
 						toggle();
 						dispatch('select', detail);
