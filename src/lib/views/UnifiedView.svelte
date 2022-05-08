@@ -4,17 +4,17 @@
 	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte';
 	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte';
 	import WeekSwitcher from '$lib/components/WeekSwitcher.svelte';
-	import { curDay, weekData } from '$lib/data/intake';
+	import { curWeek, weekData } from '$lib/data/intake';
 	import { userSettings } from '$lib/data/user';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
-	import { isSameDay, isSameWeek } from 'date-fns';
+	import { isSameDay } from 'date-fns';
 	import { tick } from 'svelte';
-	import IcHome from '~icons/ic/round-home';
-	import ItemDrawer from './ItemDrawer/ItemDrawer.svelte';
 
+	let lastScrolledWeek = null;
 	async function scrollToView(data) {
-		if (!Object.keys(data).length) return;
+		if (lastScrolledWeek === $curWeek || !Object.keys(data).length) return;
+		lastScrolledWeek = $curWeek;
 		await tick();
 		const el = document.getElementById(toISODateString(new Date()));
 		if (!el) return;
@@ -23,6 +23,7 @@
 			inline: 'center',
 		});
 	}
+
 	$: scrollToView($weekData);
 
 	$: entries = Object.entries($weekData);
