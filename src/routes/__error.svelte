@@ -15,14 +15,14 @@
 {#if !$user}
 	<p>Maybe try reloading or logging in.</p>
 
-	<nav>
+	<nav class="fab-bar">
 		<a sveltekit:prefetch href="/auth">
 			<IconLogin /> Login
 		</a>
 	</nav>
 {:else}
 	<p>Maybe try reloading or going home.</p>
-	<nav>
+	<nav class="fab-bar">
 		<a sveltekit:prefetch href="/">
 			<IcHome />
 		</a>

@@ -15,13 +15,14 @@
 	export let selector = false;
 	export let excludeId = '';
 	export let noCustomKcal = false;
+	export let triggerClass = '';
 
 	let editId: string = null;
 </script>
 
 <Dialog
 	let:toggle
-	triggerClass={selector ? 'btn text margin-left-auto' : ''}
+	triggerClass="margin-left-auto {selector ? 'btn text' : ''} {triggerClass}"
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}
 	dialogOut={fly}

@@ -63,6 +63,7 @@
 		line-height: 44px;
 		font-weight: bold;
 	}
+
 	img {
 		height: auto;
 		width: auto;
@@ -80,18 +81,20 @@
 	main {
 		margin: auto;
 		margin-bottom: 4rem;
+		padding-inline: 0.5rem;
 	}
 
-	@media only screen and (max-width: 1000px) {
+	@media only screen and (min-width: 1000px) {
 		main {
-			padding-inline: 0.5rem;
+			margin-bottom: 0;
+			padding: 0;
 		}
 	}
 
 	.profile-img {
 		aspect-ratio: 1/1;
 		border-radius: 50%;
-		height: 1rem;
+		height: 1.5em;
 		outline: 1px solid var(--md-primary);
 		outline-offset: 1px;
 	}

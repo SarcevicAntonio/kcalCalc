@@ -74,21 +74,6 @@
 	{/each}
 </div>
 
-<nav class="fab-bar">
-	{#if !isSameWeek(new Date(), new Date($curDay))}
-		<button
-			on:click={() => {
-				$curDay = toISODateString(new Date());
-			}}
-		>
-			<IcHome />
-		</button>
-	{:else}
-		<span />
-	{/if}
-	<ItemDrawer />
-</nav>
-
 <style lang="postcss">
 	.scroll-hori {
 		display: flex;
