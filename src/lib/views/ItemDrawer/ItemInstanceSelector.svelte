@@ -35,7 +35,7 @@
 	function handleSelect({ detail: item }: { detail: Item }) {
 		const itemInstance = instantiateItem(item);
 		search = '';
-		if (item.id.startsWith('FDDB||')) {
+		if (externalEntries.length) {
 			dispatch('externalItem', item);
 			return;
 		}
