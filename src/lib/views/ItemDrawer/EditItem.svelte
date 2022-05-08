@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
-	import ItemSelector from '$lib/components/ItemSelector.svelte';
+	import ItemSelector from '$lib/components/ItemInstanceSelector.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems } from '$lib/kcal';
@@ -20,9 +20,12 @@
 	import IcArrowBack from '~icons/ic/round-arrow-back';
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcPlus from '~icons/ic/round-plus';
+	import ItemDrawer from './ItemDrawer.svelte';
 	const dispatch = createEventDispatcher();
 
 	export let id: string;
+	export let selector = false;
+
 	let dataStore: WritableLoadable<Item> = createItemStore(id);
 
 	let sumInputEl = null;
@@ -49,7 +52,7 @@
 
 {#await dataStore.load()}
 	<Input disabled>Label</Input>
-	<Input disabled>Brand</Input>
+	<Input disabled>Brand / Date / Whatever</Input>
 	<Input disabled>kcal per 100 g || ml</Input>
 
 	{#each { length: 2 } as _}
@@ -64,8 +67,7 @@
 	{/each}
 {:then}
 	<Input bind:value={$dataStore.label}>Label</Input>
-
-	<Input bind:value={$dataStore.brand}>Brand</Input>
+	<Input bind:value={$dataStore.brand}>Brand / Date / Whatever</Input>
 
 	{#if !$dataStore.items.length}
 		<Input type="calc" bind:value={$dataStore.kcalPer100}>kcal per 100 g || ml</Input>
@@ -82,9 +84,9 @@
 	<div class="card filled col">
 		<div class="row">
 			<h3 class="headline-4">Items</h3>
-			<ItemSelector
+			<ItemDrawer
+				selector
 				noCustomKcal
-				end
 				excludeId={id}
 				on:select={({ detail }) => {
 					addItem(detail);
@@ -175,7 +177,7 @@
 						on:click={async () => {
 							await Promise.all([deleteItem($dataStore.id), items.reload()]);
 							toggle();
-							dispatch('done');
+							dispatch('done', null);
 						}}
 					>
 						<IcDelete />
@@ -185,7 +187,14 @@
 			</div>
 		</Dialog>
 	{/await}
-	<button on:click={() => dispatch('done')}><IcArrowBack /> Back</button>
+	<button on:click={() => dispatch('done', $dataStore)}>
+		<IcArrowBack />
+		{#if !selector}
+			Back
+		{:else}
+			Select
+		{/if}
+	</button>
 </nav>
 
 <style>

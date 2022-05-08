@@ -1,18 +1,27 @@
 <script lang="ts">
-
-	import { items } from '$lib/data/items';
+	import ItemInstanceSelector from '$lib/components/ItemInstanceSelector.svelte';
+	import { instantiateItem, items } from '$lib/data/items';
 	import { Dialog } from 'as-comps';
+	import { createEventDispatcher } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import IcItems from '~icons/ic/round-category';
-import EditItem from './EditItem.svelte';
-import ItemList from './ItemList.svelte';
+	import IcAdd from '~icons/ic/round-plus';
+	import AddItem from './AddItem.svelte';
+	import EditItem from './EditItem.svelte';
+	import SavedItems from './SavedItems.svelte';
+	const dispatch = createEventDispatcher();
 
 	export let label = 'Items';
+	export let selector = false;
+	export let excludeId = '';
+	export let noCustomKcal = false;
 
 	let editId: string = null;
 </script>
 
 <Dialog
+	let:toggle
+	triggerClass={selector ? 'btn text margin-left-auto' : ''}
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}
 	dialogOut={fly}
@@ -26,20 +35,49 @@ import ItemList from './ItemList.svelte';
 	--as-dialog-max-height="100%"
 >
 	<svelte:fragment slot="trigger-label">
-		<IcItems />
-		{label}
+		{#if !selector}
+			<IcItems />
+			{label}
+		{:else}
+			<IcAdd />
+			Add Item
+		{/if}
 	</svelte:fragment>
 	<div class="flow">
-		{#if !editId}
-			<ItemList on:selected={({ detail }) => (editId = detail)} />
-		{:else}
+		{#if editId}
 			<EditItem
+				{selector}
 				id={editId}
-				on:done={async () => {
+				on:done={async ({ detail }) => {
+					if (selector && detail) {
+						const itemInstance = instantiateItem(detail);
+						toggle();
+						dispatch('select', itemInstance);
+					}
 					await items.reload();
 					editId = null;
 				}}
 			/>
+		{:else}
+			{#if selector}
+				<ItemInstanceSelector
+					{noCustomKcal}
+					{excludeId}
+					on:select={({ detail }) => {
+						toggle();
+						dispatch('select', detail);
+					}}
+				/>
+			{:else}
+				<SavedItems on:select={({ detail }) => (editId = detail.id)} />
+			{/if}
+			<AddItem on:created={({ detail }) => (editId = detail)} />
 		{/if}
 	</div>
 </Dialog>
+
+<style>
+	:global(.margin-left-auto) {
+		margin-left: auto;
+	}
+</style>

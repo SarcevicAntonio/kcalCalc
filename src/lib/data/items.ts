@@ -1,4 +1,5 @@
 import { db } from '$lib/firebase';
+import { calculateKcalPer100FromItems } from '$lib/kcal';
 import { asyncDerived, asyncReadable, asyncWritable } from '@square/svelte-store';
 import {
 	collection,
@@ -75,7 +76,8 @@ export const recentItems = asyncDerived(
 		const data = docSnap.data()?.recentItems || [];
 		return data as Item[];
 	},
-	true
+	true,
+	[]
 );
 
 export async function setRecentItem(mostRecentItem: Item) {
@@ -104,6 +106,20 @@ export async function saveExternalItem(item: Item) {
 	const docRef = doc(db, 'Items/' + item.id);
 	await setDoc(docRef, item);
 	await items.reload();
+}
+
+export function instantiateItem(item: Item) {
+	if (item.id.startsWith('FDDB||')) saveExternalItem(item);
+	if (!item.id.startsWith('CUSTOM')) setRecentItem(item);
+	return {
+		key: uuid(),
+		id: item.id,
+		label: item.label,
+		brand: item.brand || '',
+		kcalPer100: item.kcalPer100 || calculateKcalPer100FromItems(item.items, item.amount),
+		amount: 100,
+		portions: item.portions || [],
+	};
 }
 
 export const defaultItem = {
@@ -138,15 +154,15 @@ export const customKcalAmountItem = {
 
 export interface Item {
 	owner?: string;
-	createdAt?: number;
-	updatedAt?: number;
 	id: string;
-	label: string;
 	brand?: string;
+	label: string;
 	kcalPer100: number;
 	amount: number;
 	items?: ItemInstance[];
 	portions?: Portion[];
+	createdAt?: number;
+	updatedAt?: number;
 }
 
 export interface ItemInstance {

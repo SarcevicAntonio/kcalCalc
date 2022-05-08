@@ -1,10 +1,10 @@
 <script type="ts">
-	import ItemSelector from '$lib/components/ItemSelector.svelte';
-	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
-	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
-	import { createEventDispatcher, tick } from 'svelte';
-	import { slide } from 'svelte/transition';
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
+	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
+	import { calculateKcalFromItems,kcalDisplay } from '$lib/kcal';
+	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
+	import { createEventDispatcher,tick } from 'svelte';
+	import { slide } from 'svelte/transition';
 	const dispatch = createEventDispatcher();
 
 	export let label: string;
@@ -39,7 +39,8 @@
 					kcal
 				</span>
 			{:else}
-				<ItemSelector
+				<ItemDrawer
+					selector
 					on:select={({ detail }) => {
 						addItem(detail);
 					}}
@@ -54,8 +55,8 @@
 			{#each items as item, index (item.key)}
 				<ItemInstance bind:item on:delete={() => delItem(index)} on:update />
 			{/each}
-			<ItemSelector
-				end
+			<ItemDrawer
+				selector
 				on:select={({ detail }) => {
 					addItem(detail);
 				}}

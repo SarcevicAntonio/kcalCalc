@@ -1,12 +1,10 @@
 <script lang="ts">
-	import Input from '$lib/Input.svelte';
-	import { calculateKcal } from '$lib/kcal';
-	import { kcalDisplay } from '$lib/kcal';
 	import type { ItemInstance } from '$lib/data/items';
+	import Input from '$lib/Input.svelte';
+	import { calculateKcal, kcalDisplay } from '$lib/kcal';
 	import { createEventDispatcher } from 'svelte';
 	import { scale, slide } from 'svelte/transition';
 	import IcDelete from '~icons/ic/round-delete-forever';
-	import ItemSelector from './ItemSelector.svelte';
 	import PortionSelector from './PortionSelector.svelte';
 	const dispatch = createEventDispatcher();
 
@@ -86,13 +84,6 @@
 						}}
 					/>
 				{/if}
-				<ItemSelector
-					edit
-					on:select={({ detail }) => {
-						item = { ...detail, amount: item.amount, key: item.key };
-						dispatchUpdate();
-					}}
-				/>
 			</div>
 		</div>
 	{/if}
