@@ -3,8 +3,8 @@
 	"short_name": "kcalCalc",
 	"start_url": "/",
 	"display": "standalone",
-	"theme_color": "#8bc34a",
-	"background_color": "#e6f2d9",
+	"theme_color": "rgba(255, 176, 199, 1)",
+	"background_color": "rgba(32, 26, 27, 1)",
 	"icons": [
 		{
 			"sizes": "192x192",
