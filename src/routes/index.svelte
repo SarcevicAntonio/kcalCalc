@@ -56,8 +56,10 @@
 </nav>
 
 <style>
-	.home-btn {
-		margin-left: auto;
+	@media only screen and (max-width: 1000px) {
+		.home-btn {
+			margin-left: auto;
+		}
 	}
 	/* @media only screen and (min-width: 1000px) {
 		.fab-bar {
