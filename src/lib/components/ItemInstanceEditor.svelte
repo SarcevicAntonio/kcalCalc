@@ -3,7 +3,7 @@
 	import Input from '$lib/Input.svelte';
 	import { calculateKcal, kcalDisplay } from '$lib/kcal';
 	import { createEventDispatcher } from 'svelte';
-	import { scale, slide } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import PortionSelector from './PortionSelector.svelte';
 	const dispatch = createEventDispatcher();
@@ -19,7 +19,7 @@
 	}
 </script>
 
-<button transition:scale|local on:click={() => (expanded = !expanded)} class="card outlined">
+<button on:click={() => (expanded = !expanded)} class="card outlined">
 	<div class="row">
 		<div class="col item-info">
 			<span class="title-m">
