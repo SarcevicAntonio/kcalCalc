@@ -97,6 +97,7 @@ export async function setRecentItem(mostRecentItem: Item) {
 	let recentItemIds = await getRecentItemIds();
 	recentItemIds = recentItemIds.filter((item) => item !== mostRecentItem.id);
 	recentItemIds.unshift(mostRecentItem.id);
+	recentItemIds = recentItemIds.splice(0, 10);
 	const docRef = doc(db, `Users/${get(user).id}/Data/RecentItems`);
 	console.log('setDoc RecentItem', mostRecentItem.id);
 	await setDoc(docRef, { recentItemIds });
