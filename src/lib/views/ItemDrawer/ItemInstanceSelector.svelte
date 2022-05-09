@@ -32,8 +32,8 @@
 		loadingExternalItems = false;
 	}
 
-	function handleSelect({ detail: item }: { detail: Item }) {
-		const itemInstance = instantiateItem(item);
+	async function handleSelect({ detail: item }: { detail: Item }) {
+		const itemInstance = await instantiateItem(item);
 		search = '';
 		if (externalEntries.length) {
 			dispatch('externalItem', item);
