@@ -4,16 +4,13 @@
 
 A free calorie counting app made to fit my needs.
 
-<details>
-  <summary>Toggle Screenshots 📸</summary>
+| Mobile Day View                       | Item Selection                                          | Mobile Week View                          |
+| ------------------------------------- | ------------------------------------------------------- | ----------------------------------------- |
+| ![DayView](./screenshots/DayView.png) | ![SelectItemSearch](./screenshots/SelectItemSearch.png) | ![WeekGraph](./screenshots/WeekGraph.png) |
 
-![DayView](./screenshots/DayView.png)
-![SelectItemSearch](./screenshots/SelectItemSearch.png)
-![WeekGraph](./screenshots/WeekGraph.png)
-
-![Unified View](./screenshots/UnifiedView.png)
-
-</details>
+| Desktop Unified View                           |
+| ---------------------------------------------- |
+| ![Unified View](./screenshots/UnifiedView.png) |
 
 ## Self Hosting
 
