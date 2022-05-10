@@ -51,7 +51,7 @@
 				id={editId}
 				on:done={async ({ detail }) => {
 					if (selector && detail) {
-						const itemInstance = instantiateItem(detail);
+						const itemInstance = await instantiateItem(detail);
 						toggle();
 						dispatch('select', itemInstance);
 					}
