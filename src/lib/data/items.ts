@@ -122,8 +122,7 @@ export async function saveExternalItem(item: Item) {
 	await items.reload();
 }
 
-export async function instantiateItem(item: Item) {
-	if (item.id.startsWith('FDDB||')) await saveExternalItem(item);
+export function instantiateItem(item: Item) {
 	if (!item.id.startsWith('CUSTOM')) setRecentItem(item);
 	return {
 		key: uuid(),

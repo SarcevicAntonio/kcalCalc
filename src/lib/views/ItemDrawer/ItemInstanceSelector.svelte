@@ -7,6 +7,7 @@
 		instantiateItem,
 		items,
 		recentItems,
+		saveExternalItem,
 		type Item,
 	} from '$lib/data/items';
 	import Input from '$lib/Input.svelte';
@@ -22,6 +23,7 @@
 	export let excludeId = '';
 
 	let search = '';
+	let handlingId = null;
 
 	let externalEntries = [];
 	let loadingExternalItems = false;
@@ -33,12 +35,16 @@
 	}
 
 	async function handleSelect({ detail: item }: { detail: Item }) {
-		const itemInstance = await instantiateItem(item);
-		search = '';
+		const itemInstance = instantiateItem(item);
 		if (externalEntries.length) {
+			handlingId = item.id;
+			await saveExternalItem(item);
 			dispatch('externalItem', item);
+			handlingId = null;
+			search = '';
 			return;
 		}
+		search = '';
 		dispatch('select', itemInstance);
 	}
 </script>
@@ -92,6 +98,7 @@
 {:then}
 	{#if !loadingExternalItems}
 		<ItemCards
+			skeletonId={handlingId}
 			dontShowSkeletons
 			{excludeId}
 			items={externalEntries.length

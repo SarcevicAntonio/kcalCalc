@@ -10,6 +10,7 @@
 	export let disableNotOwned = false;
 	export let dontShowSkeletons = false;
 	export let excludeId = '';
+	export let skeletonId: string;
 </script>
 
 {#each items as item (item.id)}
@@ -21,6 +22,7 @@
 			on:click={() => {
 				dispatch('select', item);
 			}}
+			class:skeleton={skeletonId === item.id}
 		>
 			<div class="row">
 				<span class="title-l">{item.label}</span>
