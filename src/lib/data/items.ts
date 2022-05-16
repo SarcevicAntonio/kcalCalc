@@ -87,6 +87,7 @@ export const recentItems = asyncDerived(
 		querySnap.forEach((doc) => {
 			data.push({ ...(doc.data() as Item), id: doc.id });
 		});
+		data.sort((a, b) => recentItemIds.indexOf(a.id) - recentItemIds.indexOf(b.id));
 		return data as Item[];
 	},
 	true,
