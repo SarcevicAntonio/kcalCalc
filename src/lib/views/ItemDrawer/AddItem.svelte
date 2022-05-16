@@ -5,14 +5,18 @@
 	import IcAdd from '~icons/ic/round-add';
 
 	const dispatch = createEventDispatcher<{ created: string }>();
+	let loading = false;
 </script>
 
 <nav class="fab-bar">
 	<button
+		class:skeleton={loading}
 		on:click={async () => {
+			loading = true;
 			const id = uuid();
 			await createItem(id);
 			dispatch('created', id);
+			loading = false;
 		}}
 	>
 		<IcAdd /> Add
