@@ -8,7 +8,7 @@
 </script>
 
 <h2 class="headline-1">Saved Items</h2>
-<Input bind:value={search}>Search</Input>
+<Input clearable bind:value={search}>Search</Input>
 
 <ItemCards
 	on:select

@@ -52,6 +52,7 @@
 
 <h2 class="headline-3">Add Item</h2>
 <Input
+	clearable
 	bind:value={search}
 	on:input={() => {
 		externalEntries = [];
@@ -67,9 +68,6 @@
 			<MdiCloudSearch /> Search for item on internet
 		</button>
 	{/if}
-	<button class="btn tonal w100p" on:click={() => (search = '')}>
-		<IcArrowBack /> Back to recent items and custom kcal
-	</button>
 {:else}
 	{#if !noCustomKcal}
 		<button

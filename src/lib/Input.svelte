@@ -2,7 +2,7 @@
 	import { evaluate } from 'mathjs';
 	import { createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
-
+	import IcRoundClear from '~icons/ic/round-clear';
 	const id = uuidv4();
 	const dispatch = createEventDispatcher();
 
@@ -15,6 +15,7 @@
 	export let disabled = false;
 
 	export let outlined = false;
+	export let clearable = false;
 
 	const handleInput = (e: Event) => {
 		// handle types
@@ -75,6 +76,11 @@
 		}}
 		on:blur={handleBlur}
 	/>
+	{#if value && clearable}
+		<button class="inline-btn" on:click={() => (value = '')}>
+			<IcRoundClear />
+		</button>
+	{/if}
 </div>
 
 <style lang="postcss">
@@ -123,6 +129,18 @@
 		&:focus {
 			outline: none;
 		}
+	}
+
+	.inline-btn {
+		position: absolute;
+		border: 1px solid var(--md-on-background);
+		border-radius: 9999px;
+		aspect-ratio: 1/1;
+		right: 1.2em;
+		top: 50%;
+		transform: translateY(-50%);
+		padding: 0.4em;
+		line-height: 0;
 	}
 
 	.error {
