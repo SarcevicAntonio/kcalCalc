@@ -17,6 +17,7 @@
 	import IcRoundNumbers from '~icons/ic/round-numbers';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import MdiWeight from '~icons/mdi/weight';
+	import IcArrowBack from '~icons/ic/round-arrow-back';
 	const dispatch = createEventDispatcher();
 
 	export let noCustomKcal = false;
@@ -49,25 +50,7 @@
 	}
 </script>
 
-<h2 class="headline-1">Select Item</h2>
-{#if !noCustomKcal}
-	<button
-		class="btn tonal w100p"
-		on:click={() => {
-			handleSelect({ detail: customKcalCountItem });
-		}}
-	>
-		<IcRoundNumbers /> Custom kcal count
-	</button>
-{/if}
-<button
-	class="btn tonal w100p"
-	on:click={() => {
-		handleSelect({ detail: customKcalAmountItem });
-	}}
->
-	<MdiWeight /> Custom kcal & amount
-</button>
+<h2 class="headline-3">Add Item</h2>
 <Input
 	bind:value={search}
 	on:input={() => {
@@ -75,20 +58,37 @@
 	}}>Search</Input
 >
 {#if search}
-	{#if !externalEntries.length}
+	{#if externalEntries.length || loadingExternalItems}
+		<button class="btn tonal w100p" on:click={() => (externalEntries = [])}>
+			<IcItems /> Back to saved items
+		</button>
+	{:else}
 		<button class="btn tonal w100p" on:click={searchExternal}>
 			<MdiCloudSearch /> Search for item on internet
 		</button>
-	{:else}
+	{/if}
+	<button class="btn tonal w100p" on:click={() => (search = '')}>
+		<IcArrowBack /> Back to recent items and custom kcal
+	</button>
+{:else}
+	{#if !noCustomKcal}
 		<button
 			class="btn tonal w100p"
 			on:click={() => {
-				externalEntries = [];
+				handleSelect({ detail: customKcalCountItem });
 			}}
 		>
-			<IcItems /> Back to saved items
+			<IcRoundNumbers /> Custom kcal count
 		</button>
 	{/if}
+	<button
+		class="btn tonal w100p"
+		on:click={() => {
+			handleSelect({ detail: customKcalAmountItem });
+		}}
+	>
+		<MdiWeight /> Custom kcal & amount
+	</button>
 {/if}
 
 {#await recentItems.load()}
