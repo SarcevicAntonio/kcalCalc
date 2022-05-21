@@ -193,3 +193,8 @@
 .over-limit {
 	color: var(--md-error);
 }
+
+.with-icon {
+	display: flex;
+	gap: 0.25em;
+}

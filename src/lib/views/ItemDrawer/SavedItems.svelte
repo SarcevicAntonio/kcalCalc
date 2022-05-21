@@ -3,11 +3,12 @@
 	import { items } from '$lib/data/items';
 	import Input from '$lib/Input.svelte';
 	import Fuse from 'fuse.js';
+	import IcItems from '~icons/ic/round-category';
 
 	let search = '';
 </script>
 
-<h2 class="headline-1">Saved Items</h2>
+<h2 class="headline-3 with-icon"><IcItems /> Items</h2>
 <Input clearable bind:value={search}>Search</Input>
 
 <ItemCards

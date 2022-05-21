@@ -17,7 +17,8 @@
 	import { v4 as uuid } from 'uuid';
 	import IcArrowBack from '~icons/ic/round-arrow-back';
 	import IcDelete from '~icons/ic/round-delete-forever';
-	import IcPlus from '~icons/ic/round-plus';
+	import IcRoundEdit from '~icons/ic/round-edit';
+	import IcAdd from '~icons/ic/round-plus';
 	import ItemDrawer from './ItemDrawer.svelte';
 	const dispatch = createEventDispatcher();
 
@@ -46,7 +47,13 @@
 	}
 </script>
 
-<h2 class="headline-1">Edit Item</h2>
+<h2 class="headline-3 with-icon">
+	{#if !selector}
+		<IcRoundEdit />Edit Item
+	{:else}
+		<IcAdd /> Add Item
+	{/if}
+</h2>
 
 {#await dataStore.load()}
 	<Input disabled>Label</Input>
@@ -58,7 +65,7 @@
 			<div class="row">
 				<h3 class="headline-4">Portions</h3>
 				<button class="btn text add">
-					<IcPlus /> Add
+					<IcAdd /> Add
 				</button>
 			</div>
 		</ItemSkeleton>
@@ -137,7 +144,7 @@
 					$dataStore.portions = [...$dataStore.portions, { ...defaultPortion, key: uuid() }];
 				}}
 			>
-				<IcPlus /> Add
+				<IcAdd /> Add
 			</button>
 		</div>
 

@@ -15,9 +15,9 @@
 	import { createEventDispatcher } from 'svelte';
 	import IcItems from '~icons/ic/round-category';
 	import IcRoundNumbers from '~icons/ic/round-numbers';
+	import IcAdd from '~icons/ic/round-plus';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import MdiWeight from '~icons/mdi/weight';
-	import IcArrowBack from '~icons/ic/round-arrow-back';
 	const dispatch = createEventDispatcher();
 
 	export let noCustomKcal = false;
@@ -50,7 +50,7 @@
 	}
 </script>
 
-<h2 class="headline-3">Add Item</h2>
+<h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2>
 <Input
 	clearable
 	bind:value={search}
