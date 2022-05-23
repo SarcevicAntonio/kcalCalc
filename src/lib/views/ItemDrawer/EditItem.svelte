@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
+	import IcRoundToday from '~icons/ic/round-today';
 	import {
 		createItemStore,
 		defaultPortion,
@@ -20,6 +21,7 @@
 	import IcRoundEdit from '~icons/ic/round-edit';
 	import IcAdd from '~icons/ic/round-plus';
 	import ItemDrawer from './ItemDrawer.svelte';
+	import { toISODateString } from '$lib/dateHelpers';
 	const dispatch = createEventDispatcher();
 
 	export let id: string;
@@ -72,7 +74,21 @@
 	{/each}
 {:then}
 	<Input bind:value={$dataStore.label}>Label</Input>
-	<Input bind:value={$dataStore.brand}>Brand / Date / Whatever</Input>
+	<Input bind:value={$dataStore.brand}>
+		Brand / Date / Whatever
+		<svelte:fragment slot="inline">
+			{#if !$dataStore.brand}
+				<button
+					class="inline-btn"
+					on:click={() => {
+						$dataStore.brand = toISODateString(new Date());
+					}}
+				>
+					<IcRoundToday />
+				</button>
+			{/if}
+		</svelte:fragment>
+	</Input>
 
 	{#if !$dataStore.items.length}
 		<Input type="calc" bind:value={$dataStore.kcalPer100}>kcal per 100 g || ml</Input>

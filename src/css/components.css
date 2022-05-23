@@ -69,6 +69,15 @@
 	}
 }
 
+.inline-btn {
+	padding: 0.4em;
+	line-height: 0;
+	border: 1px solid var(--md-on-background);
+	border-radius: 9999px;
+	aspect-ratio: 1/1;
+}
+
+
 .card {
 	text-decoration: unset;
 	padding: 0.5rem 0.75rem;

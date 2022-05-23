@@ -3,6 +3,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import IcRoundClear from '~icons/ic/round-clear';
+	import IcCalc from '~icons/mdi/calculator';
 	const id = uuidv4();
 	const dispatch = createEventDispatcher();
 
@@ -51,6 +52,7 @@
 </script>
 
 <div
+	class="container"
 	on:click={() => inputElement.focus()}
 	class:error={canNotEvaluate}
 	class:disabled
@@ -76,15 +78,21 @@
 		}}
 		on:blur={handleBlur}
 	/>
-	{#if value && clearable}
-		<button class="inline-btn" on:click={() => (value = '')}>
-			<IcRoundClear />
-		</button>
-	{/if}
+	<div class="inline">
+		<slot name="inline" />
+		{#if type === 'calc' && value && typeof value === 'string' && /\+|-|\*|\//.test(value)}
+			<button class="inline-btn"><IcCalc /></button>
+		{/if}
+		{#if clearable && value}
+			<button class="inline-btn" on:click={() => (value = '')}>
+				<IcRoundClear />
+			</button>
+		{/if}
+	</div>
 </div>
 
 <style lang="postcss">
-	div {
+	.container {
 		cursor: text;
 		display: flex;
 		flex-direction: column;
@@ -112,7 +120,6 @@
 			border-color: var(--md-primary);
 		}
 	}
-
 	label {
 		cursor: text;
 		color: var(--md-primary);
@@ -131,16 +138,11 @@
 		}
 	}
 
-	.inline-btn {
+	.inline {
 		position: absolute;
-		border: 1px solid var(--md-on-background);
-		border-radius: 9999px;
-		aspect-ratio: 1/1;
 		right: 1.2em;
 		top: 50%;
 		transform: translateY(-50%);
-		padding: 0.4em;
-		line-height: 0;
 	}
 
 	.error {
