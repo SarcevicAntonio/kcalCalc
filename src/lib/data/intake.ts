@@ -28,7 +28,7 @@ export const weekData = asyncDerived(
 		const data = {};
 		let day = startOfISOWeek(setISOWeek(setYear(new Date(), year), week));
 		for (let index = 0; index < 7; index++) {
-			data[toISODateString(day)] = defaultDay;
+			data[toISODateString(day)] = structuredClone(defaultDay);
 			day = addDays(day, 1);
 		}
 
