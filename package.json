@@ -25,7 +25,7 @@
 		"uuid": "^8.3.2"
 	},
 	"devDependencies": {
-		"@iconify/json": "^2.1.29",
+		"@iconify/json": "^2.1.48",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/uuid": "^8.3.4",
