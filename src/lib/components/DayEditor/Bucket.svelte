@@ -1,9 +1,9 @@
 <script type="ts">
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
-	import { calculateKcalFromItems,kcalDisplay } from '$lib/kcal';
+	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
-	import { createEventDispatcher,tick } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 	import { slide } from 'svelte/transition';
 	const dispatch = createEventDispatcher();
 
@@ -11,10 +11,12 @@
 	export let items: ItemInstanceType[];
 
 	let expanded = false;
+	let freshItems = [];
 
 	async function addItem(item: ItemInstanceType) {
 		expanded = true;
 		await tick();
+		freshItems = [...freshItems, item.id];
 		items = [...items, item];
 		dispatch('update');
 	}
@@ -53,7 +55,12 @@
 		<div transition:slide|local class="col" on:click|stopPropagation>
 			<div class="pad" />
 			{#each items as item, index (item.key)}
-				<ItemInstance bind:item on:delete={() => delItem(index)} on:update />
+				<ItemInstance
+					expanded={freshItems.includes(item.id)}
+					bind:item
+					on:delete={() => delItem(index)}
+					on:update
+				/>
 			{/each}
 			<ItemDrawer
 				selector
