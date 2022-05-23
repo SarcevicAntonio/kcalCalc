@@ -28,7 +28,6 @@
 	export let selector = false;
 
 	let dataStore: WritableLoadable<Item> = createItemStore(id);
-	let freshItems = [];
 	let sumInputEl = null;
 	let activeEl = undefined;
 	function update() {
@@ -46,7 +45,6 @@
 	async function addItem(newItem: ItemInstanceType) {
 		$dataStore.kcalPer100 = 0;
 		$dataStore.items = [...$dataStore.items, newItem];
-		freshItems = [...freshItems, newItem.id];
 	}
 </script>
 
@@ -117,7 +115,6 @@
 		</div>
 		{#each $dataStore.items as child, index (child.key)}
 			<ItemInstance
-				expanded={freshItems.includes(child.id)}
 				bind:item={child}
 				on:delete={() => {
 					$dataStore.items.splice(index, 1);

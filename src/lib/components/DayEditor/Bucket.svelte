@@ -11,12 +11,10 @@
 	export let items: ItemInstanceType[];
 
 	let expanded = false;
-	let freshItems = [];
 
 	async function addItem(item: ItemInstanceType) {
 		expanded = true;
 		await tick();
-		freshItems = [...freshItems, item.id];
 		items = [...items, item];
 		dispatch('update');
 	}
@@ -56,7 +54,6 @@
 			<div class="pad" />
 			{#each items as item, index (item.key)}
 				<ItemInstance
-					expanded={freshItems.includes(item.id)}
 					bind:item
 					on:delete={() => delItem(index)}
 					on:update
