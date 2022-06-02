@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ItemCards from '$lib/components/ItemCards.svelte';
+	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import { items } from '$lib/data/items';
 	import Input from '$lib/Input.svelte';
 	import Fuse from 'fuse.js';
@@ -11,12 +12,20 @@
 <h2 class="headline-3 with-icon"><IcItems /> Items</h2>
 <Input clearable bind:value={search}>Search</Input>
 
-<ItemCards
-	on:select
-	items={search
-		? new Fuse($items, { keys: ['label', 'brand'] }).search(search + '').map((res) => res.item)
-		: $items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))}
-/>
+{#if $items}
+	<ItemCards
+		on:select
+		items={search
+			? new Fuse($items, { keys: ['label', 'brand'] }).search(search + '').map((res) => res.item)
+			: $items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))}
+	>
+		<IcItems /> No saved items found.
+	</ItemCards>
+{:else}
+	{#each { length: 10 } as _}
+		<ItemSkeleton />
+	{/each}
+{/if}
 
 <style>
 	:disabled {

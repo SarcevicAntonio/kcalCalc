@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import type { Item } from '$lib/data/items';
 	import { user } from '$lib/data/user';
 	import { calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal';
@@ -8,7 +7,6 @@
 
 	export let items: Item[] = [];
 	export let disableNotOwned = false;
-	export let dontShowSkeletons = false;
 	export let excludeId = '';
 	export let skeletonId: string = '';
 </script>
@@ -43,13 +41,9 @@
 		</button>
 	{/if}
 {:else}
-	{#if !dontShowSkeletons}
-		{#each { length: 10 } as _}
-			<ItemSkeleton />
-		{/each}
-	{:else}
-		... no items found
-	{/if}
+	<p class="none">
+		<slot />
+	</p>
 {/each}
 
 <style>
@@ -68,5 +62,13 @@
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
+	}
+
+	.none {
+		display: flex;
+		align-items: center;
+		align-self: center;
+		gap: 0.5em;
+		opacity: 0.8;
 	}
 </style>

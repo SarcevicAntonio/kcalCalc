@@ -18,6 +18,7 @@
 	import IcAdd from '~icons/ic/round-plus';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import MdiWeight from '~icons/mdi/weight';
+	import IcRoundRestore from '~icons/ic/round-restore';
 	const dispatch = createEventDispatcher();
 
 	export let noCustomKcal = false;
@@ -97,7 +98,6 @@
 	{#if !loadingExternalItems}
 		<ItemCards
 			skeletonId={handlingId}
-			dontShowSkeletons
 			{excludeId}
 			items={externalEntries.length
 				? externalEntries
@@ -105,7 +105,17 @@
 				? new Fuse($items, { keys: ['label', 'brand'] }).search(search).map((res) => res.item)
 				: $recentItems}
 			on:select={handleSelect}
-		/>
+		>
+			{#if externalEntries.length}
+				<MdiCloudSearch />
+			{:else if search}
+				<IcItems />
+			{:else}
+				<IcRoundRestore />
+			{/if}
+
+			No {externalEntries.length ? 'external' : search ? 'saved' : 'recently used'} items found
+		</ItemCards>
 	{:else}
 		{#each { length: 10 } as _}
 			<ItemSkeleton />

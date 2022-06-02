@@ -16,9 +16,9 @@ import { v4 as uuid } from 'uuid';
 import { user } from './user';
 
 export const items = asyncReadable<Item[]>(
-	[],
+	null,
 	async () => {
-		const colRef = collection(db, `Items`);
+		const colRef = collection(db, `Users/${get(user).id}/Items`);
 		console.count('getDocs items');
 		const snapshot = await getDocs(colRef);
 		const data: Item[] = [];
@@ -32,7 +32,7 @@ export const items = asyncReadable<Item[]>(
 );
 
 export const createItem = (id: string) => {
-	const colRef = doc(db, 'Items/' + id);
+	const colRef = doc(db, `Users/${get(user).id}/Items/` + id);
 	console.log('setDoc newItem', id);
 	return setDoc(colRef, {
 		...defaultItem,
@@ -47,13 +47,13 @@ export const createItemStore = (id: string) => {
 	const store = asyncWritable(
 		[],
 		async () => {
-			const docRef = doc(db, `Items/${id}`);
+			const docRef = doc(db, `Users/${get(user).id}/Items/${id}`);
 			console.log('getDoc new ItemStore', id);
 			const docSnap = await getDoc(docRef);
 			return docSnap.data() as Item;
 		},
 		async (data: Item) => {
-			const docRef = doc(db, `Items/${data.id}`);
+			const docRef = doc(db, `Users/${get(user).id}/Items/${data.id}`);
 			console.log('setDoc ItemStore', id);
 			await setDoc(docRef, { ...data, updatedAt: Date.now() });
 		}
@@ -62,7 +62,7 @@ export const createItemStore = (id: string) => {
 };
 
 export const deleteItem = (id: string) => {
-	const docRef = doc(db, `Items/${id}`);
+	const docRef = doc(db, `Users/${get(user).id}/Items/${id}`);
 	console.log('deleteDoc', id);
 	return deleteDoc(docRef);
 };
@@ -79,7 +79,7 @@ export const recentItems = asyncDerived(
 	async () => {
 		const recentItemIds = await getRecentItemIds();
 		if (!recentItemIds.length) return [];
-		const colRef = collection(db, `Items`);
+		const colRef = collection(db, `Users/${get(user).id}/Items`);
 		const queryInstance = query(colRef, where('id', 'in', recentItemIds));
 		console.log('getDocs recentItems', recentItemIds);
 		const querySnap = await getDocs(queryInstance);
@@ -106,7 +106,7 @@ export async function setRecentItem(mostRecentItem: Item) {
 }
 
 export async function saveExternalItem(item: Item) {
-	const colRef = collection(db, `Items`);
+	const colRef = collection(db, `Users/${get(user).id}/Items`);
 	const queryInstance = query(colRef, where('id', '==', item.id));
 	console.log('getDocs saveExternalItem', item.id);
 	const querySnap = await getDocs(queryInstance);
@@ -118,7 +118,7 @@ export async function saveExternalItem(item: Item) {
 	item.updatedAt = Date.now();
 
 	console.log('setDoc saveExternalItem', item.id);
-	const docRef = doc(db, 'Items/' + item.id);
+	const docRef = doc(db, `Users/${get(user).id}/Items/` + item.id);
 	await setDoc(docRef, item);
 	await items.reload();
 }
