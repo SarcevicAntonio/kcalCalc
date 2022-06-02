@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { encodeObjToUriComponent } from '$lib/base64';
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
-	import IcRoundToday from '~icons/ic/round-today';
 	import {
 		createItemStore,
 		defaultPortion,
@@ -10,18 +10,20 @@
 		type Item,
 		type ItemInstance as ItemInstanceType,
 	} from '$lib/data/items';
+	import { toISODateString } from '$lib/dateHelpers';
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal';
 	import type { WritableLoadable } from '@square/svelte-store';
-	import { Dialog } from 'as-comps';
+	import { Dialog, notification } from 'as-comps';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { v4 as uuid } from 'uuid';
 	import IcArrowBack from '~icons/ic/round-arrow-back';
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcRoundEdit from '~icons/ic/round-edit';
 	import IcAdd from '~icons/ic/round-plus';
+	import IcRoundShare from '~icons/ic/round-share';
+	import IcRoundToday from '~icons/ic/round-today';
 	import ItemDrawer from './ItemDrawer.svelte';
-	import { toISODateString } from '$lib/dateHelpers';
 	const dispatch = createEventDispatcher();
 
 	export let id: string;
@@ -206,6 +208,17 @@
 				</div>
 			</div>
 		</Dialog>
+		<button
+			on:click={() => {
+				const uriComponent = encodeObjToUriComponent($dataStore);
+				const url = new URL(window.location.toString());
+				url.searchParams.set('add', uriComponent);
+				navigator.clipboard.writeText(url.href);
+				notification('Copied to clipboard.');
+			}}
+		>
+			<IcRoundShare />
+		</button>
 	{/await}
 	<button on:click={() => dispatch('done', $dataStore)}>
 		<IcArrowBack />

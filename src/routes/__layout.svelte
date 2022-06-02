@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Login from '$lib/views/Login.svelte';
-	import { auth } from '$lib/firebase';
-	import IconProfile from '~icons/ic/round-account-circle';
 	import { user } from '$lib/data/user';
+	import { auth } from '$lib/firebase';
+	import Login from '$lib/views/Login.svelte';
+	import { Notifications } from 'as-comps';
+	import IconProfile from '~icons/ic/round-account-circle';
 	import '../css/global.css';
 
 	let authStateUnfetched = true;
@@ -49,12 +50,21 @@
 </header>
 
 <main class="flow">
-	{#if !$user && !authStateUnfetched}
+	{#if authStateUnfetched}
+		&nbsp;
+	{:else if !$user}
 		<Login />
 	{:else}
 		<slot />
 	{/if}
 </main>
+
+<Notifications
+	--as-notification-color="var(--md-on-surface)"
+	--as-notification--info-background="var(--md-surface)"
+	--as-notification--info-border-color="var(--md-surface)"
+	--as-notification--btn-background="var(--md-primary-container)"
+/>
 
 <style lang="postcss">
 	h1 {

@@ -1,5 +1,9 @@
 <script lang="ts">
+	import { browser } from '$app/env';
+	import { page } from '$app/stores';
+	import { decodeUriComponentToObj } from '$lib/base64';
 	import { curDay, dateIsToday, weekData } from '$lib/data/intake';
+	import { saveExternalItem, type Item } from '$lib/data/items';
 	import { toISODateString } from '$lib/dateHelpers';
 	import CurDayView from '$lib/views/CurDayView.svelte';
 	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
@@ -14,6 +18,20 @@
 	const toggleWeekGraph = () => {
 		showWeekGraph = !showWeekGraph;
 	};
+
+	let editId = null;
+
+	const createDecodedItem = async (uriComponent: string) => {
+		const item = decodeUriComponentToObj(uriComponent) as Item;
+		console.log(item, uriComponent);
+		await saveExternalItem(item);
+		editId = item.id;
+	};
+
+	const uriComponent = $page.url.searchParams.get('add');
+	if (uriComponent && browser) {
+		createDecodedItem(uriComponent);
+	}
 
 	$: mobileView = innerWidth < 1000;
 </script>
@@ -52,7 +70,7 @@
 			<IcHome />
 		</button>
 	{/if}
-	<ItemDrawer />
+	<ItemDrawer {editId} open={editId} />
 </nav>
 
 <style>
