@@ -214,7 +214,7 @@
 				const url = new URL(window.location.toString());
 				url.searchParams.set('add', uriComponent);
 				navigator.clipboard.writeText(url.href);
-				notification('Copied to clipboard.');
+				notification('Copied Item URL to clipboard.');
 			}}
 		>
 			<IcRoundShare />

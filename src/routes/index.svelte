@@ -23,7 +23,6 @@
 
 	const createDecodedItem = async (uriComponent: string) => {
 		const item = decodeUriComponentToObj(uriComponent) as Item;
-		console.log(item, uriComponent);
 		await saveExternalItem(item);
 		editId = item.id;
 	};
