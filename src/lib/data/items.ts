@@ -192,14 +192,3 @@ export interface Portion {
 	label: string;
 	amount: number;
 }
-
-export async function transfer() {
-	const colRef = collection(db, `Items`);
-	console.count('getDocs items');
-	const snapshot = await getDocs(colRef);
-	const promises = snapshot.docs.map((document) => {
-		const docRef = doc(db, `Users/${get(user).id}/Items/${document.id}`);
-		return setDoc(docRef, document.data());
-	});
-	await Promise.all(promises);
-}
