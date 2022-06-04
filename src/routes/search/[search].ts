@@ -9,9 +9,7 @@ if (!String.prototype.replaceAll) {
 }
 
 export const get: RequestHandler = async (request) => {
-	const searchRes = await fetch(
-		'https://fddb.mobi/search/?lang=de&search=' + request.params.search
-	);
+	const searchRes = await fetch('https://fddb.mobi/search/?search=' + request.params.search);
 	if (!searchRes.ok) {
 		return { status: searchRes.status, error: new Error(searchRes.statusText) };
 	}
@@ -61,7 +59,7 @@ export const get: RequestHandler = async (request) => {
 
 				if (kcalPer100 > 0) {
 					const ingredient = {
-						id: `FDDB||${label}||${brand}`.replaceAll('/', '_').replaceAll(' ', '_'),
+						id: `FDDB${a.href}`,
 						label,
 						brand,
 						kcalPer100,
