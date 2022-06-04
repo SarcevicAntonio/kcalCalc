@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { instantiateItem, items } from '$lib/data/items';
+	import { instantiateItem, items, transfer } from '$lib/data/items';
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
 	import { fly } from 'svelte/transition';
@@ -46,6 +46,7 @@
 		{/if}
 	</svelte:fragment>
 	<div class="flow">
+		<button class="btn tonal" on:click={transfer}> -> Transfer global '/Items' to 'User/Items'</button>
 		{#if editId}
 			<EditItem
 				{selector}
