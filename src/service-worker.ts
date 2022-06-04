@@ -61,7 +61,7 @@ worker.addEventListener('fetch', (event) => {
  * Fall back to the cache if the user is offline.
  */
 async function fetchAndCache(request: Request) {
-	const cache = await caches.open(`offline${version}`);
+	const cache = await caches.open(version);
 
 	try {
 		const response = await fetch(request);
@@ -70,6 +70,7 @@ async function fetchAndCache(request: Request) {
 	} catch (err) {
 		const response = await cache.match(request);
 		if (response) return response;
+		if (request.url.includes('www.google.com/images/cleardot.gif')) return new Response(null);
 
 		throw err;
 	}

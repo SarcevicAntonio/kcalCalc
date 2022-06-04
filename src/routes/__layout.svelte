@@ -4,8 +4,9 @@
 	import Login from '$lib/views/Login.svelte';
 	import { Notifications } from 'as-comps';
 	import IconProfile from '~icons/ic/round-account-circle';
+	import IcRoundCloudOff from '~icons/ic/round-cloud-off';
 	import '../css/global.css';
-
+	
 	let authStateUnfetched = true;
 
 	auth.onAuthStateChanged((changedUser) => {
@@ -25,28 +26,38 @@
 	});
 
 	let imgError = false;
+
+	let offline = false;
+	const updateOfflineStatus = () => (offline = !navigator.onLine);
 </script>
 
+<svelte:window on:online={updateOfflineStatus} on:offline={updateOfflineStatus} />
+
 <header>
-	<div class="title">
+	<div>
 		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
 	</div>
 
-	{#if $user}
-		<a sveltekit:prefetch class="btn text" href="/profile">
-			{#if $user.photoURL && !imgError}
-				<img
-					src={$user.photoURL}
-					alt="You"
-					class="profile-img"
-					on:error={() => (imgError = true)}
-				/>
-			{:else}
-				<IconProfile />
-			{/if}
-		</a>
-	{/if}
+	<div class="header-items">
+		{#if offline}
+			<IcRoundCloudOff color="var(--md-error)" />
+		{/if}
+		{#if $user}
+			<a sveltekit:prefetch class="btn text" href="/profile">
+				{#if $user.photoURL && !imgError}
+					<img
+						src={$user.photoURL}
+						alt="You"
+						class="profile-img"
+						on:error={() => (imgError = true)}
+					/>
+				{:else}
+					<IconProfile />
+				{/if}
+			</a>
+		{/if}
+	</div>
 </header>
 
 <main class="flow">
@@ -86,6 +97,11 @@
 		padding-left: 0.5rem;
 		background-color: var(--md-surface);
 		color: var(--md-on-surface);
+		& > div {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
 	}
 
 	main {
@@ -107,10 +123,5 @@
 		height: 1.5em;
 		outline: 1px solid var(--md-primary);
 		outline-offset: 1px;
-	}
-
-	.title {
-		display: flex;
-		gap: 1rem;
 	}
 </style>
