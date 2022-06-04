@@ -1,6 +1,7 @@
 import adapter from '@sveltejs/adapter-auto';
 import preprocess from 'svelte-preprocess';
 import Icons from 'unplugin-icons/vite';
+import removeConsole from 'vite-plugin-svelte-console-remover';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -23,6 +24,7 @@ const config = {
 				Icons({
 					compiler: 'svelte',
 				}),
+				removeConsole(),
 			],
 		},
 	},
