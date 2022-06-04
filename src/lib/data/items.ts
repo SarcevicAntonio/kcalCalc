@@ -111,7 +111,7 @@ export async function saveExternalItem(item: Item) {
 	const querySnap = await getDocs(queryInstance);
 	if (querySnap.docs.length) return;
 
-	item.items = [];
+	if (!item.items) item.items = [];
 	item.portions = item.portions ? item.portions.map((p) => ({ ...p, key: uuid() })) : [];
 	item.createdAt = Date.now();
 	item.updatedAt = Date.now();
@@ -129,7 +129,7 @@ export function instantiateItem(item: Item) {
 		id: item.id,
 		label: item.label,
 		brand: item.brand || '',
-		kcalPer100: item.kcalPer100 ?? calculateKcalPer100FromItems(item.items, item.amount),
+		kcalPer100: item.kcalPer100 || calculateKcalPer100FromItems(item.items, item.amount),
 		amount: 100,
 		portions: item.portions || [],
 	};
