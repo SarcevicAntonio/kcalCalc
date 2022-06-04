@@ -37,7 +37,6 @@ export const createItem = (id: string) => {
 	return setDoc(colRef, {
 		...defaultItem,
 		id,
-		owner: get(user).id,
 		createdAt: Date.now(),
 		updatedAt: Date.now(),
 	});
@@ -167,7 +166,6 @@ export const customKcalAmountItem = {
 };
 
 export interface Item {
-	owner?: string;
 	id: string;
 	brand?: string;
 	label: string;

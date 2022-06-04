@@ -41,11 +41,6 @@ kcalCalc can be self-hosted for yourself for free using Firebase and a Cloud Hos
           match /Users/{userId}/{documents=**} {
           allow read, write: if userId == request.auth.uid;
         }
-        match /Items/{documents=**} {
-          allow read: if true;
-          allow create: if true;
-          allow write: if !resource.data.keys().hasAny(["owner"]) || resource.data.owner == request.auth.uid;
-        }
       }
     }
     ```

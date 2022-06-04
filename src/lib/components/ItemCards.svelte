@@ -1,22 +1,18 @@
 <script lang="ts">
 	import type { Item } from '$lib/data/items';
-	import { user } from '$lib/data/user';
 	import { calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher<{ select: Item }>();
 
 	export let items: Item[] = [];
-	export let disableNotOwned = false;
 	export let excludeId = '';
 	export let skeletonId: string = '';
 </script>
 
 {#each items as item (item.id)}
-	{@const owner = item.owner ? $user.id === item.owner : true}
 	{#if item.id !== excludeId}
 		<button
 			class="card filled"
-			disabled={disableNotOwned && !owner}
 			on:click={() => {
 				dispatch('select', item);
 			}}
