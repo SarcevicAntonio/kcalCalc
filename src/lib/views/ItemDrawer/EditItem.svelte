@@ -6,6 +6,7 @@
 		createItemStore,
 		defaultPortion,
 		deleteItem,
+		flattenItem,
 		items,
 		type Item,
 		type ItemInstance as ItemInstanceType,
@@ -210,7 +211,8 @@
 		</Dialog>
 		<button
 			on:click={() => {
-				const uriComponent = encodeObjToUriComponent($dataStore);
+				const share = flattenItem($dataStore);
+				const uriComponent = encodeObjToUriComponent(share);
 				const url = new URL(window.location.toString());
 				url.searchParams.set('add', uriComponent);
 				navigator.clipboard.writeText(url.href);

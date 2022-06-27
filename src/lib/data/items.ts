@@ -135,6 +135,15 @@ export function instantiateItem(item: Item) {
 	};
 }
 
+export function flattenItem(item: Item): Item {
+	if (item.kcalPer100) return item;
+	return {
+		...item,
+		kcalPer100: calculateKcalPer100FromItems(item.items, item.amount),
+		items: [],
+	};
+}
+
 export const defaultItem = {
 	id: '',
 	label: '',
