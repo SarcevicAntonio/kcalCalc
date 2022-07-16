@@ -10,7 +10,8 @@
 
 	export let item: ItemInstance;
 
-	export let expanded = false;
+	export let nonExpanding = false;
+	export let expanded = nonExpanding;
 
 	$: kcalLabel = kcalDisplay(calculateKcal(item));
 
@@ -19,7 +20,13 @@
 	}
 </script>
 
-<button on:click={() => (expanded = !expanded)} class="card outlined">
+<button
+	on:click={() => {
+		if (nonExpanding) return;
+		expanded = !expanded;
+	}}
+	class="card outlined"
+>
 	<div class="row">
 		<div class="col item-info">
 			<span class="title-m">
@@ -68,9 +75,13 @@
 				{/if}
 			</Input>
 			<div class="row">
-				<button class="btn text" on:click={() => dispatch('delete')}>
-					<IcDelete />
-				</button>
+				{#if !nonExpanding}
+					<button class="btn text" on:click={() => dispatch('delete')}>
+						<IcDelete />
+					</button>
+				{:else}
+					&nbsp
+				{/if}
 				{#if item.portions?.length}
 					<PortionSelector
 						portions={item.portions}
