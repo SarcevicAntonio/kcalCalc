@@ -48,7 +48,7 @@
 		dispatch('blur', e);
 	};
 
-	export let inputElement = null;
+	export let inputElement: HTMLInputElement = null;
 </script>
 
 <div

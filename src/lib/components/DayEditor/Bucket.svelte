@@ -6,8 +6,8 @@
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher, tick } from 'svelte';
 	import { slide } from 'svelte/transition';
-	const dispatch = createEventDispatcher();
 	import IcAdd from '~icons/ic/round-plus';
+	const dispatch = createEventDispatcher();
 
 	export let label: string;
 	export let items: ItemInstanceType[];
@@ -18,6 +18,8 @@
 
 	async function considerItem(item: ItemInstanceType) {
 		consideredItem = item;
+		await tick();
+		amountInputElement.focus();
 	}
 
 	async function addItem(item: ItemInstanceType) {
@@ -33,15 +35,17 @@
 		items = items;
 		dispatch('update');
 	}
+
+	let amountInputElement: HTMLInputElement;
 </script>
 
 <Dialog includedTrigger={false} open={!!consideredItem} mandatory>
 	<div class="col">
-		<h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2>
-		<ItemInstance nonExpanding item={consideredItem} />
-		<button class="btn tonal full" on:click={() => addItem(consideredItem)}
-			><IcAdd /> Add Item</button
-		>
+		<!-- <h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2> -->
+		<ItemInstance bind:amountInputElement nonExpanding item={consideredItem} />
+		<button class="btn tonal full" on:click={() => addItem(consideredItem)}>
+			<IcAdd /> Add Item
+		</button>
 	</div>
 </Dialog>
 

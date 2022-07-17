@@ -12,6 +12,7 @@
 
 	export let nonExpanding = false;
 	export let expanded = nonExpanding;
+	export let amountInputElement: HTMLInputElement = null;
 
 	$: kcalLabel = kcalDisplay(calculateKcal(item));
 
@@ -67,7 +68,12 @@
 			{:else}
 				<Input type="number" disabled value={item.kcalPer100}>kcal Per 100 g || ml</Input>
 			{/if}
-			<Input type="calc" bind:value={item.amount} on:input={dispatchUpdate}>
+			<Input
+				bind:inputElement={amountInputElement}
+				type="calc"
+				bind:value={item.amount}
+				on:input={dispatchUpdate}
+			>
 				{#if item.id !== 'CUSTOM:KCAL_COUNT'}
 					Amount in g || ml
 				{:else}

@@ -9,6 +9,7 @@
 </script>
 
 <nav class="fab-bar">
+	&nbsp;
 	<button
 		class:skeleton={loading}
 		on:click={async () => {
