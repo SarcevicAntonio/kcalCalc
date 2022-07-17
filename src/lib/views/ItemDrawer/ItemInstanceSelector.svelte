@@ -12,7 +12,7 @@
 	} from '$lib/data/items';
 	import Input from '$lib/Input.svelte';
 	import Fuse from 'fuse.js';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import IcItems from '~icons/ic/round-category';
 	import IcRoundNumbers from '~icons/ic/round-numbers';
 	import IcAdd from '~icons/ic/round-plus';
@@ -51,11 +51,18 @@
 		search = '';
 		dispatch('select', itemInstance);
 	}
+
+	let inputElement: HTMLInputElement;
+
+	onMount(() => {
+		inputElement.focus();
+	});
 </script>
 
 <h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2>
 <Input
 	clearable
+	bind:inputElement
 	bind:value={search}
 	on:input={() => {
 		externalEntries = [];
