@@ -3,20 +3,29 @@
 	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
+	import { Dialog } from 'as-comps';
 	import { createEventDispatcher, tick } from 'svelte';
 	import { slide } from 'svelte/transition';
 	const dispatch = createEventDispatcher();
+	import IcAdd from '~icons/ic/round-plus';
 
 	export let label: string;
 	export let items: ItemInstanceType[];
 
 	let expanded = false;
 
+	let consideredItem: ItemInstanceType;
+
+	async function considerItem(item: ItemInstanceType) {
+		consideredItem = item;
+	}
+
 	async function addItem(item: ItemInstanceType) {
 		expanded = true;
 		await tick();
 		items = [...items, item];
 		dispatch('update');
+		consideredItem = null;
 	}
 
 	function delItem(index: number) {
@@ -25,6 +34,16 @@
 		dispatch('update');
 	}
 </script>
+
+<Dialog includedTrigger={false} open={!!consideredItem} mandatory>
+	<div class="col">
+		<h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2>
+		<ItemInstance nonExpanding item={consideredItem} />
+		<button class="btn tonal full" on:click={() => addItem(consideredItem)}
+			><IcAdd /> Add Item</button
+		>
+	</div>
+</Dialog>
 
 <button class="card filled" on:click={() => (expanded = !expanded)}>
 	<div class="row">
@@ -42,7 +61,7 @@
 				<ItemDrawer
 					selector
 					on:select={({ detail }) => {
-						addItem(detail);
+						considerItem(detail);
 					}}
 				/>
 			{/if}
@@ -53,16 +72,12 @@
 		<div transition:slide|local class="col" on:click|stopPropagation>
 			<div class="pad" />
 			{#each items as item, index (item.key)}
-				<ItemInstance
-					bind:item
-					on:delete={() => delItem(index)}
-					on:update
-				/>
+				<ItemInstance bind:item on:delete={() => delItem(index)} on:update />
 			{/each}
 			<ItemDrawer
 				selector
 				on:select={({ detail }) => {
-					addItem(detail);
+					considerItem(detail);
 				}}
 			/>
 		</div>
@@ -77,7 +92,7 @@
 		align-items: center;
 	}
 
-	button {
+	.card.filled {
 		padding-bottom: 0;
 	}
 
@@ -103,5 +118,9 @@
 
 	.pad {
 		min-height: 0.5rem;
+	}
+
+	.full {
+		width: 100%;
 	}
 </style>

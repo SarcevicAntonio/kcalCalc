@@ -25,6 +25,7 @@
 	export let excludeId = '';
 
 	let search = '';
+	/** used to skeletonize a selected external item while saving it */
 	let handlingId = null;
 
 	let externalEntries = [];
@@ -38,6 +39,7 @@
 
 	async function handleSelect({ detail: item }: { detail: Item }) {
 		const itemInstance = instantiateItem(item);
+		// is this item external?
 		if (externalEntries.length) {
 			handlingId = item.id;
 			await saveExternalItem(item);
