@@ -69,7 +69,7 @@
 		{placeholder}
 		{min}
 		{max}
-		{name}
+		name={name || null}
 		{disabled}
 		on:input={handleInput}
 		on:change
