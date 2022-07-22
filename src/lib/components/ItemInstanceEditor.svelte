@@ -5,13 +5,14 @@
 	import { createEventDispatcher } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import IcDelete from '~icons/ic/round-delete-forever';
+	import IcAdd from '~icons/ic/round-plus';
 	import PortionSelector from './PortionSelector.svelte';
 	const dispatch = createEventDispatcher();
 
 	export let item: ItemInstance;
 
-	export let nonExpanding = false;
-	export let expanded = nonExpanding;
+	export let inline = false;
+	export let expanded = inline;
 	export let amountInputElement: HTMLInputElement = null;
 
 	$: kcalLabel = kcalDisplay(calculateKcal(item));
@@ -23,10 +24,11 @@
 
 <button
 	on:click={() => {
-		if (nonExpanding) return;
 		expanded = !expanded;
 	}}
 	class="card outlined"
+	disabled={inline}
+	class:non-expanding={inline}
 >
 	<div class="row">
 		<div class="col item-info">
@@ -56,60 +58,78 @@
 			</span>
 		</div>
 	</div>
-
 	{#if expanded}
 		<div transition:slide|local class="col" on:click|stopPropagation on:keyup|preventDefault>
 			<div class="pad" />
 			{#if item.id.startsWith('CUSTOM')}
 				<Input bind:value={item.label} on:input={dispatchUpdate}>Custom Label</Input>
 			{/if}
-
-			{#if typeof item.id === 'string' && item.id.startsWith('CUSTOM')}
-				{#if item.id === 'CUSTOM:KCAL+AMOUNT'}
-					<Input type="calc" bind:value={item.kcalPer100} on:input={dispatchUpdate}
-						>kcal Per 100 g || ml</Input
-					>
-				{/if}
-			{:else}
-				<Input type="number" disabled value={item.kcalPer100}>kcal Per 100 g || ml</Input>
+			{#if inline}
+				<div class="col">
+					{#each item.portions as portion}
+						<button
+							class="btn tonal fill"
+							on:click={() => {
+								item.amount = portion.amount;
+								dispatch('add');
+							}}
+						>
+							{portion.label} ({portion.amount} g|ml)
+						</button>
+					{/each}
+				</div>
 			{/if}
-			<Input
-				bind:inputElement={amountInputElement}
-				type="calc"
-				bind:value={item.amount}
-				on:input={dispatchUpdate}
-			>
-				{#if item.id !== 'CUSTOM:KCAL_COUNT'}
-					Amount in g || ml
+			<div class="row gap">
+				{#if typeof item.id === 'string' && item.id.startsWith('CUSTOM')}
+					{#if item.id === 'CUSTOM:KCAL+AMOUNT'}
+						<Input type="calc" bind:value={item.kcalPer100} on:input={dispatchUpdate}>
+							kcal Per 100x
+						</Input>
+					{/if}
 				{:else}
-					Kcal
+					<Input type="number" disabled value={kcalDisplay(item.kcalPer100)}>kcal Per 100x</Input>
 				{/if}
-			</Input>
-			<div class="row">
-				{#if !nonExpanding}
+				<Input
+					bind:inputElement={amountInputElement}
+					type="calc"
+					bind:value={item.amount}
+					on:input={dispatchUpdate}
+				>
+					{#if item.id !== 'CUSTOM:KCAL_COUNT'}
+						Amount
+					{:else}
+						Kcal
+					{/if}
+				</Input>
+			</div>
+			{#if !inline}
+				<div class="row">
 					<button class="btn text" on:click={() => dispatch('delete')}>
 						<IcDelete />
 					</button>
-				{:else}
-					&nbsp
-				{/if}
-				{#if item.portions?.length}
-					<PortionSelector
-						portions={item.portions}
-						on:select={({ detail }) => {
-							item.amount = detail.amount;
-							dispatchUpdate();
-						}}
-						on:add={({ detail }) => {
-							item.amount += detail.amount;
-							dispatchUpdate();
-						}}
-					/>
-				{/if}
-			</div>
+					{#if item.portions?.length}
+						<PortionSelector
+							portions={item.portions}
+							on:select={({ detail }) => {
+								item.amount = detail.amount;
+								dispatchUpdate();
+							}}
+							on:add={({ detail }) => {
+								item.amount += detail.amount;
+								dispatchUpdate();
+							}}
+						/>
+					{/if}
+				</div>
+			{/if}
 		</div>
 	{/if}
 	<div class="pad" />
+	{#if inline}
+		<button class="btn tonal fill" on:click={() => dispatch('add')}>
+			<IcAdd /> Add Item
+		</button>
+	{/if}
 </button>
 
 <style>
@@ -137,5 +157,18 @@
 
 	.end {
 		align-items: flex-end;
+	}
+
+	.gap {
+		gap: 1em;
+	}
+
+	.non-expanding {
+		border: none;
+		padding: 0;
+	}
+
+	.fill {
+		width: 100%;
 	}
 </style>

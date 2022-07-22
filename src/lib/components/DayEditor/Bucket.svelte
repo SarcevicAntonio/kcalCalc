@@ -6,7 +6,6 @@
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher, tick } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import IcAdd from '~icons/ic/round-plus';
 	const dispatch = createEventDispatcher();
 
 	export let label: string;
@@ -49,10 +48,12 @@
 >
 	<div class="col">
 		<!-- <h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2> -->
-		<ItemInstance bind:amountInputElement nonExpanding item={consideredItem} />
-		<button class="btn tonal full" on:click={() => addItem(consideredItem)}>
-			<IcAdd /> Add Item
-		</button>
+		<ItemInstance
+			bind:amountInputElement
+			inline
+			bind:item={consideredItem}
+			on:add={() => addItem(consideredItem)}
+		/>
 	</div>
 </Dialog>
 
@@ -129,9 +130,5 @@
 
 	.pad {
 		min-height: 0.5rem;
-	}
-
-	.full {
-		width: 100%;
 	}
 </style>
