@@ -47,9 +47,14 @@
 				</span>
 			{/if}
 		</div>
-		<span class="label-l">
-			{kcalLabel} kcal
-		</span>
+		<div class="col end">
+			<span class="body-m">
+				{item.amount} g || ml
+			</span>
+			<span class="label-l">
+				{kcalLabel} kcal
+			</span>
+		</div>
 	</div>
 
 	{#if expanded}
@@ -128,5 +133,9 @@
 
 	.pad {
 		min-height: 0.5rem;
+	}
+
+	.end {
+		align-items: flex-end;
 	}
 </style>
