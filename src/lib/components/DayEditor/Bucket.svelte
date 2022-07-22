@@ -39,7 +39,14 @@
 	let amountInputElement: HTMLInputElement;
 </script>
 
-<Dialog includedTrigger={false} open={!!consideredItem} mandatory>
+<Dialog
+	includedTrigger={false}
+	open={!!consideredItem}
+	noCloseButton
+	on:dismiss={() => {
+		consideredItem = null;
+	}}
+>
 	<div class="col">
 		<!-- <h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2> -->
 		<ItemInstance bind:amountInputElement nonExpanding item={consideredItem} />
