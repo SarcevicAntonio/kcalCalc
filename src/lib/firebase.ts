@@ -1,7 +1,13 @@
 import { browser } from '$app/env';
 import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { enableIndexedDbPersistence, getFirestore } from 'firebase/firestore';
+import { connectAuthEmulator, getAuth } from 'firebase/auth';
+import {
+	connectFirestoreEmulator,
+	enableIndexedDbPersistence,
+	getFirestore,
+} from 'firebase/firestore';
+
+const useEmulation = false;
 
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_APIKEY,
@@ -23,6 +29,11 @@ function getClient() {
 	} else {
 		const app = initializeApp(firebaseConfig);
 		const db = getFirestore(app);
+		const auth = getAuth(app);
+		if (useEmulation) {
+			connectAuthEmulator(auth, 'http://localhost:9099');
+			connectFirestoreEmulator(db, 'localhost', 8081);
+		}
 		if (browser) enableIndexedDbPersistence(db);
 		return app;
 	}

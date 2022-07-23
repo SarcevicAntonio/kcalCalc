@@ -1,0 +1,13 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+      match /Users/{userId}/{documents=**} {
+      allow read, write: if userId == request.auth.uid;
+    }
+    match /Items/{documents=**} {
+      allow read: if true;
+      allow create: if true;
+			allow write: if !resource.data.keys().hasAny(["owner"]) || resource.data.owner == request.auth.uid;
+    }
+  }
+}
