@@ -2,14 +2,17 @@
 	import { userSettings } from '$lib/data/user';
 
 	export let kcalInDay;
+
+	$: overLimit = kcalInDay > ($userSettings?.kcalLimit || 9999);
 </script>
 
-<div class="bar">
+<div class="bar" class:over-limit={overLimit}>
 	<div
 		class="inner"
-		class:over-limit={kcalInDay > ($userSettings?.kcalLimit || 9999)}
 		style={!isNaN(kcalInDay)
-			? `width: ${Math.min((kcalInDay / $userSettings?.kcalLimit) * 100, 100)}%;`
+			? overLimit
+				? `width: ${Math.min(($userSettings?.kcalLimit / kcalInDay) * 100, 100)}%;`
+				: `width: ${Math.min((kcalInDay / $userSettings?.kcalLimit) * 100, 100)}%;`
 			: ''}
 	/>
 </div>
@@ -24,6 +27,12 @@
 	.bar {
 		background-color: var(--md-surface-variant);
 		overflow: hidden;
+		&.over-limit {
+			background-color: var(--md-on-error);
+			& .inner {
+				background-color: var(--md-error);
+			}
+		}
 	}
 
 	.inner {
@@ -31,8 +40,5 @@
 		transition-property: width color;
 		transition-duration: 0.2s;
 		transition-timing-function: ease-in-out;
-		&.over-limit {
-			background-color: var(--md-error);
-		}
 	}
 </style>
