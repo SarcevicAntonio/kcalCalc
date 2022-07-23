@@ -7,7 +7,7 @@ import {
 	getFirestore,
 } from 'firebase/firestore';
 
-const useEmulation = false;
+const useEmulation = import.meta.env.VITE_USE_EMULATION;
 
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_APIKEY,
