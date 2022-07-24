@@ -8,7 +8,7 @@ if (!String.prototype.replaceAll) {
 	};
 }
 
-export const get: RequestHandler = async (request) => {
+export const GET: RequestHandler = async (request) => {
 	const searchRes = await fetch('https://fddb.mobi/search/?search=' + request.params.search);
 	if (!searchRes.ok) {
 		return { status: searchRes.status, error: new Error(searchRes.statusText) };
