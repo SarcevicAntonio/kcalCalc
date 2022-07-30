@@ -4,7 +4,7 @@
 
 A free calorie counting app made to fit my needs.
 
-Give it a shot at kcal-calc.vercel.app
+Give it a shot at [kcal-calc.vercel.app](https://kcal-calc.vercel.app)
 
 | Mobile Day View                       | Item Selection                                          | Mobile Week View                          |
 | ------------------------------------- | ------------------------------------------------------- | ----------------------------------------- |
