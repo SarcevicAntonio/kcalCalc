@@ -215,7 +215,9 @@
 				const uriComponent = encodeObjToUriComponent(share);
 				const url = new URL(window.location.toString());
 				url.searchParams.set('add', uriComponent);
-				navigator.clipboard.writeText(url.href);
+				navigator.clipboard.writeText(`Add "${$dataStore.label}" as a kcalCalc Item:
+
+${url.href}`);
 				notification('Copied Item URL to clipboard.');
 			}}
 		>
