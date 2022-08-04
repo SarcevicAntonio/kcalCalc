@@ -28,9 +28,9 @@
 		background-color: var(--md-surface-variant);
 		overflow: hidden;
 		&.over-limit {
-			background-color: var(--md-on-error);
+			background-color: var(--md-error);
 			& .inner {
-				background-color: var(--md-error);
+				background-color: var(--md-error-container);
 			}
 		}
 	}
