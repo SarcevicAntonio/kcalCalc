@@ -1,6 +1,6 @@
 <script>
 	import { slide } from 'svelte/transition';
-	import Icon from '~icons/ic/round-expand-more';
+	import Icon from '~icons/ic/round-expand-circle-down';
 	export let open = false;
 	export let disabled = false;
 
@@ -48,6 +48,7 @@
 
 	.icon {
 		margin-left: 1em;
+		line-height: 0px;
 		transition: rotate 0.2s ease;
 		&.open {
 			rotate: 180deg;
