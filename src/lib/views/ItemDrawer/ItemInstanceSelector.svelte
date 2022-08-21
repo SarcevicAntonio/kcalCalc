@@ -10,15 +10,16 @@
 		saveExternalItem,
 		type Item,
 	} from '$lib/data/items';
+	import { fuseItemSettings } from '$lib/fuse';
 	import Input from '$lib/Input.svelte';
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import IcItems from '~icons/ic/round-category';
 	import IcRoundNumbers from '~icons/ic/round-numbers';
 	import IcAdd from '~icons/ic/round-plus';
+	import IcRoundRestore from '~icons/ic/round-restore';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import MdiWeight from '~icons/mdi/weight';
-	import IcRoundRestore from '~icons/ic/round-restore';
 	const dispatch = createEventDispatcher();
 
 	export let noCustomKcal = false;
@@ -111,7 +112,7 @@
 			items={externalEntries.length
 				? externalEntries
 				: search
-				? new Fuse($items, { keys: ['label', 'brand'] }).search(search).map((res) => res.item)
+				? new Fuse($items, fuseItemSettings).search(search).map((res) => res.item)
 				: $recentItems}
 			on:select={handleSelect}
 		>
