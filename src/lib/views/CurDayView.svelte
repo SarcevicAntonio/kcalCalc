@@ -4,7 +4,7 @@
 	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte';
 	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
-	import { curDay, dateIsToday, getDayData, type Day as DayType } from '$lib/data/intake';
+	import { curDay, dateIsToday, getDayData, weekData, type Day as DayType } from '$lib/data/intake';
 	import { user, userSettings } from '$lib/data/user';
 	import { toISODateString } from '$lib/dateHelpers';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';

@@ -55,13 +55,15 @@ export const weekData = asyncDerived(
 );
 
 export const getDayData = async (date: string): Promise<Day> => {
-	const dateObj = new Date(date);
-	const year = getYear(dateObj);
-	const week = getISOWeek(dateObj);
-	const docRef = doc(db, `Users/${get(user).id}/Years/${year}/Weeks/${week}/Days/${date}`);
-	console.log('getDoc getDayData', date, year, week);
-	const docSnap = await getDoc(docRef);
-	return (docSnap.data() as Day) || defaultDay;
+	await weekData.load();
+	return get(weekData)[date];
+	// const dateObj = new Date(date);
+	// const year = getYear(dateObj);
+	// const week = getISOWeek(dateObj);
+	// const docRef = doc(db, `Users/${get(user).id}/Years/${year}/Weeks/${week}/Days/${date}`);
+	// console.log('getDoc getDayData', date, year, week);
+	// const docSnap = await getDoc(docRef);
+	// return (docSnap.data() as Day) || defaultDay;
 };
 
 export const setDayData = async (date: string, data: Day) => {
