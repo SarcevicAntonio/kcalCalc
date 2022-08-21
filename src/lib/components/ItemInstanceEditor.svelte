@@ -126,9 +126,11 @@
 	{/if}
 	<div class="pad" />
 	{#if inline}
-		<button class="btn tonal fill" on:click={() => dispatch('add')}>
-			<IcAdd /> Add Item
-		</button>
+		<slot name="inline-btns">
+			<button class="btn tonal fill" on:click={() => dispatch('add')}>
+				<IcAdd /> Add Item
+			</button>
+		</slot>
 	{/if}
 </button>
 

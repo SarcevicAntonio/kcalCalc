@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AddToToday from '$lib/components/AddToToday.svelte';
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import {
@@ -215,6 +216,7 @@
 		>
 			<IcRoundShare />
 		</button>
+		<AddToToday item={$dataStore} />
 	{/await}
 	<button on:click={() => dispatch('done', $dataStore)}>
 		<IcArrowBack />
