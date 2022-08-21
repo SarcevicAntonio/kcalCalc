@@ -57,7 +57,7 @@
 	</div>
 </Dialog>
 
-<Expandable bind:open>
+<Expandable bind:open disabled={!items.length}>
 	<div slot="summary" class="row">
 		<span class="title-l">{label}</span>
 		<div class="bucket-info">
