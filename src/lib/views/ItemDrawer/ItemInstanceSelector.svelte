@@ -10,7 +10,7 @@
 		saveExternalItem,
 		type Item,
 	} from '$lib/data/items';
-	import { fuseItemSettings } from '$lib/fuse';
+	import { fuseItemSettings, mapItem } from '$lib/fuse';
 	import Input from '$lib/Input.svelte';
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher, onMount } from 'svelte';
@@ -112,7 +112,7 @@
 			items={externalEntries.length
 				? externalEntries
 				: search
-				? new Fuse($items, fuseItemSettings).search(search).map((res) => res.item)
+				? new Fuse($items, fuseItemSettings).search(search).map(mapItem)
 				: $recentItems}
 			on:select={handleSelect}
 		>
