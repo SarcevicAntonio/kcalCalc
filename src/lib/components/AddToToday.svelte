@@ -26,7 +26,7 @@
 	}
 </script>
 
-<Dialog bind:open>
+<Dialog bind:open noCloseButton --as-dialog-width="90%" --as-dialog-max-width="400px">
 	<svelte:fragment slot="trigger-label"><IcAdd />Today</svelte:fragment>
 	<ItemInstanceEditor inline bind:item={itemInstance}>
 		<div slot="inline-btns" class="col">

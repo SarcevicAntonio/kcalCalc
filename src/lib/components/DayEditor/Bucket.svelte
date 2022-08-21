@@ -45,6 +45,8 @@
 	on:dismiss={() => {
 		consideredItem = null;
 	}}
+	--as-dialog-width="90%"
+	--as-dialog-max-width="400px"
 >
 	<div class="col">
 		<!-- <h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2> -->
