@@ -54,3 +54,12 @@ kcalCalc can be self-hosted for yourself for free using Firebase and a Cloud Hos
 - Copy env variables in a `.env` file
 - `pnpm i`
 - `pnpm dev`
+
+### Svelte Style Guide
+
+- Layout: Script, Markup, Styles
+- Script Layout: Imports, createEventDispatcher, export props, local state, reactive statements, functions.
+- Hints that you component is too complicated:
+  - If you feel like you want to organize script differently
+  - ~6 Levels of Indentation max
+  - ~300LOC max
