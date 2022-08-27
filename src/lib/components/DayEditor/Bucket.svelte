@@ -1,9 +1,7 @@
 <script type="ts">
-	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
+	import ItemInstanceEditor from '$lib/components/ItemInstanceEditor.svelte';
 	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
-	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
-	import { Dialog } from 'as-comps';
 	import { createEventDispatcher, tick } from 'svelte';
 	import Expandable from '../Expandable.svelte';
 	const dispatch = createEventDispatcher();
@@ -38,27 +36,6 @@
 	let amountInputElement: HTMLInputElement;
 </script>
 
-<Dialog
-	includedTrigger={false}
-	open={!!consideredItem}
-	noCloseButton
-	on:dismiss={() => {
-		consideredItem = null;
-	}}
-	--as-dialog-width="90%"
-	--as-dialog-max-width="400px"
->
-	<div class="col">
-		<!-- <h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2> -->
-		<ItemInstance
-			bind:amountInputElement
-			inline
-			bind:item={consideredItem}
-			on:add={() => addItem(consideredItem)}
-		/>
-	</div>
-</Dialog>
-
 <Expandable bind:open disabled={!items.length}>
 	<div slot="summary" class="row">
 		<span class="title-l">{label}</span>
@@ -72,12 +49,7 @@
 					kcal
 				</span>
 			{:else}
-				<ItemDrawer
-					selector
-					on:select={({ detail }) => {
-						considerItem(detail);
-					}}
-				/>
+				TODO: open adder
 			{/if}
 		</div>
 	</div>
@@ -85,14 +57,9 @@
 	<div class="col">
 		{#if items.length}
 			{#each items as item, index (item.key)}
-				<ItemInstance bind:item on:delete={() => delItem(index)} on:update />
+				<ItemInstanceEditor bind:item on:delete={() => delItem(index)} on:update />
 			{/each}
-			<ItemDrawer
-				selector
-				on:select={({ detail }) => {
-					considerItem(detail);
-				}}
-			/>
+			TODO: open adder
 		{/if}
 	</div>
 </Expandable>

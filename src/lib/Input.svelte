@@ -4,7 +4,6 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import IcRoundClear from '~icons/ic/round-clear';
 	import IcCalc from '~icons/mdi/calculator';
-	const id = uuidv4();
 	const dispatch = createEventDispatcher();
 
 	export let value: string | number = '';
@@ -14,9 +13,12 @@
 	export let max = undefined;
 	export let name = '';
 	export let disabled = false;
-
 	export let outlined = false;
 	export let clearable = false;
+	export let inputElement: HTMLInputElement = null;
+
+	const id = uuidv4();
+	let canNotEvaluate = false;
 
 	const handleInput = (e: Event) => {
 		// handle types
@@ -26,8 +28,6 @@
 		(e.target as HTMLInputElement).value = value + '';
 		dispatch('input', e);
 	};
-
-	let canNotEvaluate = false;
 
 	const handleBlur = (e: Event) => {
 		if (type !== 'calc') {
@@ -47,8 +47,6 @@
 		}
 		dispatch('blur', e);
 	};
-
-	export let inputElement: HTMLInputElement = null;
 </script>
 
 <div
