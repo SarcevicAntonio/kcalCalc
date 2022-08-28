@@ -2,6 +2,7 @@
 	import ItemInstanceEditor from '$lib/components/ItemInstanceEditor.svelte';
 	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
+	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
 	import { createEventDispatcher, tick } from 'svelte';
 	import Expandable from '../Expandable.svelte';
 	const dispatch = createEventDispatcher();
@@ -49,7 +50,12 @@
 					kcal
 				</span>
 			{:else}
-				TODO: open adder
+				<ItemDrawer
+					selector
+					on:select={({ detail }) => {
+						considerItem(detail);
+					}}
+				/>
 			{/if}
 		</div>
 	</div>
@@ -59,7 +65,12 @@
 			{#each items as item, index (item.key)}
 				<ItemInstanceEditor bind:item on:delete={() => delItem(index)} on:update />
 			{/each}
-			TODO: open adder
+			<ItemDrawer
+				selector
+				on:select={({ detail }) => {
+					considerItem(detail);
+				}}
+			/>
 		{/if}
 	</div>
 </Expandable>
