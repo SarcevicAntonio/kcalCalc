@@ -1,25 +1,51 @@
 <script lang="ts">
-import Input from "$lib/Input.svelte";
+	import type { Item } from '$lib/data/items';
+	import Input from '$lib/Input.svelte';
+	import { calculateKcal, kcalDisplay } from '$lib/kcal';
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
 
+	export let amountInputElement: HTMLInputElement = null;
+	export let item: Item;
+	
+	$: kcalLabel = kcalDisplay(calculateKcal(item));
 
+	function dispatchUpdate() {
+		dispatch('update');
+	}
 
-export let item;
 </script>
 
 <div class="col">
-	<div class="pad" />
-	{#if item.id.startsWith('CUSTOM')}
-	<Input bind:value={item.label} on:input={dispatchUpdate}>Custom Label</Input>
-	{/if}
-	<div class="row gap">
-		{#if typeof item.id === 'string' && item.id.startsWith('CUSTOM')}
-			{#if item.id === 'CUSTOM:KCAL+AMOUNT'}
-				<Input type="calc" bind:value={item.kcalPer100} on:input={dispatchUpdate}>
-					kcal Per 100x
-				</Input>
+	<span class="title-m">
+		{#if !item.label}
+			{#if item.id === 'CUSTOM:KCAL_COUNT'}
+				Custom kcal count
+			{:else if item.id === 'CUSTOM:KCAL+AMOUNT'}
+				Custom kcal & amount
 			{/if}
 		{:else}
-			<Input type="number" disabled value={kcalDisplay(item.kcalPer100)}>kcal Per 100x</Input>
+			{item.label}
+		{/if}
+	</span>
+	{#if item.brand}
+		<span class="body-m">
+			{item.brand}
+		</span>
+	{/if}
+	<div class="row">
+		<div class="body-m">
+			{kcalDisplay(item.kcalPer100)} kcal Per 100x
+		</div>
+		<span class="label-l">
+			{kcalLabel} kcal
+		</span>
+	</div>
+	<div class="row gap">
+		{#if item.id === 'CUSTOM:KCAL+AMOUNT'}
+			<Input type="calc" bind:value={item.kcalPer100} on:input={dispatchUpdate}>
+				kcal Per 100x
+			</Input>
 		{/if}
 		<Input
 			bind:inputElement={amountInputElement}
@@ -33,23 +59,28 @@ export let item;
 				Kcal
 			{/if}
 		</Input>
+		<slot name="inline-inputs" />
 	</div>
-		<div class="row">
-			<button class="btn text" on:click={() => dispatch('delete')}>
-				<IcDelete />
-			</button>
-			{#if item.portions?.length}
-				<PortionSelector
-					portions={item.portions}
-					on:select={({ detail }) => {
-						item.amount = detail.amount;
-						dispatchUpdate();
-					}}
-					on:add={({ detail }) => {
-						item.amount += detail.amount;
-						dispatchUpdate();
-					}}
-				/>
-			{/if}
-		</div>
-	</div>
+
+	<slot />
+</div>
+
+<style>
+	.row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.col {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	.gap {
+		gap: 0.5em;
+	}
+</style>
