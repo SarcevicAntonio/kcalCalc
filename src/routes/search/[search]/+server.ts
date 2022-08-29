@@ -11,7 +11,7 @@ if (!String.prototype.replaceAll) {
 export const GET: RequestHandler = async (request) => {
 	const searchRes = await fetch('https://fddb.mobi/search/?search=' + request.params.search);
 	if (!searchRes.ok) {
-		return { status: searchRes.status, error: new Error(searchRes.statusText) };
+		return new Response(undefined, { status: searchRes.status, statusText: searchRes.statusText });
 	}
 	const { document } = parseHTML(await searchRes.text());
 
@@ -73,8 +73,6 @@ export const GET: RequestHandler = async (request) => {
 	);
 
 	return Promise.all(requests).then(() => {
-		return {
-			body: JSON.stringify(ingredients),
-		};
+		return new Response(JSON.stringify(ingredients));
 	});
 };
