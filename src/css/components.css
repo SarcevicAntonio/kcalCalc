@@ -77,7 +77,6 @@
 	aspect-ratio: 1/1;
 }
 
-
 .card {
 	text-decoration: unset;
 	padding: 0.5rem 0.75rem;
@@ -206,4 +205,10 @@
 .with-icon {
 	display: flex;
 	gap: 0.25em;
+}
+
+.non-expanding {
+	border: none !important;
+	padding: 0 !important;
+	margin-bottom: -0.5rem;
 }

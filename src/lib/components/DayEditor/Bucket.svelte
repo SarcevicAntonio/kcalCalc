@@ -5,13 +5,13 @@
 	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher, tick } from 'svelte';
-	import { slide } from 'svelte/transition';
+	import Expandable from '../Expandable.svelte';
 	const dispatch = createEventDispatcher();
 
 	export let label: string;
 	export let items: ItemInstanceType[];
 
-	let expanded = false;
+	let open = false;
 
 	let consideredItem: ItemInstanceType;
 
@@ -22,7 +22,7 @@
 	}
 
 	async function addItem(item: ItemInstanceType) {
-		expanded = true;
+		open = true;
 		await tick();
 		items = [...items, item];
 		dispatch('update');
@@ -45,6 +45,8 @@
 	on:dismiss={() => {
 		consideredItem = null;
 	}}
+	--as-dialog-width="90%"
+	--as-dialog-max-width="400px"
 >
 	<div class="col">
 		<!-- <h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2> -->
@@ -57,8 +59,8 @@
 	</div>
 </Dialog>
 
-<button class="card filled" on:click={() => (expanded = !expanded)}>
-	<div class="row">
+<Expandable bind:open disabled={!items.length}>
+	<div slot="summary" class="row">
 		<span class="title-l">{label}</span>
 		<div class="bucket-info">
 			{#if items.length}
@@ -80,9 +82,8 @@
 		</div>
 	</div>
 
-	{#if expanded && items.length}
-		<div transition:slide|local class="col" on:click|stopPropagation>
-			<div class="pad" />
+	<div class="col">
+		{#if items.length}
 			{#each items as item, index (item.key)}
 				<ItemInstance bind:item on:delete={() => delItem(index)} on:update />
 			{/each}
@@ -92,10 +93,9 @@
 					considerItem(detail);
 				}}
 			/>
-		</div>
-	{/if}
-	<div class="pad" />
-</button>
+		{/if}
+	</div>
+</Expandable>
 
 <style>
 	.row {
@@ -104,16 +104,13 @@
 		align-items: center;
 	}
 
-	.card.filled {
-		padding-bottom: 0;
-	}
-
 	.bucket-info {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
 		align-items: flex-end;
 	}
+
 	.col {
 		display: flex;
 		flex-direction: column;
@@ -126,9 +123,5 @@
 		display: flex;
 		align-items: center;
 		min-height: 2em;
-	}
-
-	.pad {
-		min-height: 0.5rem;
 	}
 </style>

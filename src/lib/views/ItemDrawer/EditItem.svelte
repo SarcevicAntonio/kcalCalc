@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { encodeObjToUriComponent } from '$lib/base64';
+	import AddToToday from '$lib/components/AddToToday.svelte';
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import {
 		createItemStore,
 		defaultPortion,
 		deleteItem,
-		flattenItem,
 		items,
 		type Item,
 		type ItemInstance as ItemInstanceType,
@@ -14,8 +13,9 @@
 	import { toISODateString } from '$lib/dateHelpers';
 	import Input from '$lib/Input.svelte';
 	import { calculateAmountSum, calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal';
+	import { shareItem } from '$lib/share';
 	import type { WritableLoadable } from '@square/svelte-store';
-	import { Dialog, notification } from 'as-comps';
+	import { Dialog } from 'as-comps';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { v4 as uuid } from 'uuid';
 	import IcArrowBack from '~icons/ic/round-arrow-back';
@@ -211,18 +211,12 @@
 		</Dialog>
 		<button
 			on:click={() => {
-				const share = flattenItem($dataStore);
-				const uriComponent = encodeObjToUriComponent(share);
-				const url = new URL(window.location.toString());
-				url.searchParams.set('add', uriComponent);
-				navigator.clipboard.writeText(`Add "${$dataStore.label}" as a kcalCalc Item:
-
-${url.href}`);
-				notification('Copied Item URL to clipboard.');
+				shareItem($dataStore);
 			}}
 		>
 			<IcRoundShare />
 		</button>
+		<AddToToday item={$dataStore} />
 	{/await}
 	<button on:click={() => dispatch('done', $dataStore)}>
 		<IcArrowBack />

@@ -1,26 +1,18 @@
 <script lang="ts">
-	import { browser } from '$app/env';
 	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
 	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte';
 	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte';
 	import Switcher from '$lib/components/Switcher.svelte';
-	import { curDay, dateIsToday, getDayData, type Day as DayType } from '$lib/data/intake';
-	import { user, userSettings } from '$lib/data/user';
+	import { curDay,dateIsToday,dayData,type Day as DayType } from '$lib/data/intake';
+	import { userSettings } from '$lib/data/user';
 	import { toISODateString } from '$lib/dateHelpers';
-	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
+	import { calculateKcalFromItems,kcalDisplay } from '$lib/kcal';
 	import { addDays } from 'date-fns';
 
 	let data = null as DayType;
 	let stale = false;
 
-	async function getDayDataInHere(date, user) {
-		stale = true;
-		if (!browser || !user) return;
-		data = await getDayData(date);
-		stale = false;
-	}
-
-	$: getDayDataInHere($curDay, $user);
+	$: data = $dayData;
 
 	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
 	$: dateObj = new Date($curDay);
@@ -50,11 +42,11 @@
 	</span>
 </Switcher>
 
-{#if data}
-	<KcalLimitBar {kcalInDay} />
-{:else}
+{#await dayData.load()}
 	<KcalLimitBarSkeleton />
-{/if}
+{:then _}
+	<KcalLimitBar {kcalInDay} />
+{/await}
 
 <DayEditor bind:data date={$curDay} />
 

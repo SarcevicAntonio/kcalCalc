@@ -54,6 +54,10 @@ export const weekData = asyncDerived(
 	{}
 );
 
+export const dayData = asyncDerived([weekData, curDay], async ([weekData, curDay]) => {
+	return weekData[curDay];
+});
+
 export const getDayData = async (date: string): Promise<Day> => {
 	const dateObj = new Date(date);
 	const year = getYear(dateObj);
