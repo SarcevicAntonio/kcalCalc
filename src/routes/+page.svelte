@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { decodeUriComponentToObj } from '$lib/base64';
 	import { curDay, dateIsToday, weekData } from '$lib/data/intake';
