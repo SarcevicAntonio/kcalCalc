@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"prepare": "svelte-kit sync",
+		"postinstall": "svelte-kit sync",
 		"build": "vite build",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
