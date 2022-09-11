@@ -68,9 +68,10 @@
 					on:externalItem={({ detail }) => {
 						editId = detail.id;
 					}}
-					on:select={({ detail }) => {
+					on:selectItem={async ({ detail }) => {
+						const itemInstance = await instantiateItem(detail);
 						toggle();
-						dispatch('select', detail);
+						dispatch('select', itemInstance);
 					}}
 				/>
 			{:else}

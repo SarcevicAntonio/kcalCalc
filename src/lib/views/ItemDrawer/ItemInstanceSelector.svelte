@@ -4,7 +4,6 @@
 	import {
 		customKcalAmountItem,
 		customKcalCountItem,
-		instantiateItem,
 		items,
 		recentItems,
 		saveExternalItem,
@@ -34,23 +33,21 @@
 	async function searchExternal() {
 		externalEntries = [];
 		loadingExternalItems = true;
-		externalEntries = await (await fetch('/search/' + encodeURIComponent(search))).json();
+		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then((r) => r.json());
 		loadingExternalItems = false;
 	}
 
 	async function handleSelect({ detail: item }: { detail: Item }) {
-		const itemInstance = instantiateItem(item);
 		// is this item external?
 		if (externalEntries.length) {
 			handlingId = item.id;
 			await saveExternalItem(item);
 			dispatch('externalItem', item);
 			handlingId = null;
-			search = '';
-			return;
+		} else {
+			dispatch('selectItem', item);
 		}
 		search = '';
-		dispatch('select', itemInstance);
 	}
 
 	let inputElement: HTMLInputElement;

@@ -216,7 +216,9 @@
 		>
 			<IcRoundShare />
 		</button>
-		<AddToToday item={$dataStore} />
+		{#if !selector}
+			<AddToToday item={$dataStore} />
+		{/if}
 	{/await}
 	<button on:click={() => dispatch('done', $dataStore)}>
 		<IcArrowBack />
