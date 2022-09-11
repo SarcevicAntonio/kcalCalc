@@ -35,7 +35,15 @@
 	getCurrentDayInHere();
 </script>
 
-<Dialog bind:open noCloseButton --as-dialog-width="90%" --as-dialog-max-width="400px">
+<Dialog
+	bind:open
+	on:dismiss={() => {
+		state = 'selectingAmount';
+	}}
+	noCloseButton
+	--as-dialog-width="90%"
+	--as-dialog-max-width="400px"
+>
 	<svelte:fragment slot="trigger-label"><IcAdd />Today</svelte:fragment>
 	<div class="col">
 		{#if state !== 'selectingBucket'}

@@ -122,7 +122,7 @@ export async function saveExternalItem(item: Item) {
 	await items.reload();
 }
 
-export function instantiateItem(item: Item) {
+export function instantiateItem(item: Item): ItemInstance {
 	if (!item.id.startsWith('CUSTOM')) setRecentItem(item);
 	return {
 		key: uuid(),
