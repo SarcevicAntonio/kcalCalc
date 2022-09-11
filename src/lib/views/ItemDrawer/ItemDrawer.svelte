@@ -4,7 +4,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import IcItems from '~icons/ic/round-category';
-	import IcAdd from '~icons/ic/round-plus';
+	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
 	import AddItem from './AddItem.svelte';
 	import EditItem from './EditItem.svelte';
 	import ItemInstanceSelector from './ItemInstanceSelector.svelte';
@@ -41,8 +41,8 @@
 			<IcItems />
 			{label}
 		{:else}
-			<IcAdd />
-			Add Item
+			<IcRoundPlaylistAdd />
+			Track Item
 		{/if}
 	</svelte:fragment>
 	<div class="flow">
@@ -53,8 +53,10 @@
 				on:done={async ({ detail }) => {
 					if (selector && detail) {
 						const itemInstance = await instantiateItem(detail);
-						toggle();
-						dispatch('select', itemInstance);
+						if (itemInstance) {
+							toggle();
+							dispatch('select', itemInstance);
+						}
 					}
 					await items.reload();
 					editId = null;
@@ -70,6 +72,7 @@
 					}}
 					on:selectItem={async ({ detail }) => {
 						const itemInstance = await instantiateItem(detail);
+						if (!itemInstance) return;
 						toggle();
 						dispatch('select', itemInstance);
 					}}

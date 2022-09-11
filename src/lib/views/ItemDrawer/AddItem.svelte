@@ -20,7 +20,7 @@
 			loading = false;
 		}}
 	>
-		<IcAdd /> Add New
+		<IcAdd /> New Item
 	</button>
 </nav>
 

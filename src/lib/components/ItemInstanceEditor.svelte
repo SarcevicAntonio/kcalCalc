@@ -95,7 +95,7 @@
 		flex-direction: column;
 		align-items: stretch;
 		justify-content: center;
-		gap: 0.5rem;
+		gap: 0.125rem;
 	}
 
 	.end {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AddToToday from '$lib/components/AddToToday.svelte';
+	import TrackNow from '$lib/components/TrackNow.svelte';
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import {
@@ -21,6 +21,7 @@
 	import IcArrowBack from '~icons/ic/round-arrow-back';
 	import IcDelete from '~icons/ic/round-delete-forever';
 	import IcRoundEdit from '~icons/ic/round-edit';
+	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
 	import IcAdd from '~icons/ic/round-plus';
 	import IcRoundShare from '~icons/ic/round-share';
 	import IcRoundToday from '~icons/ic/round-today';
@@ -55,7 +56,7 @@
 	{#if !selector}
 		<IcRoundEdit />Edit Item
 	{:else}
-		<IcAdd /> Add Item
+		<IcRoundPlaylistAdd /> Track Item
 	{/if}
 </h2>
 
@@ -69,7 +70,7 @@
 			<div class="row">
 				<h3 class="headline-4">Portions</h3>
 				<button class="btn text add">
-					<IcAdd /> Add
+					<IcAdd /> Add Portion
 				</button>
 			</div>
 		</ItemSkeleton>
@@ -217,7 +218,7 @@
 			<IcRoundShare />
 		</button>
 		{#if !selector}
-			<AddToToday item={$dataStore} />
+			<TrackNow item={$dataStore} />
 		{/if}
 	{/await}
 	<button on:click={() => dispatch('done', $dataStore)}>

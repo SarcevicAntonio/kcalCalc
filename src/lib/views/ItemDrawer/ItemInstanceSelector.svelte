@@ -15,7 +15,7 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import IcItems from '~icons/ic/round-category';
 	import IcRoundNumbers from '~icons/ic/round-numbers';
-	import IcAdd from '~icons/ic/round-plus';
+	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
 	import IcRoundRestore from '~icons/ic/round-restore';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import MdiWeight from '~icons/mdi/weight';
@@ -57,7 +57,9 @@
 	});
 </script>
 
-<h2 class="headline-3 with-icon"><IcAdd /> Add Item</h2>
+<h2 class="headline-3 with-icon">
+	<IcRoundPlaylistAdd /> Track Item
+</h2>
 <Input
 	clearable
 	bind:inputElement

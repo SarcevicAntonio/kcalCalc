@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { decodeUriComponentToObj } from '$lib/base64';
+	import InstanceCreator from '$lib/components/InstanceCreator/InstanceCreator.svelte';
 	import { curDay, dateIsToday, weekData } from '$lib/data/intake';
 	import { saveExternalItem, type Item } from '$lib/data/items';
 	import { toISODateString } from '$lib/dateHelpers';
@@ -71,6 +72,8 @@
 	{/if}
 	<ItemDrawer {editId} open={editId} />
 </nav>
+
+<InstanceCreator />
 
 <style>
 	@media only screen and (max-width: 1000px) {

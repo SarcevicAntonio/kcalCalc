@@ -1,3 +1,4 @@
+import { createInstance } from '$lib/components/InstanceCreator';
 import { db } from '$lib/firebase';
 import { calculateKcalPer100FromItems } from '$lib/kcal';
 import { asyncDerived, asyncReadable, asyncWritable } from '@square/svelte-store';
@@ -122,17 +123,9 @@ export async function saveExternalItem(item: Item) {
 	await items.reload();
 }
 
-export function instantiateItem(item: Item): ItemInstance {
+export async function instantiateItem(item: Item): Promise<ItemInstance> {
 	if (!item.id.startsWith('CUSTOM')) setRecentItem(item);
-	return {
-		key: uuid(),
-		id: item.id,
-		label: item.label,
-		brand: item.brand || '',
-		kcalPer100: item.kcalPer100 || calculateKcalPer100FromItems(item.items, item.amount),
-		amount: 100,
-		portions: item.portions || [],
-	};
+	return await createInstance(item);
 }
 
 export function flattenItem(item: Item): Item {

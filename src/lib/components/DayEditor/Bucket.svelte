@@ -3,11 +3,8 @@
 	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
-	import Dialog from 'as-comps/Dialog.svelte';
 	import { createEventDispatcher, tick } from 'svelte';
-	import IcAdd from '~icons/ic/round-plus';
 	import Expandable from '../Expandable.svelte';
-	import InstanceForm from '../InstanceForm.svelte';
 	const dispatch = createEventDispatcher();
 
 	export let label: string;
@@ -15,20 +12,11 @@
 
 	let open = false;
 
-	let consideredItem: ItemInstanceType;
-
-	async function considerItem(item: ItemInstanceType) {
-		consideredItem = item;
-		await tick();
-		amountInputElement.focus();
-	}
-
 	async function addItem(item: ItemInstanceType) {
 		open = true;
 		await tick();
 		items = [...items, item];
 		dispatch('update');
-		consideredItem = null;
 	}
 
 	function delItem(index: number) {
@@ -36,43 +24,7 @@
 		items = items;
 		dispatch('update');
 	}
-
-	let amountInputElement: HTMLInputElement;
 </script>
-
-<Dialog
-	includedTrigger={false}
-	open={!!consideredItem}
-	noCloseButton
-	on:dismiss={() => {
-		consideredItem = null;
-	}}
-	--as-dialog-width="90%"
-	--as-dialog-max-width="400px"
->
-	<div class="col">
-		<InstanceForm bind:amountInputElement bind:item={consideredItem}>
-			<svelte:fragment slot="inline-inputs">
-				<button class="btn tonal" on:click={() => addItem(consideredItem)}>
-					<IcAdd /> Add
-				</button>
-			</svelte:fragment>
-			<div class="col">
-				{#each consideredItem.portions as portion}
-					<button
-						class="btn tonal fill"
-						on:click={() => {
-							consideredItem.amount = portion.amount;
-							addItem(consideredItem);
-						}}
-					>
-						<IcAdd /> Add {portion.label} ({portion.amount} g|ml)
-					</button>
-				{/each}
-			</div>
-		</InstanceForm>
-	</div>
-</Dialog>
 
 <Expandable bind:open disabled={!items.length}>
 	<div slot="summary" class="row">
@@ -90,7 +42,7 @@
 				<ItemDrawer
 					selector
 					on:select={({ detail }) => {
-						considerItem(detail);
+						addItem(detail);
 					}}
 				/>
 			{/if}
@@ -105,7 +57,7 @@
 			<ItemDrawer
 				selector
 				on:select={({ detail }) => {
-					considerItem(detail);
+					addItem(detail);
 				}}
 			/>
 		{/if}
@@ -138,9 +90,5 @@
 		display: flex;
 		align-items: center;
 		min-height: 2em;
-	}
-
-	.fill {
-		width: 100%;
 	}
 </style>
