@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid';
 export const instanceCreatorState = writable(null);
 
 export function createInstance(item: Item): Promise<ItemInstance> {
-	console.trace('test');
 	const instance = {
 		key: uuid(),
 		id: item.id,

@@ -16,7 +16,7 @@
 
 	let amountInputElement: HTMLInputElement;
 
-	$: if ($instanceCreatorState && amountInputElement) {
+	$: if (amountInputElement) {
 		amountInputElement.scrollIntoView();
 		amountInputElement.focus();
 	}
@@ -41,7 +41,7 @@
 					<IcRoundPlaylistAdd />
 				</button>
 			</svelte:fragment>
-			{#each $instanceCreatorState.item.portions as portion}
+			{#each $instanceCreatorState.instance.portions as portion}
 				<button
 					class="btn tonal fill"
 					on:click={() => {
