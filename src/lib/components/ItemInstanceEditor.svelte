@@ -47,11 +47,11 @@
 </button>
 
 <Dialog
+	noCloseButton
 	includedTrigger={false}
 	bind:open={editing}
-	--as-dialog-padding="0.75em"
-	--as-dialog--close-btn-top="0.75em"
-	--as-dialog--close-btn-right="0.75em"
+	--as-dialog-width="90%"
+	--as-dialog-max-width="400px"
 >
 	<InstanceForm bind:item bind:amountInputElement on:update>
 		<svelte:fragment slot="inline-inputs">

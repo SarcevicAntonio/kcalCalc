@@ -32,6 +32,9 @@
 			{item.brand}
 		</span>
 	{/if}
+	{#if item.id.startsWith('CUSTOM')}
+		<Input bind:value={item.label} on:input={dispatchUpdate}>Custom Label</Input>
+	{/if}
 	<div class="row">
 		<div class="body-m">
 			{kcalDisplay(item.kcalPer100)} kcal Per 100x
