@@ -38,7 +38,7 @@
 		<InstanceForm bind:item={$instanceCreatorState.instance} bind:amountInputElement>
 			<svelte:fragment slot="inline-inputs">
 				<button class="btn tonal" on:click={() => confirm()}>
-					<IcRoundPlaylistAdd />
+					<IcRoundPlaylistAdd /> Track
 				</button>
 			</svelte:fragment>
 			{#each $instanceCreatorState.instance.portions as portion}
@@ -50,7 +50,7 @@
 					}}
 				>
 					<IcRoundPlaylistAdd />
-					{portion.label} ({portion.amount} g|ml)
+					Track {portion.label} ({portion.amount} g|ml)
 				</button>
 			{/each}
 		</InstanceForm>
