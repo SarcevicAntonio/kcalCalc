@@ -23,6 +23,9 @@
 <Dialog
 	let:toggle
 	bind:open
+	on:dismiss={() => {
+		editId = null;
+	}}
 	triggerClass="margin-left-auto {selector ? 'btn text' : ''} {triggerClass}"
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}
