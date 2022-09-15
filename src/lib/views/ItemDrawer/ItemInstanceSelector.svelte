@@ -18,6 +18,7 @@
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
 	import IcRoundRestore from '~icons/ic/round-restore';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
+	import IcRoundAccessTime from '~icons/ic/round-access-time';
 	import MdiWeight from '~icons/mdi/weight';
 	const dispatch = createEventDispatcher();
 
@@ -99,6 +100,10 @@
 	</button>
 {/if}
 
+{#if !externalEntries.length && !search}
+	<p class="recent-items-title"><IcRoundAccessTime /> Recent Items:</p>
+{/if}
+
 {#await recentItems.load()}
 	{#each { length: 10 } as _}
 		<ItemSkeleton />
@@ -136,5 +141,12 @@
 	.w100p {
 		width: 100%;
 		justify-content: flex-start;
+	}
+
+	.recent-items-title {
+		display: flex;
+		align-items: center;
+		gap: 0.25em;
+		color: var(--md-on-surface);
 	}
 </style>
