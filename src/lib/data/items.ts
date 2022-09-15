@@ -1,7 +1,7 @@
 import { createInstance } from '$lib/components/InstanceCreator';
 import { db } from '$lib/firebase';
 import { calculateKcalPer100FromItems } from '$lib/kcal';
-import { asyncDerived, asyncReadable, asyncWritable } from '@square/svelte-store';
+import { asyncDerived, asyncWritable } from '@square/svelte-store';
 import {
 	collection,
 	deleteDoc,
@@ -16,10 +16,10 @@ import { get } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
 import { user } from './user';
 
-export const items = asyncReadable<Item[]>(
-	null,
-	async () => {
-		const colRef = collection(db, `Users/${get(user).id}/Items`);
+export const items = asyncDerived<typeof user, Item[]>(
+	user,
+	async ($user) => {
+		const colRef = collection(db, `Users/${$user.id}/Items`);
 		console.count('getDocs items');
 		const snapshot = await getDocs(colRef);
 		const data: Item[] = [];
@@ -75,20 +75,16 @@ const getRecentItemIds = async (): Promise<string[]> => {
 };
 
 export const recentItems = asyncDerived(
-	user,
-	async () => {
+	items,
+	async ($items) => {
+		console.log('#### recetn tiems');
 		const recentItemIds = await getRecentItemIds();
 		if (!recentItemIds.length) return [];
-		const colRef = collection(db, `Users/${get(user).id}/Items`);
-		const queryInstance = query(colRef, where('id', 'in', recentItemIds));
-		console.log('getDocs recentItems', recentItemIds);
-		const querySnap = await getDocs(queryInstance);
-		const data: Item[] = [];
-		querySnap.forEach((doc) => {
-			data.push({ ...(doc.data() as Item), id: doc.id });
-		});
-		data.sort((a, b) => recentItemIds.indexOf(a.id) - recentItemIds.indexOf(b.id));
-		return data as Item[];
+		const recentItems = $items.filter((i) => recentItemIds.includes(i.id));
+		const sortedRecentItems = recentItems.sort(
+			(a, b) => recentItemIds.indexOf(a.id) - recentItemIds.indexOf(b.id)
+		);
+		return sortedRecentItems;
 	},
 	true,
 	[]
