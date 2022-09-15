@@ -14,7 +14,6 @@
 
 	async function addItem(item: ItemInstanceType) {
 		open = true;
-		await tick();
 		items = [...items, item];
 		dispatch('update');
 	}
