@@ -27,7 +27,7 @@
 </script>
 
 <Dialog
-	open={!!$instanceCreatorState}
+	isOpen={!!$instanceCreatorState}
 	on:dismiss={handleDismiss}
 	includedTrigger={false}
 	noCloseButton

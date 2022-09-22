@@ -49,7 +49,7 @@
 <Dialog
 	noCloseButton
 	includedTrigger={false}
-	bind:open={editing}
+	bind:isOpen={editing}
 	--as-dialog-width="90%"
 	--as-dialog-max-width="400px"
 >
