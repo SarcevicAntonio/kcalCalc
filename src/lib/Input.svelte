@@ -8,7 +8,7 @@
 
 	export let value: string | number = '';
 	export let placeholder = null;
-	export let type = 'text';
+	export let type: 'text' | 'calc' | 'number' = 'text';
 	export let min = undefined;
 	export let max = undefined;
 	export let name = '';

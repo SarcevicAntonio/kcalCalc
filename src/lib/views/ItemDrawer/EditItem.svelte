@@ -143,9 +143,9 @@
 					}}
 				/>
 				{#if $dataStore.amount || activeEl === sumInputEl}
-					<Input type="calc" bind:value={$dataStore.amount} bind:inputElement={sumInputEl}
-						>Amount Sum</Input
-					>
+					<Input type="calc" bind:value={$dataStore.amount} bind:inputElement={sumInputEl}>
+						Amount Sum
+					</Input>
 				{:else}
 					<Input type="calc" disabled value={calculateAmountSum($dataStore.items)}>Amount Sum</Input
 					>
@@ -179,7 +179,7 @@
 					<IcDelete />
 				</button>
 				<Input bind:value={portion.label}>Label</Input>
-				<Input type="number" bind:value={portion.amount}>Amount (g||ml)</Input>
+				<Input type="calc" bind:value={portion.amount}>Amount (g||ml)</Input>
 			</div>
 		{/each}
 	</div>
