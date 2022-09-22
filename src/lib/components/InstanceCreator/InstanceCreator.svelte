@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { Dialog } from 'as-comps';
+	import { tick } from 'svelte';
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
 	import { instanceCreatorState } from '.';
 	import InstanceForm from '../InstanceForm.svelte';
+
+	let amountInputElement: HTMLInputElement;
 
 	function confirm() {
 		$instanceCreatorState.resolve($instanceCreatorState.instance);
@@ -14,12 +17,13 @@
 		instanceCreatorState.set(null);
 	}
 
-	let amountInputElement: HTMLInputElement;
-
-	$: if (amountInputElement) {
-		amountInputElement.scrollIntoView();
+	async function focusInput() {
 		amountInputElement.focus();
+		await tick();
+		amountInputElement.scrollIntoView();
 	}
+
+	$: if (amountInputElement) focusInput();
 </script>
 
 <Dialog
