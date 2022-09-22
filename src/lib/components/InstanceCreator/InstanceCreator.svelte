@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Dialog } from 'as-comps';
-	import { tick } from 'svelte';
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
 	import { instanceCreatorState } from '.';
 	import InstanceForm from '../InstanceForm.svelte';
@@ -18,17 +17,15 @@
 	}
 
 	async function focusInput() {
-		amountInputElement.focus();
-		await tick();
 		amountInputElement.scrollIntoView();
+		amountInputElement.focus();
 	}
-
-	$: if (amountInputElement) focusInput();
 </script>
 
 <Dialog
 	isOpen={!!$instanceCreatorState}
 	on:dismiss={handleDismiss}
+	on:introend={focusInput}
 	includedTrigger={false}
 	noCloseButton
 	--as-dialog-width="90%"
