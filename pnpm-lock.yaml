@@ -18,6 +18,7 @@ specifiers:
   eslint-plugin-svelte3: ^3.4.1
   firebase: ^9.6.11
   fuse.js: ^6.5.3
+  html5-qrcode: ^2.2.1
   linkedom: ^0.14.7
   mathjs: ^10.4.3
   postcss: ^8.4.12
@@ -43,6 +44,7 @@ dependencies:
   date-fns: 2.28.0
   firebase: 9.6.11
   fuse.js: 6.5.3
+  html5-qrcode: 2.2.1
   linkedom: 0.14.7
   mathjs: 10.4.3
   uuid: 8.3.2
@@ -3128,6 +3130,10 @@ packages:
 
   /html-escaper/3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
+    dev: false
+
+  /html5-qrcode/2.2.1:
+    resolution: {integrity: sha512-itYnSlSxC3gNRe825mUkKaMzlmevLc4hpH2XLlhCdiEYIE3aMdQUr1XjQ9/zk7NuRMcYRerlbCaMKM+Z66KpSg==}
     dev: false
 
   /htmlparser2/7.2.0:

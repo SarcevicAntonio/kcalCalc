@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ItemCards from '$lib/components/ItemCards.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
+	import QrDialog from '$lib/components/QrDialog.svelte';
 	import {
 		customKcalAmountItem,
 		customKcalCountItem,
@@ -13,12 +14,12 @@
 	import Input from '$lib/Input.svelte';
 	import Fuse from 'fuse.js';
 	import { createEventDispatcher, onMount } from 'svelte';
+	import IcRoundAccessTime from '~icons/ic/round-access-time';
 	import IcItems from '~icons/ic/round-category';
 	import IcRoundNumbers from '~icons/ic/round-numbers';
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
 	import IcRoundRestore from '~icons/ic/round-restore';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
-	import IcRoundAccessTime from '~icons/ic/round-access-time';
 	import MdiWeight from '~icons/mdi/weight';
 	const dispatch = createEventDispatcher();
 
@@ -61,14 +62,17 @@
 <h2 class="headline-3 with-icon">
 	<IcRoundPlaylistAdd /> Track Item
 </h2>
-<Input
-	clearable
-	bind:inputElement
-	bind:value={search}
-	on:input={() => {
-		externalEntries = [];
-	}}>Search</Input
->
+<div class="row">
+	<Input
+		clearable
+		bind:inputElement
+		bind:value={search}
+		on:input={() => {
+			externalEntries = [];
+		}}>Search</Input
+	>
+	<QrDialog />
+</div>
 {#if search}
 	{#if externalEntries.length || loadingExternalItems}
 		<button class="btn tonal w100p" on:click={() => (externalEntries = [])}>
@@ -148,5 +152,12 @@
 		align-items: center;
 		gap: 0.25em;
 		color: var(--md-on-surface);
+	}
+
+	.row {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5em;
 	}
 </style>

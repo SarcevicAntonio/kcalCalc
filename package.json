@@ -21,6 +21,7 @@
 		"date-fns": "^2.28.0",
 		"firebase": "^9.6.11",
 		"fuse.js": "^6.5.3",
+		"html5-qrcode": "^2.2.1",
 		"linkedom": "^0.14.7",
 		"mathjs": "^10.4.3",
 		"uuid": "^8.3.2"
