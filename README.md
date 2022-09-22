@@ -30,6 +30,7 @@ kcalCalc can be self-hosted for yourself for free using Firebase and a Cloud Hos
   - VITE_MESSAGINGSENDERID
   - VITE_APPID
 - Enable Auth: Go to "Authentication" > "Get started" > "Google" > "Enable" > set "Project support email" field > "Save"
+  - Also set up your hosted app Domain under "Authentication" > "Settings" > "Authorized domains"
 - Enable Firestore: Go to "Firestore Database" > "Create database" > "Start in test mode" > "Next" > set "Cloud Firestore location" field near you > "Enable"
 - Setup Rules: "Firestore Database" > "Rules" > paste following
   - ```js
@@ -54,6 +55,12 @@ kcalCalc can be self-hosted for yourself for free using Firebase and a Cloud Hos
 - Copy env variables in a `.env` file
 - `pnpm i`
 - `pnpm dev`
+
+- firebase emulator usage can be toggled via `VITE_USE_EMULATION=true`.
+- firebase cli 
+  - install `curl -sL https://firebase.tools | bash`
+  - `firebase login`
+  - `firebase emulators:start`
 
 ### Svelte Style Guide
 
