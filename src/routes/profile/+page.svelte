@@ -33,9 +33,9 @@
 			</ul>
 			<hr />
 			{#await userSettings.load()}
-				<Input type="number" disabled>Kcal Day Limit / Warning</Input>
+				<Input type="calc" disabled>Kcal Day Limit / Warning</Input>
 			{:then}
-				<Input type="number" bind:value={$userSettings.kcalLimit}>Kcal Day Limit / Warning</Input>
+				<Input type="calc" bind:value={$userSettings.kcalLimit}>Kcal Day Limit / Warning</Input>
 			{/await}
 			<a
 				href="https://www.tk.de/service/app/2004134/kalorienrechner/einstieg.app?tkcm=ab"
