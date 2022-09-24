@@ -58,22 +58,18 @@ export const GET: RequestHandler = async (request) => {
 					}
 				});
 
-				const detailsLink = Array.from(document.querySelectorAll('a')).find((a) =>
-					a.textContent.includes('Details')
-				);
-				let possibleEan = null;
-				if (detailsLink) {
-					possibleEan = await fetch(detailsLink.href).then(async (detailsRes) => {
-						if (!detailsRes.ok) return null;
-						const { document } = parseHTML(await detailsRes.text());
-						const pWithEan = Array.from(document.querySelectorAll('p')).find((p) =>
-							p.textContent.includes('EAN:')
-						);
-
-						if (!pWithEan) return null;
-						return pWithEan.textContent.match(/EAN: ([0-9]+)/)[1];
-					});
-				}
+				const itemFddbId = a.href.split('/')[2].slice(0, -5);
+				const possibleEan = await fetch(
+					`https://fddb.info/db/de/lebensmittel/${itemFddbId}/index.html`
+				).then(async (detailsRes) => {
+					if (!detailsRes.ok) return null;
+					const { document } = parseHTML(await detailsRes.text());
+					const pWithEan = Array.from(document.querySelectorAll('p')).find((p) =>
+						p.textContent.includes('EAN:')
+					);
+					if (!pWithEan) return null;
+					return pWithEan.textContent.match(/EAN: ([0-9]+)/)[1];
+				});
 
 				if (kcalPer100 > 0) {
 					const ingredient: Item = {
