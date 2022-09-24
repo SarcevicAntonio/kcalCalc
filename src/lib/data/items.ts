@@ -173,6 +173,7 @@ export interface Item {
 	portions?: Portion[];
 	createdAt?: number;
 	updatedAt?: number;
+	ean?: number;
 }
 
 export interface ItemInstance {

@@ -1,5 +1,5 @@
 export const fuseItemSettings = {
-	keys: ['label', 'brand'],
+	keys: ['label', 'brand', 'ean'],
 	ignoreLocation: true,
 };
 

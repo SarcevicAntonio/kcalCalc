@@ -1,7 +1,8 @@
 <script lang="ts">
-	import TrackNow from '$lib/components/TrackNow.svelte';
+	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte';
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
+	import TrackNow from '$lib/components/TrackNow.svelte';
 	import {
 		createItemStore,
 		defaultPortion,
@@ -64,6 +65,7 @@
 	<Input disabled>Label</Input>
 	<Input disabled>Brand / Date / Whatever</Input>
 	<Input disabled>kcal per 100 g || ml</Input>
+	<Input disabled>EAN (Barcode)</Input>
 
 	{#each { length: 2 } as _}
 		<ItemSkeleton>
@@ -104,6 +106,12 @@
 			kcal per 100 g || ml
 		</Input>
 	{/if}
+	<Input type="number" bind:value={$dataStore.ean}
+		>EAN (Barcode)
+		<svelte:fragment slot="inline">
+			<BarCodeScanDialog on:scanned={({ detail: code }) => ($dataStore.ean = code)} />
+		</svelte:fragment>
+	</Input>
 
 	<div class="card filled col">
 		<div class="row">

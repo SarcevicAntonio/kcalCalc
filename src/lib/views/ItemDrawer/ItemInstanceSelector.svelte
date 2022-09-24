@@ -68,8 +68,12 @@
 	<IcRoundPlaylistAdd /> Track Item
 </h2>
 <div class="row">
-	<Input clearable bind:inputElement bind:value={search} on:input={resetExternal}>Search</Input>
-	<BarCodeScanDialog on:scanned={({ detail: code }) => (search = code)} />
+	<Input clearable bind:inputElement bind:value={search} on:input={resetExternal}
+		>Search
+		<svelte:fragment slot="inline">
+			<BarCodeScanDialog on:scanned={({ detail: code }) => (search = code)} />
+		</svelte:fragment>
+	</Input>
 </div>
 {#if search}
 	{#if externalEntries.length || loadingExternalItems}
