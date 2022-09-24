@@ -1,7 +1,7 @@
 <script lang="ts">
+	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte';
 	import ItemCards from '$lib/components/ItemCards.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
-	import QrDialog from '$lib/components/QrDialog.svelte';
 	import {
 		customKcalAmountItem,
 		customKcalCountItem,
@@ -69,8 +69,7 @@
 </h2>
 <div class="row">
 	<Input clearable bind:inputElement bind:value={search} on:input={resetExternal}>Search</Input>
-
-	<QrDialog />
+	<BarCodeScanDialog on:scanned={({ detail: code }) => (search = code)} />
 </div>
 {#if search}
 	{#if externalEntries.length || loadingExternalItems}
