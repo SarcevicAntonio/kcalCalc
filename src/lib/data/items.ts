@@ -168,7 +168,7 @@ export interface Item {
 	brand?: string;
 	label: string;
 	kcalPer100: number;
-	amount: number;
+	amount?: number;
 	items?: ItemInstance[];
 	portions?: Portion[];
 	createdAt?: number;
