@@ -39,6 +39,11 @@
 		loadingExternalItems = false;
 	}
 
+	function resetExternal() {
+		externalEntries = [];
+		loadingExternalItems = false;
+	}
+
 	async function handleSelect({ detail: item }: { detail: Item }) {
 		// is this item external?
 		if (externalEntries.length) {
@@ -63,19 +68,13 @@
 	<IcRoundPlaylistAdd /> Track Item
 </h2>
 <div class="row">
-	<Input
-		clearable
-		bind:inputElement
-		bind:value={search}
-		on:input={() => {
-			externalEntries = [];
-		}}>Search</Input
-	>
+	<Input clearable bind:inputElement bind:value={search} on:input={resetExternal}>Search</Input>
+
 	<QrDialog />
 </div>
 {#if search}
 	{#if externalEntries.length || loadingExternalItems}
-		<button class="btn tonal w100p" on:click={() => (externalEntries = [])}>
+		<button class="btn tonal w100p" on:click={resetExternal}>
 			<IcItems /> Back to saved items
 		</button>
 	{:else}
