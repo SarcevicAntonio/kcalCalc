@@ -195,7 +195,8 @@
 
 <nav class="fab-bar">
 	{#await dataStore.load() then}
-		<Dialog noCloseButton let:toggle>
+		<!-- hotfix for dialog destory error "Cannot read properties of null (reading 'removeChild')" -->
+		<Dialog noCloseButton let:toggle dialogOut={() => null} backdropOut={() => null}>
 			<svelte:fragment slot="trigger-label">
 				<IcDelete />
 			</svelte:fragment>
