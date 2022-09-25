@@ -30,9 +30,11 @@ function getClient() {
 		const app = initializeApp(firebaseConfig);
 		const db = getFirestore(app);
 		const auth = getAuth(app);
-		if (useEmulation) {
-			connectAuthEmulator(auth, 'http://localhost:9099');
-			connectFirestoreEmulator(db, 'localhost', 8081);
+		if (useEmulation && browser) {
+			const { hostname } = window.location;
+			const url = 'http://' + hostname;
+			connectAuthEmulator(auth, url + ':9099');
+			connectFirestoreEmulator(db, hostname, 8081);
 		}
 		if (browser) enableIndexedDbPersistence(db);
 		return app;

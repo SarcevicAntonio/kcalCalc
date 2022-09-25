@@ -12,12 +12,15 @@
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"package": "svelte-kit package",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"emulators:start": "firebase emulators:start",
+		"emulators:stop": "lsof -t -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 | xargs kill -9"
 	},
 	"dependencies": {
 		"@firebase/app-compat": "~0.1.22",
 		"@firebase/app-types": "~0.7.0",
 		"@square/svelte-store": "^0.1.0",
+		"@vitejs/plugin-basic-ssl": "^0.1.2",
 		"@zxing/browser": "^0.1.1",
 		"@zxing/library": "^0.19.1",
 		"date-fns": "^2.28.0",
