@@ -71,7 +71,9 @@
 	<Input clearable bind:inputElement bind:value={search} on:input={resetExternal}
 		>Search
 		<svelte:fragment slot="inline">
-			<BarCodeScanDialog on:scanned={({ detail: code }) => (search = code)} />
+			{#if !search}
+				<BarCodeScanDialog on:scanned={({ detail: code }) => (search = code)} />
+			{/if}
 		</svelte:fragment>
 	</Input>
 </div>
