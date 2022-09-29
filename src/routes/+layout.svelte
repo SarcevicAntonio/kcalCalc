@@ -44,7 +44,7 @@
 			<IcRoundCloudOff color="var(--md-error)" />
 		{/if}
 		{#if $user}
-			<a sveltekit:prefetch class="btn text" href="/profile">
+			<a data-sveltekit-prefetch class="btn text" href="/profile">
 				{#if $user.photoURL && !imgError}
 					<img
 						src={$user.photoURL}

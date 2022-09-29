@@ -50,7 +50,7 @@
 
 {#if $user}
 	<nav class="fab-bar">
-		<a sveltekit:prefetch href="/"><IcHome /> Go Home</a>
+		<a data-sveltekit-prefetch href="/"><IcHome /> Go Home</a>
 	</nav>
 {/if}
 

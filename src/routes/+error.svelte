@@ -16,14 +16,14 @@
 	<p>Maybe try reloading or logging in.</p>
 
 	<nav class="fab-bar">
-		<a sveltekit:prefetch href="/auth">
+		<a data-sveltekit-prefetch href="/auth">
 			<IconLogin /> Login
 		</a>
 	</nav>
 {:else}
 	<p>Maybe try reloading or going home.</p>
 	<nav class="fab-bar">
-		<a sveltekit:prefetch href="/">
+		<a data-sveltekit-prefetch href="/">
 			<IcHome />
 		</a>
 	</nav>
