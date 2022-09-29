@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { decodeUriComponentToObj } from '$lib/base64';
 	import InstanceCreator from '$lib/components/InstanceCreator/InstanceCreator.svelte';
@@ -26,6 +27,7 @@
 		const item = decodeUriComponentToObj(uriComponent) as Item;
 		await saveExternalItem(item);
 		editId = item.id;
+		goto('/');
 	};
 
 	const uriComponent = $page.url.searchParams.get('add');
