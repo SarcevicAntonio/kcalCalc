@@ -24,7 +24,7 @@
 	onMount(async () => {
 		videoInputDevices = await BrowserCodeReader.listVideoInputDevices();
 		const possibleBackCam = videoInputDevices.find((d) => d.label.includes('back'));
-		selectedDeviceId = possibleBackCam.deviceId || videoInputDevices[0].deviceId;
+		selectedDeviceId = possibleBackCam?.deviceId || videoInputDevices[0].deviceId;
 	});
 
 	async function startScanner() {
