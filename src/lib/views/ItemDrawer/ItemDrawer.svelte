@@ -16,13 +16,13 @@
 	export let excludeId = '';
 	export let noCustomKcal = false;
 	export let triggerClass = '';
-	export let open = false;
+	export let isOpen = false;
 	export let editId: string = null;
 </script>
 
 <Dialog
 	let:toggle
-	bind:open
+	bind:isOpen
 	on:dismiss={() => {
 		editId = null;
 	}}

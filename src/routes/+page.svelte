@@ -70,7 +70,7 @@
 			<IcHome />
 		</button>
 	{/if}
-	<ItemDrawer {editId} open={editId} />
+	<ItemDrawer {editId} isOpen={!!editId} />
 </nav>
 
 <InstanceCreator />

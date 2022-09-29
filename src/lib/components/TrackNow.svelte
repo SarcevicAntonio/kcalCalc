@@ -8,13 +8,13 @@
 	export let todayDate = toISODateString(new Date());
 
 	let itemInstance: ItemInstance;
-	let open = false;
+	let isOpen = false;
 	let todayData: Day;
 
 	async function startFlow() {
 		itemInstance = await instantiateItem(item);
 		if (!itemInstance) return;
-		open = true;
+		isOpen = true;
 	}
 
 	async function addTo(mealLabel: string) {
@@ -23,7 +23,7 @@
 		todayData.meals[mealIndex].intake = [...todayData.meals[mealIndex].intake, itemInstance];
 		setDayData(todayDate, todayData);
 		await weekData.reload();
-		open = false;
+		isOpen = false;
 	}
 </script>
 
@@ -32,7 +32,7 @@
 </button>
 
 <Dialog
-	bind:open
+	bind:isOpen
 	noCloseButton
 	includedTrigger={false}
 	--as-dialog-width="90%"
