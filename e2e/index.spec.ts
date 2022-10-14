@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
+	// TODO: Replace beforeEach with IndexedDB Session Sharing
+	// https://github.com/microsoft/playwright/discussions/10715#discussioncomment-1904812
 	await page.goto(`/`);
 	const [popup] = await Promise.all([
 		page.waitForEvent('popup'),
