@@ -15,7 +15,7 @@
 
 	let isOpen = false;
 	let codeReader = new BrowserMultiFormatOneDReader();
-	let videoInputDevices: MediaDeviceInfo[];
+	let videoInputDevices: MediaDeviceInfo[] = [];
 	let selectedDeviceId: string;
 	let previewElem: HTMLVideoElement;
 	let controls: IScannerControls;
@@ -24,13 +24,10 @@
 	onMount(async () => {
 		videoInputDevices = await BrowserCodeReader.listVideoInputDevices();
 		const possibleBackCam = videoInputDevices.find((d) => d.label.includes('back'));
-		selectedDeviceId = possibleBackCam?.deviceId || videoInputDevices[0].deviceId;
+		selectedDeviceId = possibleBackCam?.deviceId || videoInputDevices[0]?.deviceId;
 	});
 
 	async function startScanner() {
-		while (!videoInputDevices.length) {
-			console.log('waiting for videoInputDevices');
-		}
 		closeScanner();
 		controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result) => {
 			if (!result) return;
@@ -59,46 +56,48 @@
 	}
 </script>
 
-<Dialog
-	noCloseButton
-	triggerClass="inline-btn tonal"
-	on:introend={startScanner}
-	on:dismiss={closeScanner}
-	bind:isOpen
->
-	<svelte:fragment slot="trigger-label">
-		<IcRoundBarcode />
-	</svelte:fragment>
-	{#if !controls}
-		<div class="init">
-			<IcRoundQrCodeScanner />
-			<span>Initializing Scanner...</span>
-		</div>
-	{/if}
-	<video
-		bind:this={previewElem}
-		height={!controls ? 0 : undefined}
-		width={!controls ? 0 : undefined}
+{#if videoInputDevices.length}
+	<Dialog
+		noCloseButton
+		triggerClass="inline-btn tonal"
+		on:introend={startScanner}
+		on:dismiss={closeScanner}
+		bind:isOpen
 	>
-		<track kind="captions" />
-	</video>
-	{#if controls}
-		<div class="controls">
-			{#if videoInputDevices.length > 1}
-				<button class="btn tonal" on:click={switchSelectedDevice}><IcRoundCameraswitch /></button>
-			{/if}
-			{#if controls.switchTorch}
-				<button class="btn tonal" on:click={toggleTorch}>
-					{#if !isTorchOn}
-						<IcRoundFlashlightOn />
-					{:else}
-						<IcRoundFlashlightOff />
-					{/if}
-				</button>
-			{/if}
-		</div>
-	{/if}
-</Dialog>
+		<svelte:fragment slot="trigger-label">
+			<IcRoundBarcode />
+		</svelte:fragment>
+		{#if !controls}
+			<div class="init">
+				<IcRoundQrCodeScanner />
+				<span>Initializing Scanner...</span>
+			</div>
+		{/if}
+		<video
+			bind:this={previewElem}
+			height={!controls ? 0 : undefined}
+			width={!controls ? 0 : undefined}
+		>
+			<track kind="captions" />
+		</video>
+		{#if controls}
+			<div class="controls">
+				{#if videoInputDevices.length > 1}
+					<button class="btn tonal" on:click={switchSelectedDevice}><IcRoundCameraswitch /></button>
+				{/if}
+				{#if controls.switchTorch}
+					<button class="btn tonal" on:click={toggleTorch}>
+						{#if !isTorchOn}
+							<IcRoundFlashlightOn />
+						{:else}
+							<IcRoundFlashlightOff />
+						{/if}
+					</button>
+				{/if}
+			</div>
+		{/if}
+	</Dialog>
+{/if}
 
 <style>
 	video {
