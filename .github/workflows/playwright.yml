@@ -18,7 +18,7 @@ jobs:
       VITE_USE_EMULATION: true
     steps:
       - name: echo env
-        run: echo $VITE_MESSAGINGSENDERID
+        run: printenv | more
       # - name: Checkout
       #   uses: actions/checkout@v3
       # - name: Setup node
