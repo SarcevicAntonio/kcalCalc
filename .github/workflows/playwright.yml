@@ -8,9 +8,10 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    env:
-      VITE_USE_EMULATION: true
+    environment: e2e
     steps:
+      - name: echo env
+        run: printenv | more
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup node
@@ -26,7 +27,7 @@ jobs:
       - name: Install firebase emulator
         run: npm install -g firebase-tools
       - name: Run e2e tests against firebase emulator
-        run: firebase emulators:exec 'pnpm dlx playwright test'
+        run: firebase emulators:exec 'pnpm e2e'
       - uses: actions/upload-artifact@v3
         if: always()
         with:
