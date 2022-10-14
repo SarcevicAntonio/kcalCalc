@@ -15,9 +15,9 @@
 	export let selector = false;
 	export let excludeId = '';
 	export let noCustomKcal = false;
-	export let triggerClass = '';
 	export let isOpen = false;
 	export let editId: string = null;
+	export let triggerTestId = '';
 </script>
 
 <Dialog
@@ -26,7 +26,10 @@
 	on:dismiss={() => {
 		editId = null;
 	}}
-	triggerClass="margin-left-auto {selector ? 'btn text' : ''} {triggerClass}"
+	triggerProps={{
+		class: `margin-left-auto ${selector ? 'btn text' : ''}`,
+		'data-testid': triggerTestId,
+	}}
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}
 	dialogOut={fly}

@@ -14,7 +14,7 @@ specifiers:
   '@vitejs/plugin-basic-ssl': ^0.1.2
   '@zxing/browser': ^0.1.1
   '@zxing/library': ^0.19.1
-  as-comps: ^0.0.22
+  as-comps: ^0.0.24
   autoprefixer: ^10.4.4
   date-fns: ^2.28.0
   eslint: ^7.32.0
@@ -62,7 +62,7 @@ devDependencies:
   '@types/uuid': 8.3.4
   '@typescript-eslint/eslint-plugin': 5.20.0_eopjzrbawp6apz73lbz4cvqe6y
   '@typescript-eslint/parser': 5.20.0_sgaiclxgc5mltnpgmg7py4v6ca
-  as-comps: 0.0.22_postcss@8.4.12
+  as-comps: 0.0.24_postcss@8.4.12
   autoprefixer: 10.4.4_postcss@8.4.12
   eslint: 7.32.0
   eslint-config-prettier: 8.5.0_eslint@7.32.0
@@ -1670,8 +1670,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /as-comps/0.0.22_postcss@8.4.12:
-    resolution: {integrity: sha512-n7ocUqatSaO7tJ3buzA/E7NRFzC4BBVgnKMp5RqJhls/FRITK9NIrJsE5LqhDWnhFI3bjOA3fW4YxOj6Ht7VNA==}
+  /as-comps/0.0.24_postcss@8.4.12:
+    resolution: {integrity: sha512-fCbLj1kxOJ0UbW3L/7P3N5P1RMButYlJ0PDFI7EiWeY4q5zUjNB+XoW7Z+KbWEGO0Cl4Ar0Na/YZCYX2NWzFJw==}
     dependencies:
       fuse.js: 6.5.3
       postcss-preset-env: 7.8.2_postcss@8.4.12
@@ -1774,9 +1774,9 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001419
-      electron-to-chromium: 1.4.257
+      electron-to-chromium: 1.4.282
       node-releases: 2.0.6
-      update-browserslist-db: 1.0.9_browserslist@4.21.4
+      update-browserslist-db: 1.0.10_browserslist@4.21.4
     dev: true
 
   /buffer-crc32/0.2.13:
@@ -1957,8 +1957,8 @@ packages:
     resolution: {integrity: sha512-Rh7AAopF2ckPXe/VBcoUS9JrCZNSyc60+KpgE6X25vpVxA32TmiqvExjkfhwP4wGSb6Xe8Z/JIyGqwgx/zZYFA==}
     dev: true
 
-  /cssdb/7.0.1:
-    resolution: {integrity: sha512-pT3nzyGM78poCKLAEy2zWIVX2hikq6dIrjuZzLV98MumBg+xMTNYfHx7paUlfiRTgg91O/vR889CIf+qiv79Rw==}
+  /cssdb/7.0.2:
+    resolution: {integrity: sha512-Vm4b6P/PifADu0a76H0DKRNVWq3Rq9xa/Nx6oEMUBJlwTUuZoZ3dkZxo8Gob3UEL53Cq+Ma1GBgISed6XEBs3w==}
     dev: true
 
   /cssesc/3.0.0:
@@ -2064,8 +2064,8 @@ packages:
     resolution: {integrity: sha512-/s3+fwhKf1YK4k7btOImOzCQLpUjS6MaPf0ODTNuT4eTM1Bg4itBpLkydhOzJmpmH6Z9eXFyuuK5czsmzRzwtw==}
     dev: true
 
-  /electron-to-chromium/1.4.257:
-    resolution: {integrity: sha512-C65sIwHqNnPC2ADMfse/jWTtmhZMII+x6ADI9gENzrOiI7BpxmfKFE84WkIEl5wEg+7+SfIkwChDlsd1Erju2A==}
+  /electron-to-chromium/1.4.282:
+    resolution: {integrity: sha512-Dki0WhHNh/br/Xi1vAkueU5mtIc9XLHcMKB6tNfQKk+kPG0TEUjRh5QEMAUbRp30/rYNMFD1zKKvbVzwq/4wmg==}
     dev: true
 
   /emoji-regex/8.0.0:
@@ -4154,7 +4154,7 @@ packages:
       css-blank-pseudo: 3.0.3_postcss@8.4.12
       css-has-pseudo: 3.0.4_postcss@8.4.12
       css-prefers-color-scheme: 6.0.3_postcss@8.4.12
-      cssdb: 7.0.1
+      cssdb: 7.0.2
       postcss: 8.4.12
       postcss-attribute-case-insensitive: 5.0.2_postcss@8.4.12
       postcss-clamp: 4.1.0_postcss@8.4.12
@@ -4948,8 +4948,8 @@ packages:
       webpack-virtual-modules: 0.4.4
     dev: true
 
-  /update-browserslist-db/1.0.9_browserslist@4.21.4:
-    resolution: {integrity: sha512-/xsqn21EGVdXI3EXSum1Yckj3ZVZugqyOZQ/CxYPBD/R+ko9NSUScf8tFF4dOKY+2pvSSJA/S+5B8s4Zr4kyvg==}
+  /update-browserslist-db/1.0.10_browserslist@4.21.4:
+    resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'

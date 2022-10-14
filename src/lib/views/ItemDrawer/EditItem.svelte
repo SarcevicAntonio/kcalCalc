@@ -51,6 +51,13 @@
 		$dataStore.kcalPer100 = 0;
 		$dataStore.items = [...$dataStore.items, newItem];
 	}
+
+	let initialLoading = false;
+	async function loadData() {
+		initialLoading = true;
+		await dataStore.load();
+		initialLoading = false;
+	}
 </script>
 
 <h2 class="headline-3 with-icon">
@@ -61,7 +68,7 @@
 	{/if}
 </h2>
 
-{#await dataStore.load()}
+{#await loadData()}
 	<Input disabled>Label</Input>
 	<Input disabled>Brand / Date / Whatever</Input>
 	<Input disabled>kcal per 100 g || ml</Input>
@@ -232,7 +239,7 @@
 	{/await}
 	<button on:click={() => dispatch('done', $dataStore)}>
 		<IcArrowBack />
-		{#if !selector}
+		{#if !selector || initialLoading}
 			Back
 		{:else}
 			Select

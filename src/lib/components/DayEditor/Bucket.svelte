@@ -3,11 +3,12 @@
 	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
 	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
-	import { createEventDispatcher, tick } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import Expandable from '../Expandable.svelte';
 	const dispatch = createEventDispatcher();
 
 	export let label: string;
+	export let date: string;
 	export let items: ItemInstanceType[];
 
 	let open = false;
@@ -39,6 +40,7 @@
 				</span>
 			{:else}
 				<ItemDrawer
+					triggerTestId="track-item-{label}-{date}"
 					selector
 					on:select={({ detail }) => {
 						addItem(detail);
@@ -48,7 +50,7 @@
 		</div>
 	</div>
 
-	<div class="col">
+	<div class="col" data-testid="bucket-{label}-{date}">
 		{#if items.length}
 			{#each items as item, index (item.key)}
 				<ItemInstanceEditor bind:item on:delete={() => delItem(index)} on:update />

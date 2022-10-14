@@ -10,7 +10,7 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<Dialog let:toggle triggerClass="btn text" noCloseButton>
+<Dialog let:toggle triggerProps={{ class: 'btn text' }} noCloseButton>
 	<svelte:fragment slot="trigger-label">
 		<IcPortion />
 	</svelte:fragment>

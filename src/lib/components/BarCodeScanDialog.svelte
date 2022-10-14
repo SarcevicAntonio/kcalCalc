@@ -59,7 +59,7 @@
 {#if videoInputDevices.length}
 	<Dialog
 		noCloseButton
-		triggerClass="inline-btn tonal"
+		triggerProps={{ class: 'inline-btn tonal' }}
 		on:introend={startScanner}
 		on:dismiss={closeScanner}
 		bind:isOpen

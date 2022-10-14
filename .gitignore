@@ -9,4 +9,5 @@ node_modules
 *debug.log
 /test-results/
 /playwright-report/
+/reports/
 /playwright/.cache/
