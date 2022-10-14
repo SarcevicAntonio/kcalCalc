@@ -8,10 +8,17 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    environment: e2e
+    env:
+      VITE_APIKEY: ${{ secrets.VITE_APIKEY }}
+      VITE_AUTHDOMAIN: ${{ secrets.VITE_AUTHDOMAIN }}
+      VITE_PROJECTID: ${{ secrets.VITE_PROJECTID }}
+      VITE_STORAGEBUCKET: ${{ secrets.VITE_STORAGEBUCKET }}
+      VITE_MESSAGINGSENDERID: ${{ secrets.VITE_MESSAGINGSENDERID }}
+      VITE_APPID: ${{ secrets.VITE_APPID }}
+      VITE_USE_EMULATION: true
     steps:
       - name: echo env
-        run: echo "$VITE_MESSAGINGSENDERID"
+        run: echo $VITE_MESSAGINGSENDERID
       # - name: Checkout
       #   uses: actions/checkout@v3
       # - name: Setup node
