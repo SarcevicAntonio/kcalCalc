@@ -30,6 +30,7 @@
 		class: `margin-left-auto ${selector ? 'btn text' : ''}`,
 		'data-testid': triggerTestId,
 	}}
+	data-testid="item-drawer"
 	dialogIn={fly}
 	transitionOptions={{ x: 500 }}
 	dialogOut={fly}

@@ -92,6 +92,7 @@
 			{#if !$dataStore.brand}
 				<button
 					class="inline-btn"
+					data-testid="set-date-as-brand"
 					on:click={() => {
 						$dataStore.brand = toISODateString(new Date());
 					}}

@@ -31,13 +31,7 @@
 	<IcRoundPlaylistAdd />
 </button>
 
-<Dialog
-	bind:isOpen
-	noCloseButton
-	includedTrigger={false}
-	--as-dialog-width="90%"
-	--as-dialog-max-width="400px"
->
+<Dialog bind:isOpen includedTrigger={false} --as-dialog-width="90%" --as-dialog-max-width="400px">
 	<div class="col">
 		<h2 class="headline-3 with-icon">
 			<IcRoundPlaylistAdd />

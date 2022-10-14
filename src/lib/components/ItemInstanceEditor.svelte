@@ -47,8 +47,8 @@
 </button>
 
 <Dialog
-	noCloseButton
 	includedTrigger={false}
+	data-testid="item-instance-editor"
 	bind:isOpen={editing}
 	--as-dialog-width="90%"
 	--as-dialog-max-width="400px"

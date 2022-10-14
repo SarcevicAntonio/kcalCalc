@@ -27,7 +27,6 @@
 	on:dismiss={handleDismiss}
 	on:introend={focusInput}
 	includedTrigger={false}
-	noCloseButton
 	--as-dialog-width="90%"
 	--as-dialog-max-width="400px"
 >
