@@ -1,13 +1,15 @@
 <script>
-	import { auth } from '$lib/firebase';
+	import { goto } from '$app/navigation';
 	import { user, userSettings } from '$lib/data/user';
+	import { auth } from '$lib/firebase';
+	import Input from '$lib/Input.svelte';
 	import { signOut } from 'firebase/auth';
 	import IcHome from '~icons/ic/round-home';
 	import IcLogout from '~icons/ic/round-logout';
-	import Input from '$lib/Input.svelte';
 
 	async function logout() {
 		await signOut(auth);
+		goto('/');
 	}
 
 	let imgError = false;
