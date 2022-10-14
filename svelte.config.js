@@ -14,11 +14,13 @@ const config = {
 	kit: {
 		adapter: adapter(),
 	},
-	// vitePlugin: {
-	// 	experimental: {
-	// 		inspector: true,
-	// 	},
-	// },
+	vitePlugin: {
+		experimental: {
+			inspector: {
+				holdMode: true,
+			},
+		},
+	},
 };
 
 export default config;
