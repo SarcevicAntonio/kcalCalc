@@ -21,7 +21,6 @@ test('track external item', async ({ page }) => {
 	const label = 'Breakfast';
 	const date = toISODateString(new Date());
 	const todayBreakfastBucket = page.getByTestId(`bucket-${label}-${date}`);
-	expect(await todayBreakfastBucket.getByText('Nutella').isVisible()).toBeFalsy();
 
 	await page.getByTestId(`track-item-${label}-${date}`).click();
 	await page.getByLabel('Search').fill('Nutella');
@@ -30,7 +29,6 @@ test('track external item', async ({ page }) => {
 	await page.getByRole('button', { name: 'Select' }).click();
 	await page.getByLabel('Amount', { exact: true }).fill('1337');
 	await page.getByRole('button', { name: 'Track' }).click();
-	await todayBreakfastBucket.waitFor({ state: 'visible' });
 
 	expect(await todayBreakfastBucket.getByText('Nutella').isVisible()).toBeTruthy();
 });
