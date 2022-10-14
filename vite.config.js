@@ -16,6 +16,6 @@ export default defineConfig(({ mode }) => ({
 			compiler: 'svelte',
 		}),
 		removeConsole(),
-		mode === 'development' && basicSsl(),
+		// mode === 'development' && basicSsl(),
 	],
 }));
