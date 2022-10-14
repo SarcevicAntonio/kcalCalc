@@ -11,6 +11,7 @@
 </script>
 
 <button
+	{...$$restProps}
 	class="card {buttonClass}"
 	{disabled}
 	on:click={() => {

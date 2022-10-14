@@ -18,17 +18,39 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('track external item', async ({ page }) => {
-	const label = 'Breakfast';
+	const itemLabel = 'Nutella';
+	const bucketLabel = 'Breakfast';
 	const date = toISODateString(new Date());
-	const todayBreakfastBucket = page.getByTestId(`bucket-${label}-${date}`);
 
-	await page.getByTestId(`track-item-${label}-${date}`).click();
-	await page.getByLabel('Search').fill('Nutella');
+	await page.getByTestId(`track-item-${bucketLabel}-${date}`).click();
+	await page.getByLabel('Search').fill(itemLabel);
 	await page.getByRole('button', { name: 'Search for item on internet' }).click();
-	await page.getByRole('button', { name: 'Nutella 6 port. Ferrero 539 kcal%g||ml' }).click();
+	await page.locator(`button:has-text("Nutella")`).first().click();
 	await page.getByRole('button', { name: 'Select' }).click();
 	await page.getByLabel('Amount', { exact: true }).fill('1337');
 	await page.getByRole('button', { name: 'Track' }).click();
 
-	expect(await todayBreakfastBucket.getByText('Nutella').isVisible()).toBeTruthy();
+	const todayBreakfastBucket = page.getByTestId(`bucket-${bucketLabel}-${date}`);
+	expect(await todayBreakfastBucket.getByText(itemLabel).isVisible()).toBeTruthy();
+});
+
+test('create new item and track from edit page', async ({ page }) => {
+	const itemLabel = 'Emmer-Dinkelbrot';
+	const bucketLabel = 'Snacks';
+	const date = toISODateString(new Date());
+
+	await page.getByRole('button', { name: 'Items' }).click();
+	await page.getByRole('button', { name: 'New Item' }).click();
+	await page.getByLabel('Label').fill(itemLabel);
+	await page.getByLabel('Brand / Date / Whatever').fill('Essmanns');
+	await page.getByLabel('kcal per 100 g || ml').fill('284');
+	await page.getByTestId('track-now').click();
+	await page.getByLabel('Amount').fill('1337');
+	await page.getByRole('button', { name: 'Track' }).click();
+	await page.getByRole('button', { name: bucketLabel }).click();
+	await page.keyboard.press('Escape');
+	await page.getByTestId(`bucket-button-${bucketLabel}-${date}`).click();
+
+	const todayBreakfastBucket = page.getByTestId(`bucket-${bucketLabel}-${date}`);
+	expect(await todayBreakfastBucket.getByText(itemLabel).isVisible()).toBeTruthy();
 });

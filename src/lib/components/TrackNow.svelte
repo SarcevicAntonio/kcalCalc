@@ -27,7 +27,7 @@
 	}
 </script>
 
-<button on:click={startFlow}>
+<button on:click={startFlow} data-testid="track-now">
 	<IcRoundPlaylistAdd />
 </button>
 

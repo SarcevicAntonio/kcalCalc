@@ -26,7 +26,7 @@
 	}
 </script>
 
-<Expandable bind:open disabled={!items.length}>
+<Expandable bind:open disabled={!items.length} data-testid="bucket-button-{label}-{date}">
 	<div slot="summary" class="row">
 		<span class="title-l">{label}</span>
 		<div class="bucket-info">
