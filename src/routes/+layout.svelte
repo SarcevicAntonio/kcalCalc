@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { items } from '$lib/data/items';
+	import { items, recentItems } from '$lib/data/items';
 	import { user } from '$lib/data/user';
 	import { auth } from '$lib/firebase';
 	import Login from '$lib/views/Login.svelte';
@@ -26,6 +26,7 @@
 		};
 
 		items.load();
+		recentItems.load();
 	});
 
 	let imgError = false;

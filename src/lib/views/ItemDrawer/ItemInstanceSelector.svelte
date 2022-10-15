@@ -112,38 +112,32 @@
 	<p class="recent-items-title"><IcRoundAccessTime /> Recent Items:</p>
 {/if}
 
-{#await recentItems.load()}
+{#if !loadingExternalItems}
+	<ItemCards
+		skeletonId={handlingId}
+		{excludeId}
+		items={externalEntries.length
+			? externalEntries
+			: search
+			? new Fuse($items, fuseItemSettings).search(search).map(mapItem)
+			: $recentItems}
+		on:select={handleSelect}
+	>
+		{#if externalEntries.length}
+			<MdiCloudSearch />
+		{:else if search}
+			<IcItems />
+		{:else}
+			<IcRoundRestore />
+		{/if}
+
+		No {externalEntries.length ? 'external' : search ? 'saved' : 'recently used'} items found
+	</ItemCards>
+{:else}
 	{#each { length: 10 } as _}
 		<ItemSkeleton />
 	{/each}
-{:then}
-	{#if !loadingExternalItems}
-		<ItemCards
-			skeletonId={handlingId}
-			{excludeId}
-			items={externalEntries.length
-				? externalEntries
-				: search
-				? new Fuse($items, fuseItemSettings).search(search).map(mapItem)
-				: $recentItems}
-			on:select={handleSelect}
-		>
-			{#if externalEntries.length}
-				<MdiCloudSearch />
-			{:else if search}
-				<IcItems />
-			{:else}
-				<IcRoundRestore />
-			{/if}
-
-			No {externalEntries.length ? 'external' : search ? 'saved' : 'recently used'} items found
-		</ItemCards>
-	{:else}
-		{#each { length: 10 } as _}
-			<ItemSkeleton />
-		{/each}
-	{/if}
-{/await}
+{/if}
 
 <style>
 	.w100p {
