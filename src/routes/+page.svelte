@@ -21,12 +21,12 @@
 		showWeekGraph = !showWeekGraph;
 	};
 
-	let editId = null;
+	let editItem = null;
 
 	const createDecodedItem = async (uriComponent: string) => {
 		const item = decodeUriComponentToObj(uriComponent) as Item;
 		await saveExternalItem(item);
-		editId = item.id;
+		editItem = item;
 		goto('/');
 	};
 
@@ -72,7 +72,7 @@
 			<IcHome />
 		</button>
 	{/if}
-	<ItemDrawer {editId} isOpen={!!editId} />
+	<ItemDrawer {editItem} isOpen={!!editItem} />
 </nav>
 
 <InstanceCreator />

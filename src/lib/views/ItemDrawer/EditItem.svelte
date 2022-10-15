@@ -1,7 +1,6 @@
 <script lang="ts">
 	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte';
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
-	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import TrackNow from '$lib/components/TrackNow.svelte';
 	import {
 		createItemStore,
@@ -29,10 +28,10 @@
 	import ItemDrawer from './ItemDrawer.svelte';
 	const dispatch = createEventDispatcher();
 
-	export let id: string;
+	export let item: Item;
 	export let selector = false;
 
-	let dataStore: WritableLoadable<Item> = createItemStore(id);
+	let dataStore: WritableLoadable<Item> = createItemStore(item);
 	let sumInputEl = null;
 	let activeEl = undefined;
 	function update() {
@@ -51,13 +50,6 @@
 		$dataStore.kcalPer100 = 0;
 		$dataStore.items = [...$dataStore.items, newItem];
 	}
-
-	let initialLoading = false;
-	async function loadData() {
-		initialLoading = true;
-		await dataStore.load();
-		initialLoading = false;
-	}
 </script>
 
 <h2 class="headline-3 with-icon">
@@ -68,179 +60,158 @@
 	{/if}
 </h2>
 
-{#await loadData()}
-	<Input disabled>Label</Input>
-	<Input disabled>Brand / Date / Whatever</Input>
-	<Input disabled>kcal per 100 g || ml</Input>
-	<Input disabled>EAN (Barcode)</Input>
-
-	{#each { length: 2 } as _}
-		<ItemSkeleton>
-			<div class="row">
-				<h3 class="headline-4">Portions</h3>
-				<button class="btn text add">
-					<IcAdd /> Add Portion
-				</button>
-			</div>
-		</ItemSkeleton>
-	{/each}
-{:then}
-	<Input bind:value={$dataStore.label}>Label</Input>
-	<Input bind:value={$dataStore.brand}>
-		Brand / Date / Whatever
-		<svelte:fragment slot="inline">
-			{#if !$dataStore.brand}
-				<button
-					class="inline-btn"
-					data-testid="set-date-as-brand"
-					on:click={() => {
-						$dataStore.brand = toISODateString(new Date());
-					}}
-				>
-					<IcRoundToday />
-				</button>
-			{/if}
-		</svelte:fragment>
-	</Input>
-
-	{#if !$dataStore.items.length}
-		<Input type="calc" bind:value={$dataStore.kcalPer100}>kcal per 100 g || ml</Input>
-	{:else}
-		<Input
-			type="calc"
-			disabled
-			value={kcalDisplay(calculateKcalPer100FromItems($dataStore.items, $dataStore.amount))}
-		>
-			kcal per 100 g || ml
-		</Input>
-	{/if}
-	<Input type="number" bind:value={$dataStore.ean}
-		>EAN (Barcode)
-		<svelte:fragment slot="inline">
-			<BarCodeScanDialog on:scanned={({ detail: code }) => ($dataStore.ean = code)} />
-		</svelte:fragment>
-	</Input>
-
-	<div class="card filled col">
-		<div class="row">
-			<h3 class="headline-4">Items</h3>
-			<ItemDrawer
-				selector
-				noCustomKcal
-				excludeId={id}
-				on:select={({ detail }) => {
-					addItem(detail);
-				}}
-			/>
-		</div>
-		{#each $dataStore.items as child, index (child.key)}
-			<ItemInstance
-				bind:item={child}
-				on:delete={() => {
-					$dataStore.items.splice(index, 1);
-					if (!$dataStore.items.length) $dataStore.kcalPer100 = 100;
-					$dataStore = $dataStore;
-				}}
-			/>
-		{/each}
-		{#if $dataStore.items.length}
-			<div class="row">
-				<input
-					aria-label="Override Amount"
-					id="override-amount"
-					type="checkbox"
-					checked={$dataStore.amount ? true : false}
-					on:input={() => {
-						if ($dataStore.amount) {
-							$dataStore.amount = 0;
-						} else {
-							$dataStore.amount = calculateAmountSum($dataStore.items) || 100;
-						}
-					}}
-				/>
-				{#if $dataStore.amount || activeEl === sumInputEl}
-					<Input type="calc" bind:value={$dataStore.amount} bind:inputElement={sumInputEl}>
-						Amount Sum
-					</Input>
-				{:else}
-					<Input type="calc" disabled value={calculateAmountSum($dataStore.items)}>Amount Sum</Input
-					>
-				{/if}
-			</div>
-		{/if}
-	</div>
-
-	<div class="card filled col">
-		<div class="row">
-			<h3 class="headline-4">Portions</h3>
+<Input bind:value={$dataStore.label}>Label</Input>
+<Input bind:value={$dataStore.brand}>
+	Brand / Date / Whatever
+	<svelte:fragment slot="inline">
+		{#if !$dataStore.brand}
 			<button
-				class="btn text add"
+				class="inline-btn"
+				data-testid="set-date-as-brand"
 				on:click={() => {
-					$dataStore.portions = [...$dataStore.portions, { ...defaultPortion, key: uuid() }];
+					$dataStore.brand = toISODateString(new Date());
 				}}
 			>
-				<IcAdd /> Add Portion
+				<IcRoundToday />
 			</button>
-		</div>
+		{/if}
+	</svelte:fragment>
+</Input>
 
-		{#each $dataStore.portions as portion, index (portion.key)}
-			<div class="card outlined portion">
+{#if !$dataStore.items.length}
+	<Input type="calc" bind:value={$dataStore.kcalPer100}>kcal per 100 g || ml</Input>
+{:else}
+	<Input
+		type="calc"
+		disabled
+		value={kcalDisplay(calculateKcalPer100FromItems($dataStore.items, $dataStore.amount))}
+	>
+		kcal per 100 g || ml
+	</Input>
+{/if}
+<Input type="number" bind:value={$dataStore.ean}
+	>EAN (Barcode)
+	<svelte:fragment slot="inline">
+		<BarCodeScanDialog on:scanned={({ detail: code }) => ($dataStore.ean = code)} />
+	</svelte:fragment>
+</Input>
+
+<div class="card filled col">
+	<div class="row">
+		<h3 class="headline-4">Items</h3>
+		<ItemDrawer
+			selector
+			noCustomKcal
+			excludeId={item.id}
+			on:select={({ detail }) => {
+				addItem(detail);
+			}}
+		/>
+	</div>
+	{#each $dataStore.items as child, index (child.key)}
+		<ItemInstance
+			bind:item={child}
+			on:delete={() => {
+				$dataStore.items.splice(index, 1);
+				if (!$dataStore.items.length) $dataStore.kcalPer100 = 100;
+				$dataStore = $dataStore;
+			}}
+		/>
+	{/each}
+	{#if $dataStore.items.length}
+		<div class="row">
+			<input
+				aria-label="Override Amount"
+				id="override-amount"
+				type="checkbox"
+				checked={$dataStore.amount ? true : false}
+				on:input={() => {
+					if ($dataStore.amount) {
+						$dataStore.amount = 0;
+					} else {
+						$dataStore.amount = calculateAmountSum($dataStore.items) || 100;
+					}
+				}}
+			/>
+			{#if $dataStore.amount || activeEl === sumInputEl}
+				<Input type="calc" bind:value={$dataStore.amount} bind:inputElement={sumInputEl}>
+					Amount Sum
+				</Input>
+			{:else}
+				<Input type="calc" disabled value={calculateAmountSum($dataStore.items)}>Amount Sum</Input>
+			{/if}
+		</div>
+	{/if}
+</div>
+
+<div class="card filled col">
+	<div class="row">
+		<h3 class="headline-4">Portions</h3>
+		<button
+			class="btn text add"
+			on:click={() => {
+				$dataStore.portions = [...$dataStore.portions, { ...defaultPortion, key: uuid() }];
+			}}
+		>
+			<IcAdd /> Add Portion
+		</button>
+	</div>
+
+	{#each $dataStore.portions as portion, index (portion.key)}
+		<div class="card outlined portion">
+			<button
+				class="btn text"
+				on:click={() => {
+					$dataStore.portions.splice(index, 1);
+					$dataStore = $dataStore;
+				}}
+			>
+				<IcDelete />
+			</button>
+			<Input bind:value={portion.label}>Label</Input>
+			<Input type="calc" bind:value={portion.amount}>Amount (g||ml)</Input>
+		</div>
+	{/each}
+</div>
+
+<nav class="fab-bar">
+	<!-- hotfix for dialog destory error "Cannot read properties of null (reading 'removeChild')" -->
+	<Dialog noCloseButton let:toggle dialogOut={() => null} backdropOut={() => null}>
+		<svelte:fragment slot="trigger-label">
+			<IcDelete />
+		</svelte:fragment>
+		<div class="col">
+			<h2 class="title-l">Are you sure?</h2>
+			<p class="body-m">Deleting the item "{$dataStore.label}" can not be undone.</p>
+			<div class="row">
+				<button class="btn tonal" on:click={toggle}><IcArrowBack /> Do nothing </button>
 				<button
-					class="btn text"
-					on:click={() => {
-						$dataStore.portions.splice(index, 1);
-						$dataStore = $dataStore;
+					class="btn tonal"
+					on:click={async () => {
+						await Promise.all([deleteItem($dataStore.id), items.reload()]);
+						toggle();
+						dispatch('done', null);
 					}}
 				>
 					<IcDelete />
+					Delete
 				</button>
-				<Input bind:value={portion.label}>Label</Input>
-				<Input type="calc" bind:value={portion.amount}>Amount (g||ml)</Input>
 			</div>
-		{/each}
-	</div>
-{/await}
-
-<nav class="fab-bar">
-	{#await dataStore.load() then}
-		<!-- hotfix for dialog destory error "Cannot read properties of null (reading 'removeChild')" -->
-		<Dialog noCloseButton let:toggle dialogOut={() => null} backdropOut={() => null}>
-			<svelte:fragment slot="trigger-label">
-				<IcDelete />
-			</svelte:fragment>
-			<div class="col">
-				<h2 class="title-l">Are you sure?</h2>
-				<p class="body-m">Deleting the item "{$dataStore.label}" can not be undone.</p>
-				<div class="row">
-					<button class="btn tonal" on:click={toggle}><IcArrowBack /> Do nothing </button>
-					<button
-						class="btn tonal"
-						on:click={async () => {
-							await Promise.all([deleteItem($dataStore.id), items.reload()]);
-							toggle();
-							dispatch('done', null);
-						}}
-					>
-						<IcDelete />
-						Delete
-					</button>
-				</div>
-			</div>
-		</Dialog>
-		<button
-			on:click={() => {
-				shareItem($dataStore);
-			}}
-		>
-			<IcRoundShare />
-		</button>
-		{#if !selector}
-			<TrackNow item={$dataStore} />
-		{/if}
-	{/await}
+		</div>
+	</Dialog>
+	<button
+		on:click={() => {
+			shareItem($dataStore);
+		}}
+	>
+		<IcRoundShare />
+	</button>
+	{#if !selector}
+		<TrackNow item={$dataStore} />
+	{/if}
 	<button on:click={() => dispatch('done', $dataStore)}>
 		<IcArrowBack />
-		{#if !selector || initialLoading}
+		{#if !selector}
 			Back
 		{:else}
 			Select

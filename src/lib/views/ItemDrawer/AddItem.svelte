@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { createItem } from '$lib/data/items';
+	import { createItem, type Item } from '$lib/data/items';
 	import { createEventDispatcher } from 'svelte';
 	import { v4 as uuid } from 'uuid';
 	import IcAdd from '~icons/ic/round-add';
 
-	const dispatch = createEventDispatcher<{ created: string }>();
+	const dispatch = createEventDispatcher<{ created: Item }>();
 	let loading = false;
 </script>
 
@@ -15,8 +15,8 @@
 		on:click={async () => {
 			loading = true;
 			const id = uuid();
-			await createItem(id);
-			dispatch('created', id);
+			const item = createItem(id);
+			dispatch('created', item);
 			loading = false;
 		}}
 	>

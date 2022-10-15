@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { defaultDay, getDayData, setDayData, weekData, type Day } from '$lib/data/intake';
-	import { instantiateItem, type Item, type ItemInstance } from '$lib/data/items';
+	import type { Item, ItemInstance } from '$lib/data/items';
 	import { toISODateString } from '$lib/dateHelpers';
-	import { Dialog } from 'as-comps';
+	import { Dialog, notification, removeNotification } from 'as-comps';
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
+	import { createInstance } from './InstanceCreator';
 	export let item: Item;
 	export let todayDate = toISODateString(new Date());
 
@@ -12,18 +13,20 @@
 	let todayData: Day;
 
 	async function startFlow() {
-		itemInstance = await instantiateItem(item);
+		itemInstance = await createInstance(item);
 		if (!itemInstance) return;
 		isOpen = true;
 	}
 
 	async function addTo(mealLabel: string) {
+		const notificationId = notification(`Tracking ${itemInstance.label}...`);
+		isOpen = false;
 		todayData = await getDayData(todayDate);
 		const mealIndex = todayData.meals.findIndex((meal) => meal.label === mealLabel);
 		todayData.meals[mealIndex].intake = [...todayData.meals[mealIndex].intake, itemInstance];
-		setDayData(todayDate, todayData);
-		await weekData.reload();
-		isOpen = false;
+		await setDayData(todayDate, todayData);
+		removeNotification(notificationId);
+		weekData.reload();
 	}
 </script>
 

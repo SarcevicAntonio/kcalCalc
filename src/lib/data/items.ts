@@ -32,19 +32,22 @@ export const items = asyncDerived<typeof user, Item[]>(
 	true
 );
 
-export const createItem = (id: string) => {
+export const createItem = (id: string): Item => {
 	const colRef = doc(db, `Users/${get(user).id}/Items/` + id);
 	console.log('setDoc newItem', id);
-	return setDoc(colRef, {
+	const item = {
 		...defaultItem,
 		id,
 		createdAt: Date.now(),
 		updatedAt: Date.now(),
-	});
+	};
+	setDoc(colRef, item);
+	return item;
 };
 
-export const createItemStore = (id: string) => {
-	const store = asyncWritable(
+export const createItemStore = (item: Item) => {
+	const id = item.id;
+	const store = asyncWritable<[], Item>(
 		[],
 		async () => {
 			const docRef = doc(db, `Users/${get(user).id}/Items/${id}`);
@@ -56,7 +59,9 @@ export const createItemStore = (id: string) => {
 			const docRef = doc(db, `Users/${get(user).id}/Items/${data.id}`);
 			console.log('setDoc ItemStore', id);
 			await setDoc(docRef, { ...data, updatedAt: Date.now() });
-		}
+		},
+		true,
+		item
 	);
 	return store;
 };
@@ -117,11 +122,6 @@ export async function saveExternalItem(item: Item) {
 	const docRef = doc(db, `Users/${get(user).id}/Items/` + item.id);
 	await setDoc(docRef, item);
 	await items.reload();
-}
-
-export async function instantiateItem(item: Item): Promise<ItemInstance> {
-	if (!item.id.startsWith('CUSTOM')) setRecentItem(item);
-	return await createInstance(item);
 }
 
 export function flattenItem(item: Item): Item {

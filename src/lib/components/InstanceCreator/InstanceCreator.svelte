@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { setRecentItem } from '$lib/data/items';
 	import { Dialog } from 'as-comps';
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
 	import { instanceCreatorState } from '.';
@@ -7,6 +8,9 @@
 	let amountInputElement: HTMLInputElement;
 
 	function confirm() {
+		if (!$instanceCreatorState.instance.id.startsWith('CUSTOM')) {
+			setRecentItem($instanceCreatorState.instance);
+		}
 		$instanceCreatorState.resolve($instanceCreatorState.instance);
 		instanceCreatorState.set(null);
 	}

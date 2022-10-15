@@ -120,6 +120,7 @@
 
 .fab-bar button,
 .fab-bar a {
+	cursor: pointer;
 	pointer-events: auto;
 	border-radius: 1rem;
 	border: none;

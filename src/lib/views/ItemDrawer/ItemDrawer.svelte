@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { instantiateItem, items } from '$lib/data/items';
+	import { createInstance } from '$lib/components/InstanceCreator';
+	import { items, type Item } from '$lib/data/items';
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
 	import { fly } from 'svelte/transition';
@@ -16,7 +17,7 @@
 	export let excludeId = '';
 	export let noCustomKcal = false;
 	export let isOpen = false;
-	export let editId: string = null;
+	export let editItem: Item = null;
 	export let triggerTestId = '';
 </script>
 
@@ -24,7 +25,7 @@
 	let:toggle
 	bind:isOpen
 	on:dismiss={() => {
-		editId = null;
+		editItem = null;
 	}}
 	triggerProps={{
 		class: `margin-left-auto ${selector ? 'btn text' : ''}`,
@@ -53,20 +54,20 @@
 		{/if}
 	</svelte:fragment>
 	<div class="flow">
-		{#if editId}
+		{#if editItem}
 			<EditItem
 				{selector}
-				id={editId}
+				item={editItem}
 				on:done={async ({ detail }) => {
 					if (selector && detail) {
-						const itemInstance = await instantiateItem(detail);
+						const itemInstance = await createInstance(detail);
 						if (itemInstance) {
 							toggle();
 							dispatch('select', itemInstance);
 						}
 					}
 					await items.reload();
-					editId = null;
+					editItem = null;
 				}}
 			/>
 		{:else}
@@ -75,19 +76,19 @@
 					{noCustomKcal}
 					{excludeId}
 					on:externalItem={({ detail }) => {
-						editId = detail.id;
+						editItem = detail;
 					}}
 					on:selectItem={async ({ detail }) => {
-						const itemInstance = await instantiateItem(detail);
+						const itemInstance = await createInstance(detail);
 						if (!itemInstance) return;
 						toggle();
 						dispatch('select', itemInstance);
 					}}
 				/>
 			{:else}
-				<SavedItems on:select={({ detail }) => (editId = detail.id)} />
+				<SavedItems on:select={({ detail }) => (editItem = detail)} />
 			{/if}
-			<AddItem on:created={({ detail }) => (editId = detail)} />
+			<AddItem on:created={({ detail }) => (editItem = detail)} />
 		{/if}
 	</div>
 </Dialog>

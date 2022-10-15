@@ -21,7 +21,7 @@
 	import IcRoundRestore from '~icons/ic/round-restore';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import MdiWeight from '~icons/mdi/weight';
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher<{ externalItem: Item; selectItem: Item }>();
 
 	export let noCustomKcal = false;
 	export let excludeId = '';
