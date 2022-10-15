@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { items } from '$lib/data/items';
 	import { user } from '$lib/data/user';
 	import { auth } from '$lib/firebase';
 	import Login from '$lib/views/Login.svelte';
@@ -6,7 +7,7 @@
 	import IconProfile from '~icons/ic/round-account-circle';
 	import IcRoundCloudOff from '~icons/ic/round-cloud-off';
 	import '../css/global.css';
-	
+
 	let authStateUnfetched = true;
 
 	auth.onAuthStateChanged((changedUser) => {
@@ -23,6 +24,8 @@
 			displayName,
 			photoURL,
 		};
+
+		items.load();
 	});
 
 	let imgError = false;
