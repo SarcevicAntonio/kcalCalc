@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 import { toISODateString } from '../src/lib/dateHelpers.js';
 
 test.beforeEach(async ({ page }) => {
+	page.on('console', (msg) => console.log('#BROWSER# ', msg.text()));
+
 	// TODO: Replace beforeEach with IndexedDB Session Sharing
 	// https://github.com/microsoft/playwright/discussions/10715#discussioncomment-1904812
 	await page.goto(`/`);
