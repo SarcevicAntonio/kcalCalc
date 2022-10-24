@@ -39,25 +39,28 @@
 			<IcRoundPlaylistAdd />
 			Track Item
 		</h2>
-		<InstanceForm bind:item={$instanceCreatorState.instance} bind:amountInputElement>
-			<svelte:fragment slot="inline-inputs">
-				<button class="btn tonal" on:click={() => confirm()}>
-					<IcRoundPlaylistAdd /> Track
-				</button>
-			</svelte:fragment>
-			{#each $instanceCreatorState.instance.portions as portion}
-				<button
-					class="btn tonal fill"
-					on:click={() => {
-						$instanceCreatorState.instance.amount = portion.amount;
-						confirm();
-					}}
-				>
-					<IcRoundPlaylistAdd />
-					Track {portion.label} ({portion.amount} g|ml)
-				</button>
-			{/each}
-		</InstanceForm>
+		<form on:submit|preventDefault={() => confirm()}>
+			<InstanceForm bind:item={$instanceCreatorState.instance} bind:amountInputElement>
+				<svelte:fragment slot="inline-inputs">
+					<button class="btn tonal">
+						<IcRoundPlaylistAdd /> Track
+					</button>
+				</svelte:fragment>
+				{#each $instanceCreatorState.instance.portions as portion}
+					<button
+						class="btn tonal fill"
+						type="button"
+						on:click={() => {
+							$instanceCreatorState.instance.amount = portion.amount;
+							confirm();
+						}}
+					>
+						<IcRoundPlaylistAdd />
+						Track {portion.label} ({portion.amount} g|ml)
+					</button>
+				{/each}
+			</InstanceForm>
+		</form>
 	</div>
 </Dialog>
 
