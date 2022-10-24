@@ -10,6 +10,7 @@ if (!String.prototype.replaceAll) {
 }
 
 export const GET: RequestHandler = async (request) => {
+	// console.log('https://fddb.mobi/search/?search=' + request.params.search);
 	const searchRes = await fetch('https://fddb.mobi/search/?search=' + request.params.search);
 	if (!searchRes.ok) {
 		return new Response(undefined, { status: searchRes.status, statusText: searchRes.statusText });
@@ -21,8 +22,9 @@ export const GET: RequestHandler = async (request) => {
 	const requests = Array.from(document.querySelectorAll('td a')).map(
 		async (a: HTMLAnchorElement) => {
 			return fetch('https://fddb.mobi' + a.href).then(async (itemRes) => {
+				// console.log('DONE: https://fddb.mobi' + a.href);
 				if (!itemRes.ok) {
-					return { status: itemRes.status, error: new Error(itemRes.statusText) };
+					return;
 				}
 
 				const { document } = parseHTML(await itemRes.text());
@@ -59,17 +61,20 @@ export const GET: RequestHandler = async (request) => {
 				});
 
 				const itemFddbId = a.href.split('/')[2].slice(0, -5);
+				// console.log(`https://fddb.info/db/de/lebensmittel/${itemFddbId}/index.html`);
 				const possibleEan = await fetch(
 					`https://fddb.info/db/de/lebensmittel/${itemFddbId}/index.html`
-				).then(async (detailsRes) => {
-					if (!detailsRes.ok) return null;
-					const { document } = parseHTML(await detailsRes.text());
-					const pWithEan = Array.from(document.querySelectorAll('p')).find((p) =>
-						p.textContent.includes('EAN:')
-					);
-					if (!pWithEan) return null;
-					return pWithEan.textContent.match(/EAN: ([0-9]+)/)[1];
-				});
+				)
+					.then(async (detailsRes) => {
+						if (!detailsRes.ok) return null;
+						const { document } = parseHTML(await detailsRes.text());
+						const pWithEan = Array.from(document.querySelectorAll('p')).find((p) =>
+							p.textContent.includes('EAN:')
+						);
+						if (!pWithEan) return null;
+						return pWithEan.textContent.match(/EAN: ([0-9]+)/)[1];
+					})
+					.catch(() => null);
 
 				if (kcalPer100 > 0) {
 					const ingredient: Item = {
@@ -88,7 +93,6 @@ export const GET: RequestHandler = async (request) => {
 		}
 	);
 
-	return Promise.all(requests).then(() => {
-		return new Response(JSON.stringify(ingredients));
-	});
+	await Promise.all(requests);
+	return new Response(JSON.stringify(ingredients));
 };

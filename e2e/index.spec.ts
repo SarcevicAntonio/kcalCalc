@@ -155,7 +155,7 @@ test.describe('App Test', () => {
 		await searchInternetButton.click();
 		// Suche verfeinern
 		await page.getByLabel('Search').click();
-		await page.getByLabel('Search').fill('Gemüsebrühe Pulver');
+		await page.getByLabel('Search').fill('Maggi Gemüsebrühe Pulver');
 		await searchInternetButton.click();
 		await page
 			.getByRole('button', { name: 'Maggi Klare Gemüsebrühe Pulver Maggi 172 kcal%g||ml' })
