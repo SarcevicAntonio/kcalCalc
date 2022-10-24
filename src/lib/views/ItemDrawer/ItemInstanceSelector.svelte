@@ -48,8 +48,8 @@
 		// is this item external?
 		if (externalEntries.length) {
 			handlingId = item.id;
-			await saveExternalItem(item);
-			dispatch('externalItem', item);
+			const cleanedItem = await saveExternalItem(item);
+			dispatch('externalItem', cleanedItem);
 			handlingId = null;
 		} else {
 			dispatch('selectItem', item);

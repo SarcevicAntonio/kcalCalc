@@ -1,4 +1,3 @@
-import { createInstance } from '$lib/components/InstanceCreator';
 import { db } from '$lib/firebase';
 import { calculateKcalPer100FromItems } from '$lib/kcal';
 import { asyncDerived, asyncWritable } from '@square/svelte-store';
@@ -111,7 +110,7 @@ export async function saveExternalItem(item: Item) {
 	const queryInstance = query(colRef, where('id', '==', item.id));
 	console.log('getDocs saveExternalItem', item.id);
 	const querySnap = await getDocs(queryInstance);
-	if (querySnap.docs.length) return;
+	if (querySnap.docs.length) return querySnap.docs[0].data() as Item;
 
 	if (!item.items) item.items = [];
 	item.portions = item.portions ? item.portions.map((p) => ({ ...p, key: uuid() })) : [];
@@ -121,7 +120,8 @@ export async function saveExternalItem(item: Item) {
 	console.log('setDoc saveExternalItem', item.id);
 	const docRef = doc(db, `Users/${get(user).id}/Items/` + item.id);
 	await setDoc(docRef, item);
-	await items.reload();
+	items.reload();
+	return item;
 }
 
 export function flattenItem(item: Item): Item {
