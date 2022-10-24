@@ -5,8 +5,6 @@
 	import { instanceCreatorState } from '.';
 	import InstanceForm from '../InstanceForm.svelte';
 
-	let amountInputElement: HTMLInputElement;
-
 	function confirm() {
 		if (!$instanceCreatorState.instance.id.startsWith('CUSTOM')) {
 			setRecentItem($instanceCreatorState.instance);
@@ -19,17 +17,11 @@
 		$instanceCreatorState.resolve(undefined);
 		instanceCreatorState.set(null);
 	}
-
-	async function focusInput() {
-		amountInputElement.scrollIntoView();
-		amountInputElement.focus();
-	}
 </script>
 
 <Dialog
 	isOpen={!!$instanceCreatorState}
 	on:dismiss={handleDismiss}
-	on:introend={focusInput}
 	includedTrigger={false}
 	--as-dialog-width="90%"
 	--as-dialog-max-width="400px"
@@ -40,7 +32,7 @@
 			Track Item
 		</h2>
 		<form on:submit|preventDefault={() => confirm()}>
-			<InstanceForm bind:item={$instanceCreatorState.instance} bind:amountInputElement>
+			<InstanceForm bind:item={$instanceCreatorState.instance}>
 				<svelte:fragment slot="inline-inputs">
 					<button class="btn tonal">
 						<IcRoundPlaylistAdd /> Track
