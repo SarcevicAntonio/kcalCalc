@@ -40,3 +40,7 @@ h5,
 h6 {
 	all: unset;
 }
+
+dialog.container section.dialog button.close-btn {
+	outline-offset: 0.5em;
+}
