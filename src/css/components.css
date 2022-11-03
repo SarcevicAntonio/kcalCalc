@@ -1,4 +1,5 @@
 .btn {
+	width: -moz-fit-content;
 	width: fit-content;
 	padding-block: 0.5rem;
 	padding-inline: 0.75rem;
@@ -178,6 +179,7 @@
 	);
 	background-size: 500px 100%;
 	color: transparent !important;
+	-webkit-user-select: none;
 	user-select: none;
 	cursor: wait;
 	& * {
