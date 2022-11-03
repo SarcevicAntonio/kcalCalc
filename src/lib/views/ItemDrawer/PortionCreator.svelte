@@ -27,7 +27,7 @@
 		on:submit|preventDefault={() => {
 			dispatch('create', {
 				key: '',
-				label: 'Divided by ' + { divideBy },
+				label: 'Divided by ' + divideBy,
 				amount: portion,
 			});
 			toggle();
