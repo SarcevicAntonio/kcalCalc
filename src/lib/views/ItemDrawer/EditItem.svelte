@@ -26,6 +26,8 @@
 	import IcRoundShare from '~icons/ic/round-share';
 	import IcRoundToday from '~icons/ic/round-today';
 	import ItemDrawer from './ItemDrawer.svelte';
+	import PortionCreator from './PortionCreator.svelte';
+
 	const dispatch = createEventDispatcher();
 
 	export let item: Item;
@@ -119,7 +121,7 @@
 		/>
 	{/each}
 	{#if $dataStore.items.length}
-		<div class="row">
+		<div class="row margin-top">
 			<input
 				aria-label="Override Amount"
 				id="override-amount"
@@ -140,6 +142,12 @@
 			{:else}
 				<Input type="calc" disabled value={calculateAmountSum($dataStore.items)}>Amount Sum</Input>
 			{/if}
+			<PortionCreator
+				amount={$dataStore.amount || calculateAmountSum($dataStore.items)}
+				on:create={({ detail: portion }) => {
+					$dataStore.portions = [...$dataStore.portions, { ...portion, key: uuid() }];
+				}}
+			/>
 		</div>
 	{/if}
 </div>
@@ -230,7 +238,7 @@
 	.col {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 0.25rem;
 	}
 
 	input {
@@ -252,5 +260,9 @@
 	.fab-bar {
 		position: sticky;
 		padding: 0;
+	}
+
+	.margin-top {
+		margin-top: 0.25em;
 	}
 </style>
