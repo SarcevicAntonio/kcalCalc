@@ -166,18 +166,20 @@
 	</div>
 
 	{#each $dataStore.portions as portion, index (portion.key)}
-		<div class="card outlined portion">
-			<button
-				class="btn text"
-				on:click={() => {
-					$dataStore.portions.splice(index, 1);
-					$dataStore = $dataStore;
-				}}
-			>
-				<IcDelete />
-			</button>
+		<div class="card outlined portion col">
 			<Input bind:value={portion.label}>Label</Input>
-			<Input type="calc" bind:value={portion.amount}>Amount (g||ml)</Input>
+			<div class="row">
+				<Input type="calc" bind:value={portion.amount}>Amount (g||ml)</Input>
+				<button
+					class="btn text"
+					on:click={() => {
+						$dataStore.portions.splice(index, 1);
+						$dataStore = $dataStore;
+					}}
+				>
+					<IcDelete />
+				</button>
+			</div>
 		</div>
 	{/each}
 </div>
@@ -248,7 +250,7 @@
 	.portion {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
+		align-items: stretch;
 		padding: 0.5rem;
 		gap: 0.5rem;
 	}
