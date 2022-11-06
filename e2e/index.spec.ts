@@ -151,10 +151,6 @@ test.describe('App Test', () => {
 
 		// Gemüsebrühe
 		await dialog.getByRole('button', { name: 'Track Item' }).click();
-		await page.getByLabel('Search').fill('Gemüsebrühe');
-		await searchInternetButton.click();
-		// Suche verfeinern
-		await page.getByLabel('Search').click();
 		await page.getByLabel('Search').fill('Maggi Gemüsebrühe Pulver');
 		await searchInternetButton.click();
 		await page
