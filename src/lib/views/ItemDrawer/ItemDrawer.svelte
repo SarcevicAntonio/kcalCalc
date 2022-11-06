@@ -78,9 +78,7 @@
 					on:externalItem={({ detail }) => {
 						editItem = detail;
 					}}
-					on:selectItem={async ({ detail }) => {
-						const itemInstance = await createInstance(detail);
-						if (!itemInstance) return;
+					on:selectItem={async ({ detail: itemInstance }) => {
 						toggle();
 						dispatch('select', itemInstance);
 					}}

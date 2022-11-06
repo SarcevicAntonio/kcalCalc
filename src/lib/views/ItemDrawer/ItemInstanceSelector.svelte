@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte';
+	import { createInstance } from '$lib/components/InstanceCreator';
 	import ItemCards from '$lib/components/ItemCards.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import {
@@ -49,12 +50,15 @@
 		if (externalEntries.length) {
 			handlingId = item.id;
 			const cleanedItem = await saveExternalItem(item);
-			dispatch('externalItem', cleanedItem);
+			search = '';
 			handlingId = null;
+			dispatch('externalItem', cleanedItem);
 		} else {
-			dispatch('selectItem', item);
+			const itemInstance = await createInstance(item);
+			if (!itemInstance) return;
+			search = '';
+			dispatch('selectItem', itemInstance);
 		}
-		search = '';
 	}
 
 	let inputElement: HTMLInputElement;
