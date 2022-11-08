@@ -123,7 +123,7 @@
 		items={externalEntries.length
 			? externalEntries
 			: search
-			? new Fuse($items, fuseItemSettings).search(search).map(mapItem)
+			? new Fuse($items, fuseItemSettings).search(search).map(mapItem).splice(0, 50)
 			: $recentItems}
 		on:select={handleSelect}
 	>

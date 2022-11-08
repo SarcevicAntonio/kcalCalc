@@ -191,3 +191,11 @@ export interface Portion {
 	label: string;
 	amount: number;
 }
+
+// export function fakeABunchOfItems() {
+// 	const items = [];
+// 	for (let index = 0; index < 1000; index++) {
+// 		items.push({ ...defaultItem, label: uuid(), id: uuid() });
+// 	}
+// 	return items;
+// }
