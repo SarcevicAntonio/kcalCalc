@@ -11,9 +11,8 @@
 		saveExternalItem,
 		type Item,
 	} from '$lib/data/items';
-	import { fuseItemSettings, mapItem } from '$lib/fuse';
+	import { fuzzySearch } from '$lib/fuzzySearch';
 	import Input from '$lib/Input.svelte';
-	import Fuse from 'fuse.js';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import IcRoundAccessTime from '~icons/ic/round-access-time';
 	import IcItems from '~icons/ic/round-category';
@@ -123,7 +122,7 @@
 		items={externalEntries.length
 			? externalEntries
 			: search
-			? new Fuse($items, fuseItemSettings).search(search).map(mapItem).splice(0, 50)
+			? fuzzySearch($items, search).splice(0, 50)
 			: $recentItems}
 		on:select={handleSelect}
 	>

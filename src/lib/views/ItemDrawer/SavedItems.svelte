@@ -2,9 +2,8 @@
 	import ItemCards from '$lib/components/ItemCards.svelte';
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
 	import { items } from '$lib/data/items';
-	import { fuseItemSettings, mapItem } from '$lib/fuse';
+	import { fuzzySearch } from '$lib/fuzzySearch';
 	import Input from '$lib/Input.svelte';
-	import Fuse from 'fuse.js';
 	import IcItems from '~icons/ic/round-category';
 
 	let search = '';
@@ -17,7 +16,7 @@
 	<ItemCards
 		on:select
 		items={search
-			? new Fuse($items, fuseItemSettings).search(search + '').map(mapItem)
+			? fuzzySearch($items, search).splice(0, 50)
 			: $items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))}
 	>
 		<IcItems /> No saved items found.
