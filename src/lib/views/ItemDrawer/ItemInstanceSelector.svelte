@@ -122,7 +122,7 @@
 		items={externalEntries.length
 			? externalEntries
 			: search
-			? fuzzySearch($items, search).splice(0, 50)
+			? fuzzySearch($items, search)
 			: $recentItems}
 		on:select={handleSelect}
 	>

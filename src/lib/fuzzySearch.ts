@@ -1,10 +1,13 @@
-import Fuse from 'fuse.js';
+import { byLengthAsc, byStartAsc, extendedMatch, Fzf } from 'fzf';
 import type { Item } from './data/items';
 
-export const fuseItemSettings = {
-	keys: ['label', 'brand', 'ean'],
-	ignoreLocation: true,
-};
-
 export const fuzzySearch = (items: Item[], search: string) =>
-	new Fuse(items, fuseItemSettings).search(search + '').map((res) => res.item);
+	new Fzf(items, {
+		selector: ({ label, id, ean }) => `${label} (${id}) #${ean}`,
+		tiebreakers: [byLengthAsc, byStartAsc],
+		limit: 50,
+		casing: 'case-insensitive',
+		match: extendedMatch,
+	})
+		.find(search)
+		.map((res) => res.item);

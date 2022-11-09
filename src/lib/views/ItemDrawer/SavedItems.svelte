@@ -16,7 +16,7 @@
 	<ItemCards
 		on:select
 		items={search
-			? fuzzySearch($items, search).splice(0, 50)
+			? fuzzySearch($items, search)
 			: $items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))}
 	>
 		<IcItems /> No saved items found.
