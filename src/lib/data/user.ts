@@ -32,8 +32,8 @@ function subscribeUserSettings(docRef: DocumentReference) {
 	onSnapshot(docRef, (docSnap) => {
 		console.log('onSnapshot userSettings');
 		const data = (docSnap.data() || {}) as UserSettings;
-		setStorage(USER_SETTINGS_STORAGE_KEY, data);
 		userSettings.set(data, false);
+		setStorage(USER_SETTINGS_STORAGE_KEY, data);
 		gotInitialData = true;
 	});
 }

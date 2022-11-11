@@ -2,6 +2,7 @@ import type { ItemInstance } from '$lib/data/items';
 import { toISODateString } from '$lib/dateHelpers';
 import { db } from '$lib/firebase';
 import { calculateKcalFromItems } from '$lib/kcal';
+import { getStorage, setStorage } from '$lib/localStorage';
 import { asyncDerived, asyncWritable } from '@square/svelte-store';
 import {
 	addDays,
@@ -24,6 +25,8 @@ import {
 import { derived, get, writable } from 'svelte/store';
 import { user } from './user';
 
+const WEEK_DATA_STORAGE_KEY = 'v1/weekData';
+
 export const curDay = writable(toISODateString(new Date()));
 export const dateIsToday = derived(curDay, (day) => isSameDay(new Date(day), new Date()));
 export const curYear = derived(curDay, (day) => getYear(new Date(day)));
@@ -44,8 +47,7 @@ export const weekData = asyncWritable(
 
 		const colRef = collection(db, `Users/${user.id}/Years/${year}/Weeks/${week}/Days`);
 		subscribeWeekData(colRef, data);
-
-		return data as Week;
+		return getStorage(WEEK_DATA_STORAGE_KEY, data) as Week;
 	},
 	null,
 	true,
@@ -68,6 +70,7 @@ function subscribeWeekData(colRef: CollectionReference, data: Week) {
 			};
 		});
 		weekData.set(data, false);
+		setStorage(WEEK_DATA_STORAGE_KEY, data);
 	});
 }
 
