@@ -6,6 +6,7 @@
 	import { Notifications } from 'as-comps';
 	import IconProfile from '~icons/ic/round-account-circle';
 	import IcRoundCloudOff from '~icons/ic/round-cloud-off';
+	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
 	import '../css/global.css';
 
 	let authStateUnfetched = true;
@@ -66,7 +67,9 @@
 
 <main class="flow">
 	{#if authStateUnfetched}
-		&nbsp;
+		<div class="loading">
+			<LineMdLoadingTwotoneLoop />
+		</div>
 	{:else if !$user}
 		<Login />
 	{:else}
@@ -127,5 +130,11 @@
 		height: 1.5em;
 		outline: 1px solid var(--md-primary);
 		outline-offset: 1px;
+	}
+
+	.loading {
+		font-size: 6rem;
+		margin: auto;
+		padding-top: 4rem;
 	}
 </style>
