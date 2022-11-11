@@ -1,35 +1,47 @@
 import { db } from '$lib/firebase';
 import { calculateKcalPer100FromItems } from '$lib/kcal';
+import { getStorage, setStorage } from '$lib/localStorage';
 import { asyncDerived, asyncWritable } from '@square/svelte-store';
 import {
 	collection,
+	CollectionReference,
 	deleteDoc,
 	doc,
 	getDoc,
 	getDocs,
+	onSnapshot,
 	query,
 	setDoc,
 	where,
+	type Unsubscribe,
 } from 'firebase/firestore';
 import { get } from 'svelte/store';
 import { v4 as uuid } from 'uuid';
 import { user } from './user';
 
-export const items = asyncDerived<typeof user, Item[]>(
-	user,
-	async ($user) => {
-		const colRef = collection(db, `Users/${$user.id}/Items`);
-		console.count('getDocs items');
-		const snapshot = await getDocs(colRef);
+const ITEMS_STORAGE_KEY = 'v1/items';
+
+export const items = asyncWritable<typeof user, Item[]>(user, async ($user) => {
+	if (unsubscribeItems) unsubscribeItems();
+	const colRef = collection(db, `Users/${$user.id}/Items`);
+	const data: Item[] = [];
+	subscribeItems(colRef);
+	return getStorage(ITEMS_STORAGE_KEY, data) as Item[];
+});
+
+let unsubscribeItems: Unsubscribe;
+
+function subscribeItems(colRef: CollectionReference) {
+	unsubscribeItems = onSnapshot(colRef, (querySnap) => {
 		const data: Item[] = [];
-		snapshot.docs.forEach((doc) => {
+		querySnap.docs.forEach((doc) => {
 			const docData = doc.data();
 			data.push({ ...(docData as Item), id: doc.id });
 		});
-		return data;
-	},
-	true
-);
+		setStorage(ITEMS_STORAGE_KEY, data);
+		items.set(data);
+	});
+}
 
 export const createItem = (id: string): Item => {
 	const colRef = doc(db, `Users/${get(user).id}/Items/` + id);
@@ -120,7 +132,6 @@ export async function saveExternalItem(item: Item) {
 	console.log('setDoc saveExternalItem', item.id);
 	const docRef = doc(db, `Users/${get(user).id}/Items/` + item.id);
 	await setDoc(docRef, item);
-	items.reload();
 	return item;
 }
 

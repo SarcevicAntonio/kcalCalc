@@ -198,8 +198,7 @@
 				<button
 					class="btn tonal"
 					on:click={async () => {
-						await Promise.all([deleteItem($dataStore.id), items.reload()]);
-						toggle();
+						await deleteItem($dataStore.id);
 						dispatch('done', null);
 					}}
 				>

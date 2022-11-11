@@ -32,27 +32,21 @@ export const dateIsToday = derived(curDay, (day) => isSameDay(new Date(day), new
 export const curYear = derived(curDay, (day) => getYear(new Date(day)));
 export const curWeek = derived(curDay, (day) => getISOWeek(new Date(day)));
 
-export const weekData = asyncWritable(
-	[curYear, curWeek, user],
-	async ([year, week, user]) => {
-		if (unsubscribeWeekData) unsubscribeWeekData();
+export const weekData = asyncWritable([curYear, curWeek, user], async ([year, week, user]) => {
+	if (unsubscribeWeekData) unsubscribeWeekData();
 
-		// build skeleton data
-		const data = {};
-		let day = startOfISOWeek(setISOWeek(setYear(new Date(), year), week));
-		for (let index = 0; index < 7; index++) {
-			data[toISODateString(day)] = structuredClone(defaultDay);
-			day = addDays(day, 1);
-		}
+	// build skeleton data
+	const data = {};
+	let day = startOfISOWeek(setISOWeek(setYear(new Date(), year), week));
+	for (let index = 0; index < 7; index++) {
+		data[toISODateString(day)] = structuredClone(defaultDay);
+		day = addDays(day, 1);
+	}
 
-		const colRef = collection(db, `Users/${user.id}/Years/${year}/Weeks/${week}/Days`);
-		subscribeWeekData(colRef, data);
-		return getStorage(WEEK_DATA_STORAGE_KEY, data) as Week;
-	},
-	null,
-	true,
-	{}
-);
+	const colRef = collection(db, `Users/${user.id}/Years/${year}/Weeks/${week}/Days`);
+	subscribeWeekData(colRef, data);
+	return getStorage(WEEK_DATA_STORAGE_KEY, data) as Week;
+});
 
 let unsubscribeWeekData: Unsubscribe;
 
