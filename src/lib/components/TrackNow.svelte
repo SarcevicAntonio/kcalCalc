@@ -24,9 +24,8 @@
 		todayData = await getDayData(todayDate);
 		const mealIndex = todayData.meals.findIndex((meal) => meal.label === mealLabel);
 		todayData.meals[mealIndex].intake = [...todayData.meals[mealIndex].intake, itemInstance];
-		await setDayData(todayDate, todayData);
+		await w(todayDate, todayData);
 		removeNotification(notificationId);
-		weekData.reload();
 	}
 </script>
 

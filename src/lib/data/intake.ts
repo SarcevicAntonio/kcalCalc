@@ -1,8 +1,8 @@
+import type { ItemInstance } from '$lib/data/items';
 import { toISODateString } from '$lib/dateHelpers';
 import { db } from '$lib/firebase';
 import { calculateKcalFromItems } from '$lib/kcal';
-import type { ItemInstance } from '$lib/data/items';
-import { asyncDerived } from '@square/svelte-store';
+import { asyncDerived, asyncWritable } from '@square/svelte-store';
 import {
 	addDays,
 	getISOWeek,
@@ -12,7 +12,15 @@ import {
 	setYear,
 	startOfISOWeek,
 } from 'date-fns';
-import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import {
+	collection,
+	CollectionReference,
+	doc,
+	getDoc,
+	onSnapshot,
+	setDoc,
+	type Unsubscribe,
+} from 'firebase/firestore';
 import { derived, get, writable } from 'svelte/store';
 import { user } from './user';
 
@@ -21,9 +29,11 @@ export const dateIsToday = derived(curDay, (day) => isSameDay(new Date(day), new
 export const curYear = derived(curDay, (day) => getYear(new Date(day)));
 export const curWeek = derived(curDay, (day) => getISOWeek(new Date(day)));
 
-export const weekData = asyncDerived(
+export const weekData = asyncWritable(
 	[curYear, curWeek, user],
 	async ([year, week, user]) => {
+		if (unsubscribeWeekData) unsubscribeWeekData();
+
 		// build skeleton data
 		const data = {};
 		let day = startOfISOWeek(setISOWeek(setYear(new Date(), year), week));
@@ -33,12 +43,22 @@ export const weekData = asyncDerived(
 		}
 
 		const colRef = collection(db, `Users/${user.id}/Years/${year}/Weeks/${week}/Days`);
-		console.log('getDocs weekData', year, week);
-		const querySnap = await getDocs(colRef);
+		subscribeWeekData(colRef, data);
 
-		// replace skeleton data with real data
+		return data as Week;
+	},
+	null,
+	true,
+	{}
+);
+
+let unsubscribeWeekData: Unsubscribe;
+
+function subscribeWeekData(colRef: CollectionReference, data: Week) {
+	unsubscribeWeekData = onSnapshot(colRef, (querySnap) => {
+		console.log('onSnapshot weekData');
 		querySnap.docs.forEach((doc) => {
-			const docData = doc.data();
+			const docData = doc.data() as Day;
 			data[doc.id] = {
 				...docData,
 				kcal: docData.meals.reduce(
@@ -47,17 +67,15 @@ export const weekData = asyncDerived(
 				),
 			};
 		});
-
-		return data as Week;
-	},
-	true,
-	{}
-);
+		weekData.set(data, false);
+	});
+}
 
 export const dayData = asyncDerived([weekData, curDay], async ([weekData, curDay]) => {
 	return weekData[curDay];
 });
 
+/** for one off use */
 export const getDayData = async (date: string): Promise<Day> => {
 	const dateObj = new Date(date);
 	const year = getYear(dateObj);
