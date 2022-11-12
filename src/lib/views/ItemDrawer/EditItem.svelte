@@ -27,6 +27,9 @@
 	import IcRoundToday from '~icons/ic/round-today';
 	import ItemDrawer from './ItemDrawer.svelte';
 	import PortionCreator from './PortionCreator.svelte';
+	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt';
+	import MaterialSymbolsOfflineBoltOutline from '~icons/material-symbols/offline-bolt-outline';
+	import { addQuickSnack, quickSnacks, removeQuickSnack } from '$lib/data/quick-snacks';
 
 	const dispatch = createEventDispatcher();
 
@@ -167,7 +170,25 @@
 
 	{#each $dataStore.portions as portion, index (portion.key)}
 		<div class="card outlined portion col">
-			<Input bind:value={portion.label}>Label</Input>
+			<div class="row">
+				<Input bind:value={portion.label}>Label</Input>
+				{#if $quickSnacks[$dataStore.id]?.some((pk) => pk === portion.key)}
+					<button class="btn text" on:click={() => {
+							removeQuickSnack($dataStore.id, portion.key);
+					}}>
+						<MaterialSymbolsOfflineBolt />
+					</button>
+				{:else}
+					<button
+						class="btn text"
+						on:click={() => {
+							addQuickSnack($dataStore.id, portion.key);
+						}}
+					>
+						<MaterialSymbolsOfflineBoltOutline />
+					</button>
+				{/if}
+			</div>
 			<div class="row">
 				<Input type="calc" bind:value={portion.amount}>Amount (g||ml)</Input>
 				<button
