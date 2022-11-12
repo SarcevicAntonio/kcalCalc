@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { items, recentItems } from '$lib/data/items';
+	import { quickSnacks } from '$lib/data/quick-snacks';
 	import { user } from '$lib/data/user';
 	import { auth } from '$lib/firebase';
 	import Login from '$lib/views/Login.svelte';
@@ -26,8 +27,10 @@
 			photoURL,
 		};
 
+		// preload data
 		items.load();
 		recentItems.load();
+		quickSnacks.load();
 	});
 
 	let imgError = false;

@@ -10,6 +10,9 @@
 	import EditItem from './EditItem.svelte';
 	import ItemInstanceSelector from './ItemInstanceSelector.svelte';
 	import SavedItems from './SavedItems.svelte';
+	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt';
+	import IcArrowBack from '~icons/ic/round-arrow-back';
+
 	const dispatch = createEventDispatcher();
 
 	export let label = 'Items';
@@ -19,6 +22,7 @@
 	export let isOpen = false;
 	export let editItem: Item = null;
 	export let triggerTestId = '';
+	let showQuickSnacks = false;
 </script>
 
 <Dialog
@@ -82,10 +86,25 @@
 						dispatch('select', itemInstance);
 					}}
 				/>
-			{:else}
+			{:else if !showQuickSnacks}
 				<SavedItems on:select={({ detail }) => (editItem = detail)} />
+			{:else}
+				QuickSnacks
 			{/if}
-			<AddItem on:created={({ detail }) => (editItem = detail)} />
+			<nav class="fab-bar">
+				{#if selector}
+					&nbsp;
+				{:else}
+					<button on:click={() => (showQuickSnacks = !showQuickSnacks)}>
+						{#if !showQuickSnacks}
+							<MaterialSymbolsOfflineBolt />
+						{:else}
+							<IcArrowBack />
+						{/if}
+					</button>
+				{/if}
+				<AddItem on:created={({ detail }) => (editItem = detail)} />
+			</nav>
 		{/if}
 	</div>
 </Dialog>
@@ -93,5 +112,9 @@
 <style>
 	:global(.margin-left-auto) {
 		margin-left: auto;
+	}
+	.fab-bar {
+		position: sticky;
+		padding: 0;
 	}
 </style>

@@ -173,9 +173,12 @@
 			<div class="row">
 				<Input bind:value={portion.label}>Label</Input>
 				{#if $quickSnacks[$dataStore.id]?.some((pk) => pk === portion.key)}
-					<button class="btn text" on:click={() => {
+					<button
+						class="btn text"
+						on:click={() => {
 							removeQuickSnack($dataStore.id, portion.key);
-					}}>
+						}}
+					>
 						<MaterialSymbolsOfflineBolt />
 					</button>
 				{:else}
