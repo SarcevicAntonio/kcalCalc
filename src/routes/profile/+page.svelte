@@ -42,6 +42,7 @@
 			<a
 				href="https://www.tk.de/service/app/2004134/kalorienrechner/einstieg.app?tkcm=ab"
 				target="_blank"
+				rel="noreferrer"
 			>
 				Kalo­ri­en­be­darfs­rechner von TK
 			</a>

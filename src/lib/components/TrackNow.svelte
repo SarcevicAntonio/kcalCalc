@@ -26,7 +26,6 @@
 		todayData.meals[mealIndex].intake = [...todayData.meals[mealIndex].intake, itemInstance];
 		await setDayData(todayDate, todayData);
 		removeNotification(notificationId);
-		weekData.reload();
 	}
 </script>
 

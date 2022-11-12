@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createInstance } from '$lib/components/InstanceCreator';
-	import { items, type Item } from '$lib/data/items';
+	import type { Item } from '$lib/data/items';
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
 	import { fly } from 'svelte/transition';
@@ -66,7 +66,6 @@
 							dispatch('select', itemInstance);
 						}
 					}
-					await items.reload();
 					editItem = null;
 				}}
 			/>

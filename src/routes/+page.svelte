@@ -54,7 +54,6 @@
 	{#if !showWeekGraph && mobileView}
 		<button
 			on:click={async () => {
-				await weekData.reload();
 				toggleWeekGraph();
 			}}
 		>
