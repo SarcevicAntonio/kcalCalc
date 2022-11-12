@@ -97,7 +97,7 @@
 				{#if selector}
 					&nbsp;
 				{:else if !showQuickSnacks}
-					<button on:click={() => (showQuickSnacks = true)}>
+					<button data-testid="quick-snacks" on:click={() => (showQuickSnacks = true)}>
 						<MaterialSymbolsOfflineBolt />
 					</button>
 					<AddItem on:created={({ detail }) => (editItem = detail)} />

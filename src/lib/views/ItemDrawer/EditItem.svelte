@@ -175,6 +175,7 @@
 				{#if $quickSnacks[$dataStore.id]?.some((pk) => pk === portion.key)}
 					<button
 						class="btn text"
+						data-testid="remove-quick-snack"
 						on:click={() => {
 							removeQuickSnack($dataStore.id, portion.key);
 						}}
@@ -184,6 +185,7 @@
 				{:else}
 					<button
 						class="btn text"
+						data-testid="add-quick-snack"
 						on:click={() => {
 							addQuickSnack($dataStore.id, portion.key);
 						}}
