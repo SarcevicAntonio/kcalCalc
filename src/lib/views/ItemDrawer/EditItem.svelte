@@ -29,7 +29,7 @@
 	import PortionCreator from './PortionCreator.svelte';
 	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt';
 	import MaterialSymbolsOfflineBoltOutline from '~icons/material-symbols/offline-bolt-outline';
-	import { addQuickSnack, quickSnacks, removeQuickSnack } from '$lib/data/quick-snacks';
+	import { addQuickSnack, quickSnacks, removeQuickSnack } from '$lib/data/quickSnacks';
 
 	const dispatch = createEventDispatcher();
 

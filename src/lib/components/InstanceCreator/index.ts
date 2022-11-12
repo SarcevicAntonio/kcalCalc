@@ -5,8 +5,8 @@ import { v4 as uuid } from 'uuid';
 
 export const instanceCreatorState = writable(null);
 
-export function createInstance(item: Item): Promise<ItemInstance> {
-	const instance = {
+export function transformItemToInstance(item: Item): ItemInstance {
+	return {
 		key: uuid(),
 		id: item.id,
 		label: item.label,
@@ -15,6 +15,10 @@ export function createInstance(item: Item): Promise<ItemInstance> {
 		amount: 100,
 		portions: item.portions || [],
 	};
+}
+
+export function createInstance(item: Item): Promise<ItemInstance> {
+	const instance = transformItemToInstance(item);
 
 	return new Promise((resolve, reject) => {
 		instanceCreatorState.set({ item, instance, resolve, reject });

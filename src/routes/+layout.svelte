@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { items, recentItems } from '$lib/data/items';
-	import { quickSnacks } from '$lib/data/quick-snacks';
+	import { quickSnacks } from '$lib/data/quickSnacks';
 	import { user } from '$lib/data/user';
 	import { auth } from '$lib/firebase';
 	import Login from '$lib/views/Login.svelte';
