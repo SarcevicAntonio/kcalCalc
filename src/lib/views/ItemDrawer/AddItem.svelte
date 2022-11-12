@@ -8,27 +8,20 @@
 	let loading = false;
 </script>
 
-<nav class="fab-bar">
-	&nbsp;
-	<button
-		class:skeleton={loading}
-		on:click={async () => {
-			loading = true;
-			const id = uuid();
-			const item = createItem(id);
-			dispatch('created', item);
-			loading = false;
-		}}
-	>
-		<IcAdd /> New Item
-	</button>
-</nav>
+<button
+	class:skeleton={loading}
+	on:click={async () => {
+		loading = true;
+		const id = uuid();
+		const item = createItem(id);
+		dispatch('created', item);
+		loading = false;
+	}}
+>
+	<IcAdd /> New Item
+</button>
 
 <style>
-	.fab-bar {
-		position: sticky;
-		padding: 0;
-	}
 	:disabled {
 		cursor: not-allowed;
 		opacity: 0.5;

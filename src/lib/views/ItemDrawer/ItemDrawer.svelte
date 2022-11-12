@@ -4,12 +4,16 @@
 	import { Dialog } from 'as-comps';
 	import { createEventDispatcher } from 'svelte';
 	import { fly } from 'svelte/transition';
+	import IcArrowBack from '~icons/ic/round-arrow-back';
 	import IcItems from '~icons/ic/round-category';
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
+	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt';
 	import AddItem from './AddItem.svelte';
 	import EditItem from './EditItem.svelte';
 	import ItemInstanceSelector from './ItemInstanceSelector.svelte';
+	import QuickSnacks from './QuickSnacks.svelte';
 	import SavedItems from './SavedItems.svelte';
+
 	const dispatch = createEventDispatcher();
 
 	export let label = 'Items';
@@ -19,6 +23,7 @@
 	export let isOpen = false;
 	export let editItem: Item = null;
 	export let triggerTestId = '';
+	let showQuickSnacks = false;
 </script>
 
 <Dialog
@@ -26,6 +31,7 @@
 	bind:isOpen
 	on:dismiss={() => {
 		editItem = null;
+		showQuickSnacks = false;
 	}}
 	triggerProps={{
 		class: `margin-left-auto ${selector ? 'btn text' : ''}`,
@@ -82,10 +88,25 @@
 						dispatch('select', itemInstance);
 					}}
 				/>
-			{:else}
+			{:else if !showQuickSnacks}
 				<SavedItems on:select={({ detail }) => (editItem = detail)} />
+			{:else}
+				<QuickSnacks />
 			{/if}
-			<AddItem on:created={({ detail }) => (editItem = detail)} />
+			<nav class="fab-bar">
+				{#if selector}
+					&nbsp;
+				{:else if !showQuickSnacks}
+					<button data-testid="quick-snacks" on:click={() => (showQuickSnacks = true)}>
+						<MaterialSymbolsOfflineBolt />
+					</button>
+					<AddItem on:created={({ detail }) => (editItem = detail)} />
+				{:else}
+					<button on:click={() => (showQuickSnacks = false)}>
+						<IcArrowBack />
+					</button>
+				{/if}
+			</nav>
 		{/if}
 	</div>
 </Dialog>
@@ -93,5 +114,9 @@
 <style>
 	:global(.margin-left-auto) {
 		margin-left: auto;
+	}
+	.fab-bar {
+		position: sticky;
+		padding: 0;
 	}
 </style>

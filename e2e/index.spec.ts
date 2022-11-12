@@ -185,12 +185,39 @@ test.describe('App Test', () => {
 		await page.getByLabel('Amount').fill('430');
 		await page.getByRole('button', { name: 'Track' }).click();
 
-		const todayBreakfastBucket = page.getByTestId(`bucket-Dinner-${date}`);
+		const todayDinnerBucket = page.getByTestId(`bucket-Dinner-${date}`);
 		let searchText = `Spaghetti aglio, olio e peperoncino`;
-		expect(await todayBreakfastBucket.getByText(searchText).isVisible()).toBeTruthy();
+		expect(await todayDinnerBucket.getByText(searchText).isVisible()).toBeTruthy();
 		searchText = date;
-		expect(await todayBreakfastBucket.getByText(searchText).isVisible()).toBeTruthy();
+		expect(await todayDinnerBucket.getByText(searchText).isVisible()).toBeTruthy();
 		searchText = '1440 kcal';
-		expect(await todayBreakfastBucket.getByText(searchText).isVisible()).toBeTruthy();
+		expect(await todayDinnerBucket.getByText(searchText).isVisible()).toBeTruthy();
+	});
+
+	test('add quick snack and track it', async ({ page }) => {
+		const date = toISODateString(new Date());
+
+		await page.getByTestId(`track-item-Lunch-${date}`).click();
+		await page.getByLabel('Search').fill('Oatly Hafer Calcium');
+		page.getByRole('button', { name: 'Search for item on internet' }).click();
+		await page.getByRole('button', { name: 'Hafer Drink, Calcium Oatly 46 kcal%g||ml' }).click();
+		await page.getByRole('button', { name: 'Add Portion' }).click();
+		await page.getByLabel('Label').nth(1).fill('Schuss');
+		await page.getByLabel('Amount (g||ml)').fill('10');
+		await page.getByTestId('add-quick-snack').click();
+		await page.getByRole('button', { name: 'Close Dialog or Dialog' }).click();
+		await page.getByRole('button', { name: 'Items' }).click();
+		await page.getByTestId('quick-snacks').click();
+		await page.getByRole('button', { name: 'Hafer Drink, Calcium Schuss Oatly 5 kcal' }).click();
+		await page
+			.getByRole('button', { name: 'Hafer Drink, Calcium Schuss Oatly 5 kcal' })
+			.press('Escape');
+
+		await page.getByTestId(`bucket-button-Snacks-${date}`).click();
+		const todaySnackBucket = page.getByTestId(`bucket-Snacks-${date}`);
+		let searchText = `Hafer Drink, Calcium`;
+		expect(await todaySnackBucket.getByText(searchText).isVisible()).toBeTruthy();
+		searchText = '5 kcal';
+		expect(await todaySnackBucket.getByText(searchText).isVisible()).toBeTruthy();
 	});
 });
