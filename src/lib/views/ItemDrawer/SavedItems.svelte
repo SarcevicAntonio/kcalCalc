@@ -11,21 +11,57 @@
 	import AddItem from './AddItem.svelte';
 	import QuickSnacks from './QuickSnacks.svelte';
 
-	const dispatch = createEventDispatcher<{ edit: Item }>();
+	enum SortModes {
+		UPDATED_AT,
+		ALPHABET,
+	}
 
 	let search = '';
 	let showQuickSnacks = false;
+	let sortMode = 'updatedAt';
+	const dispatch = createEventDispatcher<{ edit: Item }>();
+	const collator = new Intl.Collator();
+
+	$: sortedItems = sortItems($items, sortMode);
+
+	function sortItems(items: Item[], mode: string) {
+		switch (mode) {
+			case 'updatedAt':
+				return items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+			case 'alphabet':
+				return items.sort(({ label: a }, { label: b }) => {
+					const cleanA = cleanString(a);
+					const cleanB = cleanString(b);
+					return collator.compare(cleanA, cleanB);
+				});
+			default:
+				return items;
+		}
+	}
+
+	function cleanString(str: string) {
+		// remove emojis and whitespace
+		return str.replace(
+			/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]| /g,
+			''
+		);
+	}
 </script>
 
 {#if !showQuickSnacks}
 	<h2 class="headline-3 with-icon"><IcItems /> Items</h2>
 	<Input clearable bind:value={search}>Search</Input>
-	{#if $items}
+
+	<label for="sort">Sort</label>
+	<select id="sort" bind:value={sortMode}>
+		<option value="updatedAt">updatedAt</option>
+		<option value="alphabet">alphabet</option>
+	</select>
+
+	{#if sortedItems}
 		<ItemCards
 			on:select={({ detail: selectedItem }) => dispatch('edit', selectedItem)}
-			items={search
-				? fuzzySearch($items, search)
-				: $items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))}
+			items={search ? fuzzySearch($items, search) : sortedItems}
 		>
 			<IcItems /> No saved items found.
 		</ItemCards>
