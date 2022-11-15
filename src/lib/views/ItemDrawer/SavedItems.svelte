@@ -4,6 +4,7 @@
 	import { items, type Item } from '$lib/data/items';
 	import { fuzzySearch } from '$lib/fuzzySearch';
 	import Input from '$lib/Input.svelte';
+	import Select from '$lib/Select.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import IcArrowBack from '~icons/ic/round-arrow-back';
 	import IcItems from '~icons/ic/round-category';
@@ -23,7 +24,7 @@
 		switch (mode) {
 			case 'updatedAt':
 				return items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-			case 'alphabet':
+			case 'label':
 				return items.sort(({ label: a }, { label: b }) => {
 					const cleanA = cleanString(a);
 					const cleanB = cleanString(b);
@@ -46,14 +47,22 @@
 </script>
 
 {#if !showQuickSnacks}
-	<h2 class="headline-3 with-icon"><IcItems /> Items</h2>
+	<h2 class="headline-3 with-icon"><IcItems /> Saved Items</h2>
 	<Input clearable bind:value={search}>Search</Input>
 
-	<label for="sort">Sort</label>
-	<select id="sort" bind:value={sortMode}>
-		<option value="updatedAt">updatedAt</option>
-		<option value="alphabet">alphabet</option>
-	</select>
+	<Select
+		bind:value={sortMode}
+		options={[
+			{
+				label: 'Recently Updated',
+				value: 'updatedAt',
+			},
+			{
+				label: 'Label',
+				value: 'label',
+			},
+		]}>Sort</Select
+	>
 
 	{#if sortedItems}
 		<ItemCards
