@@ -47,11 +47,16 @@
 		}
 		dispatch('blur', e);
 	};
+
+	const focusInput = () => inputElement.focus();
 </script>
 
 <div
 	class="container"
-	on:click={() => inputElement.focus()}
+	on:click={focusInput}
+	on:keydown={focusInput}
+	on:keyup={focusInput}
+	on:keypress={focusInput}
 	class:error={canNotEvaluate}
 	class:disabled
 	class:outlined
@@ -89,73 +94,4 @@
 	</div>
 </div>
 
-<style lang="postcss">
-	.container {
-		cursor: text;
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-		flex-grow: 1;
-		position: relative;
-		padding: 0.5rem 1rem;
-		border-top-left-radius: 0.25rem;
-		border-top-right-radius: 0.25rem;
-		border-bottom: 1px solid var(--md-on-surface);
-		background-color: var(--md-surface-variant);
-		color: var(--md-on-surface-variant);
-
-		&.outlined {
-			background-color: transparent;
-			border: 1px solid var(--md-outline);
-			border-radius: 0.25rem;
-			& label {
-				color: var(--md-on-surface-variant);
-			}
-			color: var(--md-on-surface);
-		}
-
-		&:focus-within {
-			border-color: var(--md-primary);
-		}
-	}
-	label {
-		cursor: text;
-		color: var(--md-primary);
-		font-size: var(--md-body--small);
-	}
-
-	input {
-		font-size: var(--md-body--large);
-		background-color: transparent;
-		border: none;
-		width: 100%;
-		color: inherit;
-
-		&:focus {
-			outline: none;
-		}
-	}
-
-	.inline {
-		position: absolute;
-		right: 1.2em;
-		top: 50%;
-		transform: translateY(-50%);
-	}
-
-	.error {
-		border-color: var(--md-error);
-		& label {
-			color: var(--md-error);
-		}
-	}
-
-	.disabled {
-		background-color: var(--md-on-secondary-container--opacity-008);
-		color: var(--md-on-surface);
-		border-color: var(--md-on-surface--opacity-012);
-		& > * {
-			opacity: 0.75;
-		}
-	}
-</style>
+<style src="./input.css"></style>
