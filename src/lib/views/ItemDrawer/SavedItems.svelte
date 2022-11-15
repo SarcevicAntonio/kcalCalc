@@ -30,6 +30,12 @@
 					const cleanB = cleanString(b);
 					return collator.compare(cleanA, cleanB);
 				});
+			case 'brand':
+				return items.sort(({ brand: a }, { brand: b }) => {
+					const cleanA = cleanString(a);
+					const cleanB = cleanString(b);
+					return collator.compare(cleanA, cleanB);
+				});
 			default:
 				return items;
 		}
@@ -50,19 +56,25 @@
 	<h2 class="headline-3 with-icon"><IcItems /> Saved Items</h2>
 	<Input clearable bind:value={search}>Search</Input>
 
-	<Select
-		bind:value={sortMode}
-		options={[
-			{
-				label: 'Recently Updated',
-				value: 'updatedAt',
-			},
-			{
-				label: 'Label',
-				value: 'label',
-			},
-		]}>Sort</Select
-	>
+	{#if !search}
+		<Select
+			bind:value={sortMode}
+			options={[
+				{
+					label: 'Recently Updated',
+					value: 'updatedAt',
+				},
+				{
+					label: 'Label',
+					value: 'label',
+				},
+				{
+					label: 'Brand',
+					value: 'brand',
+				},
+			]}>Sort</Select
+		>
+	{/if}
 
 	{#if sortedItems}
 		<ItemCards
