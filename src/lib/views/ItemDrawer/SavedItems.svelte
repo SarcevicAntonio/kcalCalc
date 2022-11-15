@@ -11,11 +11,6 @@
 	import AddItem from './AddItem.svelte';
 	import QuickSnacks from './QuickSnacks.svelte';
 
-	enum SortModes {
-		UPDATED_AT,
-		ALPHABET,
-	}
-
 	let search = '';
 	let showQuickSnacks = false;
 	let sortMode = 'updatedAt';
@@ -41,10 +36,12 @@
 
 	function cleanString(str: string) {
 		// remove emojis and whitespace
-		return str.replace(
-			/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]| /g,
-			''
-		);
+		return str
+			.replace(
+				/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]| /g,
+				''
+			)
+			.trim();
 	}
 </script>
 
