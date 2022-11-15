@@ -100,11 +100,13 @@
 					<button data-testid="quick-snacks" on:click={() => (showQuickSnacks = true)}>
 						<MaterialSymbolsOfflineBolt />
 					</button>
-					<AddItem on:created={({ detail }) => (editItem = detail)} />
 				{:else}
 					<button on:click={() => (showQuickSnacks = false)}>
 						<IcArrowBack />
 					</button>
+				{/if}
+				{#if !showQuickSnacks}
+					<AddItem on:created={({ detail }) => (editItem = detail)} />
 				{/if}
 			</nav>
 		{/if}
