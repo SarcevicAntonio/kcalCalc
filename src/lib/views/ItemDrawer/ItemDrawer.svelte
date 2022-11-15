@@ -75,40 +75,18 @@
 					editItem = null;
 				}}
 			/>
+		{:else if selector}
+			<ItemInstanceSelector
+				{noCustomKcal}
+				{excludeId}
+				on:edit={({ detail: item }) => (editItem = item)}
+				on:selectItem={({ detail: itemInstance }) => {
+					toggle();
+					dispatch('select', itemInstance);
+				}}
+			/>
 		{:else}
-			{#if selector}
-				<ItemInstanceSelector
-					{noCustomKcal}
-					{excludeId}
-					on:externalItem={({ detail }) => {
-						editItem = detail;
-					}}
-					on:selectItem={async ({ detail: itemInstance }) => {
-						toggle();
-						dispatch('select', itemInstance);
-					}}
-				/>
-			{:else if !showQuickSnacks}
-				<SavedItems on:select={({ detail }) => (editItem = detail)} />
-			{:else}
-				<QuickSnacks />
-			{/if}
-			<nav class="fab-bar">
-				{#if selector}
-					&nbsp;
-				{:else if !showQuickSnacks}
-					<button data-testid="quick-snacks" on:click={() => (showQuickSnacks = true)}>
-						<MaterialSymbolsOfflineBolt />
-					</button>
-				{:else}
-					<button on:click={() => (showQuickSnacks = false)}>
-						<IcArrowBack />
-					</button>
-				{/if}
-				{#if !showQuickSnacks}
-					<AddItem on:created={({ detail }) => (editItem = detail)} />
-				{/if}
-			</nav>
+			<SavedItems on:edit={({ detail }) => (editItem = detail)} />
 		{/if}
 	</div>
 </Dialog>
@@ -116,9 +94,5 @@
 <style>
 	:global(.margin-left-auto) {
 		margin-left: auto;
-	}
-	.fab-bar {
-		position: sticky;
-		padding: 0;
 	}
 </style>

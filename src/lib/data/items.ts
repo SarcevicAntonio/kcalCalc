@@ -43,12 +43,13 @@ function subscribeItems(colRef: CollectionReference) {
 	});
 }
 
-export const createItem = (id: string): Item => {
+export const createItem = (id: string, label = ''): Item => {
 	const colRef = doc(db, `Users/${get(user).id}/Items/` + id);
 	console.log('setDoc newItem', id);
-	const item = {
+	const item: Item = {
 		...defaultItem,
 		id,
+		label,
 		createdAt: Date.now(),
 		updatedAt: Date.now(),
 	};

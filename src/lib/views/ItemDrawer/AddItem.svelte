@@ -5,6 +5,9 @@
 	import IcAdd from '~icons/ic/round-add';
 
 	const dispatch = createEventDispatcher<{ created: Item }>();
+
+	export let label = '';
+
 	let loading = false;
 </script>
 
@@ -13,7 +16,7 @@
 	on:click={async () => {
 		loading = true;
 		const id = uuid();
-		const item = createItem(id);
+		const item = createItem(id, label);
 		dispatch('created', item);
 		loading = false;
 	}}

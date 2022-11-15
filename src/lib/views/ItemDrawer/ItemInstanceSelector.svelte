@@ -21,7 +21,8 @@
 	import IcRoundRestore from '~icons/ic/round-restore';
 	import MdiCloudSearch from '~icons/mdi/cloud-search';
 	import MdiWeight from '~icons/mdi/weight';
-	const dispatch = createEventDispatcher<{ externalItem: Item; selectItem: Item }>();
+	import AddItem from './AddItem.svelte';
+	const dispatch = createEventDispatcher<{ edit: Item; selectItem: Item }>();
 
 	export let noCustomKcal = false;
 	export let excludeId = '';
@@ -51,7 +52,7 @@
 			const cleanedItem = await saveExternalItem(item);
 			search = '';
 			handlingId = null;
-			dispatch('externalItem', cleanedItem);
+			dispatch('edit', cleanedItem);
 		} else {
 			const itemInstance = await createInstance(item);
 			if (!itemInstance) return;
@@ -141,6 +142,11 @@
 		<ItemSkeleton />
 	{/each}
 {/if}
+
+<nav class="fab-bar sticky">
+	&nbsp;
+	<AddItem on:created={({ detail: newItem }) => dispatch('edit', newItem)} label={search} />
+</nav>
 
 <style>
 	.w100p {
