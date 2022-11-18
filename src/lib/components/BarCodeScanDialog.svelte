@@ -58,6 +58,8 @@
 
 {#if videoInputDevices.length}
 	<Dialog
+		--as-dialog-height="max-content"
+		--as-dialog-width="max-content"
 		noCloseButton
 		triggerProps={{ class: 'inline-btn tonal' }}
 		on:introend={startScanner}
