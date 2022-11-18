@@ -37,11 +37,13 @@ worker.addEventListener('activate', event => {
 })
 
 worker.addEventListener('fetch', event => {
-	if (event.request.method !== 'GET' || event.request.headers.has('range')) return
+	if (event.request.method !== 'GET' || event.request.headers.has('range'))
+		return
 
 	const url = new URL(event.request.url)
 
-	const isStaticAsset = url.host === self.location.host && staticAssets.has(url.pathname)
+	const isStaticAsset =
+		url.host === self.location.host && staticAssets.has(url.pathname)
 	if (url.protocol.startsWith('http')) {
 		event.respondWith(
 			(async () => {
@@ -70,7 +72,8 @@ async function fetchAndCache(request: Request) {
 	} catch (err) {
 		const response = await cache.match(request)
 		if (response) return response
-		if (request.url.includes('www.google.com/images/cleardot.gif')) return new Response(null)
+		if (request.url.includes('www.google.com/images/cleardot.gif'))
+			return new Response(null)
 
 		throw err
 	}

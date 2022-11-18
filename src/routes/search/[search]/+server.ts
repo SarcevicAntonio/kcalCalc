@@ -11,9 +11,14 @@ if (!String.prototype.replaceAll) {
 
 export const GET: RequestHandler = async request => {
 	// console.log('https://fddb.mobi/search/?search=' + request.params.search);
-	const searchRes = await fetch('https://fddb.mobi/search/?search=' + request.params.search)
+	const searchRes = await fetch(
+		'https://fddb.mobi/search/?search=' + request.params.search
+	)
 	if (!searchRes.ok) {
-		return new Response(undefined, { status: searchRes.status, statusText: searchRes.statusText })
+		return new Response(undefined, {
+			status: searchRes.status,
+			statusText: searchRes.statusText,
+		})
 	}
 	const { document } = parseHTML(await searchRes.text())
 
@@ -30,7 +35,9 @@ export const GET: RequestHandler = async request => {
 				const { document } = parseHTML(await itemRes.text())
 
 				const label = document.querySelector('h3').textContent
-				const brand = document.querySelector('p').textContent.match(/\((.+)\)/)[1]
+				const brand = document
+					.querySelector('p')
+					.textContent.match(/\((.+)\)/)[1]
 
 				let kcalPer100 = 0
 
@@ -68,8 +75,8 @@ export const GET: RequestHandler = async request => {
 					.then(async detailsRes => {
 						if (!detailsRes.ok) return null
 						const { document } = parseHTML(await detailsRes.text())
-						const pWithEan = Array.from(document.querySelectorAll('p')).find(p =>
-							p.textContent.includes('EAN:')
+						const pWithEan = Array.from(document.querySelectorAll('p')).find(
+							p => p.textContent.includes('EAN:')
 						)
 						if (!pWithEan) return null
 						return pWithEan.textContent.match(/EAN: ([0-9]+)/)[1]

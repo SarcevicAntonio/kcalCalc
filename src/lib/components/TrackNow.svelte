@@ -1,5 +1,11 @@
 <script lang="ts">
-	import { defaultDay, getDayData, setDayData, weekData, type Day } from '$lib/data/intake'
+	import {
+		defaultDay,
+		getDayData,
+		setDayData,
+		weekData,
+		type Day,
+	} from '$lib/data/intake'
 	import type { Item, ItemInstance } from '$lib/data/items'
 	import { toISODateString } from '$lib/dateHelpers'
 	import { Dialog, notification, removeNotification } from 'as-comps'
@@ -22,8 +28,13 @@
 		const notificationId = notification(`Tracking ${itemInstance.label}...`)
 		isOpen = false
 		todayData = await getDayData(todayDate)
-		const mealIndex = todayData.meals.findIndex(meal => meal.label === mealLabel)
-		todayData.meals[mealIndex].intake = [...todayData.meals[mealIndex].intake, itemInstance]
+		const mealIndex = todayData.meals.findIndex(
+			meal => meal.label === mealLabel
+		)
+		todayData.meals[mealIndex].intake = [
+			...todayData.meals[mealIndex].intake,
+			itemInstance,
+		]
 		await setDayData(todayDate, todayData)
 		removeNotification(notificationId)
 	}

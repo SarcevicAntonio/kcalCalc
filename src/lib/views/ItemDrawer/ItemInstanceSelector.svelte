@@ -36,7 +36,9 @@
 	async function searchExternal() {
 		externalEntries = []
 		loadingExternalItems = true
-		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then(r => r.json())
+		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then(
+			r => r.json()
+		)
 		loadingExternalItems = false
 	}
 
@@ -146,7 +148,11 @@
 			<IcRoundRestore />
 		{/if}
 
-		No {externalEntries.length ? 'external' : search ? 'saved' : 'recently used'} items found
+		No {externalEntries.length
+			? 'external'
+			: search
+			? 'saved'
+			: 'recently used'} items found
 	</ItemCards>
 {:else}
 	{#each { length: 10 } as _}

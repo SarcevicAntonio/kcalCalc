@@ -18,7 +18,13 @@
 	}
 
 	$: kcalSum = (overrideData || Object.values($weekData)).reduce((acc, day) => {
-		return acc + day.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0) || 0
+		return (
+			acc +
+				day.meals.reduce(
+					(acc, meal) => acc + calculateKcalFromItems(meal.intake),
+					0
+				) || 0
+		)
 	}, 0)
 </script>
 

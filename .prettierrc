@@ -2,7 +2,6 @@
 	"useTabs": true,
 	"singleQuote": true,
 	"semi": false,
-	"printWidth": 100,
 	"quoteProps": "consistent",
 	"arrowParens": "avoid",
 	"htmlWhitespaceSensitivity": "ignore",

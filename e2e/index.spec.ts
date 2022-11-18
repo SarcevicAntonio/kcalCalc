@@ -14,8 +14,12 @@ test.describe('App Test', () => {
 		])
 		await authPopup.waitForLoadState()
 		await authPopup.getByRole('button', { name: 'Add new account' }).click()
-		await authPopup.getByRole('button', { name: 'Auto-generate user information' }).click()
-		await authPopup.getByRole('button', { name: 'Sign in with Google.com' }).click()
+		await authPopup
+			.getByRole('button', { name: 'Auto-generate user information' })
+			.click()
+		await authPopup
+			.getByRole('button', { name: 'Sign in with Google.com' })
+			.click()
 		await page.getByText('Today').waitFor()
 		await authPopup.close()
 	})
@@ -24,7 +28,9 @@ test.describe('App Test', () => {
 		const itemLabel = 'Nutella'
 		const bucketLabel = 'Breakfast'
 		const date = toISODateString(new Date())
-		const searchInternetButton = page.getByRole('button', { name: 'Search for item on internet' })
+		const searchInternetButton = page.getByRole('button', {
+			name: 'Search for item on internet',
+		})
 
 		await page.getByTestId(`track-item-${bucketLabel}-${date}`).click()
 		await page.getByLabel('Search').fill(itemLabel)
@@ -34,8 +40,12 @@ test.describe('App Test', () => {
 		await page.getByLabel('Amount', { exact: true }).fill('1337')
 		await page.getByRole('button', { name: 'Track' }).click()
 
-		const todayBreakfastBucket = page.getByTestId(`bucket-${bucketLabel}-${date}`)
-		expect(await todayBreakfastBucket.getByText(itemLabel).isVisible()).toBeTruthy()
+		const todayBreakfastBucket = page.getByTestId(
+			`bucket-${bucketLabel}-${date}`
+		)
+		expect(
+			await todayBreakfastBucket.getByText(itemLabel).isVisible()
+		).toBeTruthy()
 	})
 
 	test('create new item and track from edit page', async ({ page }) => {
@@ -55,14 +65,20 @@ test.describe('App Test', () => {
 		await page.keyboard.press('Escape')
 		await page.getByTestId(`bucket-button-${bucketLabel}-${date}`).click()
 
-		const todayBreakfastBucket = page.getByTestId(`bucket-${bucketLabel}-${date}`)
-		expect(await todayBreakfastBucket.getByText(itemLabel).isVisible()).toBeTruthy()
+		const todayBreakfastBucket = page.getByTestId(
+			`bucket-${bucketLabel}-${date}`
+		)
+		expect(
+			await todayBreakfastBucket.getByText(itemLabel).isVisible()
+		).toBeTruthy()
 	})
 
 	test('create aglio and track from bucket', async ({ page }) => {
 		const date = toISODateString(new Date())
 		const dialog = page.getByTestId('item-drawer')
-		const searchInternetButton = page.getByRole('button', { name: 'Search for item on internet' })
+		const searchInternetButton = page.getByRole('button', {
+			name: 'Search for item on internet',
+		})
 
 		const waitForIngredientDialogClose = async () => {
 			await page
@@ -83,7 +99,9 @@ test.describe('App Test', () => {
 		await page.getByLabel('Search').fill('Spaghetti')
 		await searchInternetButton.click()
 		await page
-			.getByRole('button', { name: 'Spaghetti, roh Durchschnittswert 330 kcal%g||ml' })
+			.getByRole('button', {
+				name: 'Spaghetti, roh Durchschnittswert 330 kcal%g||ml',
+			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByLabel('Amount').fill('500')
@@ -95,7 +113,9 @@ test.describe('App Test', () => {
 		await page.getByLabel('Search').fill('Parmesan')
 		await searchInternetButton.click()
 		await page
-			.getByRole('button', { name: 'Parmesan am Stück 1 port. Milbona 402 kcal%g||ml' })
+			.getByRole('button', {
+				name: 'Parmesan am Stück 1 port. Milbona 402 kcal%g||ml',
+			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByRole('textbox', { name: 'Amount' }).fill('40')
@@ -107,10 +127,14 @@ test.describe('App Test', () => {
 		await page.getByLabel('Search').fill('Tomate')
 		await searchInternetButton.click()
 		await page
-			.getByRole('button', { name: 'Tomaten, frisch 4 port. Naturprodukt 19 kcal%g||ml' })
+			.getByRole('button', {
+				name: 'Tomaten, frisch 4 port. Naturprodukt 19 kcal%g||ml',
+			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
-		await page.getByRole('button', { name: 'Track 1 mittelgroße (130 g|ml)' }).click()
+		await page
+			.getByRole('button', { name: 'Track 1 mittelgroße (130 g|ml)' })
+			.click()
 		await waitForIngredientDialogClose()
 
 		// Knoblauch
@@ -118,13 +142,17 @@ test.describe('App Test', () => {
 		await page.getByLabel('Search').fill('Knoblauch')
 		await searchInternetButton.click()
 		await page
-			.getByRole('button', { name: 'Knoblauch, frisch 1 port. Naturprodukt 141 kcal%g||ml' })
+			.getByRole('button', {
+				name: 'Knoblauch, frisch 1 port. Naturprodukt 141 kcal%g||ml',
+			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByRole('button', { name: 'Track 1 Zehe (3 g|ml)' }).click()
 		await waitForIngredientDialogClose()
 		// ups, 5 müssen das sein
-		await page.getByRole('button', { name: 'Knoblauch, frisch Naturprodukt 4 kcal' }).click()
+		await page
+			.getByRole('button', { name: 'Knoblauch, frisch Naturprodukt 4 kcal' })
+			.click()
 		await page.getByRole('textbox', { name: 'Amount' }).fill('3*5')
 		await page
 			.getByTestId('item-instance-editor')
@@ -136,13 +164,19 @@ test.describe('App Test', () => {
 		await page.getByLabel('Search').fill('Peperoni')
 		await searchInternetButton.click()
 		await page
-			.getByRole('button', { name: 'Peperoni, rot 1 port. Naturprodukt 28 kcal%g||ml' })
+			.getByRole('button', {
+				name: 'Peperoni, rot 1 port. Naturprodukt 28 kcal%g||ml',
+			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
-		await page.getByRole('button', { name: 'Track 1 mittelgroße (6 g|ml)' }).click()
+		await page
+			.getByRole('button', { name: 'Track 1 mittelgroße (6 g|ml)' })
+			.click()
 		await waitForIngredientDialogClose()
 		// ups, 2 müssen das sein
-		await page.getByRole('button', { name: 'Peperoni, rot Naturprodukt 2 kcal' }).click()
+		await page
+			.getByRole('button', { name: 'Peperoni, rot Naturprodukt 2 kcal' })
+			.click()
 		await page.getByRole('textbox', { name: 'Amount' }).fill('6*2')
 		await page
 			.getByTestId('item-instance-editor')
@@ -154,7 +188,9 @@ test.describe('App Test', () => {
 		await page.getByLabel('Search').fill('Maggi Gemüsebrühe Pulver')
 		await searchInternetButton.click()
 		await page
-			.getByRole('button', { name: 'Maggi Klare Gemüsebrühe Pulver Maggi 172 kcal%g||ml' })
+			.getByRole('button', {
+				name: 'Maggi Klare Gemüsebrühe Pulver Maggi 172 kcal%g||ml',
+			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByRole('textbox', { name: 'Amount' }).fill('30')
@@ -165,7 +201,11 @@ test.describe('App Test', () => {
 		await dialog.getByRole('button', { name: 'Track Item' }).click()
 		await page.getByLabel('Search').fill('Olivenöl')
 		await searchInternetButton.click()
-		await page.getByRole('button', { name: 'Olivenöl 3 port. Naturprodukt 857 kcal%g||ml' }).click()
+		await page
+			.getByRole('button', {
+				name: 'Olivenöl 3 port. Naturprodukt 857 kcal%g||ml',
+			})
+			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByRole('button', { name: 'Track' }).click()
 		await waitForIngredientDialogClose()
@@ -178,18 +218,26 @@ test.describe('App Test', () => {
 		await page.getByTestId(`track-item-Dinner-${date}`).click()
 		await page.getByLabel('Search').fill('Spaghetti')
 		await page
-			.getByRole('button', { name: `Spaghetti aglio, olio e peperoncino ${date} 335 kcal%g||ml` })
+			.getByRole('button', {
+				name: `Spaghetti aglio, olio e peperoncino ${date} 335 kcal%g||ml`,
+			})
 			.click()
 		await page.getByLabel('Amount').fill('430')
 		await page.getByRole('button', { name: 'Track' }).click()
 
 		const todayDinnerBucket = page.getByTestId(`bucket-Dinner-${date}`)
 		let searchText = `Spaghetti aglio, olio e peperoncino`
-		expect(await todayDinnerBucket.getByText(searchText).isVisible()).toBeTruthy()
+		expect(
+			await todayDinnerBucket.getByText(searchText).isVisible()
+		).toBeTruthy()
 		searchText = date
-		expect(await todayDinnerBucket.getByText(searchText).isVisible()).toBeTruthy()
+		expect(
+			await todayDinnerBucket.getByText(searchText).isVisible()
+		).toBeTruthy()
 		searchText = '1440 kcal'
-		expect(await todayDinnerBucket.getByText(searchText).isVisible()).toBeTruthy()
+		expect(
+			await todayDinnerBucket.getByText(searchText).isVisible()
+		).toBeTruthy()
 	})
 
 	test('add quick snack and track it', async ({ page }) => {
@@ -198,7 +246,9 @@ test.describe('App Test', () => {
 		await page.getByTestId(`track-item-Lunch-${date}`).click()
 		await page.getByLabel('Search').fill('Oatly Hafer Calcium')
 		page.getByRole('button', { name: 'Search for item on internet' }).click()
-		await page.getByRole('button', { name: 'Hafer Drink, Calcium Oatly 46 kcal%g||ml' }).click()
+		await page
+			.getByRole('button', { name: 'Hafer Drink, Calcium Oatly 46 kcal%g||ml' })
+			.click()
 		await page.getByRole('button', { name: 'Add Portion' }).click()
 		await page.getByLabel('Label').nth(1).fill('Schuss')
 		await page.getByLabel('Amount (g||ml)').fill('10')
@@ -206,7 +256,9 @@ test.describe('App Test', () => {
 		await page.getByRole('button', { name: 'Close Dialog or Dialog' }).click()
 		await page.getByRole('button', { name: 'Items' }).click()
 		await page.getByTestId('quick-snacks').click()
-		await page.getByRole('button', { name: 'Hafer Drink, Calcium Schuss Oatly 5 kcal' }).click()
+		await page
+			.getByRole('button', { name: 'Hafer Drink, Calcium Schuss Oatly 5 kcal' })
+			.click()
 		await page
 			.getByRole('button', { name: 'Hafer Drink, Calcium Schuss Oatly 5 kcal' })
 			.press('Escape')
@@ -214,8 +266,12 @@ test.describe('App Test', () => {
 		await page.getByTestId(`bucket-button-Snacks-${date}`).click()
 		const todaySnackBucket = page.getByTestId(`bucket-Snacks-${date}`)
 		let searchText = `Hafer Drink, Calcium`
-		expect(await todaySnackBucket.getByText(searchText).isVisible()).toBeTruthy()
+		expect(
+			await todaySnackBucket.getByText(searchText).isVisible()
+		).toBeTruthy()
 		searchText = '5 kcal'
-		expect(await todaySnackBucket.getByText(searchText).isVisible()).toBeTruthy()
+		expect(
+			await todaySnackBucket.getByText(searchText).isVisible()
+		).toBeTruthy()
 	})
 })

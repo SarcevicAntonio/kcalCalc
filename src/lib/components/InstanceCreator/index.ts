@@ -11,7 +11,8 @@ export function transformItemToInstance(item: Item): ItemInstance {
 		id: item.id,
 		label: item.label,
 		brand: item.brand || '',
-		kcalPer100: item.kcalPer100 || calculateKcalPer100FromItems(item.items, item.amount),
+		kcalPer100:
+			item.kcalPer100 || calculateKcalPer100FromItems(item.items, item.amount),
 		amount: 100,
 		portions: item.portions || [],
 	}

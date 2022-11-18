@@ -15,14 +15,17 @@ import { v4 as uuid } from 'uuid'
 const QUICK_SNACK_STORAGE_KEY = 'v1/quickSnacks'
 
 let docRef: DocumentReference
-export const quickSnacks = asyncWritable<typeof user, QuickSnacks>(user, async $user => {
-	if (unsubscribeQuickSnacks) {
-		unsubscribeQuickSnacks()
+export const quickSnacks = asyncWritable<typeof user, QuickSnacks>(
+	user,
+	async $user => {
+		if (unsubscribeQuickSnacks) {
+			unsubscribeQuickSnacks()
+		}
+		docRef = doc(db, `Users/${$user.id}/Data/QuickSnacks`)
+		subscribeQuickSnacks(docRef)
+		return getStorage(QUICK_SNACK_STORAGE_KEY, {}) as QuickSnacks
 	}
-	docRef = doc(db, `Users/${$user.id}/Data/QuickSnacks`)
-	subscribeQuickSnacks(docRef)
-	return getStorage(QUICK_SNACK_STORAGE_KEY, {}) as QuickSnacks
-})
+)
 
 let unsubscribeQuickSnacks: Unsubscribe
 
@@ -35,24 +38,27 @@ function subscribeQuickSnacks(docRef: DocumentReference) {
 	})
 }
 
-export const quickSnackTemplates = derived([quickSnacks, items], ([$quickSnacks, $items]) => {
-	console.log('ayyyoo')
-	const templates: QuickSnackTemplate[] = []
-	if (!$quickSnacks || !$items?.length) return []
-	Object.entries($quickSnacks).forEach(([itemId, portionKeys]) => {
-		const item = $items.find(i => i.id === itemId)
-		if (!item || !item.portions) return []
-		const portions = item.portions.filter(p => portionKeys.includes(p.key))
-		portions.forEach(p => {
-			templates.push({
-				...transformItemToInstance(item),
-				amount: p.amount,
-				portionLabel: p.label,
+export const quickSnackTemplates = derived(
+	[quickSnacks, items],
+	([$quickSnacks, $items]) => {
+		console.log('ayyyoo')
+		const templates: QuickSnackTemplate[] = []
+		if (!$quickSnacks || !$items?.length) return []
+		Object.entries($quickSnacks).forEach(([itemId, portionKeys]) => {
+			const item = $items.find(i => i.id === itemId)
+			if (!item || !item.portions) return []
+			const portions = item.portions.filter(p => portionKeys.includes(p.key))
+			portions.forEach(p => {
+				templates.push({
+					...transformItemToInstance(item),
+					amount: p.amount,
+					portionLabel: p.label,
+				})
 			})
 		})
-	})
-	return templates
-})
+		return templates
+	}
+)
 
 const MEAL_LABEL_SNACK = 'Snacks'
 
@@ -61,8 +67,13 @@ export async function trackQuickSnack(itemInstance: QuickSnackTemplate) {
 	const notificationId = notification(`Tracking ${itemInstance.label}...`)
 	const todayDate = toISODateString(new Date())
 	const todayData = await getDayData(todayDate)
-	const mealIndex = todayData.meals.findIndex(meal => meal.label === MEAL_LABEL_SNACK)
-	todayData.meals[mealIndex].intake = [...todayData.meals[mealIndex].intake, itemInstance]
+	const mealIndex = todayData.meals.findIndex(
+		meal => meal.label === MEAL_LABEL_SNACK
+	)
+	todayData.meals[mealIndex].intake = [
+		...todayData.meals[mealIndex].intake,
+		itemInstance,
+	]
 	await setDayData(todayDate, todayData)
 	removeNotification(notificationId)
 }

@@ -3,7 +3,12 @@
 	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte'
 	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte'
 	import Switcher from '$lib/components/Switcher.svelte'
-	import { curDay, dateIsToday, dayData, type Day as DayType } from '$lib/data/intake'
+	import {
+		curDay,
+		dateIsToday,
+		dayData,
+		type Day as DayType,
+	} from '$lib/data/intake'
 	import { userSettings } from '$lib/data/user'
 	import { toISODateString } from '$lib/dateHelpers'
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
@@ -14,7 +19,10 @@
 
 	$: data = $dayData
 
-	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0)
+	$: kcalInDay = data?.meals.reduce(
+		(acc, meal) => acc + calculateKcalFromItems(meal.intake),
+		0
+	)
 	$: dateObj = new Date($curDay)
 
 	function goToNext() {
@@ -36,7 +44,11 @@
 		{#if $dateIsToday}
 			Today
 		{:else}
-			{dateObj.toLocaleString(undefined, { month: 'short', day: 'numeric', weekday: 'short' })}
+			{dateObj.toLocaleString(undefined, {
+				month: 'short',
+				day: 'numeric',
+				weekday: 'short',
+			})}
 		{/if}
 	</h2>
 	<span

@@ -12,7 +12,11 @@
 	} from '$lib/data/items'
 	import { toISODateString } from '$lib/dateHelpers'
 	import Input from '$lib/Input.svelte'
-	import { calculateAmountSum, calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal'
+	import {
+		calculateAmountSum,
+		calculateKcalPer100FromItems,
+		kcalDisplay,
+	} from '$lib/kcal'
 	import { shareItem } from '$lib/share'
 	import type { WritableLoadable } from '@square/svelte-store'
 	import { Dialog } from 'as-comps'
@@ -29,7 +33,11 @@
 	import PortionCreator from './PortionCreator.svelte'
 	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
 	import MaterialSymbolsOfflineBoltOutline from '~icons/material-symbols/offline-bolt-outline'
-	import { addQuickSnack, quickSnacks, removeQuickSnack } from '$lib/data/quickSnacks'
+	import {
+		addQuickSnack,
+		quickSnacks,
+		removeQuickSnack,
+	} from '$lib/data/quickSnacks'
 
 	const dispatch = createEventDispatcher()
 
@@ -94,7 +102,9 @@
 	<Input
 		type="calc"
 		disabled
-		value={kcalDisplay(calculateKcalPer100FromItems($dataStore.items, $dataStore.amount))}
+		value={kcalDisplay(
+			calculateKcalPer100FromItems($dataStore.items, $dataStore.amount)
+		)}
 	>
 		kcal per 100 g || ml
 	</Input>
@@ -105,7 +115,9 @@
 >
 	EAN (Barcode)
 	<svelte:fragment slot="inline">
-		<BarCodeScanDialog on:scanned={({ detail: code }) => ($dataStore.ean = code)} />
+		<BarCodeScanDialog
+			on:scanned={({ detail: code }) => ($dataStore.ean = code)}
+		/>
 	</svelte:fragment>
 </Input>
 
@@ -166,7 +178,10 @@
 			<PortionCreator
 				amount={$dataStore.amount || calculateAmountSum($dataStore.items)}
 				on:create={({ detail: portion }) => {
-					$dataStore.portions = [...$dataStore.portions, { ...portion, key: uuid() }]
+					$dataStore.portions = [
+						...$dataStore.portions,
+						{ ...portion, key: uuid() },
+					]
 				}}
 			/>
 		</div>
@@ -179,7 +194,10 @@
 		<button
 			class="btn text add"
 			on:click={() => {
-				$dataStore.portions = [...$dataStore.portions, { ...defaultPortion, key: uuid() }]
+				$dataStore.portions = [
+					...$dataStore.portions,
+					{ ...defaultPortion, key: uuid() },
+				]
 			}}
 		>
 			<IcAdd /> Add Portion
@@ -246,7 +264,9 @@
 		</svelte:fragment>
 		<div class="col">
 			<h2 class="title-l">Are you sure?</h2>
-			<p class="body-m">Deleting the item "{$dataStore.label}" can not be undone.</p>
+			<p class="body-m">
+				Deleting the item "{$dataStore.label}" can not be undone.
+			</p>
 			<div class="row">
 				<button
 					class="btn tonal"

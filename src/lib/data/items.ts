@@ -126,7 +126,9 @@ export async function saveExternalItem(item: Item) {
 	if (querySnap.docs.length) return querySnap.docs[0].data() as Item
 
 	if (!item.items) item.items = []
-	item.portions = item.portions ? item.portions.map(p => ({ ...p, key: uuid() })) : []
+	item.portions = item.portions
+		? item.portions.map(p => ({ ...p, key: uuid() }))
+		: []
 	item.createdAt = Date.now()
 	item.updatedAt = Date.now()
 

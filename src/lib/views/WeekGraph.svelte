@@ -34,7 +34,9 @@
 				dispatch('toggleWeekGraph')
 			}}
 		>
-			<span class="title-m">{dateObj.toLocaleString(undefined, { weekday: 'narrow' })}</span>
+			<span class="title-m">
+				{dateObj.toLocaleString(undefined, { weekday: 'narrow' })}
+			</span>
 			{#if item?.kcal}
 				<span
 					class="label-m end"

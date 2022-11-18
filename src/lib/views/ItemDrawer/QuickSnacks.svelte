@@ -4,7 +4,9 @@
 	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
 </script>
 
-<h2 class="headline-3 with-icon"><MaterialSymbolsOfflineBolt /> Quick Snacks</h2>
+<h2 class="headline-3 with-icon">
+	<MaterialSymbolsOfflineBolt /> Quick Snacks
+</h2>
 
 {#each $quickSnackTemplates as item}
 	<button

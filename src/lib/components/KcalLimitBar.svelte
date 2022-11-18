@@ -14,8 +14,14 @@
 		class="inner"
 		style={!isNaN(kcalInDay)
 			? overLimit
-				? `width: ${Math.min(($userSettings?.kcalLimit / kcalInDay) * 100, 100)}%;`
-				: `width: ${Math.min((kcalInDay / $userSettings?.kcalLimit) * 100, 100)}%;`
+				? `width: ${Math.min(
+						($userSettings?.kcalLimit / kcalInDay) * 100,
+						100
+				  )}%;`
+				: `width: ${Math.min(
+						(kcalInDay / $userSettings?.kcalLimit) * 100,
+						100
+				  )}%;`
 			: ''}
 	/>
 </div>

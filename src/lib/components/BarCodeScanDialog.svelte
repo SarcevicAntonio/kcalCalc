@@ -23,18 +23,25 @@
 
 	onMount(async () => {
 		videoInputDevices = await BrowserCodeReader.listVideoInputDevices()
-		const possibleBackCam = videoInputDevices.find(d => d.label.includes('back'))
-		selectedDeviceId = possibleBackCam?.deviceId || videoInputDevices[0]?.deviceId
+		const possibleBackCam = videoInputDevices.find(d =>
+			d.label.includes('back')
+		)
+		selectedDeviceId =
+			possibleBackCam?.deviceId || videoInputDevices[0]?.deviceId
 	})
 
 	async function startScanner() {
 		closeScanner()
-		controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, result => {
-			if (!result) return
-			dispatch('scanned', result.getText())
-			closeScanner()
-			isOpen = false
-		})
+		controls = await codeReader.decodeFromVideoDevice(
+			selectedDeviceId,
+			previewElem,
+			result => {
+				if (!result) return
+				dispatch('scanned', result.getText())
+				closeScanner()
+				isOpen = false
+			}
+		)
 	}
 
 	function closeScanner() {

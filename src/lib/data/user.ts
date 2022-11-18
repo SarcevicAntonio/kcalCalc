@@ -1,7 +1,13 @@
 import { db } from '$lib/firebase'
 import { getStorage, setStorage } from '$lib/localStorage'
 import { asyncWritable } from '@square/svelte-store'
-import { doc, DocumentReference, onSnapshot, setDoc, type Unsubscribe } from 'firebase/firestore'
+import {
+	doc,
+	DocumentReference,
+	onSnapshot,
+	setDoc,
+	type Unsubscribe,
+} from 'firebase/firestore'
 import { writable } from 'svelte/store'
 
 export const user = writable<User>()
