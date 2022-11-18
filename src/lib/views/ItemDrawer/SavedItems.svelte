@@ -54,7 +54,12 @@
 
 {#if !showQuickSnacks}
 	<h2 class="headline-3 with-icon"><IcItems /> Saved Items</h2>
-	<Input clearable bind:value={search}>Search</Input>
+	<Input
+		clearable
+		bind:value={search}
+	>
+		Search
+	</Input>
 
 	{#if !search}
 		<Select
@@ -96,10 +101,16 @@
 
 <nav class="fab-bar sticky">
 	{#if !showQuickSnacks}
-		<button data-testid="quick-snacks" on:click={() => (showQuickSnacks = true)}>
+		<button
+			data-testid="quick-snacks"
+			on:click={() => (showQuickSnacks = true)}
+		>
 			<MaterialSymbolsOfflineBolt />
 		</button>
-		<AddItem on:created={({ detail: newItem }) => dispatch('edit', newItem)} label={search} />
+		<AddItem
+			on:created={({ detail: newItem }) => dispatch('edit', newItem)}
+			label={search}
+		/>
 	{:else}
 		<button on:click={() => (showQuickSnacks = false)}>
 			<IcArrowBack />

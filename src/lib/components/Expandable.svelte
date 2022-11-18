@@ -25,13 +25,20 @@
 			<slot name="summary" />
 		</div>
 		{#if !disabled}
-			<div class="icon" class:open>
+			<div
+				class="icon"
+				class:open
+			>
 				<Icon />
 			</div>
 		{/if}
 	</div>
 	{#if open}
-		<div transition:slide|local on:click|stopPropagation on:keyup|preventDefault>
+		<div
+			transition:slide|local
+			on:click|stopPropagation
+			on:keyup|preventDefault
+		>
 			<slot />
 		</div>
 	{/if}

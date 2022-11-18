@@ -36,7 +36,7 @@
 	async function searchExternal() {
 		externalEntries = []
 		loadingExternalItems = true
-		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then((r) => r.json())
+		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then(r => r.json())
 		loadingExternalItems = false
 	}
 
@@ -72,7 +72,12 @@
 	<IcRoundPlaylistAdd /> Track Item
 </h2>
 <div class="row">
-	<Input clearable bind:inputElement bind:value={search} on:input={resetExternal}>
+	<Input
+		clearable
+		bind:inputElement
+		bind:value={search}
+		on:input={resetExternal}
+	>
 		Search
 		<svelte:fragment slot="inline">
 			{#if !search}
@@ -83,11 +88,17 @@
 </div>
 {#if search}
 	{#if externalEntries.length || loadingExternalItems}
-		<button class="btn tonal w100p" on:click={resetExternal}>
+		<button
+			class="btn tonal w100p"
+			on:click={resetExternal}
+		>
 			<IcItems /> Back to saved items
 		</button>
 	{:else}
-		<button class="btn tonal w100p" on:click={searchExternal}>
+		<button
+			class="btn tonal w100p"
+			on:click={searchExternal}
+		>
 			<MdiCloudSearch /> Search for item on internet
 		</button>
 	{/if}
@@ -145,7 +156,10 @@
 
 <nav class="fab-bar sticky">
 	&nbsp;
-	<AddItem on:created={({ detail: newItem }) => dispatch('edit', newItem)} label={search} />
+	<AddItem
+		on:created={({ detail: newItem }) => dispatch('edit', newItem)}
+		label={search}
+	/>
 </nav>
 
 <style>

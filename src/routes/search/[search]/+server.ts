@@ -9,7 +9,7 @@ if (!String.prototype.replaceAll) {
 	}
 }
 
-export const GET: RequestHandler = async (request) => {
+export const GET: RequestHandler = async request => {
 	// console.log('https://fddb.mobi/search/?search=' + request.params.search);
 	const searchRes = await fetch('https://fddb.mobi/search/?search=' + request.params.search)
 	if (!searchRes.ok) {
@@ -21,7 +21,7 @@ export const GET: RequestHandler = async (request) => {
 
 	const requests = Array.from(document.querySelectorAll('td a')).map(
 		async (a: HTMLAnchorElement) => {
-			return fetch('https://fddb.mobi' + a.href).then(async (itemRes) => {
+			return fetch('https://fddb.mobi' + a.href).then(async itemRes => {
 				// console.log('DONE: https://fddb.mobi' + a.href);
 				if (!itemRes.ok) {
 					return
@@ -34,7 +34,7 @@ export const GET: RequestHandler = async (request) => {
 
 				let kcalPer100 = 0
 
-				document.querySelectorAll('tr').forEach((tr) => {
+				document.querySelectorAll('tr').forEach(tr => {
 					if (tr.textContent.startsWith('Kalorien')) {
 						kcalPer100 = +tr.children[1].textContent.split(' ')[0]
 					}
@@ -42,7 +42,7 @@ export const GET: RequestHandler = async (request) => {
 
 				const portions = []
 
-				document.querySelectorAll('h4').forEach((h4) => {
+				document.querySelectorAll('h4').forEach(h4 => {
 					if (h4.textContent.includes('Portionen')) {
 						let ref = h4.nextElementSibling
 						while (ref.nodeName === 'DIV') {
@@ -65,10 +65,10 @@ export const GET: RequestHandler = async (request) => {
 				const possibleEan = await fetch(
 					`https://fddb.info/db/de/lebensmittel/${itemFddbId}/index.html`
 				)
-					.then(async (detailsRes) => {
+					.then(async detailsRes => {
 						if (!detailsRes.ok) return null
 						const { document } = parseHTML(await detailsRes.text())
-						const pWithEan = Array.from(document.querySelectorAll('p')).find((p) =>
+						const pWithEan = Array.from(document.querySelectorAll('p')).find(p =>
 							p.textContent.includes('EAN:')
 						)
 						if (!pWithEan) return null

@@ -11,11 +11,11 @@ const worker = self as unknown as ServiceWorkerGlobalScope
 const to_cache = build.concat(files, '/_app/version.json', '/')
 const staticAssets = new Set(to_cache)
 
-worker.addEventListener('install', (event) => {
+worker.addEventListener('install', event => {
 	event.waitUntil(
 		caches
 			.open(version)
-			.then((cache) => {
+			.then(cache => {
 				return cache.addAll(to_cache)
 			})
 			.then(() => {
@@ -24,9 +24,9 @@ worker.addEventListener('install', (event) => {
 	)
 })
 
-worker.addEventListener('activate', (event) => {
+worker.addEventListener('activate', event => {
 	event.waitUntil(
-		caches.keys().then(async (keys) => {
+		caches.keys().then(async keys => {
 			// delete old caches
 			for (const key of keys) {
 				if (key !== version) await caches.delete(key)
@@ -36,7 +36,7 @@ worker.addEventListener('activate', (event) => {
 	)
 })
 
-worker.addEventListener('fetch', (event) => {
+worker.addEventListener('fetch', event => {
 	if (event.request.method !== 'GET' || event.request.headers.has('range')) return
 
 	const url = new URL(event.request.url)

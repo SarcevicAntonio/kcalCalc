@@ -23,13 +23,13 @@
 
 	onMount(async () => {
 		videoInputDevices = await BrowserCodeReader.listVideoInputDevices()
-		const possibleBackCam = videoInputDevices.find((d) => d.label.includes('back'))
+		const possibleBackCam = videoInputDevices.find(d => d.label.includes('back'))
 		selectedDeviceId = possibleBackCam?.deviceId || videoInputDevices[0]?.deviceId
 	})
 
 	async function startScanner() {
 		closeScanner()
-		controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result) => {
+		controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, result => {
 			if (!result) return
 			dispatch('scanned', result.getText())
 			closeScanner()
@@ -44,7 +44,7 @@
 	}
 
 	function switchSelectedDevice() {
-		let idx = videoInputDevices.findIndex((d) => d.deviceId === selectedDeviceId)
+		let idx = videoInputDevices.findIndex(d => d.deviceId === selectedDeviceId)
 		idx = (idx + 1) % videoInputDevices.length
 		selectedDeviceId = videoInputDevices[idx].deviceId
 		startScanner()
@@ -85,12 +85,18 @@
 		{#if controls}
 			<div class="controls">
 				{#if videoInputDevices.length > 1}
-					<button class="btn tonal" on:click={switchSelectedDevice}>
+					<button
+						class="btn tonal"
+						on:click={switchSelectedDevice}
+					>
 						<IcRoundCameraswitch />
 					</button>
 				{/if}
 				{#if controls.switchTorch}
-					<button class="btn tonal" on:click={toggleTorch}>
+					<button
+						class="btn tonal"
+						on:click={toggleTorch}
+					>
 						{#if !isTorchOn}
 							<IcRoundFlashlightOn />
 						{:else}

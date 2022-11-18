@@ -6,7 +6,10 @@
 	$: overLimit = kcalInDay > ($userSettings?.kcalLimit || 9999)
 </script>
 
-<div class="bar" class:over-limit={overLimit}>
+<div
+	class="bar"
+	class:over-limit={overLimit}
+>
 	<div
 		class="inner"
 		style={!isNaN(kcalInDay)

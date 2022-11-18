@@ -4,7 +4,7 @@ import { asyncWritable } from '@square/svelte-store'
 import { doc, DocumentReference, onSnapshot, setDoc, type Unsubscribe } from 'firebase/firestore'
 import { writable } from 'svelte/store'
 
-export const user = writable<User>(undefined)
+export const user = writable<User>()
 
 const USER_SETTINGS_STORAGE_KEY = 'v1/userSettings'
 let gotInitialData = false
@@ -29,7 +29,7 @@ export const userSettings = asyncWritable(
 let unsubscribeUserSettings: Unsubscribe
 
 function subscribeUserSettings(docRef: DocumentReference) {
-	unsubscribeUserSettings = onSnapshot(docRef, (docSnap) => {
+	unsubscribeUserSettings = onSnapshot(docRef, docSnap => {
 		console.log('onSnapshot userSettings')
 		const data = (docSnap.data() || {}) as UserSettings
 		userSettings.set(data, false)

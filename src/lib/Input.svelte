@@ -76,7 +76,7 @@
 		{disabled}
 		on:input={handleInput}
 		on:change
-		on:focus={(e) => {
+		on:focus={e => {
 			dispatch('focus', e)
 		}}
 		on:blur={handleBlur}
@@ -87,7 +87,10 @@
 			<button class="inline-btn"><IcCalc /></button>
 		{/if}
 		{#if clearable && value}
-			<button class="inline-btn" on:click={() => (value = '')}>
+			<button
+				class="inline-btn"
+				on:click={() => (value = '')}
+			>
 				<IcRoundClear />
 			</button>
 		{/if}

@@ -34,7 +34,7 @@
 		showQuickSnacks = false
 	}}
 	triggerProps={{
-		class: `margin-left-auto ${selector ? 'btn text' : ''}`,
+		'class': `margin-left-auto ${selector ? 'btn text' : ''}`,
 		'data-testid': triggerTestId,
 	}}
 	data-testid="item-drawer"

@@ -25,8 +25,14 @@
 	}
 </script>
 
-<Switcher on:prev={goToPref} on:next={goToNext}>
-	<h2 class="headline-1" class:stale>
+<Switcher
+	on:prev={goToPref}
+	on:next={goToNext}
+>
+	<h2
+		class="headline-1"
+		class:stale
+	>
 		{#if $dateIsToday}
 			Today
 		{:else}
@@ -48,7 +54,10 @@
 	<KcalLimitBar {kcalInDay} />
 {/await}
 
-<DayEditor bind:data date={$curDay} />
+<DayEditor
+	bind:data
+	date={$curDay}
+/>
 
 <style>
 	.over-limit {

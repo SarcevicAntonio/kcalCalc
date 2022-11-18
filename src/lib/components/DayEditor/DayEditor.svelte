@@ -13,7 +13,12 @@
 
 {#if data?.meals}
 	{#each data.meals as { label, intake } (label)}
-		<Bucket {label} {date} bind:items={intake} on:update={updateData} />
+		<Bucket
+			{label}
+			{date}
+			bind:items={intake}
+			on:update={updateData}
+		/>
 	{/each}
 {:else}
 	{#each { length: 4 } as _}

@@ -84,7 +84,12 @@
 </Input>
 
 {#if !$dataStore.items.length}
-	<Input type="calc" bind:value={$dataStore.kcalPer100}>kcal per 100 g || ml</Input>
+	<Input
+		type="calc"
+		bind:value={$dataStore.kcalPer100}
+	>
+		kcal per 100 g || ml
+	</Input>
 {:else}
 	<Input
 		type="calc"
@@ -94,7 +99,10 @@
 		kcal per 100 g || ml
 	</Input>
 {/if}
-<Input type="number" bind:value={$dataStore.ean}>
+<Input
+	type="number"
+	bind:value={$dataStore.ean}
+>
 	EAN (Barcode)
 	<svelte:fragment slot="inline">
 		<BarCodeScanDialog on:scanned={({ detail: code }) => ($dataStore.ean = code)} />
@@ -139,11 +147,21 @@
 				}}
 			/>
 			{#if $dataStore.amount || activeEl === sumInputEl}
-				<Input type="calc" bind:value={$dataStore.amount} bind:inputElement={sumInputEl}>
+				<Input
+					type="calc"
+					bind:value={$dataStore.amount}
+					bind:inputElement={sumInputEl}
+				>
 					Amount Sum
 				</Input>
 			{:else}
-				<Input type="calc" disabled value={calculateAmountSum($dataStore.items)}>Amount Sum</Input>
+				<Input
+					type="calc"
+					disabled
+					value={calculateAmountSum($dataStore.items)}
+				>
+					Amount Sum
+				</Input>
 			{/if}
 			<PortionCreator
 				amount={$dataStore.amount || calculateAmountSum($dataStore.items)}
@@ -172,7 +190,7 @@
 		<div class="card outlined portion col">
 			<div class="row">
 				<Input bind:value={portion.label}>Label</Input>
-				{#if $quickSnacks[$dataStore.id]?.some((pk) => pk === portion.key)}
+				{#if $quickSnacks[$dataStore.id]?.some(pk => pk === portion.key)}
 					<button
 						class="btn text"
 						data-testid="remove-quick-snack"
@@ -195,7 +213,12 @@
 				{/if}
 			</div>
 			<div class="row">
-				<Input type="calc" bind:value={portion.amount}>Amount (g||ml)</Input>
+				<Input
+					type="calc"
+					bind:value={portion.amount}
+				>
+					Amount (g||ml)
+				</Input>
 				<button
 					class="btn text"
 					on:click={() => {
@@ -212,7 +235,12 @@
 
 <nav class="fab-bar">
 	<!-- hotfix for dialog destory error "Cannot read properties of null (reading 'removeChild')" -->
-	<Dialog noCloseButton let:toggle dialogOut={() => null} backdropOut={() => null}>
+	<Dialog
+		noCloseButton
+		let:toggle
+		dialogOut={() => null}
+		backdropOut={() => null}
+	>
 		<svelte:fragment slot="trigger-label">
 			<IcDelete />
 		</svelte:fragment>
@@ -220,7 +248,10 @@
 			<h2 class="title-l">Are you sure?</h2>
 			<p class="body-m">Deleting the item "{$dataStore.label}" can not be undone.</p>
 			<div class="row">
-				<button class="btn tonal" on:click={toggle}>
+				<button
+					class="btn tonal"
+					on:click={toggle}
+				>
 					<IcArrowBack /> Do nothing
 				</button>
 				<button

@@ -22,12 +22,18 @@
 	}, 0)
 </script>
 
-<Switcher on:prev={goToPrev} on:next={goToNext}>
+<Switcher
+	on:prev={goToPrev}
+	on:next={goToNext}
+>
 	{#if $curYear !== getYear(new Date())}
 		<span>{$curYear}</span>
 	{/if}
 	<h2 class="headline-1">Week {$curWeek}</h2>
-	<span class="label-l" class:over-limit={kcalSum > ($userSettings?.kcalLimit || 9999) * 7}>
+	<span
+		class="label-l"
+		class:over-limit={kcalSum > ($userSettings?.kcalLimit || 9999) * 7}
+	>
 		{kcalDisplay(kcalSum)} kcal
 	</span>
 </Switcher>

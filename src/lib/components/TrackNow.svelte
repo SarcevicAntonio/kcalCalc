@@ -22,27 +22,41 @@
 		const notificationId = notification(`Tracking ${itemInstance.label}...`)
 		isOpen = false
 		todayData = await getDayData(todayDate)
-		const mealIndex = todayData.meals.findIndex((meal) => meal.label === mealLabel)
+		const mealIndex = todayData.meals.findIndex(meal => meal.label === mealLabel)
 		todayData.meals[mealIndex].intake = [...todayData.meals[mealIndex].intake, itemInstance]
 		await setDayData(todayDate, todayData)
 		removeNotification(notificationId)
 	}
 </script>
 
-<button on:click={startFlow} data-testid="track-now">
+<button
+	on:click={startFlow}
+	data-testid="track-now"
+>
 	<IcRoundPlaylistAdd />
 </button>
 
-<Dialog bind:isOpen includedTrigger={false} --as-dialog-width="90%" --as-dialog-max-width="400px">
+<Dialog
+	bind:isOpen
+	includedTrigger={false}
+	--as-dialog-width="90%"
+	--as-dialog-max-width="400px"
+>
 	<div class="col">
 		<h2 class="headline-3 with-icon">
 			<IcRoundPlaylistAdd />
 			Track Item
 		</h2>
-		<input type="date" bind:value={todayDate} />
+		<input
+			type="date"
+			bind:value={todayDate}
+		/>
 		Select a bucket for {todayDate}
 		{#each defaultDay.meals as item}
-			<button class="btn tonal fill" on:click={() => addTo(item.label)}>
+			<button
+				class="btn tonal fill"
+				on:click={() => addTo(item.label)}
+			>
 				{item.label}
 			</button>
 		{/each}

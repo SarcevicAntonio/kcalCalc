@@ -39,8 +39,14 @@
 			0
 		)}
 		{@const today = isSameDay(dateObj, new Date())}
-		<div class="flow" id={date}>
-			<div class="day-title" class:today>
+		<div
+			class="flow"
+			id={date}
+		>
+			<div
+				class="day-title"
+				class:today
+			>
 				<span class="headline-2">
 					{#if today}
 						Today
@@ -52,12 +58,18 @@
 						})}
 					{/if}
 				</span>
-				<span class="label-l" class:over-limit={kcalInDay > ($userSettings?.kcalLimit || 9999)}>
+				<span
+					class="label-l"
+					class:over-limit={kcalInDay > ($userSettings?.kcalLimit || 9999)}
+				>
 					{kcalDisplay(kcalInDay)} kcal
 				</span>
 			</div>
 			<KcalLimitBar {kcalInDay} />
-			<DayEditor bind:data {date} />
+			<DayEditor
+				bind:data
+				{date}
+			/>
 		</div>
 	{:else}
 		{#each { length: 7 } as _}

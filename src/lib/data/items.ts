@@ -21,7 +21,7 @@ import { user } from './user'
 
 const ITEMS_STORAGE_KEY = 'v1/items'
 
-export const items = asyncWritable<typeof user, Item[]>(user, async ($user) => {
+export const items = asyncWritable<typeof user, Item[]>(user, async $user => {
 	if (unsubscribeItems) unsubscribeItems()
 	const colRef = collection(db, `Users/${$user.id}/Items`)
 	const data: Item[] = []
@@ -32,9 +32,9 @@ export const items = asyncWritable<typeof user, Item[]>(user, async ($user) => {
 let unsubscribeItems: Unsubscribe
 
 function subscribeItems(colRef: CollectionReference) {
-	unsubscribeItems = onSnapshot(colRef, (querySnap) => {
+	unsubscribeItems = onSnapshot(colRef, querySnap => {
 		const data: Item[] = []
-		querySnap.docs.forEach((doc) => {
+		querySnap.docs.forEach(doc => {
 			const docData = doc.data()
 			data.push({ ...(docData as Item), id: doc.id })
 		})
@@ -93,11 +93,11 @@ const getRecentItemIds = async (): Promise<string[]> => {
 
 export const recentItems = asyncDerived(
 	items,
-	async ($items) => {
+	async $items => {
 		console.log('#### recetn tiems')
 		const recentItemIds = await getRecentItemIds()
 		if (!recentItemIds.length) return []
-		const recentItems = $items.filter((i) => recentItemIds.includes(i.id))
+		const recentItems = $items.filter(i => recentItemIds.includes(i.id))
 		const sortedRecentItems = recentItems.sort(
 			(a, b) => recentItemIds.indexOf(a.id) - recentItemIds.indexOf(b.id)
 		)
@@ -109,7 +109,7 @@ export const recentItems = asyncDerived(
 
 export async function setRecentItem(mostRecentItem: Item) {
 	let recentItemIds = await getRecentItemIds()
-	recentItemIds = recentItemIds.filter((item) => item !== mostRecentItem.id)
+	recentItemIds = recentItemIds.filter(item => item !== mostRecentItem.id)
 	recentItemIds.unshift(mostRecentItem.id)
 	recentItemIds = recentItemIds.splice(0, 50)
 	const docRef = doc(db, `Users/${get(user).id}/Data/RecentItems`)
@@ -126,7 +126,7 @@ export async function saveExternalItem(item: Item) {
 	if (querySnap.docs.length) return querySnap.docs[0].data() as Item
 
 	if (!item.items) item.items = []
-	item.portions = item.portions ? item.portions.map((p) => ({ ...p, key: uuid() })) : []
+	item.portions = item.portions ? item.portions.map(p => ({ ...p, key: uuid() })) : []
 	item.createdAt = Date.now()
 	item.updatedAt = Date.now()
 

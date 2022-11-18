@@ -17,7 +17,10 @@
 
 <div class="col">
 	{#if $userSettings && maxKcal > $userSettings.kcalLimit}
-		<div class="line" style="top:{(($userSettings?.kcalLimit || 0) / maxKcal) * 100}%;" />
+		<div
+			class="line"
+			style="top:{(($userSettings?.kcalLimit || 0) / maxKcal) * 100}%;"
+		/>
 	{/if}
 
 	{#each Object.entries($data) as [date, item] (date)}

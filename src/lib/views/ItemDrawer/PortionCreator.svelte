@@ -13,7 +13,10 @@
 	$: portion = amount / divideBy
 </script>
 
-<Dialog triggerProps={{ class: 'btn text' }} let:toggle>
+<Dialog
+	triggerProps={{ class: 'btn text' }}
+	let:toggle
+>
 	<svelte:fragment slot="trigger-label">
 		<IcPortion />
 	</svelte:fragment>
@@ -34,7 +37,12 @@
 		}}
 	>
 		<p>Amount: {amount} g||ml</p>
-		<Input type="number" bind:value={divideBy}>Divide by</Input>
+		<Input
+			type="number"
+			bind:value={divideBy}
+		>
+			Divide by
+		</Input>
 		<p>Portion: {portion} g||ml</p>
 		<button class="btn tonal">
 			<IcAdd /> Add Portion
