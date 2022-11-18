@@ -1,28 +1,28 @@
 <script type="ts">
-	import ItemInstanceEditor from '$lib/components/ItemInstanceEditor.svelte';
-	import type { ItemInstance as ItemInstanceType } from '$lib/data/items';
-	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
-	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte';
-	import { createEventDispatcher } from 'svelte';
-	import Expandable from '../Expandable.svelte';
-	const dispatch = createEventDispatcher();
+	import ItemInstanceEditor from '$lib/components/ItemInstanceEditor.svelte'
+	import type { ItemInstance as ItemInstanceType } from '$lib/data/items'
+	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
+	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte'
+	import { createEventDispatcher } from 'svelte'
+	import Expandable from '../Expandable.svelte'
+	const dispatch = createEventDispatcher()
 
-	export let label: string;
-	export let date: string;
-	export let items: ItemInstanceType[];
+	export let label: string
+	export let date: string
+	export let items: ItemInstanceType[]
 
-	let open = false;
+	let open = false
 
 	async function addItem(item: ItemInstanceType) {
-		open = true;
-		items = [...items, item];
-		dispatch('update');
+		open = true
+		items = [...items, item]
+		dispatch('update')
 	}
 
 	function delItem(index: number) {
-		items.splice(index, 1);
-		items = items;
-		dispatch('update');
+		items.splice(index, 1)
+		items = items
+		dispatch('update')
 	}
 </script>
 
@@ -43,7 +43,7 @@
 					triggerTestId="track-item-{label}-{date}"
 					selector
 					on:select={({ detail }) => {
-						addItem(detail);
+						addItem(detail)
 					}}
 				/>
 			{/if}
@@ -58,7 +58,7 @@
 			<ItemDrawer
 				selector
 				on:select={({ detail }) => {
-					addItem(detail);
+					addItem(detail)
 				}}
 			/>
 		{/if}

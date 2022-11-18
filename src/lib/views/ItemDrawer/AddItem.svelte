@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { createItem, type Item } from '$lib/data/items';
-	import { createEventDispatcher } from 'svelte';
-	import { v4 as uuid } from 'uuid';
-	import IcAdd from '~icons/ic/round-add';
+	import { createItem, type Item } from '$lib/data/items'
+	import { createEventDispatcher } from 'svelte'
+	import { v4 as uuid } from 'uuid'
+	import IcAdd from '~icons/ic/round-add'
 
-	const dispatch = createEventDispatcher<{ created: Item }>();
+	const dispatch = createEventDispatcher<{ created: Item }>()
 
-	export let label = '';
+	export let label = ''
 
-	let loading = false;
+	let loading = false
 </script>
 
 <button
 	class:skeleton={loading}
 	on:click={async () => {
-		loading = true;
-		const id = uuid();
-		const item = createItem(id, label);
-		dispatch('created', item);
-		loading = false;
+		loading = true
+		const id = uuid()
+		const item = createItem(id, label)
+		dispatch('created', item)
+		loading = false
 	}}
 >
 	<IcAdd /> New Item

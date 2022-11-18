@@ -57,7 +57,7 @@ kcalCalc can be self-hosted for yourself for free using Firebase and a Cloud Hos
 - `pnpm dev`
 
 - firebase emulator usage can be toggled via `VITE_USE_EMULATION=true`.
-- firebase cli 
+- firebase cli
   - install `curl -sL https://firebase.tools | bash`
   - `firebase login`
   - `firebase emulators:start`

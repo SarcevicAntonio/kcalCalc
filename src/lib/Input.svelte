@@ -1,54 +1,54 @@
 <script lang="ts">
-	import { evaluate } from 'mathjs';
-	import { createEventDispatcher } from 'svelte';
-	import { v4 as uuidv4 } from 'uuid';
-	import IcRoundClear from '~icons/ic/round-clear';
-	import IcCalc from '~icons/mdi/calculator';
-	const dispatch = createEventDispatcher();
+	import { evaluate } from 'mathjs'
+	import { createEventDispatcher } from 'svelte'
+	import { v4 as uuidv4 } from 'uuid'
+	import IcRoundClear from '~icons/ic/round-clear'
+	import IcCalc from '~icons/mdi/calculator'
+	const dispatch = createEventDispatcher()
 
-	export let value: string | number = '';
-	export let placeholder = null;
-	export let type: 'text' | 'calc' | 'number' = 'text';
-	export let min = undefined;
-	export let max = undefined;
-	export let name = '';
-	export let disabled = false;
-	export let outlined = false;
-	export let clearable = false;
-	export let inputElement: HTMLInputElement = null;
+	export let value: string | number = ''
+	export let placeholder = null
+	export let type: 'text' | 'calc' | 'number' = 'text'
+	export let min = undefined
+	export let max = undefined
+	export let name = ''
+	export let disabled = false
+	export let outlined = false
+	export let clearable = false
+	export let inputElement: HTMLInputElement = null
 
-	const id = uuidv4();
-	let canNotEvaluate = false;
+	const id = uuidv4()
+	let canNotEvaluate = false
 
 	const handleInput = (e: Event) => {
 		// handle types
 		value = ['number', 'range'].includes(type)
 			? +(e.target as HTMLInputElement).value
-			: (e.target as HTMLInputElement).value;
-		(e.target as HTMLInputElement).value = value + '';
-		dispatch('input', e);
-	};
+			: (e.target as HTMLInputElement).value
+		;(e.target as HTMLInputElement).value = value + ''
+		dispatch('input', e)
+	}
 
 	const handleBlur = (e: Event) => {
 		if (type !== 'calc') {
-			dispatch('blur', e);
-			return;
+			dispatch('blur', e)
+			return
 		}
-		if (!value) value = 0;
+		if (!value) value = 0
 		try {
-			const evaluated = evaluate((value + '').replaceAll(',', '.'));
-			canNotEvaluate = false;
+			const evaluated = evaluate((value + '').replaceAll(',', '.'))
+			canNotEvaluate = false
 			if (evaluated !== value) {
-				value = evaluated;
-				dispatch('input', e);
+				value = evaluated
+				dispatch('input', e)
 			}
 		} catch (e) {
-			canNotEvaluate = true;
+			canNotEvaluate = true
 		}
-		dispatch('blur', e);
-	};
+		dispatch('blur', e)
+	}
 
-	const focusInput = () => inputElement.focus();
+	const focusInput = () => inputElement.focus()
 </script>
 
 <div
@@ -77,7 +77,7 @@
 		on:input={handleInput}
 		on:change
 		on:focus={(e) => {
-			dispatch('focus', e);
+			dispatch('focus', e)
 		}}
 		on:blur={handleBlur}
 	/>

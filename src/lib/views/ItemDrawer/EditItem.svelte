@@ -1,7 +1,7 @@
 <script lang="ts">
-	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte';
-	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte';
-	import TrackNow from '$lib/components/TrackNow.svelte';
+	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte'
+	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte'
+	import TrackNow from '$lib/components/TrackNow.svelte'
 	import {
 		createItemStore,
 		defaultPortion,
@@ -9,51 +9,51 @@
 		items,
 		type Item,
 		type ItemInstance as ItemInstanceType,
-	} from '$lib/data/items';
-	import { toISODateString } from '$lib/dateHelpers';
-	import Input from '$lib/Input.svelte';
-	import { calculateAmountSum, calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal';
-	import { shareItem } from '$lib/share';
-	import type { WritableLoadable } from '@square/svelte-store';
-	import { Dialog } from 'as-comps';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { v4 as uuid } from 'uuid';
-	import IcArrowBack from '~icons/ic/round-arrow-back';
-	import IcDelete from '~icons/ic/round-delete-forever';
-	import IcRoundEdit from '~icons/ic/round-edit';
-	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
-	import IcAdd from '~icons/ic/round-plus';
-	import IcRoundShare from '~icons/ic/round-share';
-	import IcRoundToday from '~icons/ic/round-today';
-	import ItemDrawer from './ItemDrawer.svelte';
-	import PortionCreator from './PortionCreator.svelte';
-	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt';
-	import MaterialSymbolsOfflineBoltOutline from '~icons/material-symbols/offline-bolt-outline';
-	import { addQuickSnack, quickSnacks, removeQuickSnack } from '$lib/data/quickSnacks';
+	} from '$lib/data/items'
+	import { toISODateString } from '$lib/dateHelpers'
+	import Input from '$lib/Input.svelte'
+	import { calculateAmountSum, calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal'
+	import { shareItem } from '$lib/share'
+	import type { WritableLoadable } from '@square/svelte-store'
+	import { Dialog } from 'as-comps'
+	import { createEventDispatcher, onMount } from 'svelte'
+	import { v4 as uuid } from 'uuid'
+	import IcArrowBack from '~icons/ic/round-arrow-back'
+	import IcDelete from '~icons/ic/round-delete-forever'
+	import IcRoundEdit from '~icons/ic/round-edit'
+	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add'
+	import IcAdd from '~icons/ic/round-plus'
+	import IcRoundShare from '~icons/ic/round-share'
+	import IcRoundToday from '~icons/ic/round-today'
+	import ItemDrawer from './ItemDrawer.svelte'
+	import PortionCreator from './PortionCreator.svelte'
+	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
+	import MaterialSymbolsOfflineBoltOutline from '~icons/material-symbols/offline-bolt-outline'
+	import { addQuickSnack, quickSnacks, removeQuickSnack } from '$lib/data/quickSnacks'
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher()
 
-	export let item: Item;
-	export let selector = false;
+	export let item: Item
+	export let selector = false
 
-	let dataStore: WritableLoadable<Item> = createItemStore(item);
-	let sumInputEl = null;
-	let activeEl = undefined;
+	let dataStore: WritableLoadable<Item> = createItemStore(item)
+	let sumInputEl = null
+	let activeEl = undefined
 	function update() {
-		activeEl = document.activeElement;
+		activeEl = document.activeElement
 	}
 	onMount(() => {
-		document.addEventListener('focus', update, true);
-		document.addEventListener('blur', update, true);
+		document.addEventListener('focus', update, true)
+		document.addEventListener('blur', update, true)
 		return () => {
-			document.removeEventListener('focus', update, true);
-			document.removeEventListener('blur', update, true);
-		};
-	});
+			document.removeEventListener('focus', update, true)
+			document.removeEventListener('blur', update, true)
+		}
+	})
 
 	async function addItem(newItem: ItemInstanceType) {
-		$dataStore.kcalPer100 = 0;
-		$dataStore.items = [...$dataStore.items, newItem];
+		$dataStore.kcalPer100 = 0
+		$dataStore.items = [...$dataStore.items, newItem]
 	}
 </script>
 
@@ -74,7 +74,7 @@
 				class="inline-btn"
 				data-testid="set-date-as-brand"
 				on:click={() => {
-					$dataStore.brand = toISODateString(new Date());
+					$dataStore.brand = toISODateString(new Date())
 				}}
 			>
 				<IcRoundToday />
@@ -94,8 +94,8 @@
 		kcal per 100 g || ml
 	</Input>
 {/if}
-<Input type="number" bind:value={$dataStore.ean}
-	>EAN (Barcode)
+<Input type="number" bind:value={$dataStore.ean}>
+	EAN (Barcode)
 	<svelte:fragment slot="inline">
 		<BarCodeScanDialog on:scanned={({ detail: code }) => ($dataStore.ean = code)} />
 	</svelte:fragment>
@@ -109,7 +109,7 @@
 			noCustomKcal
 			excludeId={item.id}
 			on:select={({ detail }) => {
-				addItem(detail);
+				addItem(detail)
 			}}
 		/>
 	</div>
@@ -117,9 +117,9 @@
 		<ItemInstance
 			bind:item={child}
 			on:delete={() => {
-				$dataStore.items.splice(index, 1);
-				if (!$dataStore.items.length) $dataStore.kcalPer100 = 100;
-				$dataStore = $dataStore;
+				$dataStore.items.splice(index, 1)
+				if (!$dataStore.items.length) $dataStore.kcalPer100 = 100
+				$dataStore = $dataStore
 			}}
 		/>
 	{/each}
@@ -132,9 +132,9 @@
 				checked={$dataStore.amount ? true : false}
 				on:input={() => {
 					if ($dataStore.amount) {
-						$dataStore.amount = 0;
+						$dataStore.amount = 0
 					} else {
-						$dataStore.amount = calculateAmountSum($dataStore.items) || 100;
+						$dataStore.amount = calculateAmountSum($dataStore.items) || 100
 					}
 				}}
 			/>
@@ -148,7 +148,7 @@
 			<PortionCreator
 				amount={$dataStore.amount || calculateAmountSum($dataStore.items)}
 				on:create={({ detail: portion }) => {
-					$dataStore.portions = [...$dataStore.portions, { ...portion, key: uuid() }];
+					$dataStore.portions = [...$dataStore.portions, { ...portion, key: uuid() }]
 				}}
 			/>
 		</div>
@@ -161,7 +161,7 @@
 		<button
 			class="btn text add"
 			on:click={() => {
-				$dataStore.portions = [...$dataStore.portions, { ...defaultPortion, key: uuid() }];
+				$dataStore.portions = [...$dataStore.portions, { ...defaultPortion, key: uuid() }]
 			}}
 		>
 			<IcAdd /> Add Portion
@@ -177,7 +177,7 @@
 						class="btn text"
 						data-testid="remove-quick-snack"
 						on:click={() => {
-							removeQuickSnack($dataStore.id, portion.key);
+							removeQuickSnack($dataStore.id, portion.key)
 						}}
 					>
 						<MaterialSymbolsOfflineBolt />
@@ -187,7 +187,7 @@
 						class="btn text"
 						data-testid="add-quick-snack"
 						on:click={() => {
-							addQuickSnack($dataStore.id, portion.key);
+							addQuickSnack($dataStore.id, portion.key)
 						}}
 					>
 						<MaterialSymbolsOfflineBoltOutline />
@@ -199,8 +199,8 @@
 				<button
 					class="btn text"
 					on:click={() => {
-						$dataStore.portions.splice(index, 1);
-						$dataStore = $dataStore;
+						$dataStore.portions.splice(index, 1)
+						$dataStore = $dataStore
 					}}
 				>
 					<IcDelete />
@@ -220,12 +220,14 @@
 			<h2 class="title-l">Are you sure?</h2>
 			<p class="body-m">Deleting the item "{$dataStore.label}" can not be undone.</p>
 			<div class="row">
-				<button class="btn tonal" on:click={toggle}><IcArrowBack /> Do nothing </button>
+				<button class="btn tonal" on:click={toggle}>
+					<IcArrowBack /> Do nothing
+				</button>
 				<button
 					class="btn tonal"
 					on:click={async () => {
-						await deleteItem($dataStore.id);
-						dispatch('done', null);
+						await deleteItem($dataStore.id)
+						dispatch('done', null)
 					}}
 				>
 					<IcDelete />
@@ -236,7 +238,7 @@
 	</Dialog>
 	<button
 		on:click={() => {
-			shareItem($dataStore);
+			shareItem($dataStore)
 		}}
 	>
 		<IcRoundShare />

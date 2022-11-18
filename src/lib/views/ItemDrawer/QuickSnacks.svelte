@@ -1,7 +1,7 @@
 <script>
-	import { quickSnackTemplates, trackQuickSnack } from '$lib/data/quickSnacks';
-	import { calculateKcal, kcalDisplay } from '$lib/kcal';
-	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt';
+	import { quickSnackTemplates, trackQuickSnack } from '$lib/data/quickSnacks'
+	import { calculateKcal, kcalDisplay } from '$lib/kcal'
+	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
 </script>
 
 <h2 class="headline-3 with-icon"><MaterialSymbolsOfflineBolt /> Quick Snacks</h2>
@@ -10,7 +10,7 @@
 	<button
 		class="card filled"
 		on:click={() => {
-			trackQuickSnack(item);
+			trackQuickSnack(item)
 		}}
 	>
 		<div class="row">

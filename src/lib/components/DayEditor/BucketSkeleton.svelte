@@ -1,5 +1,5 @@
 <script>
-	import IconProfile from '~icons/ic/round-account-circle';
+	import IconProfile from '~icons/ic/round-account-circle'
 </script>
 
 <button class="card filled skeleton">

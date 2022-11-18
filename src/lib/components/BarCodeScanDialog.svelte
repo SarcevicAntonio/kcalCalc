@@ -3,56 +3,56 @@
 		BrowserCodeReader,
 		BrowserMultiFormatOneDReader,
 		type IScannerControls,
-	} from '@zxing/browser';
-	import { Dialog } from 'as-comps';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import IcRoundBarcode from '~icons/ic/round-barcode';
-	import IcRoundCameraswitch from '~icons/ic/round-cameraswitch';
-	import IcRoundFlashlightOff from '~icons/ic/round-flashlight-off';
-	import IcRoundFlashlightOn from '~icons/ic/round-flashlight-on';
-	import IcRoundQrCodeScanner from '~icons/ic/round-qr-code-scanner';
-	const dispatch = createEventDispatcher();
+	} from '@zxing/browser'
+	import { Dialog } from 'as-comps'
+	import { createEventDispatcher, onMount } from 'svelte'
+	import IcRoundBarcode from '~icons/ic/round-barcode'
+	import IcRoundCameraswitch from '~icons/ic/round-cameraswitch'
+	import IcRoundFlashlightOff from '~icons/ic/round-flashlight-off'
+	import IcRoundFlashlightOn from '~icons/ic/round-flashlight-on'
+	import IcRoundQrCodeScanner from '~icons/ic/round-qr-code-scanner'
+	const dispatch = createEventDispatcher()
 
-	let isOpen = false;
-	let codeReader = new BrowserMultiFormatOneDReader();
-	let videoInputDevices: MediaDeviceInfo[] = [];
-	let selectedDeviceId: string;
-	let previewElem: HTMLVideoElement;
-	let controls: IScannerControls;
-	let isTorchOn = false;
+	let isOpen = false
+	let codeReader = new BrowserMultiFormatOneDReader()
+	let videoInputDevices: MediaDeviceInfo[] = []
+	let selectedDeviceId: string
+	let previewElem: HTMLVideoElement
+	let controls: IScannerControls
+	let isTorchOn = false
 
 	onMount(async () => {
-		videoInputDevices = await BrowserCodeReader.listVideoInputDevices();
-		const possibleBackCam = videoInputDevices.find((d) => d.label.includes('back'));
-		selectedDeviceId = possibleBackCam?.deviceId || videoInputDevices[0]?.deviceId;
-	});
+		videoInputDevices = await BrowserCodeReader.listVideoInputDevices()
+		const possibleBackCam = videoInputDevices.find((d) => d.label.includes('back'))
+		selectedDeviceId = possibleBackCam?.deviceId || videoInputDevices[0]?.deviceId
+	})
 
 	async function startScanner() {
-		closeScanner();
+		closeScanner()
 		controls = await codeReader.decodeFromVideoDevice(selectedDeviceId, previewElem, (result) => {
-			if (!result) return;
-			dispatch('scanned', result.getText());
-			closeScanner();
-			isOpen = false;
-		});
+			if (!result) return
+			dispatch('scanned', result.getText())
+			closeScanner()
+			isOpen = false
+		})
 	}
 
 	function closeScanner() {
-		controls?.stop();
-		isTorchOn = false;
-		controls = undefined;
+		controls?.stop()
+		isTorchOn = false
+		controls = undefined
 	}
 
 	function switchSelectedDevice() {
-		let idx = videoInputDevices.findIndex((d) => d.deviceId === selectedDeviceId);
-		idx = (idx + 1) % videoInputDevices.length;
-		selectedDeviceId = videoInputDevices[idx].deviceId;
-		startScanner();
+		let idx = videoInputDevices.findIndex((d) => d.deviceId === selectedDeviceId)
+		idx = (idx + 1) % videoInputDevices.length
+		selectedDeviceId = videoInputDevices[idx].deviceId
+		startScanner()
 	}
 
 	function toggleTorch() {
-		controls.switchTorch(!isTorchOn);
-		isTorchOn = !isTorchOn;
+		controls.switchTorch(!isTorchOn)
+		isTorchOn = !isTorchOn
 	}
 </script>
 
@@ -85,7 +85,9 @@
 		{#if controls}
 			<div class="controls">
 				{#if videoInputDevices.length > 1}
-					<button class="btn tonal" on:click={switchSelectedDevice}><IcRoundCameraswitch /></button>
+					<button class="btn tonal" on:click={switchSelectedDevice}>
+						<IcRoundCameraswitch />
+					</button>
 				{/if}
 				{#if controls.switchTorch}
 					<button class="btn tonal" on:click={toggleTorch}>

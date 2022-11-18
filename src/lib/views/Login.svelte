@@ -1,10 +1,10 @@
 <script>
-	import { auth } from '$lib/firebase';
-	import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-	import IcLogin from '~icons/ic/round-key';
+	import { auth } from '$lib/firebase'
+	import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+	import IcLogin from '~icons/ic/round-key'
 
 	async function popAuth() {
-		await signInWithPopup(auth, new GoogleAuthProvider());
+		await signInWithPopup(auth, new GoogleAuthProvider())
 	}
 </script>
 

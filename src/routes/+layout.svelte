@@ -1,42 +1,42 @@
 <script lang="ts">
-	import { items, recentItems } from '$lib/data/items';
-	import { quickSnacks } from '$lib/data/quickSnacks';
-	import { user } from '$lib/data/user';
-	import { auth } from '$lib/firebase';
-	import Login from '$lib/views/Login.svelte';
-	import { Notifications } from 'as-comps';
-	import IconProfile from '~icons/ic/round-account-circle';
-	import IcRoundCloudOff from '~icons/ic/round-cloud-off';
-	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
-	import '../css/global.css';
+	import { items, recentItems } from '$lib/data/items'
+	import { quickSnacks } from '$lib/data/quickSnacks'
+	import { user } from '$lib/data/user'
+	import { auth } from '$lib/firebase'
+	import Login from '$lib/views/Login.svelte'
+	import { Notifications } from 'as-comps'
+	import IconProfile from '~icons/ic/round-account-circle'
+	import IcRoundCloudOff from '~icons/ic/round-cloud-off'
+	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop'
+	import '../css/global.css'
 
-	let authStateUnfetched = true;
+	let authStateUnfetched = true
 
 	auth.onAuthStateChanged((changedUser) => {
-		authStateUnfetched = false;
+		authStateUnfetched = false
 		if (!changedUser) {
-			$user = null;
-			return;
+			$user = null
+			return
 		}
 
-		const { displayName, email, uid, photoURL } = changedUser;
+		const { displayName, email, uid, photoURL } = changedUser
 		$user = {
 			id: uid,
 			email,
 			displayName,
 			photoURL,
-		};
+		}
 
 		// preload data
-		items.load();
-		recentItems.load();
-		quickSnacks.load();
-	});
+		items.load()
+		recentItems.load()
+		quickSnacks.load()
+	})
 
-	let imgError = false;
+	let imgError = false
 
-	let offline = false;
-	const updateOfflineStatus = () => (offline = !navigator.onLine);
+	let offline = false
+	const updateOfflineStatus = () => (offline = !navigator.onLine)
 </script>
 
 <svelte:window on:online={updateOfflineStatus} on:offline={updateOfflineStatus} />

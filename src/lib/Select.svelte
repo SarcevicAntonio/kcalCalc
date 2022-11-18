@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import { v4 as uuidv4 } from 'uuid';
-	const dispatch = createEventDispatcher();
+	import { createEventDispatcher } from 'svelte'
+	import { v4 as uuidv4 } from 'uuid'
+	const dispatch = createEventDispatcher()
 
-	export let value: string | number = '';
-	export let placeholder = null;
-	export let options: Array<{ label: string; value: string | number }> = [];
-	export let disabled = false;
-	export let outlined = false;
-	export let selectElement: HTMLSelectElement = null;
+	export let value: string | number = ''
+	export let placeholder = null
+	export let options: Array<{ label: string; value: string | number }> = []
+	export let disabled = false
+	export let outlined = false
+	export let selectElement: HTMLSelectElement = null
 
-	const id = uuidv4();
+	const id = uuidv4()
 
-	const focusInput = () => selectElement.focus();
+	const focusInput = () => selectElement.focus()
 </script>
 
 <div

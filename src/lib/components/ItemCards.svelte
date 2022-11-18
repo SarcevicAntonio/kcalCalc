@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { Item } from '$lib/data/items';
-	import { calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal';
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher<{ select: Item }>();
+	import type { Item } from '$lib/data/items'
+	import { calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal'
+	import { createEventDispatcher } from 'svelte'
+	const dispatch = createEventDispatcher<{ select: Item }>()
 
-	export let items: Item[] = [];
-	export let excludeId = '';
-	export let skeletonId: string = '';
+	export let items: Item[] = []
+	export let excludeId = ''
+	export let skeletonId: string = ''
 </script>
 
 {#each items as item (item.id)}
@@ -14,7 +14,7 @@
 		<button
 			class="card filled"
 			on:click={() => {
-				dispatch('select', item);
+				dispatch('select', item)
 			}}
 			class:skeleton={skeletonId === item.id}
 		>

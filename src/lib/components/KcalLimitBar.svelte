@@ -1,9 +1,9 @@
 <script>
-	import { userSettings } from '$lib/data/user';
+	import { userSettings } from '$lib/data/user'
 
-	export let kcalInDay;
+	export let kcalInDay
 
-	$: overLimit = kcalInDay > ($userSettings?.kcalLimit || 9999);
+	$: overLimit = kcalInDay > ($userSettings?.kcalLimit || 9999)
 </script>
 
 <div class="bar" class:over-limit={overLimit}>

@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { kcalDisplay } from '$lib/kcal';
-	import { curDay, weekData, type Week } from '$lib/data/intake';
-	import { userSettings } from '$lib/data/user';
-	import type { Loadable } from '@square/svelte-store';
-	import { isSameDay } from 'date-fns';
-	import { createEventDispatcher } from 'svelte';
-import WeekSwitcher from '$lib/components/WeekSwitcher.svelte';
-	const dispatch = createEventDispatcher();
+	import { kcalDisplay } from '$lib/kcal'
+	import { curDay, weekData, type Week } from '$lib/data/intake'
+	import { userSettings } from '$lib/data/user'
+	import type { Loadable } from '@square/svelte-store'
+	import { isSameDay } from 'date-fns'
+	import { createEventDispatcher } from 'svelte'
+	import WeekSwitcher from '$lib/components/WeekSwitcher.svelte'
+	const dispatch = createEventDispatcher()
 
-	export let data: Loadable<Week> = weekData;
+	export let data: Loadable<Week> = weekData
 
-	$: maxKcal = Math.max(...Object.values($data).map(({ kcal }) => kcal || 0));
+	$: maxKcal = Math.max(...Object.values($data).map(({ kcal }) => kcal || 0))
 </script>
 
 <WeekSwitcher />
@@ -27,8 +27,8 @@ import WeekSwitcher from '$lib/components/WeekSwitcher.svelte';
 			class:today={isSameDay(dateObj, new Date())}
 			style={!isNaN(maxKcal) ? `height: ${(item?.kcal / maxKcal) * 100}%;` : ''}
 			on:click={() => {
-				$curDay = date;
-				dispatch('toggleWeekGraph');
+				$curDay = date
+				dispatch('toggleWeekGraph')
 			}}
 		>
 			<span class="title-m">{dateObj.toLocaleString(undefined, { weekday: 'narrow' })}</span>

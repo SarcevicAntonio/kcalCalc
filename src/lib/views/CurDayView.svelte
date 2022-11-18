@@ -1,27 +1,27 @@
 <script lang="ts">
-	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
-	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte';
-	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte';
-	import Switcher from '$lib/components/Switcher.svelte';
-	import { curDay,dateIsToday,dayData,type Day as DayType } from '$lib/data/intake';
-	import { userSettings } from '$lib/data/user';
-	import { toISODateString } from '$lib/dateHelpers';
-	import { calculateKcalFromItems,kcalDisplay } from '$lib/kcal';
-	import { addDays } from 'date-fns';
+	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte'
+	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte'
+	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte'
+	import Switcher from '$lib/components/Switcher.svelte'
+	import { curDay, dateIsToday, dayData, type Day as DayType } from '$lib/data/intake'
+	import { userSettings } from '$lib/data/user'
+	import { toISODateString } from '$lib/dateHelpers'
+	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
+	import { addDays } from 'date-fns'
 
-	let data = null as DayType;
-	let stale = false;
+	let data = null as DayType
+	let stale = false
 
-	$: data = $dayData;
+	$: data = $dayData
 
-	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0);
-	$: dateObj = new Date($curDay);
+	$: kcalInDay = data?.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0)
+	$: dateObj = new Date($curDay)
 
 	function goToNext() {
-		$curDay = toISODateString(addDays(dateObj, 1));
+		$curDay = toISODateString(addDays(dateObj, 1))
 	}
 	function goToPref() {
-		$curDay = toISODateString(addDays(dateObj, -1));
+		$curDay = toISODateString(addDays(dateObj, -1))
 	}
 </script>
 

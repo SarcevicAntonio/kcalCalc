@@ -1,17 +1,17 @@
 <script lang="ts">
-	import type { ItemInstance } from '$lib/data/items';
-	import Input from '$lib/Input.svelte';
-	import { calculateKcal, kcalDisplay } from '$lib/kcal';
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
+	import type { ItemInstance } from '$lib/data/items'
+	import Input from '$lib/Input.svelte'
+	import { calculateKcal, kcalDisplay } from '$lib/kcal'
+	import { createEventDispatcher } from 'svelte'
+	const dispatch = createEventDispatcher()
 
-	export let amountInputElement: HTMLInputElement = null;
-	export let item: ItemInstance;
+	export let amountInputElement: HTMLInputElement = null
+	export let item: ItemInstance
 
-	$: kcalLabel = kcalDisplay(calculateKcal(item));
+	$: kcalLabel = kcalDisplay(calculateKcal(item))
 
 	function dispatchUpdate() {
-		dispatch('update');
+		dispatch('update')
 	}
 </script>
 

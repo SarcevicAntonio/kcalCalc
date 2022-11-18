@@ -1,25 +1,25 @@
 <script>
-	import { toISODateString } from '$lib/dateHelpers';
-	import { calculateKcalFromItems } from '$lib/kcal';
-	import { kcalDisplay } from '$lib/kcal';
-	import { curDay, curWeek, curYear, weekData } from '$lib/data/intake';
-	import { userSettings } from '$lib/data/user';
-	import { addDays, getYear } from 'date-fns';
-	import Switcher from './Switcher.svelte';
+	import { toISODateString } from '$lib/dateHelpers'
+	import { calculateKcalFromItems } from '$lib/kcal'
+	import { kcalDisplay } from '$lib/kcal'
+	import { curDay, curWeek, curYear, weekData } from '$lib/data/intake'
+	import { userSettings } from '$lib/data/user'
+	import { addDays, getYear } from 'date-fns'
+	import Switcher from './Switcher.svelte'
 
-	export let overrideData = null;
+	export let overrideData = null
 
 	function goToNext() {
-		$curDay = toISODateString(addDays(new Date($curDay), +7));
+		$curDay = toISODateString(addDays(new Date($curDay), +7))
 	}
 
 	function goToPrev() {
-		$curDay = toISODateString(addDays(new Date($curDay), -7));
+		$curDay = toISODateString(addDays(new Date($curDay), -7))
 	}
 
 	$: kcalSum = (overrideData || Object.values($weekData)).reduce((acc, day) => {
-		return acc + day.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0) || 0;
-	}, 0);
+		return acc + day.meals.reduce((acc, meal) => acc + calculateKcalFromItems(meal.intake), 0) || 0
+	}, 0)
 </script>
 
 <Switcher on:prev={goToPrev} on:next={goToNext}>

@@ -1,8 +1,8 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	import IcArrowBack from '~icons/ic/round-arrow-back';
-	import IcArrowForward from '~icons/ic/round-arrow-forward';
-	const dispatch = createEventDispatcher();
+	import { createEventDispatcher } from 'svelte'
+	import IcArrowBack from '~icons/ic/round-arrow-back'
+	import IcArrowForward from '~icons/ic/round-arrow-forward'
+	const dispatch = createEventDispatcher()
 </script>
 
 <div class="row">

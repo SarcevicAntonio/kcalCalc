@@ -1,32 +1,32 @@
 <script>
-	import BucketSkeleton from '$lib/components/DayEditor/BucketSkeleton.svelte';
-	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte';
-	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte';
-	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte';
-	import WeekSwitcher from '$lib/components/WeekSwitcher.svelte';
-	import { curWeek, weekData } from '$lib/data/intake';
-	import { userSettings } from '$lib/data/user';
-	import { toISODateString } from '$lib/dateHelpers';
-	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal';
-	import { isSameDay } from 'date-fns';
-	import { tick } from 'svelte';
+	import BucketSkeleton from '$lib/components/DayEditor/BucketSkeleton.svelte'
+	import DayEditor from '$lib/components/DayEditor/DayEditor.svelte'
+	import KcalLimitBar from '$lib/components/KcalLimitBar.svelte'
+	import KcalLimitBarSkeleton from '$lib/components/KcalLimitBarSkeleton.svelte'
+	import WeekSwitcher from '$lib/components/WeekSwitcher.svelte'
+	import { curWeek, weekData } from '$lib/data/intake'
+	import { userSettings } from '$lib/data/user'
+	import { toISODateString } from '$lib/dateHelpers'
+	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
+	import { isSameDay } from 'date-fns'
+	import { tick } from 'svelte'
 
-	let lastScrolledWeek = null;
+	let lastScrolledWeek = null
 	async function scrollToView(data) {
-		if (lastScrolledWeek === $curWeek || !Object.keys(data).length) return;
-		lastScrolledWeek = $curWeek;
-		await tick();
-		const el = document.getElementById(toISODateString(new Date()));
-		if (!el) return;
+		if (lastScrolledWeek === $curWeek || !Object.keys(data).length) return
+		lastScrolledWeek = $curWeek
+		await tick()
+		const el = document.getElementById(toISODateString(new Date()))
+		if (!el) return
 		el.scrollIntoView({
 			behavior: 'smooth',
 			inline: 'center',
-		});
+		})
 	}
 
-	$: scrollToView($weekData);
+	$: scrollToView($weekData)
 
-	$: entries = Object.entries($weekData);
+	$: entries = Object.entries($weekData)
 </script>
 
 <WeekSwitcher overrideData={entries.map(([_, data]) => data)} />

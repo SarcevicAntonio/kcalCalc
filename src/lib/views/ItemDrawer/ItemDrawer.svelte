@@ -1,37 +1,37 @@
 <script lang="ts">
-	import { createInstance } from '$lib/components/InstanceCreator';
-	import type { Item } from '$lib/data/items';
-	import { Dialog } from 'as-comps';
-	import { createEventDispatcher } from 'svelte';
-	import { fly } from 'svelte/transition';
-	import IcArrowBack from '~icons/ic/round-arrow-back';
-	import IcItems from '~icons/ic/round-category';
-	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
-	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt';
-	import AddItem from './AddItem.svelte';
-	import EditItem from './EditItem.svelte';
-	import ItemInstanceSelector from './ItemInstanceSelector.svelte';
-	import QuickSnacks from './QuickSnacks.svelte';
-	import SavedItems from './SavedItems.svelte';
+	import { createInstance } from '$lib/components/InstanceCreator'
+	import type { Item } from '$lib/data/items'
+	import { Dialog } from 'as-comps'
+	import { createEventDispatcher } from 'svelte'
+	import { fly } from 'svelte/transition'
+	import IcArrowBack from '~icons/ic/round-arrow-back'
+	import IcItems from '~icons/ic/round-category'
+	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add'
+	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
+	import AddItem from './AddItem.svelte'
+	import EditItem from './EditItem.svelte'
+	import ItemInstanceSelector from './ItemInstanceSelector.svelte'
+	import QuickSnacks from './QuickSnacks.svelte'
+	import SavedItems from './SavedItems.svelte'
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher()
 
-	export let label = 'Items';
-	export let selector = false;
-	export let excludeId = '';
-	export let noCustomKcal = false;
-	export let isOpen = false;
-	export let editItem: Item = null;
-	export let triggerTestId = '';
-	let showQuickSnacks = false;
+	export let label = 'Items'
+	export let selector = false
+	export let excludeId = ''
+	export let noCustomKcal = false
+	export let isOpen = false
+	export let editItem: Item = null
+	export let triggerTestId = ''
+	let showQuickSnacks = false
 </script>
 
 <Dialog
 	let:toggle
 	bind:isOpen
 	on:dismiss={() => {
-		editItem = null;
-		showQuickSnacks = false;
+		editItem = null
+		showQuickSnacks = false
 	}}
 	triggerProps={{
 		class: `margin-left-auto ${selector ? 'btn text' : ''}`,
@@ -66,13 +66,13 @@
 				item={editItem}
 				on:done={async ({ detail }) => {
 					if (selector && detail) {
-						const itemInstance = await createInstance(detail);
+						const itemInstance = await createInstance(detail)
 						if (itemInstance) {
-							toggle();
-							dispatch('select', itemInstance);
+							toggle()
+							dispatch('select', itemInstance)
 						}
 					}
-					editItem = null;
+					editItem = null
 				}}
 			/>
 		{:else if selector}
@@ -81,8 +81,8 @@
 				{excludeId}
 				on:edit={({ detail: item }) => (editItem = item)}
 				on:selectItem={({ detail: itemInstance }) => {
-					toggle();
-					dispatch('select', itemInstance);
+					toggle()
+					dispatch('select', itemInstance)
 				}}
 			/>
 		{:else}

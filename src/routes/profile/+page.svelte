@@ -1,18 +1,18 @@
 <script>
-	import { goto } from '$app/navigation';
-	import { user, userSettings } from '$lib/data/user';
-	import { auth } from '$lib/firebase';
-	import Input from '$lib/Input.svelte';
-	import { signOut } from 'firebase/auth';
-	import IcHome from '~icons/ic/round-home';
-	import IcLogout from '~icons/ic/round-logout';
+	import { goto } from '$app/navigation'
+	import { user, userSettings } from '$lib/data/user'
+	import { auth } from '$lib/firebase'
+	import Input from '$lib/Input.svelte'
+	import { signOut } from 'firebase/auth'
+	import IcHome from '~icons/ic/round-home'
+	import IcLogout from '~icons/ic/round-logout'
 
 	async function logout() {
-		await signOut(auth);
-		goto('/');
+		await signOut(auth)
+		goto('/')
 	}
 
-	let imgError = false;
+	let imgError = false
 </script>
 
 <div class="container">
@@ -25,7 +25,7 @@
 					src={$user.photoURL}
 					alt="Your Profile"
 					on:error={() => {
-						imgError = true;
+						imgError = true
 					}}
 				/>
 			{/if}
@@ -47,13 +47,17 @@
 				Kalo­ri­en­be­darfs­rechner von TK
 			</a>
 		</div>
-		<button class="btn tonal" on:click={logout}><IcLogout /> Logout</button>
+		<button class="btn tonal" on:click={logout}>
+			<IcLogout /> Logout
+		</button>
 	{/if}
 </div>
 
 {#if $user}
 	<nav class="fab-bar">
-		<a data-sveltekit-prefetch href="/"><IcHome /> Go Home</a>
+		<a data-sveltekit-prefetch href="/">
+			<IcHome /> Go Home
+		</a>
 	</nav>
 {/if}
 

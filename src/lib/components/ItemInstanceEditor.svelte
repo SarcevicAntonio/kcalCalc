@@ -1,22 +1,22 @@
 <script lang="ts">
-	import type { ItemInstance } from '$lib/data/items';
-	import { calculateKcal, kcalDisplay } from '$lib/kcal';
-	import { Dialog } from 'as-comps';
-	import { createEventDispatcher } from 'svelte';
-	import IcDelete from '~icons/ic/round-delete-forever';
-	import InstanceForm from './InstanceForm.svelte';
-	import PortionSelector from './PortionSelector.svelte';
-	const dispatch = createEventDispatcher();
+	import type { ItemInstance } from '$lib/data/items'
+	import { calculateKcal, kcalDisplay } from '$lib/kcal'
+	import { Dialog } from 'as-comps'
+	import { createEventDispatcher } from 'svelte'
+	import IcDelete from '~icons/ic/round-delete-forever'
+	import InstanceForm from './InstanceForm.svelte'
+	import PortionSelector from './PortionSelector.svelte'
+	const dispatch = createEventDispatcher()
 
-	export let item: ItemInstance;
-	export let amountInputElement: HTMLInputElement = null;
+	export let item: ItemInstance
+	export let amountInputElement: HTMLInputElement = null
 
-	let editing = false;
+	let editing = false
 
-	$: kcalLabel = kcalDisplay(calculateKcal(item));
+	$: kcalLabel = kcalDisplay(calculateKcal(item))
 
 	function dispatchUpdate() {
-		dispatch('update');
+		dispatch('update')
 	}
 </script>
 
@@ -59,14 +59,14 @@
 				<PortionSelector
 					portions={item.portions}
 					on:select={({ detail }) => {
-						item.amount = detail.amount;
-						dispatchUpdate();
-						editing = false;
+						item.amount = detail.amount
+						dispatchUpdate()
+						editing = false
 					}}
 					on:add={({ detail }) => {
-						item.amount += detail.amount;
-						dispatchUpdate();
-						editing = false;
+						item.amount += detail.amount
+						dispatchUpdate()
+						editing = false
 					}}
 				/>
 			{/if}

@@ -1,8 +1,8 @@
 <script>
-	import { page } from '$app/stores';
-	import { user } from '$lib/data/user';
-	import IcHome from '~icons/ic/round-home';
-	import IconLogin from '~icons/ic/round-login';
+	import { page } from '$app/stores'
+	import { user } from '$lib/data/user'
+	import IcHome from '~icons/ic/round-home'
+	import IconLogin from '~icons/ic/round-login'
 </script>
 
 <h2 class="headline-1">An Error Occured</h2>

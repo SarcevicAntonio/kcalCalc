@@ -1,13 +1,13 @@
 <script>
-	import { defaultDay, setDayData } from '$lib/data/intake';
-	import Bucket from './Bucket.svelte';
-	import BucketSkeleton from './BucketSkeleton.svelte';
+	import { defaultDay, setDayData } from '$lib/data/intake'
+	import Bucket from './Bucket.svelte'
+	import BucketSkeleton from './BucketSkeleton.svelte'
 
-	export let date;
-	export let data = defaultDay;
+	export let date
+	export let data = defaultDay
 
 	async function updateData() {
-		setDayData(date, data);
+		setDayData(date, data)
 	}
 </script>
 

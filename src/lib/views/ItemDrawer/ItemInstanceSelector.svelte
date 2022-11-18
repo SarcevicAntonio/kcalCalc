@@ -1,8 +1,8 @@
 <script lang="ts">
-	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte';
-	import { createInstance } from '$lib/components/InstanceCreator';
-	import ItemCards from '$lib/components/ItemCards.svelte';
-	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
+	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte'
+	import { createInstance } from '$lib/components/InstanceCreator'
+	import ItemCards from '$lib/components/ItemCards.svelte'
+	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte'
 	import {
 		customKcalAmountItem,
 		customKcalCountItem,
@@ -10,70 +10,70 @@
 		recentItems,
 		saveExternalItem,
 		type Item,
-	} from '$lib/data/items';
-	import { fuzzySearch } from '$lib/fuzzySearch';
-	import Input from '$lib/Input.svelte';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import IcRoundAccessTime from '~icons/ic/round-access-time';
-	import IcItems from '~icons/ic/round-category';
-	import IcRoundNumbers from '~icons/ic/round-numbers';
-	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add';
-	import IcRoundRestore from '~icons/ic/round-restore';
-	import MdiCloudSearch from '~icons/mdi/cloud-search';
-	import MdiWeight from '~icons/mdi/weight';
-	import AddItem from './AddItem.svelte';
-	const dispatch = createEventDispatcher<{ edit: Item; selectItem: Item }>();
+	} from '$lib/data/items'
+	import { fuzzySearch } from '$lib/fuzzySearch'
+	import Input from '$lib/Input.svelte'
+	import { createEventDispatcher, onMount } from 'svelte'
+	import IcRoundAccessTime from '~icons/ic/round-access-time'
+	import IcItems from '~icons/ic/round-category'
+	import IcRoundNumbers from '~icons/ic/round-numbers'
+	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add'
+	import IcRoundRestore from '~icons/ic/round-restore'
+	import MdiCloudSearch from '~icons/mdi/cloud-search'
+	import MdiWeight from '~icons/mdi/weight'
+	import AddItem from './AddItem.svelte'
+	const dispatch = createEventDispatcher<{ edit: Item; selectItem: Item }>()
 
-	export let noCustomKcal = false;
-	export let excludeId = '';
+	export let noCustomKcal = false
+	export let excludeId = ''
 
-	let search = '';
+	let search = ''
 	/** used to skeletonize a selected external item while saving it */
-	let handlingId = null;
+	let handlingId = null
 
-	let externalEntries = [];
-	let loadingExternalItems = false;
+	let externalEntries = []
+	let loadingExternalItems = false
 	async function searchExternal() {
-		externalEntries = [];
-		loadingExternalItems = true;
-		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then((r) => r.json());
-		loadingExternalItems = false;
+		externalEntries = []
+		loadingExternalItems = true
+		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then((r) => r.json())
+		loadingExternalItems = false
 	}
 
 	function resetExternal() {
-		externalEntries = [];
-		loadingExternalItems = false;
+		externalEntries = []
+		loadingExternalItems = false
 	}
 
 	async function handleSelect({ detail: item }: { detail: Item }) {
 		// is this item external?
 		if (externalEntries.length) {
-			handlingId = item.id;
-			const cleanedItem = await saveExternalItem(item);
-			search = '';
-			handlingId = null;
-			dispatch('edit', cleanedItem);
+			handlingId = item.id
+			const cleanedItem = await saveExternalItem(item)
+			search = ''
+			handlingId = null
+			dispatch('edit', cleanedItem)
 		} else {
-			const itemInstance = await createInstance(item);
-			if (!itemInstance) return;
-			search = '';
-			dispatch('selectItem', itemInstance);
+			const itemInstance = await createInstance(item)
+			if (!itemInstance) return
+			search = ''
+			dispatch('selectItem', itemInstance)
 		}
 	}
 
-	let inputElement: HTMLInputElement;
+	let inputElement: HTMLInputElement
 
 	onMount(() => {
-		inputElement.focus();
-	});
+		inputElement.focus()
+	})
 </script>
 
 <h2 class="headline-3 with-icon">
 	<IcRoundPlaylistAdd /> Track Item
 </h2>
 <div class="row">
-	<Input clearable bind:inputElement bind:value={search} on:input={resetExternal}
-		>Search
+	<Input clearable bind:inputElement bind:value={search} on:input={resetExternal}>
+		Search
 		<svelte:fragment slot="inline">
 			{#if !search}
 				<BarCodeScanDialog on:scanned={({ detail: code }) => (search = code)} />
@@ -96,7 +96,7 @@
 		<button
 			class="btn tonal w100p"
 			on:click={() => {
-				handleSelect({ detail: customKcalCountItem });
+				handleSelect({ detail: customKcalCountItem })
 			}}
 		>
 			<IcRoundNumbers /> Custom kcal count
@@ -105,7 +105,7 @@
 	<button
 		class="btn tonal w100p"
 		on:click={() => {
-			handleSelect({ detail: customKcalAmountItem });
+			handleSelect({ detail: customKcalAmountItem })
 		}}
 	>
 		<MdiWeight /> Custom kcal & amount

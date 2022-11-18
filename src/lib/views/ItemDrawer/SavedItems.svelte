@@ -1,43 +1,43 @@
 <script lang="ts">
-	import ItemCards from '$lib/components/ItemCards.svelte';
-	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte';
-	import { items, type Item } from '$lib/data/items';
-	import { fuzzySearch } from '$lib/fuzzySearch';
-	import Input from '$lib/Input.svelte';
-	import Select from '$lib/Select.svelte';
-	import { createEventDispatcher } from 'svelte';
-	import IcArrowBack from '~icons/ic/round-arrow-back';
-	import IcItems from '~icons/ic/round-category';
-	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt';
-	import AddItem from './AddItem.svelte';
-	import QuickSnacks from './QuickSnacks.svelte';
+	import ItemCards from '$lib/components/ItemCards.svelte'
+	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte'
+	import { items, type Item } from '$lib/data/items'
+	import { fuzzySearch } from '$lib/fuzzySearch'
+	import Input from '$lib/Input.svelte'
+	import Select from '$lib/Select.svelte'
+	import { createEventDispatcher } from 'svelte'
+	import IcArrowBack from '~icons/ic/round-arrow-back'
+	import IcItems from '~icons/ic/round-category'
+	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
+	import AddItem from './AddItem.svelte'
+	import QuickSnacks from './QuickSnacks.svelte'
 
-	let search = '';
-	let showQuickSnacks = false;
-	let sortMode = 'updatedAt';
-	const dispatch = createEventDispatcher<{ edit: Item }>();
-	const collator = new Intl.Collator();
+	let search = ''
+	let showQuickSnacks = false
+	let sortMode = 'updatedAt'
+	const dispatch = createEventDispatcher<{ edit: Item }>()
+	const collator = new Intl.Collator()
 
-	$: sortedItems = sortItems($items, sortMode);
+	$: sortedItems = sortItems($items, sortMode)
 
 	function sortItems(items: Item[], mode: string) {
 		switch (mode) {
 			case 'updatedAt':
-				return items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+				return items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))
 			case 'label':
 				return items.sort(({ label: a }, { label: b }) => {
-					const cleanA = cleanString(a);
-					const cleanB = cleanString(b);
-					return collator.compare(cleanA, cleanB);
-				});
+					const cleanA = cleanString(a)
+					const cleanB = cleanString(b)
+					return collator.compare(cleanA, cleanB)
+				})
 			case 'brand':
 				return items.sort(({ brand: a }, { brand: b }) => {
-					const cleanA = cleanString(a);
-					const cleanB = cleanString(b);
-					return collator.compare(cleanA, cleanB);
-				});
+					const cleanA = cleanString(a)
+					const cleanB = cleanString(b)
+					return collator.compare(cleanA, cleanB)
+				})
 			default:
-				return items;
+				return items
 		}
 	}
 
@@ -48,7 +48,7 @@
 				/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]| /g,
 				''
 			)
-			.trim();
+			.trim()
 	}
 </script>
 
@@ -72,8 +72,10 @@
 					label: 'Brand',
 					value: 'brand',
 				},
-			]}>Sort</Select
+			]}
 		>
+			Sort
+		</Select>
 	{/if}
 
 	{#if sortedItems}

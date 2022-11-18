@@ -1,16 +1,16 @@
 <script>
-	import Input from '$lib/Input.svelte';
-	import { Dialog } from 'as-comps';
-	import { createEventDispatcher } from 'svelte';
-	import IcPortion from '~icons/ic/round-photo-size-select-small';
-	import IcAdd from '~icons/ic/round-plus';
+	import Input from '$lib/Input.svelte'
+	import { Dialog } from 'as-comps'
+	import { createEventDispatcher } from 'svelte'
+	import IcPortion from '~icons/ic/round-photo-size-select-small'
+	import IcAdd from '~icons/ic/round-plus'
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher()
 
-	export let amount;
-	let divideBy = 2;
+	export let amount
+	let divideBy = 2
 
-	$: portion = amount / divideBy;
+	$: portion = amount / divideBy
 </script>
 
 <Dialog triggerProps={{ class: 'btn text' }} let:toggle>
@@ -29,8 +29,8 @@
 				key: '',
 				label: 'Divided by ' + divideBy,
 				amount: portion,
-			});
-			toggle();
+			})
+			toggle()
 		}}
 	>
 		<p>Amount: {amount} g||ml</p>

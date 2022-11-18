@@ -1,13 +1,13 @@
 <script>
-	import { slide } from 'svelte/transition';
-	import { v4 as uuidv4 } from 'uuid';
-	import Icon from '~icons/ic/round-expand-circle-down';
+	import { slide } from 'svelte/transition'
+	import { v4 as uuidv4 } from 'uuid'
+	import Icon from '~icons/ic/round-expand-circle-down'
 
-	export let open = false;
-	export let disabled = false;
-	export let buttonClass = 'filled';
+	export let open = false
+	export let disabled = false
+	export let buttonClass = 'filled'
 
-	const id = uuidv4();
+	const id = uuidv4()
 </script>
 
 <button
@@ -15,7 +15,7 @@
 	class="card {buttonClass}"
 	{disabled}
 	on:click={() => {
-		open = !open;
+		open = !open
 	}}
 	aria-expanded={open}
 	aria-controls={id}
