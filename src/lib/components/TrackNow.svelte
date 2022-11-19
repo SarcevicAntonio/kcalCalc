@@ -67,6 +67,7 @@
 			<button
 				class="btn tonal fill"
 				on:click={() => addTo(item.label)}
+				data-testid="track-now-in-{item.label}"
 			>
 				{item.label}
 			</button>

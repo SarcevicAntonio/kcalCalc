@@ -61,7 +61,7 @@ test.describe('App Test', () => {
 		await page.getByTestId('track-now').click()
 		await page.getByLabel('Amount').fill('1337')
 		await page.getByTestId('create-instance').click()
-		await page.getByRole('button', { name: bucketLabel }).click()
+		await page.getByTestId('track-now-in-' + bucketLabel).click()
 		await page.keyboard.press('Escape')
 		await page.getByTestId(`bucket-button-${bucketLabel}-${date}`).click()
 
