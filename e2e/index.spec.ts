@@ -38,7 +38,7 @@ test.describe('App Test', () => {
 		await page.locator(`button:has-text("Nutella")`).first().click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByLabel('Amount', { exact: true }).fill('1337')
-		await page.getByRole('button', { name: 'Track' }).click()
+		await page.getByTestId('create-instance').click()
 
 		const todayBreakfastBucket = page.getByTestId(
 			`bucket-${bucketLabel}-${date}`
@@ -60,7 +60,7 @@ test.describe('App Test', () => {
 		await page.getByLabel('kcal per 100 g || ml').fill('284')
 		await page.getByTestId('track-now').click()
 		await page.getByLabel('Amount').fill('1337')
-		await page.getByRole('button', { name: 'Track' }).click()
+		await page.getByTestId('create-instance').click()
 		await page.getByRole('button', { name: bucketLabel }).click()
 		await page.keyboard.press('Escape')
 		await page.getByTestId(`bucket-button-${bucketLabel}-${date}`).click()
@@ -105,7 +105,7 @@ test.describe('App Test', () => {
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByLabel('Amount').fill('500')
-		await page.getByRole('button', { name: 'Track' }).click()
+		await page.getByTestId('create-instance').click()
 		await waitForIngredientDialogClose()
 
 		// Parmesan
@@ -119,7 +119,7 @@ test.describe('App Test', () => {
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByRole('textbox', { name: 'Amount' }).fill('40')
-		await page.getByRole('button', { name: 'Track' }).click()
+		await page.getByTestId('create-instance').click()
 		await waitForIngredientDialogClose()
 
 		// Tomate
@@ -194,7 +194,7 @@ test.describe('App Test', () => {
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
 		await page.getByRole('textbox', { name: 'Amount' }).fill('30')
-		await page.getByRole('button', { name: 'Track' }).click()
+		await page.getByTestId('create-instance').click()
 		await waitForIngredientDialogClose()
 
 		// Olivenöl
@@ -207,7 +207,7 @@ test.describe('App Test', () => {
 			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
-		await page.getByRole('button', { name: 'Track' }).click()
+		await page.getByTestId('create-instance').click()
 		await waitForIngredientDialogClose()
 
 		// Raus hier
@@ -223,7 +223,7 @@ test.describe('App Test', () => {
 			})
 			.click()
 		await page.getByLabel('Amount').fill('430')
-		await page.getByRole('button', { name: 'Track' }).click()
+		await page.getByTestId('create-instance').click()
 
 		const todayDinnerBucket = page.getByTestId(`bucket-Dinner-${date}`)
 		let searchText = `Spaghetti aglio, olio e peperoncino`

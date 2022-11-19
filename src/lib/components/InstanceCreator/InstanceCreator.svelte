@@ -34,7 +34,7 @@
 		<form on:submit|preventDefault={() => confirm()}>
 			<InstanceForm bind:item={$instanceCreatorState.instance}>
 				<svelte:fragment slot="inline-inputs">
-					<button class="btn tonal">
+					<button class="btn tonal" data-testid="create-instance">
 						<IcRoundPlaylistAdd /> Track
 					</button>
 				</svelte:fragment>
