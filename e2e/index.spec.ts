@@ -118,7 +118,7 @@ test.describe('App Test', () => {
 			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
-		await page.getByRole('textbox', { name: 'Amount' }).fill('40')
+		await page.locator('form').getByLabel('Amount').fill('40')
 		await page.getByTestId('create-instance').click()
 		await waitForIngredientDialogClose()
 
@@ -153,7 +153,7 @@ test.describe('App Test', () => {
 		await page
 			.getByRole('button', { name: 'Knoblauch, frisch Naturprodukt 4 kcal' })
 			.click()
-		await page.getByRole('textbox', { name: 'Amount' }).fill('3*5')
+		await page.getByTestId('item-instance-editor').getByLabel('Amount').fill('93*5')
 		await page
 			.getByTestId('item-instance-editor')
 			.getByRole('button', { name: 'Close Dialog or Dialog' })
@@ -177,7 +177,7 @@ test.describe('App Test', () => {
 		await page
 			.getByRole('button', { name: 'Peperoni, rot Naturprodukt 2 kcal' })
 			.click()
-		await page.getByRole('textbox', { name: 'Amount' }).fill('6*2')
+		await page.getByTestId('item-instance-editor').getByLabel('Amount').fill('6*2')
 		await page
 			.getByTestId('item-instance-editor')
 			.getByRole('button', { name: 'Close Dialog or Dialog' })
@@ -193,7 +193,7 @@ test.describe('App Test', () => {
 			})
 			.click()
 		await page.getByRole('button', { name: 'Select' }).click()
-		await page.getByRole('textbox', { name: 'Amount' }).fill('30')
+		await page.locator('form').getByLabel('Amount').fill('30')
 		await page.getByTestId('create-instance').click()
 		await waitForIngredientDialogClose()
 
@@ -219,7 +219,7 @@ test.describe('App Test', () => {
 		await page.getByLabel('Search').fill('Spaghetti')
 		await page
 			.getByRole('button', {
-				name: `Spaghetti aglio, olio e peperoncino ${date} 335 kcal%g||ml`,
+				name: `Spaghetti aglio, olio e peperoncino ${date}`,
 			})
 			.click()
 		await page.getByLabel('Amount').fill('430')
@@ -231,10 +231,6 @@ test.describe('App Test', () => {
 			await todayDinnerBucket.getByText(searchText).isVisible()
 		).toBeTruthy()
 		searchText = date
-		expect(
-			await todayDinnerBucket.getByText(searchText).isVisible()
-		).toBeTruthy()
-		searchText = '1440 kcal'
 		expect(
 			await todayDinnerBucket.getByText(searchText).isVisible()
 		).toBeTruthy()
