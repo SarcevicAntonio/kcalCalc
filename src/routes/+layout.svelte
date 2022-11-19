@@ -95,6 +95,7 @@
 	--as-notification--info-background="var(--md-surface)"
 	--as-notification--info-border-color="var(--md-surface)"
 	--as-notification--btn-background="var(--md-primary-container)"
+	--as-notification--warn-color="var(--md-surface)"
 />
 
 <style lang="postcss">

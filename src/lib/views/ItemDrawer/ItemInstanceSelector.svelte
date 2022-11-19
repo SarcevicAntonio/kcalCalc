@@ -13,6 +13,7 @@
 	} from '$lib/data/items'
 	import { fuzzySearch } from '$lib/fuzzySearch'
 	import Input from '$lib/Input.svelte'
+	import { notification } from 'as-comps'
 	import { createEventDispatcher, onMount } from 'svelte'
 	import IcRoundAccessTime from '~icons/ic/round-access-time'
 	import IcItems from '~icons/ic/round-category'
@@ -37,7 +38,13 @@
 		externalEntries = []
 		loadingExternalItems = true
 		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then(
-			r => r.json()
+			r => {
+				if (r.ok) return r.json()
+				notification(`Error while searching for ${search}`, {
+					type: 'warn',
+				})
+				return []
+			}
 		)
 		loadingExternalItems = false
 	}
