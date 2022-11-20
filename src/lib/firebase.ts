@@ -4,6 +4,7 @@ import { connectAuthEmulator, getAuth } from 'firebase/auth'
 import {
 	connectFirestoreEmulator,
 	enableIndexedDbPersistence,
+	enableMultiTabIndexedDbPersistence,
 	getFirestore,
 } from 'firebase/firestore'
 
@@ -36,7 +37,11 @@ function getClient() {
 			connectAuthEmulator(auth, url + ':9099')
 			connectFirestoreEmulator(db, hostname, 8081)
 		}
-		if (browser) enableIndexedDbPersistence(db)
+		if (browser) {
+			enableMultiTabIndexedDbPersistence(db).catch(() => {
+				enableIndexedDbPersistence(db)
+			})
+		}
 		return app
 	}
 }
