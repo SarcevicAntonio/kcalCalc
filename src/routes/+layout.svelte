@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment'
 	import { items, recentItems } from '$lib/data/items'
 	import { quickSnacks } from '$lib/data/quickSnacks'
 	import { user } from '$lib/data/user'
@@ -35,7 +36,7 @@
 
 	let imgError = false
 
-	let offline = false
+	let offline: boolean = browser ? !navigator.onLine : false
 	const updateOfflineStatus = () => (offline = !navigator.onLine)
 </script>
 
