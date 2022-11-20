@@ -1,0 +1,26 @@
+{
+	"name": "kcalCalc",
+	"short_name": "kcalCalc",
+	"start_url": "/",
+	"display": "standalone",
+	"theme_color": "#FFB0C7",
+	"background_color": "#201A1B",
+	"icons": [
+		{
+			"sizes": "192x192",
+			"src": "icon192.png",
+			"type": "image/png"
+		},
+		{
+			"sizes": "512x512",
+			"src": "icon512.png",
+			"type": "image/png"
+		},
+		{
+			"sizes": "512x512",
+			"src": "icon-maskable.png",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}
