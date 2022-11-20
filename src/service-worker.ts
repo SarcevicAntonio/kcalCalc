@@ -12,12 +12,15 @@ self.addEventListener('message', event => {
 	if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting()
 })
 
-const precache_list: PrecacheEntry[] = [...build, ...files, ...prerendered].map(
-	s => ({
-		url: s,
-		revision: version,
-	})
-)
+const precache_list: PrecacheEntry[] = [
+	'/',
+	...build,
+	...files,
+	...prerendered,
+].map(s => ({
+	url: s,
+	revision: version,
+}))
 
 precacheAndRoute(precache_list)
 
