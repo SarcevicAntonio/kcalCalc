@@ -10,4 +10,4 @@ export const fuzzySearch = (items: Item[], search: string) =>
 		match: extendedMatch,
 	})
 		.find(search)
-		.map(res => res.item)
+		.map((res) => res.item)

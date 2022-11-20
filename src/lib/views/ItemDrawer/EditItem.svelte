@@ -92,10 +92,7 @@
 </Input>
 
 {#if !$dataStore.items.length}
-	<Input
-		type="calc"
-		bind:value={$dataStore.kcalPer100}
-	>
+	<Input type="calc" bind:value={$dataStore.kcalPer100}>
 		kcal per 100 g || ml
 	</Input>
 {:else}
@@ -109,10 +106,7 @@
 		kcal per 100 g || ml
 	</Input>
 {/if}
-<Input
-	type="number"
-	bind:value={$dataStore.ean}
->
+<Input type="number" bind:value={$dataStore.ean}>
 	EAN (Barcode)
 	<svelte:fragment slot="inline">
 		<BarCodeScanDialog
@@ -208,7 +202,7 @@
 		<div class="card outlined portion col">
 			<div class="row">
 				<Input bind:value={portion.label}>Label</Input>
-				{#if $quickSnacks[$dataStore.id]?.some(pk => pk === portion.key)}
+				{#if $quickSnacks[$dataStore.id]?.some((pk) => pk === portion.key)}
 					<button
 						class="btn text"
 						data-testid="remove-quick-snack"
@@ -231,12 +225,7 @@
 				{/if}
 			</div>
 			<div class="row">
-				<Input
-					type="calc"
-					bind:value={portion.amount}
-				>
-					Amount (g||ml)
-				</Input>
+				<Input type="calc" bind:value={portion.amount}>Amount (g||ml)</Input>
 				<button
 					class="btn text"
 					on:click={() => {
@@ -268,10 +257,7 @@
 				Deleting the item "{$dataStore.label}" can not be undone.
 			</p>
 			<div class="row">
-				<button
-					class="btn tonal"
-					on:click={toggle}
-				>
+				<button class="btn tonal" on:click={toggle}>
 					<IcArrowBack /> Do nothing
 				</button>
 				<button

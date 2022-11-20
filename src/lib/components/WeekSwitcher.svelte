@@ -28,10 +28,7 @@
 	}, 0)
 </script>
 
-<Switcher
-	on:prev={goToPrev}
-	on:next={goToNext}
->
+<Switcher on:prev={goToPrev} on:next={goToNext}>
 	{#if $curYear !== getYear(new Date())}
 		<span>{$curYear}</span>
 	{/if}

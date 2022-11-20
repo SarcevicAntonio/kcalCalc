@@ -6,19 +6,13 @@
 </script>
 
 <div class="row">
-	<button
-		class="btn text"
-		on:click={() => dispatch('prev')}
-	>
+	<button class="btn text" on:click={() => dispatch('prev')}>
 		<IcArrowBack />
 	</button>
 	<div class="col">
 		<slot />
 	</div>
-	<button
-		class="btn text"
-		on:click={() => dispatch('next')}
-	>
+	<button class="btn text" on:click={() => dispatch('next')}>
 		<IcArrowForward />
 	</button>
 </div>

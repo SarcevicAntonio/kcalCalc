@@ -28,11 +28,11 @@ import { user } from './user'
 const WEEK_DATA_STORAGE_KEY = 'v1/weekData'
 
 export const curDay = writable(toISODateString(new Date()))
-export const dateIsToday = derived(curDay, day =>
+export const dateIsToday = derived(curDay, (day) =>
 	isSameDay(new Date(day), new Date())
 )
-export const curYear = derived(curDay, day => getYear(new Date(day)))
-export const curWeek = derived(curDay, day => getISOWeek(new Date(day)))
+export const curYear = derived(curDay, (day) => getYear(new Date(day)))
+export const curWeek = derived(curDay, (day) => getISOWeek(new Date(day)))
 
 export const weekData = asyncWritable(
 	[curYear, curWeek, user],
@@ -62,9 +62,9 @@ export const weekData = asyncWritable(
 let unsubscribeWeekData: Unsubscribe
 
 function subscribeWeekData(colRef: CollectionReference, data: Week) {
-	unsubscribeWeekData = onSnapshot(colRef, querySnap => {
+	unsubscribeWeekData = onSnapshot(colRef, (querySnap) => {
 		console.log('onSnapshot weekData')
-		querySnap.docs.forEach(doc => {
+		querySnap.docs.forEach((doc) => {
 			const docData = doc.data() as Day
 			data[doc.id] = {
 				...docData,

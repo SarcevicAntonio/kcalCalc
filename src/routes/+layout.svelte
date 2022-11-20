@@ -13,7 +13,7 @@
 
 	let authStateUnfetched = true
 
-	auth.onAuthStateChanged(changedUser => {
+	auth.onAuthStateChanged((changedUser) => {
 		authStateUnfetched = false
 		if (!changedUser) {
 			$user = null
@@ -47,10 +47,7 @@
 
 <header>
 	<div>
-		<img
-			src="/icon-mono.svg"
-			alt="kcalCalc Logo"
-		/>
+		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
 	</div>
 
@@ -59,11 +56,7 @@
 			<IcRoundCloudOff color="var(--md-error)" />
 		{/if}
 		{#if $user}
-			<a
-				data-sveltekit-prefetch
-				class="btn text"
-				href="/profile"
-			>
+			<a data-sveltekit-prefetch class="btn text" href="/profile">
 				{#if $user.photoURL && !imgError}
 					<img
 						src={$user.photoURL}

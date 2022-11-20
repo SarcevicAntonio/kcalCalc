@@ -3,7 +3,7 @@ import { toISODateString } from '../src/lib/dateHelpers.js'
 
 test.describe('App Test', () => {
 	test.beforeEach(async ({ page }) => {
-		page.on('console', msg => console.log('#BROWSER# ', msg.text()))
+		page.on('console', (msg) => console.log('#BROWSER# ', msg.text()))
 
 		// TODO: Replace beforeEach with IndexedDB Session Sharing
 		// https://github.com/microsoft/playwright/discussions/10715#discussioncomment-1904812
@@ -153,7 +153,10 @@ test.describe('App Test', () => {
 		await page
 			.getByRole('button', { name: 'Knoblauch, frisch Naturprodukt 4 kcal' })
 			.click()
-		await page.getByTestId('item-instance-editor').getByLabel('Amount').fill('93*5')
+		await page
+			.getByTestId('item-instance-editor')
+			.getByLabel('Amount')
+			.fill('93*5')
 		await page
 			.getByTestId('item-instance-editor')
 			.getByRole('button', { name: 'Close Dialog or Dialog' })
@@ -177,7 +180,10 @@ test.describe('App Test', () => {
 		await page
 			.getByRole('button', { name: 'Peperoni, rot Naturprodukt 2 kcal' })
 			.click()
-		await page.getByTestId('item-instance-editor').getByLabel('Amount').fill('6*2')
+		await page
+			.getByTestId('item-instance-editor')
+			.getByLabel('Amount')
+			.fill('6*2')
 		await page
 			.getByTestId('item-instance-editor')
 			.getByRole('button', { name: 'Close Dialog or Dialog' })

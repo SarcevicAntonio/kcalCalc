@@ -35,7 +35,7 @@ export const userSettings = asyncWritable(
 let unsubscribeUserSettings: Unsubscribe
 
 function subscribeUserSettings(docRef: DocumentReference) {
-	unsubscribeUserSettings = onSnapshot(docRef, docSnap => {
+	unsubscribeUserSettings = onSnapshot(docRef, (docSnap) => {
 		console.log('onSnapshot userSettings')
 		const data = (docSnap.data() || {}) as UserSettings
 		userSettings.set(data, false)

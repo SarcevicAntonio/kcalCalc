@@ -9,10 +9,7 @@
 </script>
 
 <div class="min-height">
-	<button
-		class="card filled"
-		on:click={popAuth}
-	>
+	<button class="card filled" on:click={popAuth}>
 		<div class="headline-2">
 			<IcLogin /> Login with Google
 		</div>

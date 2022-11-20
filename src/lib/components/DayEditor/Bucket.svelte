@@ -31,10 +31,7 @@
 	disabled={!items.length}
 	data-testid="bucket-button-{label}-{date}"
 >
-	<div
-		slot="summary"
-		class="row"
-	>
+	<div slot="summary" class="row">
 		<span class="title-l">{label}</span>
 		<div class="bucket-info">
 			{#if items.length}
@@ -57,10 +54,7 @@
 		</div>
 	</div>
 
-	<div
-		class="col"
-		data-testid="bucket-{label}-{date}"
-	>
+	<div class="col" data-testid="bucket-{label}-{date}">
 		{#if items.length}
 			{#each items as item, index (item.key)}
 				<ItemInstanceEditor

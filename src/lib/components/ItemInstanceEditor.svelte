@@ -20,10 +20,7 @@
 	}
 </script>
 
-<button
-	class="card outlined row"
-	on:click={() => (editing = true)}
->
+<button class="card outlined row" on:click={() => (editing = true)}>
 	<div class="col item-info">
 		<span class="title-m">
 			{#if !item.label}
@@ -56,11 +53,7 @@
 	--as-dialog-width="90%"
 	--as-dialog-max-width="400px"
 >
-	<InstanceForm
-		bind:item
-		bind:amountInputElement
-		on:update
-	>
+	<InstanceForm bind:item bind:amountInputElement on:update>
 		<svelte:fragment slot="inline-inputs">
 			{#if item.portions.length}
 				<PortionSelector
@@ -79,10 +72,7 @@
 			{/if}
 		</svelte:fragment>
 		<div class="row">
-			<button
-				class="btn text"
-				on:click={() => dispatch('delete')}
-			>
+			<button class="btn text" on:click={() => dispatch('delete')}>
 				<IcDelete />
 			</button>
 		</div>
