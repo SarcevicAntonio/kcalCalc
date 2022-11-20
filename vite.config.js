@@ -18,4 +18,7 @@ export default defineConfig(({ mode }) => ({
 		removeConsole(),
 		// mode === 'development' && basicSsl(),
 	],
+	define: {
+		'process.env.NODE_ENV': '"production"',
+	},
 }))
