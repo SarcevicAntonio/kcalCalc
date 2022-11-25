@@ -29,7 +29,7 @@
 		isOpen = false
 		todayData = await getDayData(todayDate)
 		const mealIndex = todayData.meals.findIndex(
-			meal => meal.label === mealLabel
+			(meal) => meal.label === mealLabel
 		)
 		todayData.meals[mealIndex].intake = [
 			...todayData.meals[mealIndex].intake,
@@ -40,10 +40,7 @@
 	}
 </script>
 
-<button
-	on:click={startFlow}
-	data-testid="track-now"
->
+<button on:click={startFlow} data-testid="track-now">
 	<IcRoundPlaylistAdd />
 </button>
 
@@ -58,10 +55,7 @@
 			<IcRoundPlaylistAdd />
 			Track Item
 		</h2>
-		<input
-			type="date"
-			bind:value={todayDate}
-		/>
+		<input type="date" bind:value={todayDate} />
 		Select a bucket for {todayDate}
 		{#each defaultDay.meals as item}
 			<button

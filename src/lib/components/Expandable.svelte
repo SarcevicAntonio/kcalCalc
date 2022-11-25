@@ -25,10 +25,7 @@
 			<slot name="summary" />
 		</div>
 		{#if !disabled}
-			<div
-				class="icon"
-				class:open
-			>
+			<div class="icon" class:open>
 				<Icon />
 			</div>
 		{/if}

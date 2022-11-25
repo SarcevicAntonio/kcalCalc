@@ -38,7 +38,7 @@
 		externalEntries = []
 		loadingExternalItems = true
 		externalEntries = await fetch('/search/' + encodeURIComponent(search)).then(
-			r => {
+			(r) => {
 				if (r.ok) return r.json()
 				notification(`Error while searching for ${search}`, {
 					type: 'warn',
@@ -97,17 +97,11 @@
 </div>
 {#if search}
 	{#if externalEntries.length || loadingExternalItems}
-		<button
-			class="btn tonal w100p"
-			on:click={resetExternal}
-		>
+		<button class="btn tonal w100p" on:click={resetExternal}>
 			<IcItems /> Back to saved items
 		</button>
 	{:else}
-		<button
-			class="btn tonal w100p"
-			on:click={searchExternal}
-		>
+		<button class="btn tonal w100p" on:click={searchExternal}>
 			<MdiCloudSearch /> Search for item on internet
 		</button>
 	{/if}

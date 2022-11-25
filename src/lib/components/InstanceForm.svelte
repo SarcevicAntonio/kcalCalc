@@ -33,10 +33,7 @@
 		</span>
 	{/if}
 	{#if item.id.startsWith('CUSTOM')}
-		<Input
-			bind:value={item.label}
-			on:input={dispatchUpdate}
-		>
+		<Input bind:value={item.label} on:input={dispatchUpdate}>
 			Custom Label
 		</Input>
 	{/if}
@@ -50,11 +47,7 @@
 	</div>
 	<div class="row gap">
 		{#if item.id === 'CUSTOM:KCAL+AMOUNT'}
-			<Input
-				type="calc"
-				bind:value={item.kcalPer100}
-				on:input={dispatchUpdate}
-			>
+			<Input type="calc" bind:value={item.kcalPer100} on:input={dispatchUpdate}>
 				kcal Per 100x
 			</Input>
 		{/if}

@@ -35,17 +35,9 @@
 			</ul>
 			<hr />
 			{#await userSettings.load()}
-				<Input
-					type="calc"
-					disabled
-				>
-					Kcal Day Limit / Warning
-				</Input>
+				<Input type="calc" disabled>Kcal Day Limit / Warning</Input>
 			{:then}
-				<Input
-					type="calc"
-					bind:value={$userSettings.kcalLimit}
-				>
+				<Input type="calc" bind:value={$userSettings.kcalLimit}>
 					Kcal Day Limit / Warning
 				</Input>
 			{/await}
@@ -57,10 +49,7 @@
 				Kalo­ri­en­be­darfs­rechner von TK
 			</a>
 		</div>
-		<button
-			class="btn tonal"
-			on:click={logout}
-		>
+		<button class="btn tonal" on:click={logout}>
 			<IcLogout /> Logout
 		</button>
 	{/if}
@@ -68,10 +57,7 @@
 
 {#if $user}
 	<nav class="fab-bar">
-		<a
-			data-sveltekit-prefetch
-			href="/"
-		>
+		<a data-sveltekit-prefetch href="/">
 			<IcHome /> Go Home
 		</a>
 	</nav>

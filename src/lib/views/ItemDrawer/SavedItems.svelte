@@ -54,12 +54,7 @@
 
 {#if !showQuickSnacks}
 	<h2 class="headline-3 with-icon"><IcItems /> Saved Items</h2>
-	<Input
-		clearable
-		bind:value={search}
-	>
-		Search
-	</Input>
+	<Input clearable bind:value={search}>Search</Input>
 
 	{#if !search}
 		<Select

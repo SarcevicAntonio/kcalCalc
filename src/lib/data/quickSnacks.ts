@@ -17,7 +17,7 @@ const QUICK_SNACK_STORAGE_KEY = 'v1/quickSnacks'
 let docRef: DocumentReference
 export const quickSnacks = asyncWritable<typeof user, QuickSnacks>(
 	user,
-	async $user => {
+	async ($user) => {
 		if (unsubscribeQuickSnacks) {
 			unsubscribeQuickSnacks()
 		}
@@ -30,7 +30,7 @@ export const quickSnacks = asyncWritable<typeof user, QuickSnacks>(
 let unsubscribeQuickSnacks: Unsubscribe
 
 function subscribeQuickSnacks(docRef: DocumentReference) {
-	unsubscribeQuickSnacks = onSnapshot(docRef, docSnap => {
+	unsubscribeQuickSnacks = onSnapshot(docRef, (docSnap) => {
 		console.log('onSnapshot quickSnacks')
 		const data = docSnap.data() || {}
 		quickSnacks.set(data, false)
@@ -45,10 +45,10 @@ export const quickSnackTemplates = derived(
 		const templates: QuickSnackTemplate[] = []
 		if (!$quickSnacks || !$items?.length) return []
 		Object.entries($quickSnacks).forEach(([itemId, portionKeys]) => {
-			const item = $items.find(i => i.id === itemId)
+			const item = $items.find((i) => i.id === itemId)
 			if (!item || !item.portions) return []
-			const portions = item.portions.filter(p => portionKeys.includes(p.key))
-			portions.forEach(p => {
+			const portions = item.portions.filter((p) => portionKeys.includes(p.key))
+			portions.forEach((p) => {
 				templates.push({
 					...transformItemToInstance(item),
 					amount: p.amount,
@@ -68,7 +68,7 @@ export async function trackQuickSnack(itemInstance: QuickSnackTemplate) {
 	const todayDate = toISODateString(new Date())
 	const todayData = await getDayData(todayDate)
 	const mealIndex = todayData.meals.findIndex(
-		meal => meal.label === MEAL_LABEL_SNACK
+		(meal) => meal.label === MEAL_LABEL_SNACK
 	)
 	todayData.meals[mealIndex].intake = [
 		...todayData.meals[mealIndex].intake,
@@ -91,7 +91,7 @@ export function removeQuickSnack(itemId: string, portionKey: string) {
 	const data = get(quickSnacks)
 	if (!data[itemId]) return
 	console.log('###')
-	data[itemId] = data[itemId].filter(pk => pk !== portionKey)
+	data[itemId] = data[itemId].filter((pk) => pk !== portionKey)
 	setDoc(docRef, data)
 }
 
