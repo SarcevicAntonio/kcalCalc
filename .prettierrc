@@ -2,6 +2,5 @@
 	"useTabs": true,
 	"singleQuote": true,
 	"semi": false,
-	"quoteProps": "consistent",
-	"htmlWhitespaceSensitivity": "ignore"
+	"quoteProps": "consistent"
 }

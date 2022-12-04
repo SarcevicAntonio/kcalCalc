@@ -18,9 +18,9 @@
 <div
 	class="container"
 	on:click={focusInput}
-	on:keydown={focusInput}
-	on:keyup={focusInput}
-	on:keypress={focusInput}
+	on:keydown={() => {}}
+	on:keyup={() => {}}
+	on:keypress={() => {}}
 	class:disabled
 	class:outlined
 >
