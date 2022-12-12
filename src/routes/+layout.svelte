@@ -10,6 +10,7 @@
 	import IcRoundCloudOff from '~icons/ic/round-cloud-off'
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop'
 	import '../css/global.css'
+	import Credits from './Credits.svelte'
 
 	let authStateUnfetched = true
 
@@ -38,6 +39,8 @@
 
 	let offline: boolean = browser ? !navigator.onLine : false
 	const updateOfflineStatus = () => (offline = !navigator.onLine)
+
+	let creditsOpen = false
 </script>
 
 <svelte:window
@@ -46,10 +49,10 @@
 />
 
 <header>
-	<div>
+	<button on:click={() => (creditsOpen = true)}>
 		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
-	</div>
+	</button>
 
 	<div class="header-items">
 		{#if offline}
@@ -84,6 +87,8 @@
 	{/if}
 </main>
 
+<Credits bind:isOpen={creditsOpen} />
+
 <Notifications
 	--as-notification-color="var(--md-on-surface)"
 	--as-notification--info-background="var(--md-surface)"
@@ -112,7 +117,7 @@
 		padding-left: 0.5rem;
 		background-color: var(--md-surface);
 		color: var(--md-on-surface);
-		& > div {
+		& > button {
 			display: flex;
 			align-items: center;
 			gap: 1rem;
