@@ -16,16 +16,15 @@
 			Antonio Sarcevic
 		</a>
 	</p>
-	<h3 class="headline-4">Third-Party Dependencies:</h3>
+	<hr />
+	<h3 class="headline-5">Made possible thanks to:</h3>
 	<ul>
 		{#each deps as dep, i}
 			{@const link = dep.link.replace('git://', 'https://').replace('git+', '')}
-			<li class:odd={i % 2}>
-				<span>
-					<a target="_blank" rel="noreferrer" href={link}>{dep.name}</a>
-					<span class="version">@ {dep.installedVersion}</span>
-				</span>
-				<span>{dep.licenseType}</span>
+			<li>
+				<a target="_blank" rel="noreferrer" href={link}>{dep.name}</a>
+				<span class="version">@ {dep.installedVersion}</span>
+				<span class="license">{dep.licenseType}</span>
 			</li>
 		{/each}
 	</ul>
@@ -37,22 +36,46 @@
 		flex-direction: column;
 		gap: 0.25rem;
 		list-style: none;
-		border-radius: 1em;
-		border: 1px solid var(--md-on-background);
+		border-radius: 0.5em;
+		border: 1px solid var(--md-outline);
+		height: 100%;
+		overflow: auto;
+	}
+
+	hr {
+		border-color: var(--md-outline);
 	}
 
 	li {
 		display: flex;
-		justify-content: space-between;
+		flex-direction: column;
+		align-items: flex-start;
 		padding: 0.5rem 0.75rem;
+	}
+
+	.license {
+		margin-left: auto;
+	}
+
+	@media only screen and (min-width: 1000px) {
+		li {
+			flex-direction: row;
+			gap: 0.5rem;
+			align-items: center;
+		}
+	}
+
+	li:nth-child(2n) {
+		background-color: var(--md-surface-variant);
+	}
+
+	li:last-child {
+		border-bottom-right-radius: 0.5em;
+		border-bottom-left-radius: 0.5em;
 	}
 
 	a {
 		color: var(--md-on-background);
-	}
-
-	.odd {
-		background-color: var(--md-surface-variant);
 	}
 
 	.version {
