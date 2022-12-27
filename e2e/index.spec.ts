@@ -249,7 +249,7 @@ test.describe('App Test', () => {
 		await page.getByLabel('Search').fill('Oatly Hafer Calcium')
 		page.getByRole('button', { name: 'Search for item on internet' }).click()
 		await page
-			.getByRole('button', { name: 'Hafer Drink, Calcium Oatly 46 kcal%g||ml' })
+			.getByRole('button', { name: 'Hafer Drink, Calcium Oatly 48 kcal%g||ml' })
 			.click()
 		await page.getByRole('button', { name: 'Add Portion' }).click()
 		await page.getByLabel('Label').nth(1).fill('Schuss')
