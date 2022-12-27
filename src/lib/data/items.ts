@@ -1,3 +1,4 @@
+import { cleanString } from '$lib/cleanString'
 import { db } from '$lib/firebase'
 import { calculateKcalPer100FromItems } from '$lib/kcal'
 import { getStorage, setStorage } from '$lib/localStorage'
@@ -213,3 +214,40 @@ export interface Portion {
 // 	}
 // 	return items;
 // }
+
+export enum ItemSortModes {
+	updatedAt = 'Recently Updated',
+	createdAt = 'Creation Time',
+	label = 'Label',
+	brand = 'Brand',
+	recentItems = 'Recent Items',
+}
+
+export function getSortedItems(mode: ItemSortModes) {
+	const $items = get(items)
+	const collator = new Intl.Collator()
+	console.log('sorting by ...' + mode)
+	switch (mode) {
+		case ItemSortModes.updatedAt:
+			return $items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))
+		case ItemSortModes.createdAt:
+			return $items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
+		case ItemSortModes.label:
+			return $items.sort(({ label: a }, { label: b }) => {
+				const cleanA = cleanString(a)
+				const cleanB = cleanString(b)
+				return collator.compare(cleanA, cleanB)
+			})
+		case ItemSortModes.brand:
+			return $items.sort(({ brand: a }, { brand: b }) => {
+				const cleanA = cleanString(a)
+				const cleanB = cleanString(b)
+				return collator.compare(cleanA, cleanB)
+			})
+		case ItemSortModes.recentItems:
+			return get(recentItems)
+		default:
+			console.warn('No sort mode for ' + mode)
+			return $items
+	}
+}

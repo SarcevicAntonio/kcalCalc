@@ -1,7 +1,12 @@
 <script lang="ts">
 	import ItemCards from '$lib/components/ItemCards.svelte'
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte'
-	import { items, type Item } from '$lib/data/items'
+	import {
+		getSortedItems,
+		items,
+		ItemSortModes,
+		type Item,
+	} from '$lib/data/items'
 	import { fuzzySearch } from '$lib/fuzzySearch'
 	import Input from '$lib/Input.svelte'
 	import Select from '$lib/Select.svelte'
@@ -14,42 +19,15 @@
 
 	let search = ''
 	let showQuickSnacks = false
-	let sortMode = 'updatedAt'
+	let sortMode = ItemSortModes.updatedAt
 	const dispatch = createEventDispatcher<{ edit: Item }>()
-	const collator = new Intl.Collator()
 
-	$: sortedItems = sortItems($items, sortMode)
+	$: sortedItems = getSortedItems(sortMode)
 
-	function sortItems(items: Item[], mode: string) {
-		switch (mode) {
-			case 'updatedAt':
-				return items.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))
-			case 'label':
-				return items.sort(({ label: a }, { label: b }) => {
-					const cleanA = cleanString(a)
-					const cleanB = cleanString(b)
-					return collator.compare(cleanA, cleanB)
-				})
-			case 'brand':
-				return items.sort(({ brand: a }, { brand: b }) => {
-					const cleanA = cleanString(a)
-					const cleanB = cleanString(b)
-					return collator.compare(cleanA, cleanB)
-				})
-			default:
-				return items
-		}
-	}
-
-	function cleanString(str: string) {
-		// remove emojis and whitespace
-		return str
-			.replace(
-				/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2580-\u27BF]|\uD83E[\uDD10-\uDDFF]| /g,
-				''
-			)
-			.trim()
-	}
+	const sortModeOptions = Object.values(ItemSortModes).map((value) => ({
+		label: value,
+		value,
+	}))
 </script>
 
 {#if !showQuickSnacks}
@@ -57,25 +35,7 @@
 	<Input clearable bind:value={search}>Search</Input>
 
 	{#if !search}
-		<Select
-			bind:value={sortMode}
-			options={[
-				{
-					label: 'Recently Updated',
-					value: 'updatedAt',
-				},
-				{
-					label: 'Label',
-					value: 'label',
-				},
-				{
-					label: 'Brand',
-					value: 'brand',
-				},
-			]}
-		>
-			Sort
-		</Select>
+		<Select bind:value={sortMode} options={sortModeOptions}>Sort</Select>
 	{/if}
 
 	{#if sortedItems}
