@@ -16,7 +16,7 @@ Give it a shot at [kcal-calc.vercel.app](https://kcal-calc.vercel.app)
 
 ## Self Hosting
 
-kcalCalc can be self-hosted for yourself for free using Firebase and a Cloud Host like Vercel.
+kcalCalc can be self-hosted for free using Firebase and a Cloud Host like Vercel.
 
 ### Setup Firebase
 
