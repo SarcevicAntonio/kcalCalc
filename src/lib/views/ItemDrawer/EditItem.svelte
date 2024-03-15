@@ -100,7 +100,7 @@
 		type="calc"
 		disabled
 		value={kcalDisplay(
-			calculateKcalPer100FromItems($dataStore.items, $dataStore.amount)
+			calculateKcalPer100FromItems($dataStore.items, $dataStore.amount),
 		)}
 	>
 		kcal per 100 g || ml
@@ -246,6 +246,7 @@
 		noCloseButton
 		let:toggle
 		dialogOut={() => null}
+		transitionOptions={{ duration: 100 }}
 		backdropOut={() => null}
 	>
 		<svelte:fragment slot="trigger-label">

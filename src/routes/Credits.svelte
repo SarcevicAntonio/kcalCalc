@@ -8,6 +8,7 @@
 	bind:isOpen
 	includedTrigger={false}
 	style="display: flex; flex-direction: column; gap: 0.5rem; width: 80vw; max-width: 800px;"
+	transitionOptions={{ duration: 100 }}
 >
 	<h2 class="headline-3">Credits</h2>
 	<p>

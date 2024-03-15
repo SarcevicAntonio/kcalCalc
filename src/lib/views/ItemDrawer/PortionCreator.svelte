@@ -13,7 +13,11 @@
 	$: portion = amount / divideBy
 </script>
 
-<Dialog triggerProps={{ class: 'btn text' }} let:toggle>
+<Dialog
+	triggerProps={{ class: 'btn text' }}
+	let:toggle
+	transitionOptions={{ duration: 100 }}
+>
 	<svelte:fragment slot="trigger-label">
 		<IcPortion />
 	</svelte:fragment>

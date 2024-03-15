@@ -52,6 +52,7 @@
 	bind:isOpen={editing}
 	--as-dialog-width="90%"
 	--as-dialog-max-width="400px"
+	transitionOptions={{ duration: 100 }}
 >
 	<InstanceForm bind:item bind:amountInputElement on:update>
 		<svelte:fragment slot="inline-inputs">

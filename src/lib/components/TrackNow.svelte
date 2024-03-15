@@ -29,7 +29,7 @@
 		isOpen = false
 		todayData = await getDayData(todayDate)
 		const mealIndex = todayData.meals.findIndex(
-			(meal) => meal.label === mealLabel
+			(meal) => meal.label === mealLabel,
 		)
 		todayData.meals[mealIndex].intake = [
 			...todayData.meals[mealIndex].intake,

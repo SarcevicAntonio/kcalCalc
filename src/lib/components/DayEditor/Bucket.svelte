@@ -92,7 +92,8 @@
 		flex-direction: column;
 		align-items: stretch;
 		justify-content: center;
-		gap: 0.5em;
+		gap: 1em;
+		margin-top: 0.5rem;
 	}
 
 	.title-l {

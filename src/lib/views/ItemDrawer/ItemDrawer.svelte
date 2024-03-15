@@ -4,14 +4,10 @@
 	import { Dialog } from 'as-comps'
 	import { createEventDispatcher } from 'svelte'
 	import { fly } from 'svelte/transition'
-	import IcArrowBack from '~icons/ic/round-arrow-back'
 	import IcItems from '~icons/ic/round-category'
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add'
-	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
-	import AddItem from './AddItem.svelte'
 	import EditItem from './EditItem.svelte'
 	import ItemInstanceSelector from './ItemInstanceSelector.svelte'
-	import QuickSnacks from './QuickSnacks.svelte'
 	import SavedItems from './SavedItems.svelte'
 
 	const dispatch = createEventDispatcher()
@@ -39,7 +35,7 @@
 	}}
 	data-testid="item-drawer"
 	dialogIn={fly}
-	transitionOptions={{ x: 500 }}
+	transitionOptions={{ x: 500, duration: 200 }}
 	dialogOut={fly}
 	--as-dialog-left="auto"
 	--as-dialog-right="0"

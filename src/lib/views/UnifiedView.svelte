@@ -82,7 +82,7 @@
 	.scroll-hori {
 		display: flex;
 		overflow-x: auto;
-		gap: 1rem;
+		gap: 1.5rem;
 		padding-inline: 0.5rem;
 	}
 

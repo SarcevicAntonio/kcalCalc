@@ -25,6 +25,7 @@
 	includedTrigger={false}
 	--as-dialog-width="90%"
 	--as-dialog-max-width="400px"
+	transitionOptions={{ duration: 100 }}
 >
 	<div class="col">
 		<h2 class="headline-3 with-icon">
