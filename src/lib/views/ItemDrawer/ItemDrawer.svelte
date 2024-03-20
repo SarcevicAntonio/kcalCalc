@@ -19,7 +19,6 @@
 	export let isOpen = false
 	export let editItem: Item = null
 	export let triggerTestId = ''
-	let showQuickSnacks = false
 </script>
 
 <Dialog
@@ -27,7 +26,6 @@
 	bind:isOpen
 	on:dismiss={() => {
 		editItem = null
-		showQuickSnacks = false
 	}}
 	triggerProps={{
 		'class': `margin-left-auto ${selector ? 'btn text' : ''}`,

@@ -4,7 +4,7 @@
 	import { page } from '$app/stores'
 	import { decodeUriComponentToObj } from '$lib/base64'
 	import InstanceCreator from '$lib/components/InstanceCreator/InstanceCreator.svelte'
-	import { curDay, dateIsToday, weekData } from '$lib/data/intake'
+	import { curDay, dateIsToday } from '$lib/data/intake'
 	import { saveExternalItem, type Item } from '$lib/data/items'
 	import { toISODateString } from '$lib/dateHelpers'
 	import CurDayView from '$lib/views/CurDayView.svelte'

@@ -1,5 +1,6 @@
 import type { Item, ItemInstance } from '$lib/data/items'
 import { calculateKcalPer100FromItems } from '$lib/kcal'
+import { calculateProteinPer100FromItems } from '$lib/protein'
 import { writable } from 'svelte/store'
 import { v4 as uuid } from 'uuid'
 
@@ -13,6 +14,9 @@ export function transformItemToInstance(item: Item): ItemInstance {
 		brand: item.brand || '',
 		kcalPer100:
 			item.kcalPer100 || calculateKcalPer100FromItems(item.items, item.amount),
+		proteinPer100:
+			item.proteinPer100 ||
+			calculateProteinPer100FromItems(item.items, item.amount),
 		amount: 100,
 		portions: item.portions || [],
 	}

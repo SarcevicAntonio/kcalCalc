@@ -53,4 +53,5 @@ export interface User {
 
 export interface UserSettings {
 	kcalLimit?: number
+	proteinLimit?: number
 }

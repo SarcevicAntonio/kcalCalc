@@ -6,14 +6,13 @@
 	import IcDelete from '~icons/ic/round-delete-forever'
 	import InstanceForm from './InstanceForm.svelte'
 	import PortionSelector from './PortionSelector.svelte'
+	import { calculateProtein } from '$lib/protein'
 	const dispatch = createEventDispatcher()
 
 	export let item: ItemInstance
 	export let amountInputElement: HTMLInputElement = null
 
 	let editing = false
-
-	$: kcalLabel = kcalDisplay(calculateKcal(item))
 
 	function dispatchUpdate() {
 		dispatch('update')
@@ -41,7 +40,10 @@
 	</div>
 	<div class="col end">
 		<span class="label-l">
-			{kcalLabel} kcal
+			{kcalDisplay(calculateKcal(item))} kcal
+		</span>
+		<span class="label-l">
+			{kcalDisplay(calculateProtein(item))} protein
 		</span>
 	</div>
 </button>

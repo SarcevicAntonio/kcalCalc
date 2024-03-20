@@ -153,6 +153,7 @@ export const defaultItem = {
 	label: '',
 	brand: '',
 	kcalPer100: 100, // 0 means no override
+	proteinPer100: 100, // 0 means no override
 	amount: 0, // 0 means no override
 	items: [],
 	portions: [],
@@ -183,6 +184,7 @@ export interface Item {
 	brand?: string
 	label: string
 	kcalPer100: number
+	proteinPer100?: number
 	amount?: number
 	items?: ItemInstance[]
 	portions?: Portion[]
@@ -197,6 +199,7 @@ export interface ItemInstance {
 	label: string
 	brand?: string
 	kcalPer100: number
+	proteinPer100?: number
 	amount: number
 	portions?: Portion[]
 }

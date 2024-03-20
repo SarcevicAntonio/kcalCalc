@@ -20,7 +20,7 @@
 	<hr />
 	<h3 class="headline-5">Made possible thanks to:</h3>
 	<ul>
-		{#each deps as dep, i}
+		{#each deps as dep}
 			{@const link = dep.link.replace('git://', 'https://').replace('git+', '')}
 			<li>
 				<a target="_blank" rel="noreferrer" href={link}>{dep.name}</a>

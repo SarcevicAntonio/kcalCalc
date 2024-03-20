@@ -1,24 +1,17 @@
-<script>
-	import { userSettings } from '$lib/data/user'
+<script lang="ts">
+	export let amount: number
+	export let limit = 9999
 
-	export let kcalInDay
-
-	$: overLimit = kcalInDay > ($userSettings?.kcalLimit || 9999)
+	$: overLimit = amount > limit
 </script>
 
 <div class="bar" class:over-limit={overLimit}>
 	<div
 		class="inner"
-		style={!isNaN(kcalInDay)
+		style={!isNaN(amount)
 			? overLimit
-				? `width: ${Math.min(
-						($userSettings?.kcalLimit / kcalInDay) * 100,
-						100
-				  )}%;`
-				: `width: ${Math.min(
-						(kcalInDay / $userSettings?.kcalLimit) * 100,
-						100
-				  )}%;`
+				? `width: ${Math.min((limit / amount) * 100, 100)}%;`
+				: `width: ${Math.min((amount / limit) * 100, 100)}%;`
 			: ''}
 	/>
 </div>

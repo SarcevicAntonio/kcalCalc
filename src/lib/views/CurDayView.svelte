@@ -12,6 +12,7 @@
 	import { userSettings } from '$lib/data/user'
 	import { toISODateString } from '$lib/dateHelpers'
 	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
+	import { calculateProteinFromItems } from '$lib/protein'
 	import { addDays } from 'date-fns'
 
 	let data = null as DayType
@@ -21,7 +22,12 @@
 
 	$: kcalInDay = data?.meals.reduce(
 		(acc, meal) => acc + calculateKcalFromItems(meal.intake),
-		0
+		0,
+	)
+
+	$: proteinInDay = data?.meals.reduce(
+		(acc, meal) => acc + calculateProteinFromItems(meal.intake),
+		0,
 	)
 	$: dateObj = new Date($curDay)
 
@@ -52,12 +58,21 @@
 	>
 		{kcalDisplay(kcalInDay)} kcal
 	</span>
+	<span
+		class="label-l"
+		class:over-limit={proteinInDay > ($userSettings?.proteinLimit || 9999)}
+		class:stale
+	>
+		{kcalDisplay(proteinInDay)} protein
+	</span>
 </Switcher>
 
 {#await dayData.load()}
 	<KcalLimitBarSkeleton />
+	<KcalLimitBarSkeleton />
 {:then _}
-	<KcalLimitBar {kcalInDay} />
+	<KcalLimitBar amount={kcalInDay} limit={$userSettings?.kcalLimit} />
+	<KcalLimitBar amount={proteinInDay} limit={$userSettings?.proteinLimit} />
 {/await}
 
 <DayEditor bind:data date={$curDay} />

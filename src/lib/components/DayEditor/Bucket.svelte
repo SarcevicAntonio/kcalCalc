@@ -5,6 +5,7 @@
 	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte'
 	import { createEventDispatcher } from 'svelte'
 	import Expandable from '../Expandable.svelte'
+	import { calculateProteinFromItems } from '$lib/protein'
 	const dispatch = createEventDispatcher()
 
 	export let label: string
@@ -35,12 +36,13 @@
 		<span class="title-l">{label}</span>
 		<div class="bucket-info">
 			{#if items.length}
-				<span class="body-m">
-					{items.length} Item{items.length !== 1 ? 's' : ''}
-				</span>
 				<span class="label-l">
 					{kcalDisplay(calculateKcalFromItems(items))}
 					kcal
+				</span>
+				<span class="label-l">
+					{kcalDisplay(calculateProteinFromItems(items))}
+					protein
 				</span>
 			{:else}
 				<ItemDrawer

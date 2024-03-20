@@ -59,7 +59,7 @@
 					{kcalDisplay(kcalInDay)} kcal
 				</span>
 			</div>
-			<KcalLimitBar {kcalInDay} />
+			<KcalLimitBar amount={kcalInDay} />
 			<DayEditor bind:data {date} />
 		</div>
 	{:else}

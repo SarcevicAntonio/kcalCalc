@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Input from '$lib/Input.svelte'
 	import BarCodeScanDialog from '$lib/components/BarCodeScanDialog.svelte'
 	import ItemInstance from '$lib/components/ItemInstanceEditor.svelte'
 	import TrackNow from '$lib/components/TrackNow.svelte'
@@ -6,12 +7,15 @@
 		createItemStore,
 		defaultPortion,
 		deleteItem,
-		items,
 		type Item,
 		type ItemInstance as ItemInstanceType,
 	} from '$lib/data/items'
+	import {
+		addQuickSnack,
+		quickSnacks,
+		removeQuickSnack,
+	} from '$lib/data/quickSnacks'
 	import { toISODateString } from '$lib/dateHelpers'
-	import Input from '$lib/Input.svelte'
 	import {
 		calculateAmountSum,
 		calculateKcalPer100FromItems,
@@ -29,15 +33,11 @@
 	import IcAdd from '~icons/ic/round-plus'
 	import IcRoundShare from '~icons/ic/round-share'
 	import IcRoundToday from '~icons/ic/round-today'
-	import ItemDrawer from './ItemDrawer.svelte'
-	import PortionCreator from './PortionCreator.svelte'
 	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
 	import MaterialSymbolsOfflineBoltOutline from '~icons/material-symbols/offline-bolt-outline'
-	import {
-		addQuickSnack,
-		quickSnacks,
-		removeQuickSnack,
-	} from '$lib/data/quickSnacks'
+	import ItemDrawer from './ItemDrawer.svelte'
+	import PortionCreator from './PortionCreator.svelte'
+	import { calculateProteinPer100FromItems } from '$lib/protein'
 
 	const dispatch = createEventDispatcher()
 
@@ -95,6 +95,9 @@
 	<Input type="calc" bind:value={$dataStore.kcalPer100}>
 		kcal per 100 g || ml
 	</Input>
+	<Input type="calc" bind:value={$dataStore.proteinPer100}>
+		protein per 100 g || ml
+	</Input>
 {:else}
 	<Input
 		type="calc"
@@ -104,6 +107,15 @@
 		)}
 	>
 		kcal per 100 g || ml
+	</Input>
+	<Input
+		type="calc"
+		disabled
+		value={kcalDisplay(
+			calculateProteinPer100FromItems($dataStore.items, $dataStore.amount),
+		)}
+	>
+		protein per 100 g || ml
 	</Input>
 {/if}
 <Input type="number" bind:value={$dataStore.ean}>

@@ -27,7 +27,6 @@ export const GET: RequestHandler = async (request) => {
 	const requests = Array.from(document.querySelectorAll('td a')).map(
 		async (a: HTMLAnchorElement) => {
 			return fetch('https://fddb.mobi' + a.href).then(async (itemRes) => {
-				// console.log('DONE: https://fddb.mobi' + a.href);
 				if (!itemRes.ok) {
 					return
 				}
@@ -40,10 +39,16 @@ export const GET: RequestHandler = async (request) => {
 					.textContent.match(/\((.+)\)/)[1]
 
 				let kcalPer100 = 0
+				let proteinPer100 = 0
 
 				document.querySelectorAll('tr').forEach((tr) => {
 					if (tr.textContent.startsWith('Kalorien')) {
 						kcalPer100 = +tr.children[1].textContent.split(' ')[0]
+					}
+					if (tr.textContent.startsWith('Protein')) {
+						proteinPer100 = +tr.children[1].textContent
+							.split(' ')[0]
+							.replace(',', '.')
 					}
 				})
 
@@ -89,6 +94,7 @@ export const GET: RequestHandler = async (request) => {
 						label,
 						brand,
 						kcalPer100,
+						...(proteinPer100 ? { proteinPer100 } : {}),
 						portions,
 					}
 

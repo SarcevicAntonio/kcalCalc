@@ -1,9 +1,8 @@
 <script>
-	import { toISODateString } from '$lib/dateHelpers'
-	import { calculateKcalFromItems } from '$lib/kcal'
-	import { kcalDisplay } from '$lib/kcal'
 	import { curDay, curWeek, curYear, weekData } from '$lib/data/intake'
 	import { userSettings } from '$lib/data/user'
+	import { toISODateString } from '$lib/dateHelpers'
+	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
 	import { addDays, getYear } from 'date-fns'
 	import Switcher from './Switcher.svelte'
 
@@ -22,7 +21,7 @@
 			acc +
 				day.meals.reduce(
 					(acc, meal) => acc + calculateKcalFromItems(meal.intake),
-					0
+					0,
 				) || 0
 		)
 	}, 0)
