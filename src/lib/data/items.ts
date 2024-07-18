@@ -169,7 +169,7 @@ export const customItem = {
 	id: 'CUSTOM:ITEM',
 	label: '',
 	kcalPer100: 100,
-	proteinPer100:100,
+	proteinPer100: 100,
 	amount: 100,
 }
 
