@@ -19,7 +19,7 @@ export const calculateKcalPer100FromItems = (
 	return (kcal / amountSum) * 100
 }
 
-export const kcalDisplay = (val: number | string) => {
+export const valueDisplay = (val: number | string) => {
 	if (Number.isNaN(val) || typeof val !== 'number') {
 		return '...'
 	}

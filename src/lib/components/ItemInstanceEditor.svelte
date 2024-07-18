@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ItemInstance } from '$lib/data/items'
-	import { calculateKcal, kcalDisplay } from '$lib/kcal'
+	import { calculateKcal, valueDisplay } from '$lib/kcal'
 	import { Dialog } from 'as-comps'
 	import { createEventDispatcher } from 'svelte'
 	import IcDelete from '~icons/ic/round-delete-forever'
@@ -38,10 +38,10 @@
 	</div>
 	<div class="col end">
 		<span class="label-l">
-			{kcalDisplay(calculateKcal(item))} kcal
+			{valueDisplay(calculateKcal(item))} kcal
 		</span>
 		<span class="label-l">
-			{kcalDisplay(calculateProtein(item))} protein
+			{valueDisplay(calculateProtein(item))} protein
 		</span>
 	</div>
 </button>

@@ -1,6 +1,6 @@
 <script>
 	import { quickSnackTemplates, trackQuickSnack } from '$lib/data/quickSnacks'
-	import { calculateKcal, kcalDisplay } from '$lib/kcal'
+	import { calculateKcal, valueDisplay } from '$lib/kcal'
 	import MaterialSymbolsOfflineBolt from '~icons/material-symbols/offline-bolt'
 </script>
 
@@ -26,7 +26,7 @@
 				{item.brand}
 			</span>
 			<span class="label-l">
-				{kcalDisplay(calculateKcal(item))} kcal
+				{valueDisplay(calculateKcal(item))} kcal
 			</span>
 		</div>
 	</button>

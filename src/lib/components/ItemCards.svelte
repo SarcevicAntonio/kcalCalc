@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Item } from '$lib/data/items'
-	import { calculateKcalPer100FromItems, kcalDisplay } from '$lib/kcal'
+	import { calculateKcalPer100FromItems, valueDisplay } from '$lib/kcal'
 	import { createEventDispatcher } from 'svelte'
 	const dispatch = createEventDispatcher<{ select: Item }>()
 
@@ -31,7 +31,7 @@
 					{item.brand}
 				</span>
 				<span class="label-l">
-					{kcalDisplay(
+					{valueDisplay(
 						item.kcalPer100 ||
 							calculateKcalPer100FromItems(item.items, item.amount)
 					)} kcal%g||ml

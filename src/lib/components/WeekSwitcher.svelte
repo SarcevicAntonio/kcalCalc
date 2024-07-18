@@ -2,7 +2,7 @@
 	import { curDay, curWeek, curYear, weekData } from '$lib/data/intake'
 	import { userSettings } from '$lib/data/user'
 	import { toISODateString } from '$lib/dateHelpers'
-	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
+	import { calculateKcalFromItems, valueDisplay } from '$lib/kcal'
 	import { addDays, getYear } from 'date-fns'
 	import Switcher from './Switcher.svelte'
 
@@ -36,6 +36,6 @@
 		class="label-l"
 		class:over-limit={kcalSum > ($userSettings?.kcalLimit || 9999) * 7}
 	>
-		{kcalDisplay(kcalSum)} kcal
+		{valueDisplay(kcalSum)} kcal
 	</span>
 </Switcher>

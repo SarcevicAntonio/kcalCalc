@@ -19,7 +19,7 @@
 	import {
 		calculateAmountSum,
 		calculateKcalPer100FromItems,
-		kcalDisplay,
+		valueDisplay,
 	} from '$lib/kcal'
 	import { shareItem } from '$lib/share'
 	import type { WritableLoadable } from '@square/svelte-store'
@@ -102,7 +102,7 @@
 	<Input
 		type="calc"
 		disabled
-		value={kcalDisplay(
+		value={valueDisplay(
 			calculateKcalPer100FromItems($dataStore.items, $dataStore.amount),
 		)}
 	>
@@ -111,7 +111,7 @@
 	<Input
 		type="calc"
 		disabled
-		value={kcalDisplay(
+		value={valueDisplay(
 			calculateProteinPer100FromItems($dataStore.items, $dataStore.amount),
 		)}
 	>

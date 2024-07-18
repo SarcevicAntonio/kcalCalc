@@ -1,14 +1,13 @@
 <script lang="ts">
 	import type { ItemInstance } from '$lib/data/items'
 	import Input from '$lib/Input.svelte'
-	import { calculateKcal, kcalDisplay } from '$lib/kcal'
+	import { calculateKcal, valueDisplay } from '$lib/kcal'
+	import { calculateProtein } from '$lib/protein'
 	import { createEventDispatcher } from 'svelte'
 	const dispatch = createEventDispatcher()
 
 	export let amountInputElement: HTMLInputElement = null
 	export let item: ItemInstance
-
-	$: kcalLabel = kcalDisplay(calculateKcal(item))
 
 	function dispatchUpdate() {
 		dispatch('update')
@@ -37,10 +36,18 @@
 	{/if}
 	<div class="row">
 		<div class="body-m">
-			{kcalDisplay(item.kcalPer100)} kcal Per 100x
+			{valueDisplay(item.kcalPer100)} kcal Per 100x
 		</div>
 		<span class="label-l">
-			{kcalLabel} kcal
+			{valueDisplay(calculateKcal(item))} kcal
+		</span>
+	</div>
+	<div class="row">
+		<div class="body-m">
+			{valueDisplay(item.proteinPer100)} protein Per 100x
+		</div>
+		<span class="label-l">
+			{valueDisplay(calculateProtein(item))} protein
 		</span>
 	</div>
 	{#if item.id.startsWith('CUSTOM')}

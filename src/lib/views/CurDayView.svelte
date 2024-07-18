@@ -11,7 +11,7 @@
 	} from '$lib/data/intake'
 	import { userSettings } from '$lib/data/user'
 	import { toISODateString } from '$lib/dateHelpers'
-	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
+	import { calculateKcalFromItems, valueDisplay } from '$lib/kcal'
 	import { calculateProteinFromItems } from '$lib/protein'
 	import { addDays } from 'date-fns'
 
@@ -56,14 +56,14 @@
 		class:over-limit={kcalInDay > ($userSettings?.kcalLimit || 9999)}
 		class:stale
 	>
-		{kcalDisplay(kcalInDay)} kcal
+		{valueDisplay(kcalInDay)} kcal
 	</span>
 	<span
 		class="label-l"
 		class:over-limit={proteinInDay > ($userSettings?.proteinLimit || 9999)}
 		class:stale
 	>
-		{kcalDisplay(proteinInDay)} protein
+		{valueDisplay(proteinInDay)} protein
 	</span>
 </Switcher>
 

@@ -1,7 +1,7 @@
 <script type="ts">
 	import ItemInstanceEditor from '$lib/components/ItemInstanceEditor.svelte'
 	import type { ItemInstance as ItemInstanceType } from '$lib/data/items'
-	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
+	import { calculateKcalFromItems, valueDisplay } from '$lib/kcal'
 	import ItemDrawer from '$lib/views/ItemDrawer/ItemDrawer.svelte'
 	import { createEventDispatcher } from 'svelte'
 	import Expandable from '../Expandable.svelte'
@@ -37,11 +37,11 @@
 		<div class="bucket-info">
 			{#if items.length}
 				<span class="label-l">
-					{kcalDisplay(calculateKcalFromItems(items))}
+					{valueDisplay(calculateKcalFromItems(items))}
 					kcal
 				</span>
 				<span class="label-l">
-					{kcalDisplay(calculateProteinFromItems(items))}
+					{valueDisplay(calculateProteinFromItems(items))}
 					protein
 				</span>
 			{:else}

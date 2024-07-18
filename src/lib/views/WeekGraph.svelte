@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { kcalDisplay } from '$lib/kcal'
+	import { valueDisplay } from '$lib/kcal'
 	import { curDay, weekData, type Week } from '$lib/data/intake'
 	import { userSettings } from '$lib/data/user'
 	import type { Loadable } from '@square/svelte-store'
@@ -42,7 +42,7 @@
 					class="label-m end"
 					class:over-limit={item?.kcal > ($userSettings?.kcalLimit || 9999)}
 				>
-					{kcalDisplay(item.kcal)}
+					{valueDisplay(item.kcal)}
 					kcal
 				</span>
 			{/if}

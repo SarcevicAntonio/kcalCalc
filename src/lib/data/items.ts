@@ -175,13 +175,13 @@ export const customItem = {
 
 export interface Item {
 	id: string
-	brand?: string
 	label: string
+	brand?: string
 	kcalPer100: number
 	proteinPer100?: number
 	amount?: number
-	items?: ItemInstance[]
 	portions?: Portion[]
+	items?: ItemInstance[]
 	createdAt?: number
 	updatedAt?: number
 	ean?: number

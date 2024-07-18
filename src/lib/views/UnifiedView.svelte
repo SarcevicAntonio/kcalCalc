@@ -7,7 +7,7 @@
 	import { curWeek, weekData } from '$lib/data/intake'
 	import { userSettings } from '$lib/data/user'
 	import { toISODateString } from '$lib/dateHelpers'
-	import { calculateKcalFromItems, kcalDisplay } from '$lib/kcal'
+	import { calculateKcalFromItems, valueDisplay } from '$lib/kcal'
 	import { isSameDay } from 'date-fns'
 	import { tick } from 'svelte'
 
@@ -56,7 +56,7 @@
 					class="label-l"
 					class:over-limit={kcalInDay > ($userSettings?.kcalLimit || 9999)}
 				>
-					{kcalDisplay(kcalInDay)} kcal
+					{valueDisplay(kcalInDay)} kcal
 				</span>
 			</div>
 			<KcalLimitBar amount={kcalInDay} />
