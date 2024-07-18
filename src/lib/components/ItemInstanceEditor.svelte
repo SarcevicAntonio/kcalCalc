@@ -23,10 +23,8 @@
 	<div class="col item-info">
 		<span class="title-m">
 			{#if !item.label}
-				{#if item.id === 'CUSTOM:KCAL_COUNT'}
-					Custom kcal count
-				{:else if item.id === 'CUSTOM:KCAL+AMOUNT'}
-					Custom kcal & amount
+				{#if item.id.startsWith('CUSTOM')}
+					Custom Item
 				{/if}
 			{:else}
 				{item.label}

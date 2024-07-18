@@ -165,17 +165,11 @@ export const defaultPortion = {
 	amount: 0,
 }
 
-export const customKcalCountItem = {
-	id: 'CUSTOM:KCAL_COUNT',
-	label: '',
-	kcalPer100: 100, // no input- stays at 100 so amount functions as kcal input
-	amount: 100,
-}
-
-export const customKcalAmountItem = {
-	id: 'CUSTOM:KCAL+AMOUNT',
+export const customItem = {
+	id: 'CUSTOM:ITEM',
 	label: '',
 	kcalPer100: 100,
+	protein:100,
 	amount: 100,
 }
 

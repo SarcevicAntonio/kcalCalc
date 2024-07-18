@@ -4,8 +4,7 @@
 	import ItemCards from '$lib/components/ItemCards.svelte'
 	import ItemSkeleton from '$lib/components/ItemSkeleton.svelte'
 	import {
-		customKcalAmountItem,
-		customKcalCountItem,
+		customItem,
 		items,
 		recentItems,
 		saveExternalItem,
@@ -44,7 +43,7 @@
 					type: 'warn',
 				})
 				return []
-			}
+			},
 		)
 		loadingExternalItems = false
 	}
@@ -106,23 +105,13 @@
 		</button>
 	{/if}
 {:else}
-	{#if !noCustomKcal}
-		<button
-			class="btn tonal w100p"
-			on:click={() => {
-				handleSelect({ detail: customKcalCountItem })
-			}}
-		>
-			<IcRoundNumbers /> Custom kcal count
-		</button>
-	{/if}
 	<button
 		class="btn tonal w100p"
 		on:click={() => {
-			handleSelect({ detail: customKcalAmountItem })
+			handleSelect({ detail: customItem })
 		}}
 	>
-		<MdiWeight /> Custom kcal & amount
+		<MdiWeight /> Custom Item
 	</button>
 {/if}
 
@@ -137,8 +126,8 @@
 		items={externalEntries.length
 			? externalEntries
 			: search
-			? fuzzySearch($items, search)
-			: $recentItems}
+				? fuzzySearch($items, search)
+				: $recentItems}
 		on:select={handleSelect}
 	>
 		{#if externalEntries.length}
@@ -152,8 +141,8 @@
 		No {externalEntries.length
 			? 'external'
 			: search
-			? 'saved'
-			: 'recently used'} items found
+				? 'saved'
+				: 'recently used'} items found
 	</ItemCards>
 {:else}
 	{#each { length: 10 } as _}

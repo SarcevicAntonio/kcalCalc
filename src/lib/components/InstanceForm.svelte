@@ -18,10 +18,8 @@
 <div class="col">
 	<span class="title-m">
 		{#if !item.label}
-			{#if item.id === 'CUSTOM:KCAL_COUNT'}
-				Custom kcal count
-			{:else if item.id === 'CUSTOM:KCAL+AMOUNT'}
-				Custom kcal & amount
+			{#if item.id.startsWith('CUSTOM')}
+				Custom Item
 			{/if}
 		{:else}
 			{item.label}
@@ -45,27 +43,33 @@
 			{kcalLabel} kcal
 		</span>
 	</div>
-	<div class="row gap">
-		{#if item.id === 'CUSTOM:KCAL+AMOUNT'}
+	{#if item.id.startsWith('CUSTOM')}
+		<div class="row">
 			<Input type="calc" bind:value={item.kcalPer100} on:input={dispatchUpdate}>
 				kcal Per 100x
 			</Input>
-		{/if}
+		</div>
+		<div class="row">
+			<Input
+				type="calc"
+				bind:value={item.proteinPer100}
+				on:input={dispatchUpdate}
+			>
+				protein Per 100x
+			</Input>
+		</div>
+	{/if}
+	<div class="row gap">
 		<Input
 			bind:inputElement={amountInputElement}
 			type="calc"
 			bind:value={item.amount}
 			on:input={dispatchUpdate}
 		>
-			{#if item.id !== 'CUSTOM:KCAL_COUNT'}
-				Amount
-			{:else}
-				Kcal
-			{/if}
+			Amount
 		</Input>
 		<slot name="inline-inputs" />
 	</div>
-
 	<slot />
 </div>
 
