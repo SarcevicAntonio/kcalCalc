@@ -15,15 +15,11 @@
 </script>
 
 <div class="col">
-	<span class="title-m">
-		{#if !item.label}
-			{#if item.id.startsWith('CUSTOM')}
-				Custom Item
-			{/if}
-		{:else}
+	{#if !item.id.startsWith('CUSTOM')}
+		<span class="title-m">
 			{item.label}
-		{/if}
-	</span>
+		</span>
+	{/if}
 	{#if item.brand}
 		<span class="body-m">
 			{item.brand}
@@ -33,23 +29,25 @@
 		<Input bind:value={item.label} on:input={dispatchUpdate}>
 			Custom Label
 		</Input>
+	{:else}
+		<div class="row">
+			<div class="body-m">
+				{valueDisplay(item.kcalPer100)} kcal Per 100x
+			</div>
+			<span class="label-l">
+				{valueDisplay(calculateKcal(item))} kcal
+			</span>
+		</div>
+		<div class="row">
+			<div class="body-m">
+				{valueDisplay(item.proteinPer100)} protein Per 100x
+			</div>
+			<span class="label-l">
+				{valueDisplay(calculateProtein(item))} protein
+			</span>
+		</div>
 	{/if}
-	<div class="row">
-		<div class="body-m">
-			{valueDisplay(item.kcalPer100)} kcal Per 100x
-		</div>
-		<span class="label-l">
-			{valueDisplay(calculateKcal(item))} kcal
-		</span>
-	</div>
-	<div class="row">
-		<div class="body-m">
-			{valueDisplay(item.proteinPer100)} protein Per 100x
-		</div>
-		<span class="label-l">
-			{valueDisplay(calculateProtein(item))} protein
-		</span>
-	</div>
+
 	{#if item.id.startsWith('CUSTOM')}
 		<div class="row">
 			<Input type="calc" bind:value={item.kcalPer100} on:input={dispatchUpdate}>
