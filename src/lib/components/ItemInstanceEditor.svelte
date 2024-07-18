@@ -10,7 +10,6 @@
 	const dispatch = createEventDispatcher()
 
 	export let item: ItemInstance
-	export let amountInputElement: HTMLInputElement = null
 
 	let editing = false
 
@@ -54,7 +53,7 @@
 	--as-dialog-max-width="400px"
 	transitionOptions={{ duration: 100 }}
 >
-	<InstanceForm bind:item bind:amountInputElement on:update>
+	<InstanceForm bind:item on:update>
 		<svelte:fragment slot="inline-inputs">
 			{#if item.portions.length}
 				<PortionSelector

@@ -6,7 +6,6 @@
 	import { createEventDispatcher } from 'svelte'
 	const dispatch = createEventDispatcher()
 
-	export let amountInputElement: HTMLInputElement = null
 	export let item: ItemInstance
 
 	function dispatchUpdate() {
@@ -66,7 +65,6 @@
 	{/if}
 	<div class="row gap">
 		<Input
-			bind:inputElement={amountInputElement}
 			type="calc"
 			bind:value={item.amount}
 			on:input={dispatchUpdate}
