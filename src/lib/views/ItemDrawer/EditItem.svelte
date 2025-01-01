@@ -61,6 +61,7 @@
 
 	async function addItem(newItem: ItemInstanceType) {
 		$dataStore.kcalPer100 = 0
+		$dataStore.proteinPer100 = 0
 		$dataStore.items = [...$dataStore.items, newItem]
 	}
 </script>
