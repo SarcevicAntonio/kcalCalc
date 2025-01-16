@@ -13,7 +13,7 @@
 				? `width: ${Math.min((limit / amount) * 100, 100)}%;`
 				: `width: ${Math.min((amount / limit) * 100, 100)}%;`
 			: ''}
-	/>
+	></div>
 </div>
 
 <style lang="postcss">

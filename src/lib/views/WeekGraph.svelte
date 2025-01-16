@@ -20,7 +20,7 @@
 		<div
 			class="line"
 			style="top:{(($userSettings?.kcalLimit || 0) / maxKcal) * 100}%;"
-		/>
+		></div>
 	{/if}
 
 	{#each Object.entries($data) as [date, item] (date)}
@@ -49,7 +49,7 @@
 		</button>
 	{:else}
 		{#each { length: 7 } as _}
-			<div class="card filled row skeleton" />
+			<div class="card filled row skeleton"></div>
 		{/each}
 	{/each}
 </div>

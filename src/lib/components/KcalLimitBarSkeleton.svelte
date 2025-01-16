@@ -1,4 +1,4 @@
-<div class="bar skeleton" />
+<div class="bar skeleton"></div>
 
 <style>
 	.bar {
