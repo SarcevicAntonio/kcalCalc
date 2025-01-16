@@ -15,15 +15,8 @@
 	const focusInput = () => selectElement.focus()
 </script>
 
-<div
-	class="container"
-	on:click={focusInput}
-	on:keydown={() => {}}
-	on:keyup={() => {}}
-	on:keypress={() => {}}
-	class:disabled
-	class:outlined
->
+<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
+<div class="container" on:click={focusInput} class:disabled class:outlined>
 	<label for={id}>
 		<slot />
 	</label>

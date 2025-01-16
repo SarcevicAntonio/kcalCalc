@@ -10,6 +10,7 @@
 	const id = uuidv4()
 </script>
 
+<!-- TODO: Fix nesting buttons inside here. Only header needs to be the button. -->
 <button
 	{...$$restProps}
 	class="card {buttonClass}"
@@ -31,6 +32,7 @@
 		{/if}
 	</div>
 	{#if open}
+		<!-- TODO above fixes the need for this as well -->
 		<div transition:slide on:click|stopPropagation on:keyup|preventDefault>
 			<slot />
 		</div>

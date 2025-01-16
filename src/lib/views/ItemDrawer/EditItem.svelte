@@ -133,7 +133,6 @@
 		<h3 class="headline-4">Items</h3>
 		<ItemDrawer
 			selector
-			noCustomKcal
 			excludeId={item.id}
 			on:select={({ detail }) => {
 				addItem(detail)

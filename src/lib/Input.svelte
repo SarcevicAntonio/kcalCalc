@@ -51,12 +51,10 @@
 	const focusInput = () => inputElement.focus()
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
 <div
 	class="container"
 	on:click={focusInput}
-	on:keydown={() => {}}
-	on:keyup={() => {}}
-	on:keypress={() => {}}
 	class:error={canNotEvaluate}
 	class:disabled
 	class:outlined

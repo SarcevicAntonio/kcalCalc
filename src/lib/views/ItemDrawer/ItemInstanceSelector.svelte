@@ -16,7 +16,6 @@
 	import { createEventDispatcher, onMount } from 'svelte'
 	import IcRoundAccessTime from '~icons/ic/round-access-time'
 	import IcItems from '~icons/ic/round-category'
-	import IcRoundNumbers from '~icons/ic/round-numbers'
 	import IcRoundPlaylistAdd from '~icons/ic/round-playlist-add'
 	import IcRoundRestore from '~icons/ic/round-restore'
 	import MdiCloudSearch from '~icons/mdi/cloud-search'
@@ -24,7 +23,6 @@
 	import AddItem from './AddItem.svelte'
 	const dispatch = createEventDispatcher<{ edit: Item; selectItem: Item }>()
 
-	export let noCustomKcal = false
 	export let excludeId = ''
 
 	let search = ''

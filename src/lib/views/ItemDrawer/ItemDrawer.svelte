@@ -15,7 +15,6 @@
 	export let label = 'Items'
 	export let selector = false
 	export let excludeId = ''
-	export let noCustomKcal = false
 	export let isOpen = false
 	export let editItem: Item = null
 	export let triggerTestId = ''
@@ -71,7 +70,6 @@
 			/>
 		{:else if selector}
 			<ItemInstanceSelector
-				{noCustomKcal}
 				{excludeId}
 				on:edit={({ detail: item }) => (editItem = item)}
 				on:selectItem={({ detail: itemInstance }) => {
