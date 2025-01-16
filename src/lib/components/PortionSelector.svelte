@@ -22,13 +22,7 @@
 	<div class="col gap">
 		<h2 class="title-l">Select a portion size</h2>
 		{#each portions as portion (portion.key)}
-			<button
-				class="card filled"
-				on:click={() => {
-					dispatch('select', portion)
-					toggle()
-				}}
-			>
+			<div class="card filled">
 				<div class="col grow">
 					<span class="title-l">
 						{portion.label}
@@ -38,9 +32,15 @@
 					</span>
 				</div>
 
-				<div class="btn text">
+				<button
+					class="btn text"
+					on:click={() => {
+						dispatch('select', portion)
+						toggle()
+					}}
+				>
 					<IcReplace />
-				</div>
+				</button>
 				<div class="divider" />
 				<button
 					class="btn text"
@@ -51,7 +51,7 @@
 				>
 					<IcAdd />
 				</button>
-			</button>
+			</div>
 		{/each}
 		<button class="btn tonal" on:click={toggle}>
 			<IcArrowBack /> Do nothing
@@ -76,7 +76,7 @@
 		height: 2rem;
 	}
 
-	button {
+	.card {
 		display: flex;
 		align-items: center;
 	}
