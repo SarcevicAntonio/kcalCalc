@@ -21,7 +21,7 @@
 			acc +
 				day.meals.reduce(
 					(acc, meal) => acc + calculateKcalFromItems(meal.intake),
-					0,
+					0
 				) || 0
 		)
 	}, 0)

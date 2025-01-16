@@ -24,7 +24,7 @@
 	onMount(async () => {
 		videoInputDevices = await BrowserCodeReader.listVideoInputDevices()
 		const possibleBackCam = videoInputDevices.find((d) =>
-			d.label.includes('back'),
+			d.label.includes('back')
 		)
 		selectedDeviceId =
 			possibleBackCam?.deviceId || videoInputDevices[0]?.deviceId
@@ -40,7 +40,7 @@
 				dispatch('scanned', result.getText())
 				closeScanner()
 				isOpen = false
-			},
+			}
 		)
 	}
 
@@ -52,7 +52,7 @@
 
 	function switchSelectedDevice() {
 		let idx = videoInputDevices.findIndex(
-			(d) => d.deviceId === selectedDeviceId,
+			(d) => d.deviceId === selectedDeviceId
 		)
 		idx = (idx + 1) % videoInputDevices.length
 		selectedDeviceId = videoInputDevices[idx].deviceId

@@ -64,11 +64,7 @@
 		</div>
 	{/if}
 	<div class="row gap">
-		<Input
-			type="calc"
-			bind:value={item.amount}
-			on:input={dispatchUpdate}
-		>
+		<Input type="calc" bind:value={item.amount} on:input={dispatchUpdate}>
 			Amount
 		</Input>
 		<slot name="inline-inputs" />

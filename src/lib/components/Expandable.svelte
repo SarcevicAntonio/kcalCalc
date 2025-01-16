@@ -31,11 +31,7 @@
 		{/if}
 	</div>
 	{#if open}
-		<div
-			transition:slide
-			on:click|stopPropagation
-			on:keyup|preventDefault
-		>
+		<div transition:slide on:click|stopPropagation on:keyup|preventDefault>
 			<slot />
 		</div>
 	{/if}

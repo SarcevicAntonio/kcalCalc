@@ -104,7 +104,7 @@
 		type="calc"
 		disabled
 		value={valueDisplay(
-			calculateKcalPer100FromItems($dataStore.items, $dataStore.amount),
+			calculateKcalPer100FromItems($dataStore.items, $dataStore.amount)
 		)}
 	>
 		kcal per 100 g || ml
@@ -113,7 +113,7 @@
 		type="calc"
 		disabled
 		value={valueDisplay(
-			calculateProteinPer100FromItems($dataStore.items, $dataStore.amount),
+			calculateProteinPer100FromItems($dataStore.items, $dataStore.amount)
 		)}
 	>
 		protein per 100 g || ml

@@ -22,12 +22,12 @@
 
 	$: kcalInDay = data?.meals.reduce(
 		(acc, meal) => acc + calculateKcalFromItems(meal.intake),
-		0,
+		0
 	)
 
 	$: proteinInDay = data?.meals.reduce(
 		(acc, meal) => acc + calculateProteinFromItems(meal.intake),
-		0,
+		0
 	)
 	$: dateObj = new Date($curDay)
 

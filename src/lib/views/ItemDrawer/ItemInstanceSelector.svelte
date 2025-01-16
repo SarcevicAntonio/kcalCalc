@@ -43,7 +43,7 @@
 					type: 'warn',
 				})
 				return []
-			},
+			}
 		)
 		loadingExternalItems = false
 	}
@@ -126,8 +126,8 @@
 		items={externalEntries.length
 			? externalEntries
 			: search
-				? fuzzySearch($items, search)
-				: $recentItems}
+			? fuzzySearch($items, search)
+			: $recentItems}
 		on:select={handleSelect}
 	>
 		{#if externalEntries.length}
@@ -141,8 +141,8 @@
 		No {externalEntries.length
 			? 'external'
 			: search
-				? 'saved'
-				: 'recently used'} items found
+			? 'saved'
+			: 'recently used'} items found
 	</ItemCards>
 {:else}
 	{#each { length: 10 } as _}
