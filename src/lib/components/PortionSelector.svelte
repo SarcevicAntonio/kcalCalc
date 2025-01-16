@@ -41,7 +41,7 @@
 				>
 					<IcReplace />
 				</button>
-				<div class="divider" />
+				<div class="divider"></div>
 				<button
 					class="btn text"
 					on:click|stopPropagation={() => {

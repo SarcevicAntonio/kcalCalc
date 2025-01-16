@@ -95,7 +95,6 @@
 		align-items: stretch;
 		justify-content: center;
 		gap: 1em;
-		margin-top: 0.5rem;
 	}
 
 	.title-l {

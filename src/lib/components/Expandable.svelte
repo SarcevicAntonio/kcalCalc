@@ -34,15 +34,14 @@
 	{#if open}
 		<!-- TODO above fixes the need for this as well -->
 		<div transition:slide on:click|stopPropagation on:keyup|preventDefault>
+			<div class="pad" />
 			<slot />
 		</div>
 	{/if}
-	<div class="pad" />
 </button>
 
 <style lang="postcss">
 	.card {
-		padding-bottom: 0;
 	}
 
 	.row {
