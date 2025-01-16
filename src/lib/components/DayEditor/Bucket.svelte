@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
 	import ItemInstanceEditor from '$lib/components/ItemInstanceEditor.svelte'
 	import type { ItemInstance as ItemInstanceType } from '$lib/data/items'
 	import { calculateKcalFromItems, valueDisplay } from '$lib/kcal'
