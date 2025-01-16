@@ -32,7 +32,7 @@
 	</div>
 	{#if open}
 		<div
-			transition:slide|local
+			transition:slide
 			on:click|stopPropagation
 			on:keyup|preventDefault
 		>
