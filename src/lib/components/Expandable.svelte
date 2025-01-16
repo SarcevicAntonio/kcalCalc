@@ -5,40 +5,47 @@
 
 	export let open = false
 	export let disabled = false
-	export let buttonClass = 'filled'
 
-	const id = uuidv4()
+	const regionId = uuidv4()
+	const buttonId = uuidv4()
 </script>
 
-<!-- TODO: Fix nesting buttons inside here. Only header needs to be the button. -->
-<button
-	{...$$restProps}
-	class="card {buttonClass}"
-	{disabled}
-	on:click={() => {
-		open = !open
-	}}
-	aria-expanded={open}
-	aria-controls={id}
->
-	<div class="row">
-		<div class="summary">
-			<slot name="summary" />
-		</div>
-		{#if !disabled}
-			<div class="icon" class:open>
-				<Icon />
+<div class="card filled">
+	<h3>
+		<button
+			class="row"
+			aria-disabled={disabled}
+			on:click={() => {
+				if (disabled) return
+				open = !open
+			}}
+			aria-expanded={open}
+			aria-controls={regionId}
+			id={buttonId}
+			{...$$restProps}
+		>
+			<div class="summary">
+				<slot name="summary" />
 			</div>
-		{/if}
-	</div>
+			{#if !disabled}
+				<div class="icon" class:open>
+					<Icon />
+				</div>
+			{/if}
+		</button>
+	</h3>
 	{#if open}
-		<!-- TODO above fixes the need for this as well -->
-		<div transition:slide on:click|stopPropagation on:keyup|preventDefault>
-			<div class="pad" />
+		<div
+			transition:slide
+			id={regionId}
+			role="region"
+			aria-labelledby={buttonId}
+		>
+			<div class="pad"></div>
 			<slot />
 		</div>
 	{/if}
-</button>
+</div>
 
 <style lang="postcss">
 	.card {
@@ -64,5 +71,9 @@
 
 	.pad {
 		min-height: 0.5rem;
+	}
+
+	button {
+		width: fill-available;
 	}
 </style>
