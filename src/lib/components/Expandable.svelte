@@ -74,6 +74,6 @@
 	}
 
 	button {
-		width: fill-available;
+		width: stretch;
 	}
 </style>
