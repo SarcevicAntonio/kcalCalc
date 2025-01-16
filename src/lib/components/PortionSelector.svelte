@@ -44,7 +44,7 @@
 				<div class="divider"></div>
 				<button
 					class="btn text"
-					on:click|stopPropagation={() => {
+					on:click={() => {
 						dispatch('add', portion)
 						toggle()
 					}}
