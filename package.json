@@ -35,8 +35,9 @@
 		"@iconify/json": "^2.2.295",
 		"@playwright/test": "^1.49.1",
 		"@square/svelte-store": "^0.1.5",
-		"@sveltejs/adapter-auto": "^1.0.3",
-		"@sveltejs/kit": "^1.30.4",
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/uuid": "^8.3.4",
 		"@typescript-eslint/eslint-plugin": "^5.62.0",
 		"@typescript-eslint/parser": "^5.62.0",
@@ -59,7 +60,7 @@
 		"tslib": "^2.8.1",
 		"typescript": "^5.0.0",
 		"unplugin-icons": "^0.14.15",
-		"vite": "^4.5.5",
+		"vite": "^5.0.0",
 		"vite-plugin-svelte-console-remover": "^1.0.10"
 	}
 }
