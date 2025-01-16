@@ -5,8 +5,6 @@ test.describe('App Test', () => {
 	test.beforeEach(async ({ page }) => {
 		page.on('console', (msg) => console.log('#BROWSER# ', msg.text()))
 
-		// TODO: Replace beforeEach with IndexedDB Session Sharing
-		// https://github.com/microsoft/playwright/discussions/10715#discussioncomment-1904812
 		await page.goto(`/`)
 		const [authPopup] = await Promise.all([
 			page.waitForEvent('popup'),
