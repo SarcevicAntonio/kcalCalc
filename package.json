@@ -24,7 +24,7 @@
 		"@zxing/browser": "^0.1.5",
 		"@zxing/library": "^0.21.0",
 		"date-fns": "^2.30.0",
-		"firebase": "^9.23.0",
+		"firebase": "^10.9.0",
 		"fzf": "^0.5.2",
 		"linkedom": "^0.14.26",
 		"mathjs": "^10.6.4",
