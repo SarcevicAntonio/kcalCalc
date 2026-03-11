@@ -42,7 +42,7 @@ jobs:
           paths: 'reports/*.junit.xml'
         if: always()
       - name: Upload reports and videos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-reports
           path: |
