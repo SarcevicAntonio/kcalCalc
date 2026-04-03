@@ -11,6 +11,7 @@
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop'
 	import '../css/global.css'
 	import Credits from './Credits.svelte'
+	import Deprecation from '$lib/components/Deprecation.svelte'
 
 	let authStateUnfetched = true
 
@@ -49,9 +50,10 @@
 />
 
 <header>
-	<button on:click={() => (creditsOpen = true)}>
+	<button on:click={() => (creditsOpen = true)} class="brand">
 		<img src="/icon-mono.svg" alt="kcalCalc Logo" />
 		<h1>kcalCalc</h1>
+		<span>(DEPRECATED)</span>
 	</button>
 
 	<div class="header-items">
@@ -81,6 +83,7 @@
 			<LineMdLoadingTwotoneLoop />
 		</div>
 	{:else if !$user}
+		<Deprecation />
 		<Login />
 	{:else}
 		<slot />
@@ -117,11 +120,20 @@
 		padding-left: 0.5rem;
 		background-color: var(--md-surface);
 		color: var(--md-on-surface);
-		& > button {
-			display: flex;
-			align-items: center;
-			gap: 1rem;
-		}
+	}
+
+	button.brand {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		position: relative;
+	}
+
+	button.brand span {
+		position: absolute;
+		left: 40%;
+		background-color: var(--md-error);
+		color: var(--md-error-container);
 	}
 
 	main {

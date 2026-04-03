@@ -6,6 +6,13 @@ A free calorie counting app made to fit my needs.
 
 Give it a shot at [kcal-calc.vercel.app](https://kcal-calc.vercel.app)
 
+## Deprecation warning
+
+please note that this app code and above instance are both deprecated.
+the instance may be made unavailable at any moment without further warning.
+
+## Screenshots
+
 | Mobile Day View                       | Item Selection                                          | Mobile Week View                          |
 | ------------------------------------- | ------------------------------------------------------- | ----------------------------------------- |
 | ![DayView](./screenshots/DayView.png) | ![SelectItemSearch](./screenshots/SelectItemSearch.png) | ![WeekGraph](./screenshots/WeekGraph.png) |

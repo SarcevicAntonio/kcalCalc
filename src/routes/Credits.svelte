@@ -1,6 +1,7 @@
 <script>
 	import { Dialog } from 'as-comps'
 	import deps from '$lib/dependency-report.json'
+	import Deprecation from '$lib/components/Deprecation.svelte'
 	export let isOpen = false
 </script>
 
@@ -10,6 +11,8 @@
 	style="display: flex; flex-direction: column; gap: 0.5rem; width: 80vw; max-width: 800px;"
 	transitionOptions={{ duration: 100 }}
 >
+	<Deprecation />
+	<hr />
 	<h2 class="headline-3">Credits</h2>
 	<p>
 		Copyright © {new Date().toJSON().substring(0, 4)}
@@ -17,7 +20,6 @@
 			Antonio Sarcevic
 		</a>
 	</p>
-	<hr />
 	<h3 class="headline-5">Made possible thanks to:</h3>
 	<ul>
 		{#each deps as dep}

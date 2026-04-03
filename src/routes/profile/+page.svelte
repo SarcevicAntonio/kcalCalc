@@ -1,5 +1,6 @@
 <script>
 	import { goto } from '$app/navigation'
+	import Deprecation from '$lib/components/Deprecation.svelte'
 	import { user, userSettings } from '$lib/data/user'
 	import { auth } from '$lib/firebase'
 	import Input from '$lib/Input.svelte'
@@ -16,6 +17,7 @@
 </script>
 
 <div class="container">
+	<Deprecation />
 	{#if $user}
 		<span class="title-l">Howdy, good lookin'!</span>
 		<div class="user">
